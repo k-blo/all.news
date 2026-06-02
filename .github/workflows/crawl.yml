@@ -3,7 +3,7 @@ name: crawl
 on:
   schedule:
     - cron: "0 * * * *"    # hourly (UTC); accumulates into the day's archive
-  workflow_dispatch: {}    # manual "Run workflow" button
+  #workflow_dispatch: {}    # manual "Run workflow" button
 
 permissions:
   contents: write          # allow committing crawled.json
