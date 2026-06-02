@@ -55,7 +55,7 @@ NEBELSPALTER_MAX = 50  # newest N /themen/YYYY/MM/slug articles
 # Google-News sitemaps: real <news:title> + publication_date (no slug guessing).
 NEWS_SITEMAPS = [
     {"source": "Watson",    "url": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml",    "max": 50},
-    {"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
+    #{"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
 # wp-sitemap-posts-post-N. Titles from URL slug (last path segment).
