@@ -2,7 +2,7 @@ name: crawl
 
 on:
   schedule:
-    - cron: "6 * * * *"    # hourly (UTC); accumulates into the day's archive
+    - cron: "*/15 * * * *"  # every 15 minutes
   workflow_dispatch: {}    # manual "Run workflow" button
 
 permissions:
