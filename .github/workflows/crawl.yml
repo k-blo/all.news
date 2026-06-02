@@ -2,7 +2,7 @@ name: crawl
 
 on:
   schedule:
-    - cron: "0 * * * *"   # hourly (UTC); GitHub may delay under load
+    - cron: "0 * * * *"    # hourly (UTC); accumulates into the day's archive
   workflow_dispatch: {}    # manual "Run workflow" button
 
 permissions:
@@ -29,9 +29,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet -- crawled.json; then
-            git add crawled.json
-            git commit -m "chore: refresh crawled.json [skip ci]"
+          git add crawled.json archive
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: daily crawl [skip ci]"
             git push
           else
             echo "no changes"

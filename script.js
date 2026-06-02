@@ -31,6 +31,14 @@ function fmtDate(s) {
   return d.toISOString().slice(0, 10); // YYYY-MM-DD
 }
 
+function fmtDateTime(s) {
+  if (!s) return "";
+  const d = new Date(s);
+  if (isNaN(d)) return "";
+  // Swiss local date + exact crawl time
+  return d.toLocaleString("sv-SE", { timeZone: "Europe/Zurich" }); // YYYY-MM-DD HH:MM:SS
+}
+
 function ts(a) {
   const d = new Date(a.published);
   return isNaN(d) ? 0 : d.getTime();
@@ -63,7 +71,7 @@ function render(articles, mode) {
     const meta = document.createElement("div");
     meta.className = "info";
 
-    const date = fmtDate(a.published);
+    const date = fmtDateTime(a.published);
     if (date) {
       const d = document.createElement("span");
       d.className = "date";
@@ -82,20 +90,42 @@ function render(articles, mode) {
   }
 }
 
-fetch("crawled.json")
+const meta = document.getElementById("meta");
+const daySel = document.getElementById("day");
+function sortMode() {
+  const el = document.querySelector('input[name="sort"]:checked');
+  return el ? el.value : "date";
+}
+
+let current = [];
+
+function load(url) {
+  meta.textContent = "loading…";
+  fetch(url)
+    .then((r) => r.json())
+    .then((data) => {
+      current = data.articles;
+      meta.textContent =
+        `${data.count} articles · ${data.date || ""} · updated ${fmtDate(data.generated)}`;
+      render(current, sortMode());
+    })
+    .catch((e) => { meta.textContent = "failed to load " + url + ": " + e; });
+}
+
+// Populate day picker from the archive index; "latest" = newest crawl.
+fetch("archive/index.json")
   .then((r) => r.json())
-  .then((data) => {
-    document.getElementById("meta").textContent =
-      `${data.count} articles · updated ${fmtDate(data.generated)}`;
-
-    const current = () =>
-      document.querySelector('input[name="sort"]:checked').value;
-    render(data.articles, current());
-
-    for (const radio of document.querySelectorAll('input[name="sort"]')) {
-      radio.addEventListener("change", () => render(data.articles, current()));
+  .then((idx) => {
+    const opts = ['<option value="crawled.json">latest</option>'];
+    for (const d of idx.dates || []) {
+      opts.push(`<option value="archive/${d}.json">${d}</option>`);
     }
+    daySel.innerHTML = opts.join("");
   })
-  .catch((e) => {
-    document.getElementById("meta").textContent = "failed to load crawled.json: " + e;
-  });
+  .catch(() => { daySel.innerHTML = '<option value="crawled.json">latest</option>'; })
+  .finally(() => load(daySel.value));
+
+daySel.addEventListener("change", () => load(daySel.value));
+for (const radio of document.querySelectorAll('input[name="sort"]')) {
+  radio.addEventListener("change", () => render(current, sortMode()));
+}

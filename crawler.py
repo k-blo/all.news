@@ -8,12 +8,20 @@ Stdlib only. Run: python3 crawler.py
 """
 
 import json
+import os
 import re
 import sys
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+from zoneinfo import ZoneInfo
+
+ZURICH = ZoneInfo("Europe/Zurich")
+ARCHIVE_DIR = "archive"
+SEEN_FILE = os.path.join(ARCHIVE_DIR, "seen.json")
+INDEX_FILE = os.path.join(ARCHIVE_DIR, "index.json")
 
 # RSS-first: only sites that publish a feed (syndication intent). Title + link
 # always safe to aggregate; summary truncated. Edit/extend this list freely.
@@ -75,6 +83,53 @@ def fetch(url):
 
 def strip_html(text):
     return re.sub(r"<[^>]+>", "", text or "").strip()
+
+
+def parse_date(s):
+    """Parse RSS pubDate or ISO/sitemap lastmod into an aware datetime, or None."""
+    if not s:
+        return None
+    s = s.strip()
+    try:
+        return datetime.fromisoformat(s.replace("Z", "+00:00"))
+    except ValueError:
+        pass
+    try:
+        return parsedate_to_datetime(s)
+    except (TypeError, ValueError):
+        return None
+
+
+def is_today(s):
+    """True if the source date falls on today's date in Swiss local time."""
+    dt = parse_date(s)
+    if dt is None:
+        return False
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(ZURICH).date() == datetime.now(ZURICH).date()
+
+
+def load_seen():
+    """All article URLs ever crawled — persists across days to block re-adds."""
+    try:
+        with open(SEEN_FILE, encoding="utf-8") as f:
+            return set(json.load(f))
+    except (FileNotFoundError, json.JSONDecodeError):
+        return set()
+
+
+def write_json(path, obj):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=2)
+
+
+def archive_dates():
+    """Sorted (newest first) list of archived crawl dates."""
+    names = os.listdir(ARCHIVE_DIR)
+    dates = [n[:-5] for n in names
+             if n.endswith(".json") and n not in ("seen.json", "index.json")]
+    return sorted(dates, reverse=True)
 
 
 def text_of(item, *tags):
@@ -326,21 +381,41 @@ def main():
         except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError, OSError, ValueError) as e:
             print(f"  fail {name}: {e}", file=sys.stderr)
 
-    # Dedup by URL
-    seen, deduped = set(), []
-    for a in articles:
-        if a["url"] not in seen:
-            seen.add(a["url"])
-            deduped.append(a)
+    # One crawl per day. Keep only articles whose SOURCE date is today AND whose
+    # URL was never crawled before (seen.json) — so a sitemap re-dating an old
+    # article never re-adds it. Each kept article is stamped with the crawl time.
+    now_iso = datetime.now(timezone.utc).isoformat()
+    today = datetime.now(ZURICH).date().isoformat()
+    os.makedirs(ARCHIVE_DIR, exist_ok=True)
 
-    data = {
-        "generated": datetime.now(timezone.utc).isoformat(),
-        "count": len(deduped),
-        "articles": deduped,
-    }
-    with open("crawled.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"wrote crawled.json: {len(deduped)} articles", file=sys.stderr)
+    # Preserve articles already saved for today (keep their first-seen crawl time)
+    # so re-running the crawler on the same day appends rather than overwrites.
+    try:
+        with open("crawled.json", encoding="utf-8") as f:
+            prev = json.load(f)
+        existing_today = prev["articles"] if prev.get("date") == today else []
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        existing_today = []
+
+    seen = load_seen()
+    new, batch = [], set()
+    for a in articles:
+        u = a["url"]
+        if u in seen or u in batch:
+            continue
+        if not is_today(a.get("published")):
+            continue
+        new.append({**a, "published": now_iso})  # date = crawl time
+        batch.add(u)
+
+    result = existing_today + new
+    data = {"generated": now_iso, "date": today, "count": len(result), "articles": result}
+    write_json("crawled.json", data)                       # newest crawl
+    write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"), data)  # this date's crawl
+    write_json(SEEN_FILE, sorted(seen | batch))
+    write_json(INDEX_FILE, {"dates": archive_dates()})
+    print(f"wrote crawled.json: +{len(new)} new, {len(result)} total today ({today})",
+          file=sys.stderr)
 
 
 if __name__ == "__main__":
