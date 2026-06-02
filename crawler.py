@@ -27,27 +27,20 @@ INDEX_FILE = os.path.join(ARCHIVE_DIR, "index.json")
 # always safe to aggregate; summary truncated. Edit/extend this list freely.
 FEEDS = [
     {"source": "SRF",           "url": "https://www.srf.ch/news/bnf/rss/1890"},
-    {"source": "RTS",           "url": "https://www.rts.ch/info/?format=rss/news"},
-    {"source": "Le Temps",      "url": "https://www.letemps.ch/articles.rss"},
+    #{"source": "RTS",           "url": "https://www.rts.ch/info/?format=rss/news"},
+    #{"source": "Le Temps",      "url": "https://www.letemps.ch/articles.rss"},
     {"source": "Blick",         "url": "https://www.blick.ch/news/rss.xml"},
     {"source": "20 Minuten",    "url": "https://partner-feeds.20min.ch/rss/20minuten"},
     {"source": "Tages-Anzeiger","url": "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/"},
     {"source": "Berner Zeitung","url": "https://partner-feeds.publishing.tamedia.ch/rss/bernerzeitung/"},
-    {"source": "Tribune de Genève","url": "https://partner-feeds.publishing.tamedia.ch/rss/tdg/"},
+    #{"source": "Tribune de Genève","url": "https://partner-feeds.publishing.tamedia.ch/rss/tdg/"},
     {"source": "Zentralplus",   "url": "https://www.zentralplus.ch/feed/"},
-    {"source": "Heidi.news",    "url": "https://www.heidi.news/articles.rss"},
+    #{"source": "Heidi.news",    "url": "https://www.heidi.news/articles.rss"},
     {"source": "Finews",        "url": "https://www.finews.ch/news?format=feed"},
     {"source": "Netzwoche",     "url": "https://www.netzwoche.ch/rss.xml"},
-    {"source": "Le Courrier",   "url": "https://lecourrier.ch/feed/"},
+    #{"source": "Le Courrier",   "url": "https://lecourrier.ch/feed/"},
     {"source": "Inside IT",     "url": "https://www.inside-it.ch/rss.xml"},
-    # Weltwoche has no working RSS (only a dead test stub). Handled separately via
-    # sitemap below — see crawl_weltwoche(). Title derived from URL slug, no scraping.
-    # NZZ publishes recent.rss, BUT robots.txt explicitly blocks AI/crawler bots
-    # and content is paywalled. Feed is public; republishing intent is weakest of
-    # the set. summary=False -> store title+link only. Enable at your own risk.
     {"source": "NZZ",           "url": "https://www.nzz.ch/recent.rss", "summary": False},
-    # No public RSS found (all patterns 404 / non-feed): WOZ, Nebelspalter, Watson.
-    # Would need sitemap crawl (gray zone) — left out of RSS-first POC.
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
