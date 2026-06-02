@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SuisseNews crawler — POC.
+"""swissnews crawler — POC.
 
 Fetches RSS feeds from Swiss news sites, extracts title + link (+ short summary),
 writes crawled.json for the static site to consume.
@@ -44,7 +44,7 @@ FEEDS = [
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
-USER_AGENT = "SuisseNewsBot/0.1 (+https://github.com/yourname/suissenews; POC)"
+USER_AGENT = "SwissNewsBot/0.1 (+https://github.com/yourname/swissnews; POC)"
 TIMEOUT = 15
 SUMMARY_MAX = 200  # keep snippets short — legal caution
 WELTWOCHE_SITEMAP_INDEX = "https://weltwoche.ch/sitemap_index.xml"
