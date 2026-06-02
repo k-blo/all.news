@@ -22,6 +22,7 @@ ZURICH = ZoneInfo("Europe/Zurich")
 ARCHIVE_DIR = "archive"
 SEEN_FILE = os.path.join(ARCHIVE_DIR, "seen.json")
 INDEX_FILE = os.path.join(ARCHIVE_DIR, "index.json")
+HTTP_CACHE_FILE = os.path.join(ARCHIVE_DIR, "http_cache.json")
 
 # RSS-first: only sites that publish a feed (syndication intent). Title + link
 # always safe to aggregate; summary truncated. Edit/extend this list freely.
@@ -67,11 +68,31 @@ REPUBLIK_SITEMAP = "https://www.republik.ch/sitemap.xml"  # index of per-year si
 REPUBLIK_MAX = 50
 
 
+class NotModified(Exception):
+    pass
+
+
+_http_cache: dict = {}
+
+
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-        # strip BOM + leading whitespace so XML decl is at start (some feeds prepend \n)
-        return resp.read().lstrip(b"\xef\xbb\xbf \t\r\n")
+    headers = {"User-Agent": USER_AGENT}
+    entry = _http_cache.get(url, {})
+    if entry.get("last_modified"):
+        headers["If-Modified-Since"] = entry["last_modified"]
+    if entry.get("etag"):
+        headers["If-None-Match"] = entry["etag"]
+    req = urllib.request.Request(url, headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            lm, etag = resp.headers.get("Last-Modified"), resp.headers.get("ETag")
+            if lm or etag:
+                _http_cache[url] = {k: v for k, v in (("last_modified", lm), ("etag", etag)) if v}
+            return resp.read().lstrip(b"\xef\xbb\xbf \t\r\n")
+    except urllib.error.HTTPError as e:
+        if e.code == 304:
+            raise NotModified(url)
+        raise
 
 
 def strip_html(text):
@@ -343,12 +364,22 @@ def crawl_news_sitemap(source, url, limit):
 
 
 def main():
+    global _http_cache
+    os.makedirs(ARCHIVE_DIR, exist_ok=True)
+    try:
+        with open(HTTP_CACHE_FILE, encoding="utf-8") as f:
+            _http_cache = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        _http_cache = {}
+
     articles = []
     for feed in FEEDS:
         src, url = feed["source"], feed["url"]
         try:
             articles += parse_feed(src, fetch(url), feed.get("summary", True))
             print(f"  ok   {src}: {url}", file=sys.stderr)
+        except NotModified:
+            print(f"  skip {src}: not modified", file=sys.stderr)
         except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError, OSError) as e:
             print(f"  fail {src}: {url} -> {e}", file=sys.stderr)
 
@@ -371,6 +402,8 @@ def main():
             rows = fn()
             articles += rows
             print(f"  ok   {name}: {len(rows)} stories (sitemap)", file=sys.stderr)
+        except NotModified:
+            print(f"  skip {name}: not modified", file=sys.stderr)
         except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError, OSError, ValueError) as e:
             print(f"  fail {name}: {e}", file=sys.stderr)
 
@@ -379,7 +412,6 @@ def main():
     # article never re-adds it. Each kept article is stamped with the crawl time.
     now_iso = datetime.now(timezone.utc).isoformat()
     today = datetime.now(ZURICH).date().isoformat()
-    os.makedirs(ARCHIVE_DIR, exist_ok=True)
 
     # Preserve articles already saved for today (keep their first-seen crawl time)
     # so re-running the crawler on the same day appends rather than overwrites.
@@ -407,6 +439,7 @@ def main():
     write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"), data)  # this date's crawl
     write_json(SEEN_FILE, sorted(seen | batch))
     write_json(INDEX_FILE, {"dates": archive_dates()})
+    write_json(HTTP_CACHE_FILE, _http_cache)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} total today ({today})",
           file=sys.stderr)
 
