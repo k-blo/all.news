@@ -1,0 +1,25 @@
+body {
+  font-family: monospace;
+  margin: 1rem;
+  padding: 0;
+}
+#meta { color: #666; font-size: 0.85rem; }
+#controls { font-size: 0.85rem; margin-bottom: 1rem; }
+#controls label { margin-right: 0.5rem; }
+ul { list-style: none; padding: 0; margin: 0; }
+li { margin-bottom: 0.8rem; }
+a { color: #000; }
+a:visited { color: #666; }
+.info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  margin-top: 0.15rem;
+}
+.date { opacity: 0.5; }
+.source {
+  color: #fff;
+  padding: 0.05rem 0.35rem;
+  border-radius: 2px;
+}
