@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T11:00:52.884254+00:00",
+  "generated": "2026-06-03T11:30:53.616649+00:00",
   "date": "2026-06-03",
-  "count": 258,
+  "count": 276,
   "articles": [
     {
       "source": "Blick",
@@ -1808,6 +1808,132 @@
       "url": "https://www.watson.ch/schweiz/zuerich/431048507-tragoedie-im-zuercher-zoo-elefantenbaby-kurz-nach-geburt-eingeschlaefert",
       "summary": "",
       "published": "2026-06-03T11:00:52.884254+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Machtkampf um Finanzierung – 13. AHV-Rente: Wer streut hier wem Sand in die Augen?",
+      "url": "https://www.srf.ch/news/schweiz/machtkampf-um-finanzierung-13-ahv-rente-wer-streut-hier-wem-sand-in-die-augen",
+      "summary": "Kompromiss oder Scherbenhaufen? Das Parlament ringt um die Finanzierung der «Dreizehnten». Die Fronten sind verhärtet.",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Ausstellung zu Isao Takahata – Wie die Schweiz mit «Heidi» in japanische Wohnstuben kam",
+      "url": "https://www.srf.ch/kultur/film-serien/ausstellung-zu-isao-takahata-wie-die-schweiz-mit-heidi-in-japanische-wohnstuben-kam",
+      "summary": "Eine Ausstellung in Lausanne über das Schaffen des Animationsfilmemachers Isao Takahata ist ein Fest fürs Auge.",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Zoo Zürich muss neugeborenes Elefantenbaby erlösen",
+      "url": "https://www.20min.ch/story/elefantenpark-zoo-zuerich-muss-neugeborenes-elefantenbaby-erloesen-103576386",
+      "summary": "Der Zoo Zürich hat ein neugeborenes Elefantenkalb einschläfern müssen. Das Jungtier konnte nach der Geburt seine Hinterbeine nicht belasten und trotz intensiver Betreuung nicht selbstständig aufstehen",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Drama im Elefantenpark: Zoo Zürich schläfert Elefantenbaby kurz nach Geburt ein",
+      "url": "https://www.tagesanzeiger.ch/zoo-zuerich-elefantenbaby-einen-tag-nach-geburt-eingeschlaefert-859660543506",
+      "summary": "Das männliche Jungtier konnte seine Hinterbeine nicht belasten. Der Zoo entschied sich im Sinne des Tierwohls zur Euthanasie.",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Folgen des Capitol-Sturms: Warum Trump seinen eigenen Entschädigungsfonds fallen lassen muss",
+      "url": "https://www.tagesanzeiger.ch/trump-entschaedigungsfonds-regierung-gibt-nach-kritik-auf-125343709962",
+      "summary": "Kritiker befürchteten, dass Steuergelder an verurteilte Capitol-Stürmer fliessen könnten. Nun zwingt der Widerstand aus den eigenen Reihen die US-Regierung zum Rückzug.",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "French Open: Das Märchen der polnischen Qualifikantin geht weiter",
+      "url": "https://www.tagesanzeiger.ch/french-open-chwalinska-gewinnt-fuenf-spiele-im-haupttableau-844332970787",
+      "summary": "Maja Chwalinska gewinnt in Roland Garros auch im Viertelfinal. Ihre Halbfinal-Gegnerin ist wohl die Weltnummer 1 Aryna Sabalenka.",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "French Open: Das Märchen der polnischen Qualifikantin geht weiter",
+      "url": "https://www.bernerzeitung.ch/french-open-chwalinska-gewinnt-fuenf-spiele-im-haupttableau-844332970787",
+      "summary": "Maja Chwalinska gewinnt in Roland Garros auch im Viertelfinal. Ihre Halbfinal-Gegnerin ist wohl die Weltnummer 1 Aryna Sabalenka.",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Folgen des Capitol-Sturms: Warum Trump seinen eigenen Entschädigungsfonds fallen lassen muss",
+      "url": "https://www.bernerzeitung.ch/trump-entschaedigungsfonds-regierung-gibt-nach-kritik-auf-125343709962",
+      "summary": "Kritiker befürchteten, dass Steuergelder an verurteilte Capitol-Stürmer fliessen könnten. Nun zwingt der Widerstand aus den eigenen Reihen die US-Regierung zum Rückzug.",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Streik legt fast ganz Portugal lahm",
+      "url": "https://www.zentralplus.ch/news/generalstreik-legt-portugal-lahm-2875574/",
+      "summary": "In weiten Teilen von Portugal ist wegen eines Generalstreiks das öffentliche Leben lahmgelegt. Hunderte Flüge fallen am Mittwoch aus, Züge stehen still, Schulen bleiben wegen Personalmangels geschloss",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Finews",
+      "title": "Vermögensverwaltung im Umbruch: Welche Rolle die Banken spielen",
+      "url": "https://www.finews.ch/news/banken/72425-finance-circle-unabhaengige-vermoegensverwalte-zuercher-finanzplatz-alain-gallati-michel-yigit",
+      "summary": "Am 8. Juni 2026 lädt der «Finance Circle» zur Diskussion über die strategische Bedeutung der unabhängigen Vermögensverwalter für den Zürcher Finanzplatz ein. Vorab ordnen Alain Gallati (Pictet) und Mi",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Finews",
+      "title": "Riad Sherif: «Als ausgebildeter Arzt ist es meine Motivation, Patienten wirklich zu helfen»",
+      "url": "https://www.finews.ch/news/finanzplatz/72418-riad-sherif-als-ausgebildeter-arzt-ist-es-meine-groesste-motivation-patienten-wirklich-zu-helfen-ceo-oculis",
+      "summary": "Er befasst sich jeden Tag mit einer Vielfalt an Themen und schätzt die Möglichkeit, das Leben von Patienten zu verbessern. Im Interview spricht Raid Sherif, CEO von Oculis, über aktuelle Projekte und ",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Zoo Zürich verliert zum achten Mal seit 2020 einen jungen Elefanten: Neugeborenes wurde eingeschläfert",
+      "url": "https://www.nzz.ch/zuerich/zoo-zuerich-verliert-zum-achten-mal-seit-2020-einen-jungen-elefanten-neugeborenes-wurde-eingeschlaefert-ld.10009690",
+      "summary": "",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Ein grosser Trainer für eine grosse Mannschaft: Der ehemalige Stanley-Cup-Sieger Claude Julien übernimmt die ZSC Lions",
+      "url": "https://www.nzz.ch/sport/ein-grosser-trainer-fuer-eine-grosse-mannschaft-der-ehemalige-stanley-cup-sieger-claude-julien-uebernimmt-die-zsc-lions-ld.10009679",
+      "summary": "",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Taucher finden antike Holzpfähle in der Aare bei Solothurn",
+      "url": "https://www.watson.ch/wissen/schweiz/398421464-taucher-finden-antike-holzpfaehle-in-der-aare-bei-solothurn",
+      "summary": "",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Ehemalige DDR-Militärstation Ostervilm Insel zur Auktion in Hamburg",
+      "url": "https://www.watson.ch/leben/deutschland/569847886-ehemalige-ddr-militaerstation-ostervilm-insel-zur-auktion-in-hamburg",
+      "summary": "",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Sportnews-Ticker: Sommer will im portugiesischen Fussball einsteigen",
+      "url": "https://www.watson.ch/sport/sport-news/195933263-sportnews-ticker-sommer-will-im-portugiesischen-fussball-einsteigen",
+      "summary": "",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Chat-Futter: Türkische Mannschaft wird an den Flughafen begleitet",
+      "url": "https://www.watson.ch/sport/chat-futter/148875477-chat-futter-tuerkische-mannschaft-wird-an-den-flughafen-begleitet",
+      "summary": "",
+      "published": "2026-06-03T11:30:53.616649+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026: Panini-Sticker sorgen in diesem Jahr für Rekordnachfrage",
+      "url": "https://www.watson.ch/sport/fussball/324297730-wm-2026-panini-sticker-sorgen-in-diesem-jahr-fuer-rekordnachfrage",
+      "summary": "",
+      "published": "2026-06-03T11:30:53.616649+00:00"
     }
   ]
 }
