@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T20:01:35.753125+00:00",
+  "generated": "2026-06-03T20:30:56.319885+00:00",
   "date": "2026-06-03",
-  "count": 629,
+  "count": 641,
   "articles": [
     {
       "source": "Blick",
@@ -4405,6 +4405,90 @@
       "url": "https://www.bilanz.ch/unternehmen/hongkong-ueberrundet-die-schweiz-im-finanzplatzranking/skw7jwt",
       "summary": "",
       "published": "2026-06-03T20:01:35.753125+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Gebäude im Dreispitz-Quartier brennt",
+      "url": "https://www.20min.ch/story/basel-gebaeude-im-dreispitz-quartier-brennt-103576675",
+      "summary": "An der Basler Münchensteinerstrasse ist ein Brand ausgebrochen. Ein grosses Aufgebot von Feuerwehrleuten ist mit der Bekämpfung der Flammen beschäftigt.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Hype um Eiweisse: Mehr Muskeln, leichter Abnehmen? Wie viel Protein wir wirklich brauchen",
+      "url": "https://www.tagesanzeiger.ch/eiweiss-wie-viel-protein-braucht-der-koerper-wirklich-366209347047",
+      "summary": "High-Protein-Brot, Skyr und Pouletaufschnitt: Lebensmittel mit extrahohem Eiweissgehalt liegen im Trend. Doch wo liegt die Obergrenze? Ernährungsberater geben Auskunft.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Proteinreich kochen: Mehr Eiweiss im Alltag: Diese Rezepte machen satt und stark",
+      "url": "https://www.tagesanzeiger.ch/eiweiss-diese-10-lebensmittel-liefern-viel-protein-833762033741",
+      "summary": "Linsen, Eier, Tofu oder Skyr: Proteinreiche Lebensmittel lassen sich einfach in die Alltagsküche integrieren. Welche Zutaten besonders sinnvoll sind – und wie daraus ein schnelles Znacht entsteht.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Feuer in Basel: Grossbrand im Dreispitz-Quartier – Münchensteinerstrasse gesperrt",
+      "url": "https://www.tagesanzeiger.ch/grossbrand-in-basel-dreispitz-quartier-betroffen-662055162611",
+      "summary": "In Basel kämpft die Feuerwehr gegen einen Grossbrand im Dreispitz-Quartier. Ob Personen verletzt wurden, ist noch unklar.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Stadt Zürich: Lernende bei der Stadt Zürich erhalten mehr Ferien",
+      "url": "https://www.tagesanzeiger.ch/zuerich-lernende-sollen-acht-wochen-ferien-erhalten-164778235949",
+      "summary": "Derzeit haben die 1400 Lernenden der Stadt fünf Wochen Ferien. Bald könnten es acht sein. Dies hat der Gemeinderat am Mittwoch entschieden.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Hype um Eiweisse: Mehr Muskeln, leichter Abnehmen? Wie viel Protein wir wirklich brauchen",
+      "url": "https://www.bernerzeitung.ch/eiweiss-wie-viel-protein-braucht-der-koerper-wirklich-366209347047",
+      "summary": "High-Protein-Brot, Skyr und Pouletaufschnitt: Lebensmittel mit extrahohem Eiweissgehalt liegen im Trend. Doch wo liegt die Obergrenze? Ernährungsberater geben Auskunft.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Proteinreich kochen: Mehr Eiweiss im Alltag: Diese Rezepte machen satt und stark",
+      "url": "https://www.bernerzeitung.ch/eiweiss-diese-10-lebensmittel-liefern-viel-protein-833762033741",
+      "summary": "Linsen, Eier, Tofu oder Skyr: Proteinreiche Lebensmittel lassen sich einfach in die Alltagsküche integrieren. Welche Zutaten besonders sinnvoll sind – und wie daraus ein schnelles Znacht entsteht.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Stadt Zürich: Lernende bei der Stadt Zürich erhalten mehr Ferien",
+      "url": "https://www.bernerzeitung.ch/zuerich-lernende-sollen-acht-wochen-ferien-erhalten-164778235949",
+      "summary": "Derzeit haben die 1400 Lernenden der Stadt fünf Wochen Ferien. Bald könnten es acht sein. Dies hat der Gemeinderat am Mittwoch entschieden.",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Trump will zu G7-Gipfel nach Frankreich reisen",
+      "url": "https://www.watson.ch/schweiz/international/231945669-trump-will-zu-g7-gipfel-nach-frankreich-reisen",
+      "summary": "",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Schweizer Journalisten gewinnen den «Migration Journalism Award»",
+      "url": "https://www.watson.ch/schweiz/medien/523583131-schweizer-journalisten-gewinnen-den-migration-journalism-award",
+      "summary": "",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Lernende bei der Stadt Zürich erhalten mehr Ferien",
+      "url": "https://www.watson.ch/wirtschaft/schweiz/355416665-lernende-bei-der-stadt-zuerich-erhalten-mehr-ferien",
+      "summary": "",
+      "published": "2026-06-03T20:30:56.319885+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Flightright-Index 2026: Das sind die schlechtesten Airlines in Europa",
+      "url": "https://www.watson.ch/wirtschaft/international/899843949-flightright-index-2026-das-sind-die-schlechtesten-airlines-in-europa",
+      "summary": "",
+      "published": "2026-06-03T20:30:56.319885+00:00"
     }
   ]
 }
