@@ -1,0 +1,16 @@
+name = "swissnews-cron"
+main = "src/worker.js"
+compatibility_date = "2024-11-01"
+
+# Reliable hourly trigger (Cloudflare cron, unlike GitHub's best-effort schedule).
+[triggers]
+crons = ["0 * * * *"]
+
+[vars]
+OWNER = "yourname"        # GitHub user/org
+REPO = "swissnews"
+WORKFLOW = "crawl.yml"    # workflow filename in .github/workflows/
+REF = "main"              # branch to run on
+
+# Secret (NOT here): set with `wrangler secret put GITHUB_TOKEN`
+# Fine-grained PAT, repo = swissnews, permission: Actions = Read and write.
