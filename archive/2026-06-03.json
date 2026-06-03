@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T09:43:01.567199+00:00",
+  "generated": "2026-06-03T10:01:01.261999+00:00",
   "date": "2026-06-03",
-  "count": 211,
+  "count": 222,
   "articles": [
     {
       "source": "Blick",
@@ -1479,6 +1479,83 @@
       "url": "https://www.infosperber.ch/freiheit-recht/menschenrechte/deutschlands-gesunkene-chancen-auf-einen-sitz-im-sicherheitsrat/",
       "summary": "",
       "published": "2026-06-03T09:43:01.567199+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Fragwürdiges Modell – Kundinnen und Kunden von Pfando fühlen sich irregeführt",
+      "url": "https://www.srf.ch/sendungen/kassensturz-espresso/kassensturz/fragwuerdiges-modell-kundinnen-und-kunden-von-pfando-fuehlen-sich-irregefuehrt",
+      "summary": "«Besser als ein Autopfandhaus» – so wirbt Pfando. Kunden sagen: mit dieser Firma wollen sie nie mehr zu tun haben.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "«Woher nehmen wir dann das Geld für die AHV?»",
+      "url": "https://www.20min.ch/story/begrenzte-zuwanderung-woher-nehmen-wir-dann-das-geld-fuer-die-ahv-103574376",
+      "summary": "Braucht die AHV ewige Zuwanderung oder ist eine Begrenzung der Bevölkerungszahl gut für die Rente? Zwei AHV-Experten sprechen über die 10-Millionen-Initiative.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Bei der Sardinenjagd: Wal verschluckt beinahe einen Taucher",
+      "url": "https://www.20min.ch/video/suedafrika-bei-der-sardinenjagd-wal-verschluckt-beinahe-einen-taucher-103576006",
+      "summary": "Zwei Taucher filmten vor der Küste Südafrikas einen Sardinenschwarm. Doch sie sind nicht die einzigen, die es auf die Fische abgesehen hatten. Ein Brydewal wollte so viele Sardinen wie möglich schnapp",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Nach Kritik an Chefredaktorin – CBS-Moderator Pelley muss gehen",
+      "url": "https://www.20min.ch/story/machtkampf-nach-kritik-an-chefredaktorin-cbs-moderator-pelley-muss-gehen-103576226",
+      "summary": "Scott Pelley warf der CBS-Chefredaktorin vor, «60 Minutes» zu zerstören. Kurz darauf wurde er entlassen.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Kahlschlag im US-Fernsehen: CBS entlässt «60 Minutes»-Urgestein Scott Pelley nach Streit",
+      "url": "https://www.tagesanzeiger.ch/scott-pelley-cbs-feuert-60-minutes-korrespondent-980928984204",
+      "summary": "Scott Pelley warf Senderchefin Bari Weiss vor, die Nachrichtensendung «60 Minutes» zu «ermorden». Nun hat er seinen Job verloren.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Kahlschlag im US-Fernsehen: CBS entlässt «60 Minutes»-Urgestein Scott Pelley nach Streit",
+      "url": "https://www.bernerzeitung.ch/scott-pelley-cbs-feuert-60-minutes-korrespondent-980928984204",
+      "summary": "Scott Pelley warf Senderchefin Bari Weiss vor, die Nachrichtensendung «60 Minutes» zu «ermorden». Nun hat er seinen Job verloren.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Tote bei Gebäudebrand in Indien",
+      "url": "https://www.zentralplus.ch/news/tote-bei-gebaeudebrand-in-indien-2875551/",
+      "summary": "In der indischen Hauptstadt Neu-Delhi hat ein mehrstöckiges Gebäude gebrannt. Dabei sind mindestens 21 Personen gestorben. Rund 40 Personen seien aus dem Haus gerettet und in Spitäler gebracht worden,",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "Netzwoche",
+      "title": "Verein lanciert Initiative für mehr digitale Sicherheit in der Schweiz",
+      "url": "https://www.netzwoche.ch/news/2026-06-03/verein-lanciert-initiative-fuer-mehr-digitale-sicherheit-in-der-schweiz",
+      "summary": "Der Verein \"Swiss Digital Pact\" lanciert eine Volksinitiative für mehr digitale Sicherheit in der Schweiz. Der Bund soll die digitale Sicherheit als Staatsaufgabe in der Bundesverfassung verankern.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "Inside IT",
+      "title": "Neuer Managing Director bei Detecon Schweiz",
+      "url": "https://www.inside-it.ch/neuer-managing-director-bei-detecon-schweiz-20260603",
+      "summary": "Als neuer Managing Director von Detecon Schweiz übernimmt Rajesh Nair auch die Verantwortung für Österreich. Er folgt auf Ralf Helbig, der Detecon als Partner erhalten bleibt.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "Inside IT",
+      "title": "Netrics beruft Chief Market Officer",
+      "url": "https://www.inside-it.ch/netrics-beruft-chief-market-officer-20260603",
+      "summary": "Pascal Kaeser übernimmt per 1. Juni 2026 die neu geschaffene Position des Chief Market Officer und tritt in die Geschäftsleitung ein.",
+      "published": "2026-06-03T10:01:01.261999+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Bitcoin-Preis sinkt: Warum Bitcoin einen Ausverkauf hinter sich hat",
+      "url": "https://www.watson.ch/wirtschaft/kryptowaehrungen/119839447-bitcoin-preis-sinkt-warum-bitcoin-einen-ausverkauf-hinter-sich-hat",
+      "summary": "",
+      "published": "2026-06-03T10:01:01.261999+00:00"
     }
   ]
 }
