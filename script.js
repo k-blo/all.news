@@ -44,13 +44,27 @@ function ts(a) {
   return isNaN(d) ? 0 : d.getTime();
 }
 
+// Preferred source order; listed sources rank first (in this order), rest after.
+const SOURCE_PRIORITY = [
+  "Inside Paradeplatz",
+  "Infosperber",
+  "Republik",
+  "NZZ",
+  "Tages-Anzeiger",
+];
+function prio(a) {
+  const i = SOURCE_PRIORITY.indexOf(a.source);
+  return i === -1 ? SOURCE_PRIORITY.length : i;
+}
+
 function sortArticles(articles, mode) {
   const out = articles.slice();
   if (mode === "source") {
     out.sort((a, b) =>
       a.source.localeCompare(b.source) || ts(b) - ts(a));
   } else {
-    out.sort((a, b) => ts(b) - ts(a)); // newest first
+    // newest first, then by custom source preference within the same timestamp
+    out.sort((a, b) => ts(b) - ts(a) || prio(a) - prio(b));
   }
   return out;
 }
