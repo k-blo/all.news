@@ -44,11 +44,14 @@ function ts(a) {
   return isNaN(d) ? 0 : d.getTime();
 }
 
-// Preferred source order; listed sources rank first (in this order), rest after.
+// Preferred source order; listed sources rank first (in this order), rest after. Prioritize sources with fewer updates for fairer visibility.
 const SOURCE_PRIORITY = [
   "Inside Paradeplatz",
   "Infosperber",
+  "Inside IT",
+  "Bilanz",
   "Republik",
+  "Weltwoche",
   "NZZ",
   "Tages-Anzeiger",
 ];
