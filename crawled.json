@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T16:30:59.012062+00:00",
+  "generated": "2026-06-03T17:01:07.767401+00:00",
   "date": "2026-06-03",
-  "count": 491,
+  "count": 506,
   "articles": [
     {
       "source": "Blick",
@@ -3439,6 +3439,111 @@
       "url": "https://www.nzz.ch/der-andere-blick/deutschland-muss-mit-dem-asylpakt-beweisen-dass-der-staat-aus-2015-gelernt-hat-ld.10009675",
       "summary": "",
       "published": "2026-06-03T16:30:59.012062+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Ausstellung zu Isao Takahata – Der Mann, der «Heidi» nach Japan brachte",
+      "url": "https://www.srf.ch/kultur/film-serien/ausstellung-zu-isao-takahata-der-mann-der-heidi-nach-japan-brachte",
+      "summary": "Eine Ausstellung in Lausanne über das Schaffen des Animationsfilmemachers Isao Takahata ist ein Fest fürs Auge.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Sex im TV, aber bei der Familie müssen sie getrennt schlafen",
+      "url": "https://www.20min.ch/story/umut-tekin-und-lena-goldstein-getrennt-schlafen-bei-tuerkischer-familie-103576323",
+      "summary": "Umut Tekin hat seine Freundin Lena mit zu seiner Familie in die Türkei genommen. Da das Paar nicht verheiratet ist, müssen sie getrennt schlafen.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Nach Blitzeinschlag: Vollbrand zerstört Gebäude",
+      "url": "https://www.20min.ch/story/niederglatt-sg-nach-blitzeinschlag-vollbrand-zerstoert-gebaeude-103576209",
+      "summary": "In Niederglatt ist am Dienstagabend ein leerstehendes Gebäude vollständig in Brand geraten. Mögliche Brandursache ist ein Blitzeinschlag – verletzt wurde niemand.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Viertelfinal-Aus in Roland Garros: Sabalenka geschockt: «Will am liebsten sofort mit Tennis aufhören»",
+      "url": "https://www.tagesanzeiger.ch/french-open-sabalenka-von-viertelfinal-aus-geschockt-443651373955",
+      "summary": "Die Weltranglistenerste verliert gegen Diana Schnaider trotz 5:3-Führung im zweiten Satz noch. Gegen den Frust will sie einen «Rage Room» aufsuchen und alles kurz und klein schlagen.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Streit um Freihandels­abkommen: «Erpressung», «schamlos», «neuer Tiefpunkt»: Bauern fordern 880 Millionen für Mercosur-Deal",
+      "url": "https://www.tagesanzeiger.ch/mercosur-abkommen-bauernverband-fordert-880-millionen-franken-555437204995",
+      "summary": "Bauernpräsident Markus Ritter macht seine Zu­stimmung von massiven Sub­ventionen abhängig. Wirtschafts­nahe Parteien sind entsetzt. Auch die Linke stellt nun Forderungen auf. Ist der Deal noch zu rett",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Häusliche Gewalt: Liebe SVP, bei den Opfern spart man nicht",
+      "url": "https://www.tagesanzeiger.ch/frauenhaeuser-svp-nennt-schutz-fuer-opfer-zu-teuer-559420655018",
+      "summary": "Der Nationalrat stimmt zu, dass die Kantone mehr Frauenhäuser bereitstellen müssen. Die SVP war aus Kostengründen dagegen – ein Hohn für misshandelte Frauen.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Social-Media-Verbot in Australien: «Viele halten sich nicht daran, aus Angst, nicht mehr beliebt zu sein»",
+      "url": "https://www.tagesanzeiger.ch/social-media-verbot-wie-australiens-teenager-es-umgehen-364573710419",
+      "summary": "Australien führte als erstes Land ein Social Media Verbot für unter 16-Jährige ein. Drei Teenager erzählen, wie sich ihr Leben dadurch verändert hat. Und wie die Sperren einfach umgangen werden.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Viertelfinal-Aus in Roland Garros: Sabalenka geschockt: «Will am liebsten sofort mit Tennis aufhören»",
+      "url": "https://www.bernerzeitung.ch/french-open-sabalenka-von-viertelfinal-aus-geschockt-443651373955",
+      "summary": "Die Weltranglistenerste verliert gegen Diana Schnaider trotz 5:3-Führung im zweiten Satz noch. Gegen den Frust will sie einen «Rage Room» aufsuchen und alles kurz und klein schlagen.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Streit um Freihandels­abkommen: «Erpressung», «schamlos», «neuer Tiefpunkt»: Bauern fordern 880 Millionen für Mercosur-Deal",
+      "url": "https://www.bernerzeitung.ch/mercosur-abkommen-bauernverband-fordert-880-millionen-franken-555437204995",
+      "summary": "Bauernpräsident Markus Ritter macht seine Zu­stimmung von massiven Sub­ventionen abhängig. Wirtschafts­nahe Parteien sind entsetzt. Auch die Linke stellt nun Forderungen auf. Ist der Deal noch zu rett",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Häusliche Gewalt: Liebe SVP, bei den Opfern spart man nicht",
+      "url": "https://www.bernerzeitung.ch/frauenhaeuser-svp-nennt-schutz-fuer-opfer-zu-teuer-559420655018",
+      "summary": "Der Nationalrat stimmt zu, dass die Kantone mehr Frauenhäuser bereitstellen müssen. Die SVP war aus Kostengründen dagegen – ein Hohn für misshandelte Frauen.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Social-Media-Verbot in Australien: «Viele halten sich nicht daran, aus Angst, nicht mehr beliebt zu sein»",
+      "url": "https://www.bernerzeitung.ch/social-media-verbot-wie-australiens-teenager-es-umgehen-364573710419",
+      "summary": "Australien führte als erstes Land ein Social Media Verbot für unter 16-Jährige ein. Drei Teenager erzählen, wie sich ihr Leben dadurch verändert hat. Und wie die Sperren einfach umgangen werden.",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Neue Mitglieder im UNO-Sicherheitsrat",
+      "url": "https://www.zentralplus.ch/news/neue-mitglieder-im-uno-sicherheitsrat-3-2875740/",
+      "summary": "Der UNO-Sicherheitsrat hat ab dem nächsten Jahr vier neue Mitglieder. Portugal, Österreich, Trinidad und Tobago und Simbabwe sind von der UNO-Generalsversammlung für zwei Jahre gewählt worden. Verpass",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Mehr Kompetenzen für den NDB",
+      "url": "https://www.zentralplus.ch/news/mehr-kompetenzen-fuer-den-ndb-2875739/",
+      "summary": "Überwachungsmassnahmen wie das Abhören von Telefongesprächen sollen künftig auch im Kampf gegen gewalttätigen Extremismus möglich sein. Das will der Nationalrat. Bisher sind solche Massnahmen nur dann",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Der Gemeindepräsident von Crans-Montana lässt bitten und zeigt wenig Einsicht",
+      "url": "https://www.nzz.ch/schweiz/der-gemeindepraesident-von-crans-montana-laesst-bitten-und-zeigt-wenig-einsicht-ld.10009752",
+      "summary": "",
+      "published": "2026-06-03T17:01:07.767401+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "KOMMENTAR - Mord an Henry Nowak: Die britische Polizei hat sich ideologisch verwirrt und handelt rassistisch",
+      "url": "https://www.nzz.ch/meinung/mord-an-henry-nowak-die-britische-polizei-hat-sich-ideologisch-verwirrt-und-handelt-rassistisch-ld.10009697",
+      "summary": "",
+      "published": "2026-06-03T17:01:07.767401+00:00"
     }
   ]
 }
