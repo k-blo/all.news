@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T21:01:03.557813+00:00",
+  "generated": "2026-06-03T21:31:18.201808+00:00",
   "date": "2026-06-03",
-  "count": 643,
+  "count": 644,
   "articles": [
     {
       "source": "Blick",
@@ -4503,6 +4503,13 @@
       "url": "https://www.watson.ch/schweiz/basel/470857595-ein-grosseinsatz-von-polizei-und-feuerwehr",
       "summary": "",
       "published": "2026-06-03T21:01:03.557813+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Gespräche zwischen USA und Iran laufen",
+      "url": "https://www.zentralplus.ch/news/gespraeche-zwischen-usa-und-iran-laufen-2875767/",
+      "summary": "Nachdem iranische Medien Anfang Woche zunächst den Abbruch der Gespräche mit den USA gemeldet hatten, sagt der iranische Aussenminister Abbas Araghchi nun Gegenteiliges. Der Kontakt zwischen den beide",
+      "published": "2026-06-03T21:31:18.201808+00:00"
     }
   ]
 }
