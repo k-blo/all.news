@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T19:31:01.006523+00:00",
+  "generated": "2026-06-03T20:01:35.753125+00:00",
   "date": "2026-06-03",
-  "count": 627,
+  "count": 629,
   "articles": [
     {
       "source": "Blick",
@@ -4391,6 +4391,20 @@
       "url": "https://www.watson.ch/international/usa/621641499-deutschland-scheitert-bei-wahl-zu-un-sicherheitsrat",
       "summary": "",
       "published": "2026-06-03T19:31:01.006523+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Brandkatastrophe Crans-Montana – Gemeindepräsident Féraud bricht sein Schweigen",
+      "url": "https://www.srf.ch/news/schweiz/brandkatastrophe-crans-montana-gemeindepraesident-feraud-bricht-sein-schweigen",
+      "summary": "Zum ersten Mal seit Ende Januar äussert sich Nicolas Féraud wieder öffentlich.",
+      "published": "2026-06-03T20:01:35.753125+00:00"
+    },
+    {
+      "source": "Bilanz",
+      "title": "Hongkong Überrundet die Schweiz im Finanzplatzranking",
+      "url": "https://www.bilanz.ch/unternehmen/hongkong-ueberrundet-die-schweiz-im-finanzplatzranking/skw7jwt",
+      "summary": "",
+      "published": "2026-06-03T20:01:35.753125+00:00"
     }
   ]
 }
