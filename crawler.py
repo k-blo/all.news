@@ -142,7 +142,7 @@ def archive_dates():
     """Sorted (newest first) list of archived crawl dates."""
     names = os.listdir(ARCHIVE_DIR)
     dates = [n[:-5] for n in names
-             if n.endswith(".json") and n not in ("seen.json", "index.json")]
+             if n.endswith(".json") and n not in ("seen.json", "index.json", "http_cache.json")]
     return sorted(dates, reverse=True)
 
 

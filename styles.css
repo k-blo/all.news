@@ -3,8 +3,9 @@ body {
   margin: 1rem;
   padding: 0;
 }
+h1 { font-size: 1.0rem; margin: 0 0 0.5rem; }
 #meta { color: #666; font-size: 0.85rem; }
-#controls { font-size: 0.85rem; margin-bottom: 1rem; }
+#controls { font-size: 0.75rem; margin-bottom: 1rem; }
 #controls label { margin-right: 0.5rem; }
 #excludeBox { margin-top: 0.5rem; }
 #excludeBox summary { cursor: pointer; }
