@@ -69,10 +69,28 @@ function sortArticles(articles, mode) {
   return out;
 }
 
+// Excluded sources (lowercased), persisted in the URL: ?exclude=blick,watson
+const excluded = new Set(
+  (new URLSearchParams(location.search).get("exclude") || "")
+    .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
+);
+
+function isExcluded(a) {
+  return excluded.has(a.source.toLowerCase());
+}
+
+function syncUrl() {
+  const params = new URLSearchParams(location.search);
+  if (excluded.size) params.set("exclude", [...excluded].join(","));
+  else params.delete("exclude");
+  const qs = params.toString();
+  history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
+}
+
 function render(articles, mode) {
   const list = document.getElementById("list");
   list.innerHTML = "";
-  for (const a of sortArticles(articles, mode)) {
+  for (const a of sortArticles(articles, mode).filter((a) => !isExcluded(a))) {
     const li = document.createElement("li");
 
     const link = document.createElement("a");
@@ -113,6 +131,27 @@ function sortMode() {
 
 let current = [];
 
+function buildFilters(articles) {
+  const box = document.getElementById("filters");
+  box.innerHTML = "";
+  const sources = [...new Set(articles.map((a) => a.source))].sort();
+  for (const s of sources) {
+    const label = document.createElement("label");
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = excluded.has(s.toLowerCase());
+    cb.addEventListener("change", () => {
+      if (cb.checked) excluded.add(s.toLowerCase());
+      else excluded.delete(s.toLowerCase());
+      syncUrl();
+      render(current, sortMode());
+    });
+    label.appendChild(cb);
+    label.append(" " + s);
+    box.appendChild(label);
+  }
+}
+
 function load(url) {
   meta.textContent = "loading…";
   fetch(url)
@@ -121,6 +160,7 @@ function load(url) {
       current = data.articles;
       meta.textContent =
         `${data.count} articles · ${data.date || ""} · updated ${fmtDate(data.generated)}`;
+      buildFilters(current);
       render(current, sortMode());
     })
     .catch((e) => { meta.textContent = "failed to load " + url + ": " + e; });

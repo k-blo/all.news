@@ -6,6 +6,10 @@ body {
 #meta { color: #666; font-size: 0.85rem; }
 #controls { font-size: 0.85rem; margin-bottom: 1rem; }
 #controls label { margin-right: 0.5rem; }
+#excludeBox { margin-top: 0.5rem; }
+#excludeBox summary { cursor: pointer; }
+#filters { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: 0.4rem; }
+#filters label { white-space: nowrap; }
 ul { list-style: none; padding: 0; margin: 0; }
 li { margin-bottom: 0.8rem; }
 a { color: #000; }
