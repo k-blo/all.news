@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T00:01:55.680709+00:00",
+  "generated": "2026-06-03T05:14:34.946291+00:00",
   "date": "2026-06-03",
-  "count": 6,
+  "count": 87,
   "articles": [
     {
       "source": "Blick",
@@ -44,6 +44,573 @@
       "url": "https://weltwoche.ch/story/ersticken-in-der-geldschwemme/",
       "summary": "",
       "published": "2026-06-03T00:01:55.680709+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Brandkatastrophe – Vater von Crans-Montana-Opfer: «Wahrheit muss ans Licht kommen»",
+      "url": "https://www.srf.ch/news/dialog/brandkatastrophe-vater-von-crans-montana-opfer-wahrheit-muss-ans-licht-kommen",
+      "summary": "Xavier Thévenots Sohn starb beim Brand von Crans-Montana. Nun fordert er die Beschuldigten auf, geradezustehen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Altersvorsorge – Wer finanziert künftig die 13. AHV-Rente?",
+      "url": "https://www.srf.ch/news/schweiz/altersvorsorge-wer-finanziert-kuenftig-die-13-ahv-rente",
+      "summary": "Das Parlament muss sich in der Session über eine mögliche Finanzierung für die 13. AHV-Rente einigen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "«NZZ»-KMU-Barometer – Schweizer KMU so pessimistisch wie lange nicht mehr",
+      "url": "https://www.srf.ch/news/schweiz/nzz-kmu-barometer-schweizer-kmu-so-pessimistisch-wie-lange-nicht-mehr",
+      "summary": "Das «NZZ»-KMU-Barometer zeigt: Kleine und mittlere Unternehmen blicken derzeit wenig zuversichtlich in die Zukunft.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "2. SRG-Umfrage auf einen Blick – Nein-Trend bei 10-Mio-Schweiz – Nägelkauen beim Zivildienstgesetz",
+      "url": "https://www.srf.ch/news/schweiz/2-srg-umfrage-auf-einen-blick-nein-trend-bei-10-mio-schweiz-naegelkauen-beim-zivildienstgesetz",
+      "summary": "Ende Mai wäre die Initiative «Keine 10-Mio-Schweiz» abgelehnt worden, beim Zivildienstgesetz hätte es ein Patt gegeben.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "2. SRG-Umfrage – Patt-Situation: Zivildienstgesetz büsst leichten Ja-Vorsprung ein",
+      "url": "https://www.srf.ch/news/schweiz/2-srg-umfrage-patt-situation-zivildienstgesetz-buesst-leichten-ja-vorsprung-ein",
+      "summary": "Die Gesetzesvorlage ist von einer Nein-Dynamik erfasst worden, obwohl die Pro-Argumente weiter überzeugen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "2. SRG-Umfrage – «Keine 10-Mio-Schweiz» kippt ins Nein – 52 Prozent dagegen",
+      "url": "https://www.srf.ch/news/schweiz/2-srg-umfrage-keine-10-mio-schweiz-kippt-ins-nein-52-prozent-dagegen",
+      "summary": "Die Pro-Argumente verfangen zwar weiterhin, aber die Nein-Seite bestimmt laut GFS Bern zunehmend die Debatte.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Blick",
+      "title": "«Alle rufen ihre Chefs an, sagen Meetings ab»: Zug blockierte Strecke bei Stettbach ZH – mitten im Pendler-Verkehr",
+      "url": "https://www.blick.ch/schweiz/alle-rufen-ihre-chefs-an-sagen-meetings-ab-zug-blockierte-strecke-bei-stettbach-zh-mitten-im-pendler-verkehr-id21997994.html",
+      "summary": "Am Mittwochmorgen melden die SBB, dass der Verkehr im Bahnhof Stettbach eingeschränkt ist – ein Zug blockiert die Strecke. Besonders ärgerlich für die vielen Pendler.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Blick",
+      "title": "Zweite Sperrung nach Murgang am Sonntag: Axenstrasse nach Felssturz gesperrt",
+      "url": "https://www.blick.ch/schweiz/zentralschweiz/uri/zweite-sperrung-nach-murgang-am-sonntag-axenstrasse-nach-felssturz-gesperrt-id21998293.html",
+      "summary": "Nach einem nächtlichen Felssturz ist die Axenstrasse zwischen Flüelen UR und Sisikon UR seit 3.30 Uhr gesperrt. Gesteinsmassen blockieren die wichtige A4-Verbindung, Verkehrsteilnehmende sollen das Ge",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Frauen und Junge jetzt dagegen: Letzte Umfrage zeigt Nein-Trend",
+      "url": "https://www.20min.ch/story/abstimmungs-umfrage-10-millionen-initiative-zivilschutz-knappes-nein-103575755",
+      "summary": "Nachdem die erste Abstimmungsumfrage ein Ja zur «Nachhaltigkeitsinitiative» der SVP voraussagte, hat der Wind in der zweiten Umfragewelle gedreht. Das Anliegen wird nun von einer knappen Mehrheit abge",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Umfrage-Knall: SVP-Dettling und SP-Meyer reagieren auf Nein-Trend",
+      "url": "https://www.20min.ch/story/10-millionen-schweiz-umfrage-knall-svp-dettling-und-sp-meyer-reagieren-auf-nein-trend-103575848",
+      "summary": "Die letzte Umfrage deutet auf ein Nein zur «Keine-10-Millionen-Schweiz»-Initiative. SVP-Präsident Marcel Dettling bleibt optimistisch, während sich die Chefs von SP, FDP und Mitte siegessicher geben.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Warum ist diese Ampel allen egal?",
+      "url": "https://www.20min.ch/story/berner-bahnhof-warum-ist-diese-ampel-allen-egal-103575733",
+      "summary": "An einer Kreuzung in der Nähe des Bahnhofs Bern halten sich viele nicht an die rote Ampel. Sie erklären, warum sie trotzdem loslaufen. Gemäss Polizei kann das eine Busse geben.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Janosch spricht erstmals über Trennung: «Keine Schlammschlacht»",
+      "url": "https://www.20min.ch/story/ex-bachelor-janosch-spricht-erstmals-ueber-trennung-keine-schlammschlacht-103575822",
+      "summary": "Janosch Nietlispach spricht im Interview über seinen neuen Lebensabschnitt seit der Trennung von Alina. Er fokussiert sich auf seine Papi-Rolle.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Bub hält mutig die Tür offen und rettet Mädchen vor Entführer",
+      "url": "https://www.20min.ch/video/russland-er-haelt-mutig-die-tuer-offen-bub-rettet-maedchen-vor-entfuehrer-103576002",
+      "summary": "In der russischen Stadt Tjumen versuchte ein 44-jähriger Mann, ein fünfjähriges Mädchen in ein Treppenhaus zu schleppen. Zum Glück blieb die Tat nicht unbemerkt: Ein Bube rannte dem Mann nach und konn",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Verletzt, Abstieg, Model: Wie geht es mit Alisha Lehmann weiter?",
+      "url": "https://www.20min.ch/story/ungewisse-zukunft-verletzt-abstieg-model-wie-geht-es-mit-alisha-lehmann-weiter-103570874",
+      "summary": "Alisha Lehmann fehlt der Nati erneut. Sportlich steht sie vor sehr wichtigen Monaten – abseits des Platzes bleibt sie aber gefragt.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "«Günstiger als Ehering»: Momo und Anja tragen ein Hochzeitstattoo",
+      "url": "https://www.20min.ch/story/tattoo-statt-ehering-schweizer-paare-taetowieren-sich-den-ringfinger-103575948",
+      "summary": "Im besten Fall steht ein Ehering für ein lebenslanges Versprechen. Junge Paare treiben es eine Stufe weiter und tätowieren sich das Schmuckstück. Schweizer Tätowierer und Paare berichten.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Finalrunde: Wähle die beste Werbung der letzten 50 Jahre!",
+      "url": "https://www.20min.ch/story/finalrunde-die-beste-schweizer-werbung-der-letzten-50-jahre-stimme-ab-103575525",
+      "summary": "Die Werbeprofis vom ADC stehen seit 50 Jahren für beste Schweizer Werbung. In der grossen Finalrunde wollen wir von dir wissen: Welche ist deine persönliche Schweizer Lieblingswerbung der letzten fünf",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Koffeinbomben: Diese Energydrinks sind illegal stark",
+      "url": "https://www.20min.ch/story/srf-recherche-koffeinbomben-diese-energydrinks-sind-illegal-stark-103576089",
+      "summary": "Bei einer Untersuchung von knapp 30 Energydrinks hat der Sender bei fast einem Drittel zu viel Koffein festgestellt. Einzelne Behörden und Geschäfte handeln nun, andere nicht.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Zürcher Forscher heilen querschnittgelähmte Mäuse",
+      "url": "https://www.20min.ch/story/biohybride-mikroroboter-zuercher-forscher-heilen-querschnittgelaehmte-maeuse-103576068",
+      "summary": "Einem Forschungsteam der ETH Zürich und der Universität Zürich ist eine Sensation gelungen: Sie heilten gelähmte Mäuse und verletzte Zebrafische. Dies dank Mikrorobotern, die Stammzellen zur Schädigun",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Axenstrasse nach Erdrutsch gesperrt",
+      "url": "https://www.20min.ch/story/kanton-uri-axenstrasse-nach-erdrutsch-gesperrt-103576158",
+      "summary": "Die Axenstrasse im Kanton Uri ist zwischen Flüelen und Sisikon gesperrt. Es ist zu einem Fels- und Bergsturz gekommen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Zverev nach Sieg gegen Jungstar im Pariser Halbfinal",
+      "url": "https://www.20min.ch/story/french-open-zverev-nach-sieg-gegen-jungstar-jodar-im-pariser-halbfinal-103576154",
+      "summary": "Nur noch zwei Siege bis zum grossen Coup: Alexander Zverev zeigt im Viertelfinal von Paris einem aufsteigenden Spieler der neuen Generation klar die Grenzen auf. Boris Becker ist begeistert.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Umfrage zur Abstimmung vom 14. Juni: Der Wind dreht: Knappe Mehrheit will bei der 10-Millionen-Initiative Nein sagen",
+      "url": "https://www.tagesanzeiger.ch/10-millionen-schweiz-knappe-mehrheit-sagt-laut-umfrage-nein-352439023756",
+      "summary": "52 Prozent wollen die SVP-Vorlage ablehnen, 47 Prozent wollen sie annehmen. Die Frauen sagen nun mehrheitlich Nein, die Agglomerationen ebenfalls. Nun kommt es auf die Mobilisierung an.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Leerkündigung in Winterthur: «Ein Skandal»: 400 Menschen in Winterthur verlieren ihr Zuhause",
+      "url": "https://www.tagesanzeiger.ch/leerkuendigung-sulzer-kuendigt-400-mietern-in-winterthur-427004074130",
+      "summary": "Die Sulzer Vorsorgeeinrichtung hat allen ihren Mieterinnen und Mietern im Endliker-Quartier gekündigt. Nun hat sich der Mieterverband eingeschaltet.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Mentale Gesundheit: Elternsein belastet Schweizer stärker als Jobsorgen und Zukunft",
+      "url": "https://www.tagesanzeiger.ch/axa-studie-jeder-vierte-schweizer-leidet-psychisch-129881876967",
+      "summary": "Jeder vierte Erwachsene in der Schweiz leidet an einer psychischen Erkrankung. Eine Studie zeigt: Kindererziehung ist hierzulande der häufigste Belastungsfaktor – ein Sonderfall im globalen Vergleich.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Ausbau der Opferhilfe: Der Bundesrat will mehr Frauenhäuser – SVP befürchtet, dass sie zu «teuren Hotels mit Vollservice» werden",
+      "url": "https://www.tagesanzeiger.ch/opferhilfegesetz-nationalrat-debattiert-frauenhaus-pflicht-690110319232",
+      "summary": "Sollen die Kantone verpflichtet werden, Notunterkünfte zur Verfügung zu stellen? Ja, sagt die Landesregierung. Für SP-Nationalrätin Jessica Jaccoud ist die Opposition der SVP «ein Skandal».",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Bill Pulte: Der neue Geheimdienstchef verfolgt gerne Trumps Feinde",
+      "url": "https://www.tagesanzeiger.ch/bill-pulte-trump-ernennt-loyalen-anhaenger-zum-geheimdienstchef-875091597131",
+      "summary": "Donald Trump macht einen loyalen Anhänger ohne einschlägige Erfahrung zum obersten Chef der Nachrichtendienste. Aufgefallen ist Bill Pulte durch seinen Willen, dem Präsidenten auf seinem Rachefeldzug ",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Konferenz in St. Petersburg: Unter Spionen: AfD-Politiker folgen Putins Einladung nach Russland",
+      "url": "https://www.tagesanzeiger.ch/afd-markus-frohnmaier-tritt-mit-putin-vertrautem-auf-825236720069",
+      "summary": "Mehrere AfD-Politiker nehmen an einem russischen Wirtschafts­forum teil. Der Kreml nutzt die Besuche, um seine Botschaften ins Ausland zu tragen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Verlagerung auf Sekundarstufe?: Frühfranzösisch abzuschaffen, würde zu riesigem Aufwand führen",
+      "url": "https://www.tagesanzeiger.ch/franzoesischunterricht-was-eine-verschiebung-auf-sek-i-kostet-124613059690",
+      "summary": "Französisch auf Primarstufe ist politisch unter Druck geraten. Die Gegner scheinen sich jedoch der Konsequenzen ihrer Forderung zu wenig bewusst.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "«Apropos» – der tägliche Podcast: Liebesbeziehung am Bundesgericht: Warum ist das eigentlich ein Problem?",
+      "url": "https://www.tagesanzeiger.ch/bundesgericht-affaere-zwischen-richter-donzallaz-und-van-de-graaf-382066365652",
+      "summary": "Yves Donzallaz und Bundesrichterin Beatrice van de Graaf waren ein Paar – obwohl das Gesetz es verbietet. Der Fall zeigt auch, wie politisch die Arbeit des Bundesgerichts ist.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Amtszeitbeschränkung: Spitze der Zürcher SP prüft Sesselkleber-Klausel für Ständeräte",
+      "url": "https://www.tagesanzeiger.ch/zuercher-sp-prueft-amtszeitlimit-fuer-staenderaete-359841052173",
+      "summary": "Nach dem Eklat um Daniel Jositsch erwägt die Parteileitung eine neue Auflage für langjährige Ständeratsmitglieder. Bekannte Exponenten begrüssen das Vorgehen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Murat Yakin im Interview: «Falls die Steuerbehörden damit ein Problem haben, sollen sie zu mir kommen»",
+      "url": "https://www.tagesanzeiger.ch/murat-yakin-warum-er-als-nationaltrainer-ein-gambler-ist-981613011059",
+      "summary": "Der Nationaltrainer steht vor seiner zweiten WM. Wie ihm seine Mutter einst 10’000 Franken wegschnappte, worüber er mit Granit Xhaka bei einer Flasche Wein redet und welche Folgen ein heimlicher Coiff",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Auffälliger Bau in Rapperswil: Familie baut Haus nur aus Holz – ohne Leim, Schrauben und Isolationsmaterial",
+      "url": "https://www.tagesanzeiger.ch/generationenhaus-rapperswil-jona-vollholzbau-produziert-doppelt-so-viel-energie-592033972360",
+      "summary": "In Rapperswil-Jona steht ein Generationenhaus, dessen Wände aus 15 Lagen purem Holz bestehen. Das Energiekonzept sorgt in Fachkreisen für Aufsehen und wurde von ehemaligen Herzog & de Meuron-Architekt",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Massnahmen gegen Japankäfer: «Erhebliche Schäden an gepflegten Rasenflächen» – Widerstand gegen Bewässerungsverbot",
+      "url": "https://www.tagesanzeiger.ch/japankaefer-in-winkel-widerstand-gegen-bewaesserungsverbot-707774776025",
+      "summary": "Einige Betroffene aus Winkel wollen das Bewässerungsverbot für Rasenflächen lockern. Sie schlagen andere Massnahmen vor, um den Japankäfer zu bekämpfen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Strassensperrung im Kanton Uri: Axenstrasse nach Erdrutsch gesperrt",
+      "url": "https://www.tagesanzeiger.ch/felssturz-in-uri-axenstrasse-zwischen-flueelen-und-sisikon-gesperrt-725353710501",
+      "summary": "Die Axenstrasse im Kanton Uri ist zwischen Flüelen und Sisikon gesperrt. Es ist zu einem Fels- und Bergsturz gekommen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Fehlende Plätze in Psychiatrien: 400 Tage Gefängnis anstatt Therapie – jetzt muss der Kanton Bern 32’000 Franken Entschädigung zahlen",
+      "url": "https://www.bernerzeitung.ch/kanton-bern-muss-haeftling-32000-franken-genugtuung-zahlen-351220036024",
+      "summary": "Ein psychisch kranker Mann sass monatelang in Gefängnissen, obwohl ein Gutachten davor warnte. Das Gerichtsurteil könnte nun Signalwirkung haben.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Umfrage zur Abstimmung vom 14. Juni: Der Wind dreht: Knappe Mehrheit will bei der 10-Millionen-Initiative Nein sagen",
+      "url": "https://www.bernerzeitung.ch/10-millionen-schweiz-knappe-mehrheit-sagt-laut-umfrage-nein-352439023756",
+      "summary": "52 Prozent wollen die SVP-Vorlage ablehnen, 47 Prozent wollen sie annehmen. Die Frauen sagen nun mehrheitlich Nein, die Agglomerationen ebenfalls. Nun kommt es auf die Mobilisierung an.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Zwei Konzerte im Kultclub: Züri West: So leben die Songs im Mokka Thun weiter",
+      "url": "https://www.bernerzeitung.ch/mokka-thun-band-um-baze-laesst-geist-von-zueri-west-aufleben-423239554449",
+      "summary": "Züri West treten nie mehr live auf. Im August bringt die Band Chliine Brueder ein Medley der Berner Mundartlegenden zurück in den Mokka-Garten nach Thun.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Ausbau der Opferhilfe: Der Bundesrat will mehr Frauenhäuser – SVP befürchtet, dass sie zu «teuren Hotels mit Vollservice» werden",
+      "url": "https://www.bernerzeitung.ch/opferhilfegesetz-nationalrat-debattiert-frauenhaus-pflicht-690110319232",
+      "summary": "Sollen die Kantone verpflichtet werden, Notunterkünfte zur Verfügung zu stellen? Ja, sagt die Landesregierung. Für SP-Nationalrätin Jessica Jaccoud ist die Opposition der SVP «ein Skandal».",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Mentale Gesundheit: Elternsein belastet Schweizer stärker als Jobsorgen und Zukunft",
+      "url": "https://www.bernerzeitung.ch/axa-studie-jeder-vierte-schweizer-leidet-psychisch-129881876967",
+      "summary": "Jeder vierte Erwachsene in der Schweiz leidet an einer psychischen Erkrankung. Eine Studie zeigt: Kindererziehung ist hierzulande der häufigste Belastungsfaktor – ein Sonderfall im globalen Vergleich.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Gastrokritik Zähringer, Bern: Grossartige Gerichte mit Extra-Twist-Garantie – und zum Schluss gibts Saures",
+      "url": "https://www.bernerzeitung.ch/zaehringer-bern-gastrokritik-neue-crew-mit-kreativer-kueche-581178532375",
+      "summary": "Das junge Duo, das seit März im Zähringer in der Berner Matte wirtet, überzeugt mit kreativen Kombinationen, die nichts Angestrengtes haben.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Volksfest auf der Rankmatte: Der FC Langen­thal belohnt sich für die beste Saison seit 57 Jahren",
+      "url": "https://www.bernerzeitung.ch/fc-langenthal-aufstiegsspiele-nach-57-jahren-510003367203",
+      "summary": "Die Oberaargauer starten zu Hause gegen Tuggen in die Aufstiegs­spiele zur Promotion League: Nicht nur sportlich, auch stimmungs­mässig hofft der FCL auf einen unver­gesslichen Mittwoch­abend.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Murat Yakin im Interview: «Falls die Steuerbehörden damit ein Problem haben, sollen sie zu mir kommen»",
+      "url": "https://www.bernerzeitung.ch/murat-yakin-warum-er-als-nationaltrainer-ein-gambler-ist-981613011059",
+      "summary": "Der Nationaltrainer steht vor seiner zweiten WM. Wie ihm seine Mutter einst 10’000 Franken wegschnappte, worüber er mit Granit Xhaka bei einer Flasche Wein redet und welche Folgen ein heimlicher Coiff",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Bill Pulte: Der neue Geheimdienstchef verfolgt gerne Trumps Feinde",
+      "url": "https://www.bernerzeitung.ch/bill-pulte-trump-ernennt-loyalen-anhaenger-zum-geheimdienstchef-875091597131",
+      "summary": "Donald Trump macht einen loyalen Anhänger ohne einschlägige Erfahrung zum obersten Chef der Nachrichtendienste. Aufgefallen ist Bill Pulte durch seinen Willen, dem Präsidenten auf seinem Rachefeldzug ",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Verlagerung auf Sekundarstufe?: Frühfranzösisch abzuschaffen, würde zu riesigem Aufwand führen",
+      "url": "https://www.bernerzeitung.ch/franzoesischunterricht-was-eine-verschiebung-auf-sek-i-kostet-124613059690",
+      "summary": "Französisch auf Primarstufe ist politisch unter Druck geraten. Die Gegner scheinen sich jedoch der Konsequenzen ihrer Forderung zu wenig bewusst.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Konferenz in St. Petersburg: Unter Spionen: AfD-Politiker folgen Putins Einladung nach Russland",
+      "url": "https://www.bernerzeitung.ch/afd-markus-frohnmaier-tritt-mit-putin-vertrautem-auf-825236720069",
+      "summary": "Mehrere AfD-Politiker nehmen an einem russischen Wirtschafts­forum teil. Der Kreml nutzt die Besuche, um seine Botschaften ins Ausland zu tragen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Die grosse Übersicht: Vom Greenfield bis zum Openair am Bieler­see: Das hat der Berner Festival­sommer zu bieten",
+      "url": "https://www.bernerzeitung.ch/festivalsommer-2026-die-besten-open-airs-in-bern-951431586295",
+      "summary": "Gotthard, Lenny Kravitz, The Offspring: An Berner Openairs treten dieses Jahr nahmhafte Bands und Musiker auf. Wo man sie sehen kann – und wo es Konzerte im Klein­format gibt.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "«Apropos» – der tägliche Podcast: Liebesbeziehung am Bundesgericht: Warum ist das eigentlich ein Problem?",
+      "url": "https://www.bernerzeitung.ch/bundesgericht-affaere-zwischen-richter-donzallaz-und-van-de-graaf-382066365652",
+      "summary": "Yves Donzallaz und Bundesrichterin Beatrice van de Graaf waren ein Paar – obwohl das Gesetz es verbietet. Der Fall zeigt auch, wie politisch die Arbeit des Bundesgerichts ist.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Strassensperrung im Kanton Uri: Axenstrasse nach Erdrutsch gesperrt",
+      "url": "https://www.bernerzeitung.ch/felssturz-in-uri-axenstrasse-zwischen-flueelen-und-sisikon-gesperrt-725353710501",
+      "summary": "Die Axenstrasse im Kanton Uri ist zwischen Flüelen und Sisikon gesperrt. Es ist zu einem Fels- und Bergsturz gekommen.",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "So hat GFS Bern die Daten erhoben",
+      "url": "https://www.zentralplus.ch/news/so-hat-gfs-bern-die-daten-erhoben-5-2875416/",
+      "summary": "Für die zweite Trendumfrage zu den eidgenössischen Abstimmungen vom 14. Juni verwendete das Forschungsinstitut GFS Bern im Auftrag der SRG die Angaben von insgesamt 19&#8217;400 stimmberechtigten Pers",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Zivildienst: Patt bei Nein-Trend",
+      "url": "https://www.zentralplus.ch/news/zivildienst-patt-bei-nein-trend-2875415/",
+      "summary": "48 Prozent der teilnahmewilligen Stimmberechtigten hätten Ende Mai eher oder bestimmt für die Änderung des Zivildienstgesetzes gestimmt. 46 Prozent hätten eher oder bestimmt dagegen gestimmt, und 6 Pr",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Nein-Trend bei «10-Mio-Schweiz»-Vorlage",
+      "url": "https://www.zentralplus.ch/news/nein-trend-bei-10-mio-schweiz-vorlage-2875417/",
+      "summary": "Wäre Ende Mai über die Volksinitiative «Keine 10-Millionen-Schweiz» der SVP abgestimmt worden, hätten 52% der teilnahmewilligen Stimmberechtigten bestimmt oder eher Nein dazu gesagt. 45% hätten die Vo",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Umstrittenes Schulfach: So will Zug Frühfranzösisch retten",
+      "url": "https://www.zentralplus.ch/beruf-und-bildung/umstrittenes-schulfach-so-will-zug-fruehfranzoesisch-retten-2875244/",
+      "summary": "Der Zuger Regierungsrat hält am Frühfranzösisch fest, obwohl viele Kinder damit kämpfen. Gleichzeitig kündigt er neue Massnahmen an, die den Unterricht verbessern sollen. Die meisten hatten ihn, die w",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Das Horwer Zentrum wird um eine Siedlung reicher",
+      "url": "https://www.zentralplus.ch/wohnen-bauen/das-horwer-zentrum-wird-um-eine-siedlung-reicher-2874878/",
+      "summary": "Die Pläne für den Bereich östlich der Gleise hat Horw schon im März präsentiert. Nun ist auch der westliche Teil einsehbar. Die Gemeinde Horw will das Zentrum schon seit einiger Zeit umbauen. Nun hat ",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Steinschlagalarm: Axenstrasse wieder zu",
+      "url": "https://www.zentralplus.ch/news/steinschlagalarm-axenstrasse-wieder-zu-2875413/",
+      "summary": "Die Axenstrasse zwischen Flüelen und Sisikon/UR ist in der Nacht auf Mittwoch erneut durch das automatische Alarmsystem gesperrt worden. Die Sperrung wird ausgelöst, wenn Sensoren einen Steinschlag od",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Alabama darf Wahlkreise neu zuschneiden",
+      "url": "https://www.zentralplus.ch/news/alabama-darf-wahlkreise-neu-zuschneiden-2875411/",
+      "summary": "Der US-Bundesstaat Alabama darf einen Wahlkreiszuschnitt verwenden, der den Republikanern von US-Präsident Donald Trump in die Hände spielt. Das erlaubt das Oberste Gericht in den USA nun, obwohl ein ",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Treibstoff auch in Luhansk rationiert",
+      "url": "https://www.zentralplus.ch/news/treibstoff-auch-in-luhansk-rationiert-2875409/",
+      "summary": "Nachdem Russland den Treibstoff auf der Halbinsel Krim rationiert hat, dürfen nun auch die Menschen im besetzten ukrainischen Gebiet Luhansk nur noch höchstens 20 Liter pro Tankfüllung kaufen. Die rus",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "KMU pessimistischer als während Corona",
+      "url": "https://www.zentralplus.ch/news/kmu-pessimistischer-als-waehrend-corona-2875407/",
+      "summary": "Kleine und mittlere Unternehmen in der Schweiz sind angesichts der Weltlage pessimistischer als während der Pandemie. Zu diesem Schluss kommt eine Studie, die die «Neue Zürcher Zeitung» mit der Kalaid",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Rassismus gegen Weisse? Der Polizist legte den schwerverletzten Henry Nowak in Handschellen, anstatt ihm zu helfen",
+      "url": "https://www.nzz.ch/international/rassismus-gegen-weisse-der-polizist-legte-den-schwerverletzten-henry-nowak-in-handschellen-anstatt-ihm-zu-helfen-ld.10009572",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die USA künden 10 Prozent Zölle für die EU und 12,5 Prozent für die Schweiz an – Trump baut die Drohkulisse wieder auf",
+      "url": "https://www.nzz.ch/wirtschaft/die-usa-kuenden-10-prozent-zoelle-fuer-die-eu-und-125-prozent-fuer-die-schweiz-an-trump-baut-die-drohkulisse-wieder-auf-ld.10009626",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Trendwende: Plötzlich sind die Gegner der Initiative gegen die 10-Millionen-Schweiz im Vorteil",
+      "url": "https://www.nzz.ch/schweiz/trendwende-ploetzlich-sind-die-gegner-der-10-millionen-schweiz-im-vorteil-ld.10009510",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die Explosion von Jeff Bezos’ Rakete bringt die Mondpläne der Nasa durcheinander. Auch das amerikanische Militär ist besorgt",
+      "url": "https://www.nzz.ch/wissenschaft/die-explosion-von-jeff-bezos-rakete-bringt-die-mondplaene-der-nasa-durcheinander-auch-das-amerikanische-militaer-ist-besorgt-ld.10009559",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die Kreuzritterburg Beaufort ist ein Wunderwerk des Festungsbaus – und ein strategischer Hotspot im Nahen Osten. Jetzt hat Israel sie erobert",
+      "url": "https://www.nzz.ch/feuilleton/von-israel-erobert-die-kreuzritterburg-beaufort-ist-ein-wunderwerk-des-festungsbaus-und-seit-jahrhunderten-ein-strategischer-hotspot-im-nahen-osten-ld.10009491",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Es ist der erste Deal nach Buffett: Berkshire Hathaway kauft den US-Häuslebauer Taylor Morrison",
+      "url": "https://www.nzz.ch/finanzen/es-ist-der-erste-deal-nach-buffett-berkshire-hathaway-kauft-den-us-haeuslebauer-taylor-morrison-ld.10009399",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Wirtschaftsstandort Schweiz: Das Parlament will die Unternehmen entlasten",
+      "url": "https://www.nzz.ch/wirtschaft/wirtschaftsstandort-schweiz-ein-fast-perfekter-auftakt-in-die-sommersession-ld.10009391",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Sie sind gekommen, um zu gehen: Grenzgänger prägen Genf und Annemasse",
+      "url": "https://www.nzz.ch/schweiz/sie-sind-gekommen-um-zu-gehen-grenzgaenger-praegen-genf-und-annemasse-ld.10009369",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "PODCAST «NZZ GEOPOLITIK» - Weltraum-Anarchie: Wer kontrolliert die Tausenden neuen Satelliten?",
+      "url": "https://www.nzz.ch/podcast/weltraum-anarchie-wer-kontrolliert-die-tausenden-neuen-satelliten-ld.10009338",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "«Nein, ich bin nicht Satoshi» — aber ohne Adam Back gäbe es den Bitcoin wohl nicht",
+      "url": "https://www.nzz.ch/wirtschaft/nein-ich-bin-nicht-satoshi-aber-ohne-adam-back-gaebe-es-den-bitcoin-wohl-nicht-ld.10009309",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Kambodscha pflegt sein Image und gibt sich milde gegenüber seinem prominentesten Oppositionellen",
+      "url": "https://www.nzz.ch/international/kambodscha-oppositioneller-kem-sokha-aus-haft-entlassen-ld.10009282",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Dunkle Wolken am KMU-Horizont: «Die Schweiz steht früh auf, aber erwacht spät»",
+      "url": "https://www.nzz.ch/wirtschaft/dunkle-wolken-am-kmu-horizont-die-schweiz-steht-frueh-auf-aber-erwacht-spaet-ld.10009281",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Moskaus Imperium bröckelt im Süden: Armenien wählt zwischen Russland und Europa",
+      "url": "https://www.nzz.ch/international/armenien-geopolitische-wahl-zwischen-russland-und-europa-ld.10009279",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "KOMMENTAR - Elon Musk bekommt bald Milliarden aus unseren Vorsorgewerken: Wenn die KI-Blase platzt, kann sich niemand vor den Verlusten schützen",
+      "url": "https://www.nzz.ch/meinung/elon-musk-bekommt-bald-milliarden-aus-unseren-vorsorgewerken-wenn-die-ki-blase-platzt-kann-sich-niemand-vor-den-verlusten-schuetzen-ld.10009114",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "KOMMENTAR - Pedro Sánchez versinkt in Korruptionsskandalen, doch dagegen ist Spaniens Regierungschef fast immun",
+      "url": "https://www.nzz.ch/meinung/pedro-sanchez-und-korruptionsskandale-warum-er-dagegen-fast-immun-ist-ld.10009024",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Republik",
+      "title": "Zeit die Dinge Persönlich zu Nehmen",
+      "url": "https://www.republik.ch/2026/06/03/zeit-die-dinge-persoenlich-zu-nehmen",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Republik",
+      "title": "Am Gericht die Ausbeuterin Weint",
+      "url": "https://www.republik.ch/2026/06/03/am-gericht-die-ausbeuterin-weint",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Neue Eskalation: USA und Iran greifen sich in Golfregion an",
+      "url": "https://www.watson.ch/international/iran/189809576-neue-eskalation-usa-und-iran-greifen-sich-in-golfregion-an",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "SVP-Unternehmer rekrutieren in der EU",
+      "url": "https://www.watson.ch/wirtschaft/schweiz/108232697-svp-unternehmer-rekrutieren-in-der-eu",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Umfrage: Nein-Trend bei der 10-Millionen-Initiative bestätigt sich",
+      "url": "https://www.watson.ch/schweiz/umfrage/103964827-umfrage-nein-trend-bei-der-10-millionen-initiative-bestaetigt-sich",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Nun steht fest, wie stark die USA die Schweiz bestrafen",
+      "url": "https://www.watson.ch/schweiz/international/265766302-nun-steht-fest-wie-stark-die-usa-die-schweiz-bestrafen",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Verein lanciert Volksinitiative für mehr digitale Sicherheit",
+      "url": "https://www.watson.ch/wirtschaft/schweiz/683147515-verein-lanciert-volksinitiative-fuer-mehr-digitale-sicherheit",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Picdump 190 – mit Memes und guter Laune durch den Tag",
+      "url": "https://www.watson.ch/spass/picdump/407135039-picdump-190-mit-memes-und-guter-laune-durch-den-tag",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Inside Paradeplatz",
+      "title": "Wohnen Statt Ewig Ruhen",
+      "url": "https://insideparadeplatz.ch/2026/06/03/wohnen-statt-ewig-ruhen/",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
+    },
+    {
+      "source": "Inside Paradeplatz",
+      "title": "Wer aus Erlaubtem Meinungskorridor Ausbricht Wirdexkommuniziert",
+      "url": "https://insideparadeplatz.ch/2026/06/03/wer-aus-erlaubtem-meinungskorridor-ausbricht-wirdexkommuniziert/",
+      "summary": "",
+      "published": "2026-06-03T05:14:34.946291+00:00"
     }
   ]
 }
