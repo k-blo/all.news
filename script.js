@@ -126,6 +126,7 @@ function render(articles, mode) {
 }
 
 const meta = document.getElementById("meta");
+const setMeta = (t) => { if (meta) meta.textContent = t; };
 const daySel = document.getElementById("day");
 function sortMode() {
   const el = document.querySelector('input[name="sort"]:checked');
@@ -156,17 +157,16 @@ function buildFilters(articles) {
 }
 
 function load(url) {
-  meta.textContent = "loading…";
+  setMeta("loading…");
   fetch(url)
     .then((r) => r.json())
     .then((data) => {
       current = data.articles;
-      meta.textContent =
-        `${data.count} articles · ${data.date || ""} · updated ${fmtDate(data.generated)}`;
+      setMeta(`${data.count} articles · ${data.date || ""} · updated ${fmtDate(data.generated)}`);
       buildFilters(current);
       render(current, sortMode());
     })
-    .catch((e) => { meta.textContent = "failed to load " + url + ": " + e; });
+    .catch((e) => { setMeta("failed to load " + url + ": " + e); });
 }
 
 // Populate day picker from the archive index; "latest" = newest crawl.
