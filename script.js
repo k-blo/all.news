@@ -22,6 +22,10 @@ const SOURCE_COLORS = {
   "Inside IT": "#00838f",
   "Bilanz": "#9e2a2b",
   "Republik": "#111111",
+  "Südostschweiz": "#2e6b3e",
+  "Luzerner Zeitung": "#0277bd",
+  "Aargauer Zeitung": "#e65100",
+  "Persönlich": "#6d4c41",
 };
 
 function fmtDate(s) {

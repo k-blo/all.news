@@ -42,6 +42,7 @@ FEEDS = [
     #{"source": "Le Courrier",   "url": "https://lecourrier.ch/feed/"},
     {"source": "Inside IT",     "url": "https://www.inside-it.ch/rss.xml"},
     {"source": "NZZ",           "url": "https://www.nzz.ch/recent.rss", "summary": False},
+    {"source": "Persönlich",    "url": "https://www.persoenlich.com/rss/news.xml"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
@@ -66,6 +67,12 @@ WP_SOURCES = [
 BILANZ_MAX = 30      # https://www.bilanz.ch/sitemap-articles-time-limited-YYYY-MM.xml
 REPUBLIK_SITEMAP = "https://www.republik.ch/sitemap.xml"  # index of per-year sitemaps
 REPUBLIK_MAX = 50
+SUEDOSTSCHWEIZ_MAX = 50
+# CH Media regional papers: /sitemap/YYYY/MM/sitemap.xml, URLs end in -ld.NNNNNNN
+CH_MEDIA_SOURCES = [
+    {"source": "Luzerner Zeitung",  "base": "https://www.luzernerzeitung.ch",  "max": 50},
+    {"source": "Aargauer Zeitung",  "base": "https://www.aargauerzeitung.ch",  "max": 50},
+]
 
 
 class NotModified(Exception):
@@ -327,6 +334,25 @@ def crawl_wp(source, index_url, limit):
     return crawl_sitemap_source(source, rows, re.compile(r"/([^/]+)/?$"), limit)
 
 
+def crawl_suedostschweiz():
+    """Monthly sitemap. URL = /category/slug-ARTICLEID — strip trailing numeric ID."""
+    ym = datetime.now(timezone.utc).strftime("%Y-%m")
+    url = f"https://www.suedostschweiz.ch/sitemap-{ym}.xml"
+    rows = sitemap_rows(fetch(url), re.compile(r"/[^/]+-\d+$"))
+    return crawl_sitemap_source(
+        "Südostschweiz", rows, re.compile(r"/([^/]+)-\d+$"), SUEDOSTSCHWEIZ_MAX)
+
+
+def crawl_ch_media(source, base, limit):
+    """CH Media regional papers — monthly sitemap /sitemap/YYYY/MM/sitemap.xml.
+    URLs end in -ld.NNNNNNN; strip that suffix for the title slug."""
+    y = datetime.now(timezone.utc).strftime("%Y")
+    m = datetime.now(timezone.utc).strftime("%m")
+    url = f"{base}/sitemap/{y}/{m}/sitemap.xml"
+    rows = sitemap_rows(fetch(url), re.compile(r"/[^/]+-ld\.\d+$"))
+    return crawl_sitemap_source(source, rows, re.compile(r"/([^/]+)-ld\.\d+$"), limit)
+
+
 def crawl_bilanz():
     """Monthly time-limited sitemap. URL = .../slug/<id>, so slug is the
     second-to-last path segment. Builds current month's URL."""
@@ -405,6 +431,11 @@ def main():
         ("Nebelspalter", crawl_nebelspalter),
         ("Bilanz", crawl_bilanz),
         ("Republik", crawl_republik),
+        ("Südostschweiz", crawl_suedostschweiz),
+    ]
+    sitemap_jobs += [
+        (s["source"], (lambda s: lambda: crawl_ch_media(s["source"], s["base"], s["max"]))(s))
+        for s in CH_MEDIA_SOURCES
     ]
     sitemap_jobs += [
         (n["source"], (lambda n: lambda: crawl_news_sitemap(n["source"], n["url"], n["max"]))(n))
