@@ -472,6 +472,7 @@ def main():
         existing_today = []
 
     seen = load_seen()
+    seen_titles = {a["title"].lower() for a in existing_today}
     new, batch = [], set()
     for a in articles:
         u = a["url"]
@@ -479,8 +480,12 @@ def main():
             continue
         if not is_today(a.get("published")):
             continue
+        t = a["title"].lower()
+        if t in seen_titles:
+            continue
         new.append({**a, "published": now_iso})  # date = crawl time
         batch.add(u)
+        seen_titles.add(t)
 
     result = existing_today + new
     data = {"generated": now_iso, "date": today, "count": len(result), "articles": result}
