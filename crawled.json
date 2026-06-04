@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-03T23:30:55.043470+00:00",
+  "generated": "2026-06-04T00:00:52.934134+00:00",
   "date": "2026-06-04",
-  "count": 4,
+  "count": 5,
   "articles": [
     {
       "source": "Zentralplus",
@@ -30,6 +30,13 @@
       "url": "https://www.bernerzeitung.ch/spacex-boersengang-musk-will-75-milliarden-dollar-einnehmen-455792237710",
       "summary": "Die Weltraumfirma Spacex von Tech-Milliardär Elon Musk macht nicht besonders viel Umsatz und steckt tief in den roten Zahlen. Dennoch will sie den bisher grössten Börsengang über die Bühne bringen.",
       "published": "2026-06-03T23:30:55.043470+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Waffenruhe im Libanon erneuert",
+      "url": "https://www.zentralplus.ch/news/waffenruhe-im-libanon-erneuert-2875774/",
+      "summary": "Israel und der Libanon haben sich auf eine Erneuerung der Waffenruhe geeinigt. Das geht aus einer gemeinsamen Erklärung hervor, auf die sich eine israelische und eine libanesische Delegation in Washin",
+      "published": "2026-06-04T00:00:52.934134+00:00"
     }
   ]
 }
