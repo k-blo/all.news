@@ -26,6 +26,7 @@ const SOURCE_COLORS = {
   "Luzerner Zeitung": "#0277bd",
   "Aargauer Zeitung": "#e65100",
   "Persönlich": "#6d4c41",
+  "Tachles": "#1565c0",
 };
 
 function fmtDate(s) {
