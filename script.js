@@ -144,9 +144,9 @@ function buildFilters(articles) {
     const label = document.createElement("label");
     const cb = document.createElement("input");
     cb.type = "checkbox";
-    cb.checked = excluded.has(s.toLowerCase());
+    cb.checked = !excluded.has(s.toLowerCase());
     cb.addEventListener("change", () => {
-      if (cb.checked) excluded.add(s.toLowerCase());
+      if (!cb.checked) excluded.add(s.toLowerCase());
       else excluded.delete(s.toLowerCase());
       syncUrl();
       render(current, sortMode());
@@ -163,7 +163,7 @@ function load(url) {
     .then((r) => r.json())
     .then((data) => {
       current = data.articles;
-      setMeta(`${data.count} articles`);
+      setMeta(`${data.count} artikel`);
       buildFilters(current);
       render(current, sortMode());
     })
