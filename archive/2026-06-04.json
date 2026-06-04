@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-04T00:31:10.929795+00:00",
+  "generated": "2026-06-04T01:01:03.838400+00:00",
   "date": "2026-06-04",
-  "count": 7,
+  "count": 10,
   "articles": [
     {
       "source": "Zentralplus",
@@ -51,6 +51,27 @@
       "url": "https://www.nzz.ch/international/atomstreit-mit-nordkorea-die-aktuellen-ereignisse-ld.1399947",
       "summary": "",
       "published": "2026-06-04T00:31:10.929795+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Kim Jong-un will Atomwaffenvorrat radikal ausbauen",
+      "url": "https://www.20min.ch/story/nordkoreas-machthaber-kim-jong-un-will-atomwaffenvorrat-radikal-ausbauen-103576701",
+      "summary": "Nordkoreas Präsident Kim Jong-un will die Nuklearstreitkräfte des Landes drastisch erweitern. Damit setzt er seinen Kurs der atomaren Aufrüstung fort – trotz rigider UNO-Sanktionen.",
+      "published": "2026-06-04T01:01:03.838400+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Nordkoreas Machthaber: Kim Jong-un will Atomwaffenvorrat radikal ausbauen",
+      "url": "https://www.tagesanzeiger.ch/kim-jong-un-will-atomwaffenvorrat-radikal-ausbauen-400613476102",
+      "summary": "Nordkoreas Präsident Kim Jong-un will die Nuklearstreitkräfte des Landes drastisch erweitern. Damit setzt er seinen Kurs der atomaren Aufrüstung fort – trotz rigider UNO-Sanktionen.",
+      "published": "2026-06-04T01:01:03.838400+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Nordkoreas Machthaber: Kim Jong-un will Atomwaffenvorrat radikal ausbauen",
+      "url": "https://www.bernerzeitung.ch/kim-jong-un-will-atomwaffenvorrat-radikal-ausbauen-400613476102",
+      "summary": "Nordkoreas Präsident Kim Jong-un will die Nuklearstreitkräfte des Landes drastisch erweitern. Damit setzt er seinen Kurs der atomaren Aufrüstung fort – trotz rigider UNO-Sanktionen.",
+      "published": "2026-06-04T01:01:03.838400+00:00"
     }
   ]
 }
