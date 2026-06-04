@@ -1,6 +1,21 @@
 {
-  "generated": "2026-06-04T22:31:04.354553+00:00",
+  "generated": "2026-06-04T23:01:19.329441+00:00",
   "date": "2026-06-05",
-  "count": 0,
-  "articles": []
+  "count": 2,
+  "articles": [
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Gestrandeter Timmy: Keine klare Todesursache: Obduktion von Buckelwal beendet",
+      "url": "https://www.tagesanzeiger.ch/buckelwal-timmy-obduktion-ohne-klare-todesursache-176306259351",
+      "summary": "Vor Wochen wurde der als Timmy bekannte tote Buckelwal vor der Insel Anholt angespült – nun ist auch die mit Spannung erwartete Obduktion erledigt. Was konnten die Experten herausfinden?",
+      "published": "2026-06-04T23:01:19.329441+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "DIE NEUESTEN ENTWICKLUNGEN - Die Obduktion des Buckelwals kann keine Todesursache feststellen– doch sie zeigt, dass «Timmy» ein Weibchen war",
+      "url": "https://www.nzz.ch/wissenschaft/drama-in-der-ostsee-buckelwal-ist-in-transportkahn-geschwommen-ld.1934434",
+      "summary": "",
+      "published": "2026-06-04T23:01:19.329441+00:00"
+    }
+  ]
 }
