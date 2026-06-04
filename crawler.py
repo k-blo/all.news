@@ -233,7 +233,7 @@ def slug_to_title(slug):
     return " ".join(titled)
 
 
-def sitemap_rows(xml_bytes, match):
+def sitemap_rows(xml_bytes, match, sort=True):
     """Extract (lastmod, loc) pairs from a urlset whose loc matches `match` regex."""
     sm = ET.fromstring(xml_bytes)
     rows = []
@@ -248,7 +248,8 @@ def sitemap_rows(xml_bytes, match):
                 lastmod = (c.text or "").strip()
         if loc and match.search(loc):
             rows.append((lastmod, loc))
-    rows.sort(reverse=True)  # newest lastmod first
+    if sort:
+        rows.sort(reverse=True)  # newest lastmod first
     return rows
 
 
@@ -284,9 +285,10 @@ def crawl_weltwoche():
 def crawl_nebelspalter():
     """No RSS — titles from /themen/YYYY/MM/slug paths in the sitemap."""
     article_re = re.compile(r"/themen/\d{4}/\d{2}/([^/]+)$")
-    rows = sitemap_rows(fetch(NEBELSPALTER_SITEMAP), article_re)
-    return crawl_sitemap_source(
-        "Nebelspalter", rows, article_re, NEBELSPALTER_MAX)
+    # Sitemap has no lastmod and appends newest entries at the bottom.
+    rows = sitemap_rows(fetch(NEBELSPALTER_SITEMAP), article_re, sort=False)
+    rows = list(reversed(rows[-NEBELSPALTER_MAX:]))  # newest N, newest first
+    return crawl_sitemap_source("Nebelspalter", rows, article_re, NEBELSPALTER_MAX)
 
 
 # Post-sitemap names: WP-core "wp-sitemap-posts-post-N" or Yoast "post-sitemapN".
