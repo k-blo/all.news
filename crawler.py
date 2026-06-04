@@ -43,6 +43,7 @@ FEEDS = [
     {"source": "Inside IT",     "url": "https://www.inside-it.ch/rss.xml"},
     {"source": "NZZ",           "url": "https://www.nzz.ch/recent.rss", "summary": False},
     {"source": "Persönlich",    "url": "https://www.persoenlich.com/rss/news.xml"},
+    {"source": "Tachles",       "url": "https://www.tachles.ch/feed"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
