@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-04T12:30:59.978612+00:00",
+  "generated": "2026-06-04T13:01:02.831245+00:00",
   "date": "2026-06-04",
-  "count": 359,
+  "count": 370,
   "articles": [
     {
       "source": "Zentralplus",
@@ -2515,6 +2515,83 @@
       "url": "https://www.watson.ch/international/papst/252051529-papst-leo-xiv-erhaelt-sein-paypal-guthaben-zurueck",
       "summary": "",
       "published": "2026-06-04T12:30:59.978612+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Vor der Abstimmung – «Zivis» – das Bangen um die günstigen Arbeitskräfte",
+      "url": "https://www.srf.ch/news/schweiz/vor-der-abstimmung-zivis-das-bangen-um-die-guenstigen-arbeitskraefte",
+      "summary": "Verlassen sich soziale Institutionen allzu sehr auf Zivildienstleistende? Die Reportage aus dem Einsatzbetrieb.",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Nach SP-Absage für Ständerat – Daniel Jositsch tritt aus der SP aus und kandidiert 2027 erneut",
+      "url": "https://www.srf.ch/news/schweiz/nach-sp-absage-fuer-staenderat-daniel-jositsch-tritt-aus-der-sp-aus-und-kandidiert-2027-erneut",
+      "summary": "Der Zürcher SP-Politiker bricht mit der SP. Bei den nächsten Ständeratswahlen tritt er erneut an.",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Zuger Partners Group verliert 16 Prozent an einem Tag",
+      "url": "https://www.zentralplus.ch/news/zuger-partners-group-verliert-16-prozent-an-einem-tag-2875843/",
+      "summary": "Die Aktie der Partners Group stürzte gestern um 16 Prozent ab. Anleger reagierten nervös auf die Beschränkung von Rückzahlungen bei Fonds. Die Zuger Beteiligungsgesellschaft Partners Group erlebte ein",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Netzwoche",
+      "title": "Stadt Zürich führt Behördenlogin Agov für städtische Onlinedienste ein",
+      "url": "https://www.netzwoche.ch/news/2026-06-04/stadt-zuerich-fuehrt-behoerdenlogin-agov-fuer-staedtische-onlinedienste-ein",
+      "summary": "Die Stadt Zürich integriert das Behördenlogin Agov in \"Mein Konto\", den zentralen Zugang zu ihren Onlinediensten. Damit will die Stadt die Nutzung ihrer digitalen Angebote vereinfachen und einen einhe",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Netzwoche",
+      "title": "USA führen freiwillige Sicherheitstests für KI-Modelle ein",
+      "url": "https://www.netzwoche.ch/news/2026-06-04/usa-fuehren-freiwillige-sicherheitstests-fuer-ki-modelle-ein",
+      "summary": "Die US-Regierung unter Donald Trump will die Aufsicht über besonders leistungsfähige KI-Modelle ausbauen. Ein neues Dekret sieht vor, dass Entwickler ihre fortschrittlichsten Systeme vor der Weitergab",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Inside IT",
+      "title": "Parlament fordert Hotline für Cyberangriffe",
+      "url": "https://www.inside-it.ch/parlament-fordert-hotline-fuer-cyberangriffe-20260604",
+      "summary": "Der Nationalrat hat einen Vorstoss angenommen, der die Einrichtung einer Hotline für Opfer von Cyberangriffen verlangt. Der Bunderat war dagegen.",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Inside IT",
+      "title": "Zürichs Datenschützerin mahnt bei Cloud un KI zu mehr Vorsicht",
+      "url": "https://www.inside-it.ch/zuerichs-datenschuetzerin-mahnt-bei-cloud-un-ki-zu-mehr-vorsicht-20260604",
+      "summary": "Die Datenschutzbeauftragte des Kantons Zürich hat mehrere digitale Projekte von Behörden unter die Lupe genommen. Im Fokus standen unter anderem M365 sowie KI-gestützte Chatbots.",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Daniel Jositsch verlässt SP: Die Reaktionen aus der Partei",
+      "url": "https://www.watson.ch/schweiz/sp/339861553-daniel-jositsch-verlaesst-sp-die-reaktionen-aus-der-partei",
+      "summary": "",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Hisbollah lehnt Waffenruhe mit Israel ab",
+      "url": "https://www.watson.ch/international/israel/723944878-hisbollah-lehnt-waffenruhe-mit-israel-ab",
+      "summary": "",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Wetter Schweiz: Kaltfront kommt, Schneefallgrenze sinkt auf 1500 Meter",
+      "url": "https://www.watson.ch/schweiz/tessin/853785143-wetter-schweiz-kaltfront-kommt-schneefallgrenze-sinkt-auf-1500-meter",
+      "summary": "",
+      "published": "2026-06-04T13:01:02.831245+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Jobabbau bei der Post: 60 Stellen werden gestrichen",
+      "url": "https://www.watson.ch/wirtschaft/post/657531343-jobabbau-bei-der-post-60-stellen-werden-gestrichen",
+      "summary": "",
+      "published": "2026-06-04T13:01:02.831245+00:00"
     }
   ]
 }
