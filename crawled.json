@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-04T23:01:19.329441+00:00",
+  "generated": "2026-06-04T23:31:30.999130+00:00",
   "date": "2026-06-05",
-  "count": 2,
+  "count": 3,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -16,6 +16,13 @@
       "url": "https://www.nzz.ch/wissenschaft/drama-in-der-ostsee-buckelwal-ist-in-transportkahn-geschwommen-ld.1934434",
       "summary": "",
       "published": "2026-06-04T23:01:19.329441+00:00"
+    },
+    {
+      "source": "Weltwoche",
+      "title": "Aberwitzige Verlierergeschichten",
+      "url": "https://weltwoche.ch/story/aberwitzige-verlierergeschichten/",
+      "summary": "",
+      "published": "2026-06-04T23:31:30.999130+00:00"
     }
   ]
 }
