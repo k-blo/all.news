@@ -158,12 +158,12 @@ function buildFilters(articles) {
 }
 
 function load(url) {
-  setMeta("loading…");
+  setMeta("");
   fetch(url)
     .then((r) => r.json())
     .then((data) => {
       current = data.articles;
-      setMeta(`${data.count} articles · ${data.date || ""} · updated ${fmtDate(data.generated)}`);
+      setMeta(`${data.count} articles`);
       buildFilters(current);
       render(current, sortMode());
     })
@@ -174,11 +174,11 @@ function load(url) {
 fetch("archive/index.json")
   .then((r) => r.json())
   .then((idx) => {
-    const opts = ['<option value="crawled.json">latest</option>'];
-    for (const d of idx.dates || []) {
-      opts.push(`<option value="archive/${d}.json">${d}</option>`);
-    }
-    daySel.innerHTML = opts.join("");
+    const dates = idx.dates || [];
+    const opts = dates.map((d, i) =>
+      `<option value="${i === 0 ? "crawled.json" : `archive/${d}.json`}">${d}</option>`
+    );
+    daySel.innerHTML = opts.join("") || '<option value="crawled.json">latest</option>';
   })
   .catch(() => { daySel.innerHTML = '<option value="crawled.json">latest</option>'; })
   .finally(() => load(daySel.value));

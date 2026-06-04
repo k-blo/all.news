@@ -3,11 +3,10 @@ body {
   margin: 1rem;
   padding: 0;
 }
-h1 { font-size: 1.0rem; margin: 0 0 0.5rem; }
-#meta { color: #666; font-size: 0.85rem; }
-#controls { font-size: 0.75rem; margin-bottom: 1rem; }
-#controls label { margin-right: 0.5rem; }
-#excludeBox { margin-top: 0.5rem; }
+h1 { font-size: 1.0rem; margin: 0 0 0.5rem; display: flex; align-items: baseline; gap: 0.4rem; }
+#meta { color: #999; font-size: 0.7rem; font-weight: normal; }
+#controls { font-size: 0.75rem; margin-bottom: 1rem; display: flex; align-items: baseline; gap: 1rem; }
+#excludeBox { margin-top: 0; }
 #excludeBox summary { cursor: pointer; }
 #filters { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: 0.4rem; }
 #filters label { white-space: nowrap; }
@@ -19,7 +18,7 @@ a:visited { color: #666; }
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   margin-top: 0.15rem;
 }
 .date { opacity: 0.5; }
