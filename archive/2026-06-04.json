@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-04T05:31:02.017750+00:00",
+  "generated": "2026-06-04T06:01:12.780577+00:00",
   "date": "2026-06-04",
-  "count": 99,
+  "count": 113,
   "articles": [
     {
       "source": "Zentralplus",
@@ -695,6 +695,104 @@
       "url": "https://insideparadeplatz.ch/2026/06/04/banque-cramer-hat-finma-im-haus/",
       "summary": "",
       "published": "2026-06-04T05:31:02.017750+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Häusliche und sexuelle Gewalt – Wie gut Opfern geholfen wird, ist auch eine Frage des Wohnorts",
+      "url": "https://www.srf.ch/news/schweiz/haeusliche-und-sexuelle-gewalt-wie-gut-opfern-geholfen-wird-ist-auch-eine-frage-des-wohnorts",
+      "summary": "Der Nationalrat will, dass Opfer häuslicher oder sexueller Gewalt bessere Unterstützung erhalten – überall im Land.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Illegale Rabatte für Reiche – Dem Bund entgingen 200 Millionen Franken Steuern aus der Waadt",
+      "url": "https://www.srf.ch/news/schweiz/illegale-rabatte-fuer-reiche-dem-bund-entgingen-200-millionen-franken-steuern-aus-der-waadt",
+      "summary": "Die Waadtländer Steuerverwaltung hat jahrelang illegal Reiche zu tief besteuert. Der Fall ist nun Sache der Justiz.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Sommersession 2026 – Heiratsstrafe abschaffen? Ständerat berät über Mitte-Initiative",
+      "url": "https://www.srf.ch/news/schweiz/sommersession-2026-heiratsstrafe-abschaffen-staenderat-beraet-ueber-mitte-initiative",
+      "summary": "In Bern läuft die Sommersession der Eidgenössischen Räte. Die wichtigsten Debatten und Entscheide in der Übersicht.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Rätsel um Bodensee-Tote: Leiche wurde identifiziert",
+      "url": "https://www.20min.ch/story/konstanz-meersburg-raetsel-um-bodensee-tote-leiche-wurde-identifiziert-103576737",
+      "summary": "Nachdem am Montag im Bodensee bei Güttingen TG eine leblose Frau entdeckt wurde, ist ihre Identität geklärt. Die 24-Jährige dürfte zuvor von Bord der Fähre gefallen sein.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Nach Bar-Rauferei: Shia LaBeouf bekennt sich schuldig",
+      "url": "https://www.20min.ch/story/us-schauspieler-nach-bar-rauferei-shia-labeouf-bekennt-sich-schuldig-103576727",
+      "summary": "Shia LaBeouf hat sich in drei Anklagepunkten schuldig bekannt. Nun muss er unter anderem in die Aggressionsbewältigung und eine Alkohol-Reha.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "«Vernünftig betrachtet, gibts keinen Grund zur Sorge»",
+      "url": "https://www.20min.ch/story/breel-embolo-das-ganze-vernuenftig-betrachtet-gibts-keinen-grund-zur-sorge-103576621",
+      "summary": "Ohne Breel Embolo absolvierte die Nati ihr erstes Training in San Diego. Beim SFV ist man trotz seiner Einreise-Probleme zuversichtlich, den Stürmer bald wieder bei sich zu haben.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Trotz globalem Negativtrend: Die Spermienqualität bei Schweizer Rekruten bleibt stabil",
+      "url": "https://www.tagesanzeiger.ch/spermienqualitaet-bei-schweizer-rekruten-bleibt-stabil-849902970429",
+      "summary": "Entgegen dem globalen Trend ist die Spermienqualität junger Schweizer seit 2017 nicht weiter gesunken. Doch Forschende der Universität Zürich warnen vor verfrühter Euphorie.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Trotz globalem Negativtrend: Die Spermienqualität bei Schweizer Rekruten bleibt stabil",
+      "url": "https://www.bernerzeitung.ch/spermienqualitaet-bei-schweizer-rekruten-bleibt-stabil-849902970429",
+      "summary": "Entgegen dem globalen Trend ist die Spermienqualität junger Schweizer seit 2017 nicht weiter gesunken. Doch Forschende der Universität Zürich warnen vor verfrühter Euphorie.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "Finews",
+      "title": "Zürcher Finanzboutique gewinnt zwei bekannte Gesichter als Verwaltungsräte",
+      "url": "https://www.finews.ch/news/finanzplatz/72434-dcpclientpartner-verwaltungsrat-asset-management-ulrich-behm-juerg-rimle-finanzplatz-schweiz",
+      "summary": "Die Zürcher Finanzboutique DCP Client Partner vergrössert ihren Verwaltungsrat mit zwei Exponenten des Finanzplatzes, die sich in der Schweizer Asset-Management-Szene einen Namen gemacht haben.",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "«Dr. Chatbot, was habe ich?» Wie man die KI dazu bringt, gute Antworten auf Gesundheitsfragen zu liefern",
+      "url": "https://www.nzz.ch/wissenschaft/ki-fuer-gesundheitsfragen-nutzen-so-erhalten-sie-gute-antworten-ld.10004460",
+      "summary": "",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Visa und Mastercard stoppen Zahlungen auf Kuba",
+      "url": "https://www.watson.ch/international/usa/143380375-visa-und-mastercard-stoppen-zahlungen-auf-kuba",
+      "summary": "",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Spermienqualität bei jungen Schweizern bleibt stabil",
+      "url": "https://www.watson.ch/wissen/schweiz/738548665-spermienqualitaet-bei-jungen-schweizern-bleibt-stabil",
+      "summary": "",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "Inside Paradeplatz",
+      "title": "Partners Group Krise Trifft Ubs Khan",
+      "url": "https://insideparadeplatz.ch/2026/06/04/partners-group-krise-trifft-ubs-khan/",
+      "summary": "",
+      "published": "2026-06-04T06:01:12.780577+00:00"
+    },
+    {
+      "source": "Inside Paradeplatz",
+      "title": "High Noon um Old Fashion Bar an Fraumünster Strasse",
+      "url": "https://insideparadeplatz.ch/2026/06/04/high-noon-um-old-fashion-bar-an-fraumuenster-strasse/",
+      "summary": "",
+      "published": "2026-06-04T06:01:12.780577+00:00"
     }
   ]
 }
