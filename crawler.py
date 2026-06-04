@@ -284,11 +284,26 @@ def crawl_weltwoche():
 
 def crawl_nebelspalter():
     """No RSS — titles from /themen/YYYY/MM/slug paths in the sitemap."""
-    article_re = re.compile(r"/themen/\d{4}/\d{2}/([^/]+)$")
     # Sitemap has no lastmod and appends newest entries at the bottom.
-    rows = sitemap_rows(fetch(NEBELSPALTER_SITEMAP), article_re, sort=False)
+    base_re = re.compile(r"/themen/\d{4}/\d{2}/[^/]+$")
+    detail_re = re.compile(r"/themen/(\d{4}/\d{2})/([^/]+)$")
+    rows = sitemap_rows(fetch(NEBELSPALTER_SITEMAP), base_re, sort=False)
     rows = list(reversed(rows[-NEBELSPALTER_MAX:]))  # newest N, newest first
-    return crawl_sitemap_source("Nebelspalter", rows, article_re, NEBELSPALTER_MAX)
+
+    today = datetime.now(ZURICH)
+    current_ym = today.strftime("%Y/%m")
+    out = []
+    for _, loc in rows:
+        m = detail_re.search(loc)
+        if not m:
+            continue
+        url_ym, slug = m.group(1), m.group(2)
+        # No precise date in sitemap — use today for current-month articles
+        # so they pass the is_today() filter; older months keep their month date.
+        pub = today.isoformat() if url_ym == current_ym else f"{url_ym.replace('/', '-')}-01T00:00:00+01:00"
+        out.append({"source": "Nebelspalter", "title": slug_to_title(slug),
+                    "url": loc, "summary": "", "published": pub})
+    return out
 
 
 # Post-sitemap names: WP-core "wp-sitemap-posts-post-N" or Yoast "post-sitemapN".
