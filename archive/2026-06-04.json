@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-04T01:31:01.305168+00:00",
+  "generated": "2026-06-04T02:00:52.483612+00:00",
   "date": "2026-06-04",
-  "count": 12,
+  "count": 13,
   "articles": [
     {
       "source": "Zentralplus",
@@ -86,6 +86,13 @@
       "url": "https://weltwoche.ch/story/menschen-und-ihre-strasse-ein-kaleidoskop/",
       "summary": "",
       "published": "2026-06-04T01:31:01.305168+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Atomstreit mit Nordkorea: Nordkoreas Machthaber will Atomwaffenvorrat radikal ausbauen",
+      "url": "https://www.nzz.ch/international/atomstreit-mit-nordkorea-nordkoreas-machthaber-will-atomwaffenvorrat-radikal-ausbauen-ld.1399947",
+      "summary": "",
+      "published": "2026-06-04T02:00:52.483612+00:00"
     }
   ]
 }
