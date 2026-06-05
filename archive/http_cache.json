@@ -1,16 +1,16 @@
 {
   "https://www.blick.ch/news/rss.xml": {
-    "last_modified": "Fri, 05 Jun 2026 04:47:03 GMT",
-    "etag": "\"d32e4a63f3276aae65186ac4dd66abaf\""
+    "last_modified": "Fri, 05 Jun 2026 05:10:16 GMT",
+    "etag": "\"81faba79c49331e13c830d5e10a0dfa4\""
   },
   "https://partner-feeds.20min.ch/rss/20minuten": {
-    "etag": "W/\"19184-Rz/bh9KdVKeW3EOY3GECfL9Cy4Y\""
+    "etag": "W/\"19164-pDerZ14tODECkG8mbWKq/vY8syQ\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/": {
-    "etag": "W/\"105a9-SP8j7dBsoV9FpAXgnFAQEJ5h9oE\""
+    "etag": "W/\"105a9-zbJNU/UjfHFLXi1iSSUcjPFwwJk\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/bernerzeitung/": {
-    "etag": "W/\"eb90-PLB+vpCd9D8bl3A4lMzY8iDxksw\""
+    "etag": "W/\"e7de-x7d6cDl+zIjZDXSShC/VzwZA3ag\""
   },
   "https://www.zentralplus.ch/feed/": {
     "last_modified": "Fri, 05 Jun 2026 04:05:16 GMT"
@@ -23,7 +23,7 @@
     "etag": "\"1780632649\""
   },
   "https://www.nzz.ch/recent.rss": {
-    "last_modified": "Fri, 05 Jun 2026 05:00:08 GMT"
+    "last_modified": "Fri, 05 Jun 2026 05:28:58 GMT"
   },
   "https://www.bilanz.ch/sitemap-articles-time-limited-2026-06.xml": {
     "last_modified": "Thu, 04 Jun 2026 15:07:17 GMT",
