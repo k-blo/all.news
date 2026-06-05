@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-05T23:01:17.302225+00:00",
+  "generated": "2026-06-05T23:30:35.074766+00:00",
   "date": "2026-06-06",
-  "count": 1,
+  "count": 3,
   "articles": [
     {
       "source": "Zentralplus",
@@ -9,6 +9,20 @@
       "url": "https://www.zentralplus.ch/news/kreml-putin-trifft-ex-kanzler-schroeder-2876192/",
       "summary": "Der Kreml teilt mit, dass sich der russische Präsident Wladimir Putin und der Ex-Bundeskanzler Gerhard Schröder zu einem Vieraugengespräch getroffen haben. Zum Inhalt und dabei möglichen Perspektiven ",
       "published": "2026-06-05T22:30:59.308668+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Nächstes Gesundheitsupdate erst nach Lungentransplantation",
+      "url": "https://www.20min.ch/story/mette-marit-naechstes-gesundheitsupdate-erst-nach-lungentransplantation-103577764",
+      "summary": "Mette-Marit steht auf der Warteliste für eine Lungentransplantation. Wie sich ihr Gesundheitszustand entwickelt, möchte der Hof erst nach dem erfolgten Eingriff mitteilen.",
+      "published": "2026-06-05T23:30:35.074766+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Ukraine entschuldigt sich bei Athen",
+      "url": "https://www.zentralplus.ch/news/ukraine-entschuldigt-sich-bei-athen-2876194/",
+      "summary": "Die Ukraine hat sich für einen Vorfall mit einer Seedrohne bei Griechenland entschuldigt. Vor knapp einem Monat hatten Fischer diese entdeckt, vor der Insel Lefkada an der griechischen Wetsküste. Es h",
+      "published": "2026-06-05T23:30:35.074766+00:00"
     }
   ]
 }
