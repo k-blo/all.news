@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-05T01:00:54.696023+00:00",
+  "generated": "2026-06-05T01:31:04.101871+00:00",
   "date": "2026-06-05",
-  "count": 9,
+  "count": 12,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -65,6 +65,27 @@
       "url": "https://www.20min.ch/story/einkommen-aufgebessert-andrew-untervermietete-cottages-auf-mietfreiem-anwesen-103577238",
       "summary": "Der Sohn der verstorbenen Queen Elizabeth II. strich jahrelang die Einnahmen von untervermieteten Cottages auf dem von ihm mietfrei bewohnten Anwesen ein.",
       "published": "2026-06-05T01:00:54.696023+00:00"
+    },
+    {
+      "source": "Blick",
+      "title": "Bahnhofsuhr blieb um 1.16 Uhr stehen: Bahnhof Burgdorf BE steht in Flammen",
+      "url": "https://www.blick.ch/schweiz/bern/bahnhofsuhr-blieb-um-1-16-uhr-stehen-bahnhof-burgdorf-be-steht-in-flammen-id22004665.html",
+      "summary": "Das Bahnhofsgebäude von Burgdorf BE brennt lichterloh: Der Dachstock des Bahnhofs steht seit rund 1.30 Uhr in Flammen. Einsatzkräfte kämpfen gegen das Feuer. Ob der Zugverkehr am Morgen beeinträchtigt",
+      "published": "2026-06-05T01:31:04.101871+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Der Bahnhof von Burgdorf brennt lichterloh",
+      "url": "https://www.20min.ch/story/kanton-bern-der-bahnhof-von-burgdorf-brennt-103577239",
+      "summary": "Das Bahnhofsgebäude in Burgdorf im Kanton Bern steht in Flammen. Die Feuerwehr ist mit einem Grossaufgebot vor Ort.",
+      "published": "2026-06-05T01:31:04.101871+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Kuba: US-Sanktionen gegen Díaz-Canel",
+      "url": "https://www.zentralplus.ch/news/kuba-us-sanktionen-gegen-diaz-canel-2875890/",
+      "summary": "Die USA verhängen unter anderem gegen den kubanischen Präsidenten Miguel Díaz-Canel Sanktionen. Konkret werden etwa Vermögenswerte eingefroren, wie das US-Aussenministerium mitteilt. Damit erhöht die ",
+      "published": "2026-06-05T01:31:04.101871+00:00"
     }
   ]
 }
