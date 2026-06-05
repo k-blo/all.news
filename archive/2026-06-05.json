@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-05T00:01:11.915840+00:00",
+  "generated": "2026-06-05T00:31:21.856882+00:00",
   "date": "2026-06-05",
-  "count": 4,
+  "count": 8,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -30,6 +30,34 @@
       "url": "https://www.20min.ch/story/wirtschaftsforum-putin-zeigt-sich-weiter-siegesgewiss-103577233",
       "summary": "Der russische Präsident Wladimir Putin zeigt sich beim Wirtschaftsforum in St. Petersburg weiter siegessicher und erneuert seine Forderungen für Frieden in der Ukraine.",
       "published": "2026-06-05T00:01:11.915840+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Wirtschaftsforum in St. Petersburg: Putin zeigt sich siegesgewiss – und fordert erneut den Donbass",
+      "url": "https://www.tagesanzeiger.ch/putin-lehnt-selenskis-friedensangebot-ab-775153906530",
+      "summary": "Der russische Präsident Wladimir Putin zeigt sich beim Wirtschaftsforum in St. Petersburg weiter siegessicher und erneuert seine Forderungen für Frieden in der Ukraine.",
+      "published": "2026-06-05T00:31:21.856882+00:00"
+    },
+    {
+      "source": "Nebelspalter",
+      "title": "Jositsch Verlässt die Sp und Kandidiert Parteilos",
+      "url": "https://www.nebelspalter.ch/themen/2026/06/jositsch-verlaesst-die-sp-und-kandidiert-parteilos",
+      "summary": "",
+      "published": "2026-06-05T00:31:21.856882+00:00"
+    },
+    {
+      "source": "Nebelspalter",
+      "title": "Das Ende des Schleudertrauma Booms",
+      "url": "https://www.nebelspalter.ch/themen/2026/06/das-ende-des-schleudertrauma-booms",
+      "summary": "",
+      "published": "2026-06-05T00:31:21.856882+00:00"
+    },
+    {
+      "source": "Nebelspalter",
+      "title": "Die Who Möchte den Klimawandel zum Notstand Ausrufen Dabei Stützt sie Sich auf Falsche Zahlen und Verschweigt die Richtigen",
+      "url": "https://www.nebelspalter.ch/themen/2026/06/die-who-moechte-den-klimawandel-zum-notstand-ausrufen-dabei-stuetzt-sie-sich-auf-falsche-zahlen-und-verschweigt-die-richtigen",
+      "summary": "",
+      "published": "2026-06-05T00:31:21.856882+00:00"
     }
   ]
 }
