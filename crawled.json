@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-06T15:00:48.309528+00:00",
+  "generated": "2026-06-06T15:30:58.122818+00:00",
   "date": "2026-06-06",
-  "count": 267,
+  "count": 271,
   "articles": [
     {
       "source": "Zentralplus",
@@ -1871,6 +1871,34 @@
       "url": "https://www.watson.ch/international/usa/678913615-usa-hegseth-fordert-staerkeren-schulterschluss-der-verbuendeten",
       "summary": "",
       "published": "2026-06-06T15:00:48.309528+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Aussterbender Beruf – Nach 30 Jahren an der Zapfsäule: Tankwartin wird Bus-Chauffeurin",
+      "url": "https://www.srf.ch/news/schweiz/aussterbender-beruf-nach-30-jahren-an-der-zapfsaeule-tankwartin-wird-bus-chauffeurin",
+      "summary": "Nach 30 Jahren an der bedienten Tankstelle in Aarau Rohr wird der Job von Tankwartin Sandra Dietiker gestrichen.",
+      "published": "2026-06-06T15:30:58.122818+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Als Wölfe und Bären in Zug ein echtes Problem waren",
+      "url": "https://www.zentralplus.ch/geschichte/als-woelfe-und-baeren-in-zug-ein-echtes-problem-waren-2871432/",
+      "summary": "Der Wolf ist in Zug wieder ein Thema. Schon vor rund 400 Jahren plagten sich die Bauern mit den Wildtieren herum, aber auch mit Bären. Einige Strafen waren drakonisch. Was, wenn in naher Zukunft mehr ",
+      "published": "2026-06-06T15:30:58.122818+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Mirra Andrejewa gewinnt den French-Open-Final gegen Maja Chwalinska",
+      "url": "https://www.nzz.ch/sport/tennis/mirra-andrejewa-gewinnt-den-french-open-final-gegen-maja-chwalinska-ld.10010198",
+      "summary": "",
+      "published": "2026-06-06T15:30:58.122818+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Sportnews-Ticker: Alina Müller wechselt nach Hamilton",
+      "url": "https://www.watson.ch/sport/sport-news/195933263-sportnews-ticker-alina-mueller-wechselt-nach-hamilton",
+      "summary": "",
+      "published": "2026-06-06T15:30:58.122818+00:00"
     }
   ]
 }
