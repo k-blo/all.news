@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-06T02:00:49.900054+00:00",
+  "generated": "2026-06-06T02:30:40.177873+00:00",
   "date": "2026-06-06",
-  "count": 8,
+  "count": 9,
   "articles": [
     {
       "source": "Zentralplus",
@@ -58,6 +58,13 @@
       "url": "https://www.zentralplus.ch/news/angriffe-auf-iranische-radarstationen-2876196/",
       "summary": "Das US-Militär hat im Bereich der Strasse von Hormus nach eigenen Angaben vier iranische Drohnen abgewehrt und daraufhin im Iran Radarstationen zur Küstenüberwachung angegriffen. Die Kampfdrohnen hätt",
       "published": "2026-06-06T02:00:49.900054+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Papst Leo XIV reist nach Spanien",
+      "url": "https://www.zentralplus.ch/news/papst-leo-xiv-reist-nach-spanien-2876198/",
+      "summary": "Papst Leo XIV. trifft am Samstag zu einem sechstägigen Aufenthalt in Spanien ein.  Das Oberhaupt der römisch-katholischen Kirche besucht die Hauptstadt Madrid, Barcelona und die Kanarischen Inseln. In",
+      "published": "2026-06-06T02:30:40.177873+00:00"
     }
   ]
 }
