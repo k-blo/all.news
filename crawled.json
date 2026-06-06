@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-06T21:01:25.814104+00:00",
+  "generated": "2026-06-06T21:30:59.636979+00:00",
   "date": "2026-06-06",
-  "count": 348,
+  "count": 351,
   "articles": [
     {
       "source": "Zentralplus",
@@ -2438,6 +2438,27 @@
       "url": "https://www.watson.ch/schweiz/immobilien/929721433-oberaegeri-zg-ist-das-die-teuerste-eigentumswohnung-der-schweiz",
       "summary": "",
       "published": "2026-06-06T21:01:25.814104+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Sportnews-Ticker: Deutschland schlägt die USA knapp",
+      "url": "https://www.watson.ch/sport/sport-news/195933263-sportnews-ticker-deutschland-schlaegt-die-usa-knapp",
+      "summary": "",
+      "published": "2026-06-06T21:30:59.636979+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026: Schweiz gegen Australien endet Unentschieden",
+      "url": "https://www.watson.ch/sport/fussball/791566940-wm-2026-schweiz-gegen-australien-endet-unentschieden",
+      "summary": "",
+      "published": "2026-06-06T21:30:59.636979+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026: Bosnische Fans mit Gänsehautstimmung gegen Panama",
+      "url": "https://www.watson.ch/sport/fussball/417683472-wm-2026-bosnische-fans-mit-gaensehautstimmung-gegen-panama",
+      "summary": "",
+      "published": "2026-06-06T21:30:59.636979+00:00"
     }
   ]
 }
