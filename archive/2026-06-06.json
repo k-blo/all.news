@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-06T04:00:40.665526+00:00",
+  "generated": "2026-06-06T04:30:52.870214+00:00",
   "date": "2026-06-06",
-  "count": 57,
+  "count": 60,
   "articles": [
     {
       "source": "Zentralplus",
@@ -401,6 +401,27 @@
       "url": "https://www.nzz.ch/wirtschaft/fast-jeder-neue-fed-chef-musste-schwere-boersen-crashs-meistern-auch-fuer-kevin-warsh-ist-die-gefahr-einer-krise-sehr-real-ld.10009454",
       "summary": "",
       "published": "2026-06-06T04:00:40.665526+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Die treffendsten Trump-Karikaturen und Memes der Woche",
+      "url": "https://www.watson.ch/digital/spass/599272417-die-treffendsten-trump-karikaturen-und-memes-der-woche",
+      "summary": "",
+      "published": "2026-06-06T04:30:52.870214+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "SRF Arena: Warum es wegen eines Tintenfischs heute keine Review gibt",
+      "url": "https://www.watson.ch/schweiz/srf-arena/886016322-srf-arena-warum-es-wegen-eines-tintenfischs-heute-keine-review-gibt",
+      "summary": "",
+      "published": "2026-06-06T04:30:52.870214+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "KI: Angela Müller sagt, wie man Künstliche Intelligenz regulieren kann",
+      "url": "https://www.watson.ch/schweiz/digital/986323066-ki-angela-mueller-sagt-wie-man-kuenstliche-intelligenz-regulieren-kann",
+      "summary": "",
+      "published": "2026-06-06T04:30:52.870214+00:00"
     }
   ]
 }
