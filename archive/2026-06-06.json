@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-06T04:30:52.870214+00:00",
+  "generated": "2026-06-06T05:01:15.879408+00:00",
   "date": "2026-06-06",
-  "count": 60,
+  "count": 67,
   "articles": [
     {
       "source": "Zentralplus",
@@ -422,6 +422,55 @@
       "url": "https://www.watson.ch/schweiz/digital/986323066-ki-angela-mueller-sagt-wie-man-kuenstliche-intelligenz-regulieren-kann",
       "summary": "",
       "published": "2026-06-06T04:30:52.870214+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Abstimmung Camping Schützenweiher in Winterthur: Aufwertung für alle oder Heimat für wenige?",
+      "url": "https://www.tagesanzeiger.ch/schuetzenweiher-winterthur-ja-oder-nein-zur-sanierung-973685444416",
+      "summary": "Soll die Stadt den Campingplatz Schützenweiher sanieren? Die Meinungen auf der Redaktion sind geteilt.",
+      "published": "2026-06-06T05:01:15.879408+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Weltmeisterschaft 2026: Das Unterland überlässt die WM den Restaurants",
+      "url": "https://www.tagesanzeiger.ch/fussball-wm-2026-public-viewing-im-unterland-duenn-gesaet-592460471153",
+      "summary": "Die Fussballspiele auf Grossleinwand sind im Unterland kaum Thema. Bis auf zwei Kinos überlässt man das Feld der Gastronomie. Sogar der Circle tritt diesmal nicht an.",
+      "published": "2026-06-06T05:01:15.879408+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Teamarbeit im Rosengarten: 3700 Rosen gedeihen hier ohne ein Gramm Pestizid – jetzt kommen noch Reben dazu",
+      "url": "https://www.bernerzeitung.ch/berner-rosengarten-3700-rosen-bluehen-in-voller-pracht-908297785488",
+      "summary": "Der Rosengarten lockt seit jeher Familien, Pflanzenliebhaberinnen, Verliebte, Studierende, Yogagruppen und Hündeler an. Hinter der Berner Postkartenidylle steckt ein eingespieltes Team und viel Herzbl",
+      "published": "2026-06-06T05:01:15.879408+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "OGA in Langnau: «Sönd wöllkomm!»: 150 Firmen laden zur Gewerbeausstellung ins Emmental",
+      "url": "https://www.bernerzeitung.ch/langnau-emmental-trifft-appenzell-an-der-oga-911999736004",
+      "summary": "Die OGA öffnet in der Ilfishalle Langnau für neun Tage ihre Türen. Das Appenzellerland reist als Gastregion mit Kulinarik, Handwerk und Musik an. Das sind die wichtigsten Infos.",
+      "published": "2026-06-06T05:01:15.879408+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Ausstellung im Schloss Thun: Wie Thun zum goldenen Stern kam – und wie dieser bis heute ausstrahlt",
+      "url": "https://www.bernerzeitung.ch/ausstellung-im-schloss-wie-thun-zum-goldenen-stern-kam-390798246293",
+      "summary": "Vor genau 550 Jahren kam Thun zum goldenen Stern in seinem Wappen. Das Schlossmuseum zeigt derzeit die Geschichte dahinter – und wie der Stern die Stadt bis heute prägt.",
+      "published": "2026-06-06T05:01:15.879408+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Ein Fluss im Wandel: Liebe Aare – nerven wir dich?",
+      "url": "https://www.bernerzeitung.ch/aare-bern-schoenster-schwimmplatz-oder-gefaehrlichster-fluss-474603286388",
+      "summary": "Berns Lebensader wird ständig wärmer und im Sommer überrannt. Vielleicht fordert sie deshalb immer wieder ihren Tribut.",
+      "published": "2026-06-06T05:01:15.879408+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Nahost-Krieg: Iran beschiesst US-Basen in Kuwait und Bahrain mit Raketen",
+      "url": "https://www.watson.ch/international/iran/800152916-nahost-krieg-iran-beschiesst-us-basen-in-kuwait-und-bahrain-mit-raketen",
+      "summary": "",
+      "published": "2026-06-06T05:01:15.879408+00:00"
     }
   ]
 }
