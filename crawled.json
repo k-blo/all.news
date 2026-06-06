@@ -1,6 +1,28 @@
 {
-  "generated": "2026-06-06T22:00:50.466736+00:00",
+  "generated": "2026-06-06T22:30:43.492037+00:00",
   "date": "2026-06-07",
-  "count": 0,
-  "articles": []
+  "count": 3,
+  "articles": [
+    {
+      "source": "Blick",
+      "title": "Donald Trump gegen die Schweiz: Eine Nation in der Zoll-Falle",
+      "url": "https://www.blick.ch/schweiz/donald-trump-gegen-die-schweiz-eine-nation-in-der-zoll-falle-id22008346.html",
+      "summary": "Im Streit mit Donald Trump droht der Schweiz der nächste Zollhammer. In Bern spielt sich ein Duell der Superlative ab. Amerika-Schweiz gegen Europa-Schweiz. Die Uhr tickt.",
+      "published": "2026-06-06T22:30:43.492037+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "D: Ebola Patient aus Charité entlassen",
+      "url": "https://www.zentralplus.ch/news/d-ebola-patient-aus-charite-entlassen-2876281/",
+      "summary": "Nach gut zwei Wochen Behandlung in der Berliner Charité ist der US-amerikanische Ebola-Patient aus dem Krankenhaus entlassen worden. Der Arzt, der sich in Kongo-Kinshasa infiziert hatte, befinde sich ",
+      "published": "2026-06-06T22:30:43.492037+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Mosambik: Bischof tot aufgefunden",
+      "url": "https://www.zentralplus.ch/news/mosambik-bischof-tot-aufgefunden-2876279/",
+      "summary": "Der katholische Bischof von Quelimane in Mosambik, Osório Citora Afonso, ist am Samstag erschossen in seinem Haus aufgefunden worden, wie Kathpress am Abend berichtete. Der 54-jährige Geistliche und O",
+      "published": "2026-06-06T22:30:43.492037+00:00"
+    }
+  ]
 }
