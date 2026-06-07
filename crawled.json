@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-07T04:01:17.227110+00:00",
+  "generated": "2026-06-07T04:30:55.048821+00:00",
   "date": "2026-06-07",
-  "count": 59,
+  "count": 60,
   "articles": [
     {
       "source": "Blick",
@@ -415,6 +415,13 @@
       "url": "https://www.watson.ch/international/lateinamerika/439940142-35-boote-in-ecuador-in-flammen-brandursache-unklar",
       "summary": "",
       "published": "2026-06-07T04:01:17.227110+00:00"
+    },
+    {
+      "source": "Blick",
+      "title": "Editorial über ein Land und seine Widersprüche: So droht uns eigentlich das Aus",
+      "url": "https://www.blick.ch/meinung/editorial-ueber-ein-land-der-widersprueche-eigentlich-die-schweiz-id22008425.html",
+      "summary": "Selbstzufrieden schaukelt sich die Nation durch den politischen Nebel. Ein unbedarftes Interview des Ruag-Präsidenten offenbart das ebenso wie die anstehenden politischen Dossiers.",
+      "published": "2026-06-07T04:30:55.048821+00:00"
     }
   ]
 }
