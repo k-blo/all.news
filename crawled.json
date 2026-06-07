@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-07T06:01:23.528177+00:00",
+  "generated": "2026-06-07T06:31:21.406841+00:00",
   "date": "2026-06-07",
-  "count": 85,
+  "count": 89,
   "articles": [
     {
       "source": "Blick",
@@ -597,6 +597,34 @@
       "url": "https://insideparadeplatz.ch/2026/06/07/sbb-verwaltungsrat-in-thurgauer-wirtschaftskrimi/",
       "summary": "",
       "published": "2026-06-07T06:01:23.528177+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Blick ins PTT-Archiv – Was historische Telefonbücher über die Schweiz erzählen",
+      "url": "https://www.srf.ch/news/schweiz/blick-ins-ptt-archiv-was-historische-telefonbuecher-ueber-die-schweiz-erzaehlen",
+      "summary": "Wo wohnte Albert Einstein? Welche Berufe sind verschwunden? Telefonbücher sind wertvolle Archivquellen. Fünf Beispiele.",
+      "published": "2026-06-07T06:31:21.406841+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Winterthur: Kritik an Siegelung",
+      "url": "https://www.zentralplus.ch/news/winterthur-kritik-an-siegelung-2876295/",
+      "summary": "Nach dem Messerangriff in Winterthur mit drei Verletzten, konnten die Strafverfolgungsbehörden die elektronischen Geräte des Angreifers noch nicht auswerten. Das sagt Bundesanwalt Stefan Blättler der ",
+      "published": "2026-06-07T06:31:21.406841+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Sportnews-Ticker: Golden Knights nach Spektakel-Spiel wieder in Führung",
+      "url": "https://www.watson.ch/sport/sport-news/195933263-sportnews-ticker-golden-knights-nach-spektakel-spiel-wieder-in-fuehrung",
+      "summary": "",
+      "published": "2026-06-07T06:31:21.406841+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Wahl in Armenien: Eine Zerreissprobe zwischen Putin und Europa",
+      "url": "https://www.watson.ch/international/eu/393297666-wahl-in-armenien-eine-zerreissprobe-zwischen-putin-und-europa",
+      "summary": "",
+      "published": "2026-06-07T06:31:21.406841+00:00"
     }
   ]
 }
