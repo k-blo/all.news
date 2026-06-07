@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-07T05:01:14.441814+00:00",
+  "generated": "2026-06-07T05:31:09.244656+00:00",
   "date": "2026-06-07",
-  "count": 65,
+  "count": 78,
   "articles": [
     {
       "source": "Blick",
@@ -457,6 +457,97 @@
       "url": "https://www.watson.ch/international/interview/941575189-ikkimel-im-interview-deutsch-rapperin-ueber-hass-und-toleranz",
       "summary": "",
       "published": "2026-06-07T05:01:14.441814+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Sorgen um Stromversorgung: Die Bevölkerung setzt auf Atomkraft",
+      "url": "https://www.tagesanzeiger.ch/schweiz-79-prozent-wollen-akw-laufen-lassen-708537758269",
+      "summary": "Eine neue Umfrage zeigt: Vier von fünf Befragten wollen die Kern­kraft­werke in der Schweiz weiterbetrieben. Zwei Drittel glauben nicht mehr, dass die Erneuerbaren alleine den Strombedarf decken könne",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Atomausstieg aufheben?: Mitte-Frauen wollen keine Kernkraftwerke – die wichtigen Männer in der Partei schon",
+      "url": "https://www.tagesanzeiger.ch/atomausstieg-zwei-drittel-der-mitte-partei-will-akw-comeback-477677126472",
+      "summary": "Im Parlament kommt es am Montag zur grossen Atomdebatte. Und die Mitte-Partei steht unter besonderem Druck.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Streit um Schulsport: Pflicht für drei Lektionen Sport soll fallen. Verband warnt: «Es geht um die Gesundheit der Kinder»",
+      "url": "https://www.tagesanzeiger.ch/entflechtung-27-bund-will-schulsportobligatorium-abschaffen-406549529992",
+      "summary": "Sport ist das einzige Fach, bei dem der Bund den Kantonen die wöchentliche Stundenzahl diktiert. Damit soll nun Schluss sein. Hintergrund ist auch der Mangel an Turnhallen im Land.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Letzte Erkenntnisse vor der WM: Zu viel Nebengeräusche und zu wenig Fussball: Granit Xhaka schlägt Alarm",
+      "url": "https://www.tagesanzeiger.ch/wm-2026-xhaka-schlaegt-alarm-nach-1-1-gegen-australien-814806264922",
+      "summary": "Ein Captain, der die Sinne schärft. Ein Spieler, der all zwei Jahre aus der Versenkung auftaucht. Und ein Joker, der eigentlich zu gut ist, um nur Joker zu sein.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Fussball-Legende Georges Bregy: «Es wäre das höchste Salär meines Lebens gewesen – aber ich lehnte ab»",
+      "url": "https://www.tagesanzeiger.ch/georges-bregy-fussball-legende-blickt-auf-wm-1994-zurueck-633463185332",
+      "summary": "Sein Freistosstor an der WM 1994 ist unvergessen. Weshalb der Walliser sich einst wie eine lebende Leiche fühlte, warum er Simon Ammann schlimm findet. Und bei wem er verlangt, dass das Aufnahmegerät ",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Tierarzt im Interview: Warum sterben im Zoo Zürich so viele Elefanten?",
+      "url": "https://www.tagesanzeiger.ch/warum-sterben-im-zoo-zuerich-so-viele-elefanten-116059249273",
+      "summary": "Die Zahl der toten Elefanten in Zürich sei hoch, sagt der renommierte Elefantenmediziner Willem Schaftenaar. Er erklärt, warum ein Impfstoff Hoffnung macht und weshalb ein Zuchtstopp keine Lösung wäre",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Nachhaltigkeit im Supermarkt: Weniger Tierwohl, sinkender Bio-Umsatz – wie grün ist die Migros noch?",
+      "url": "https://www.tagesanzeiger.ch/migros-rueckschritte-bei-nachhaltigkeit-tierwohl-nimmt-ab-139087191422",
+      "summary": "Das Unternehmen war lange stolz auf seinen Titel als «nachhaltigste Detail­händlerin». Heute löscht es alte Berichte, listet Bio­produkte aus und wirbt mit tiefen Preisen. Doch es kommt Widerstand auf",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Elektromobilität ist günstiger: Trendwende beim Autokauf: Plötzlich will jeder Zweite ein E-Auto",
+      "url": "https://www.tagesanzeiger.ch/e-auto-schweiz-jeder-zweite-will-beim-kauf-umsteigen-544979492615",
+      "summary": "Das Interesse an Stromern hat sich in der Schweiz innert Jahresfrist verdoppelt. Nun zieht auch der Occasionsmarkt an. Darauf kommt es beim Kauf an, um böse Überraschungen zu vermeiden.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Lernfähige Blutsauger: Wer sich mit Antibrumm einsprüht, könnte Mücken erst recht anlocken",
+      "url": "https://www.tagesanzeiger.ch/deet-insektenschutzmittel-zieht-muecken-an-352445663490",
+      "summary": "Forschende haben Gelbfiebermücken auf den Geruch vom Wirkstoff DEET trainiert – mit erstaunlichem Ergebnis. Über 60 Prozent der Tiere stachen zu, sobald sie das Insektenschutzmittel wahrnahmen.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Bei Opfikon: Wendemanöver auf Flughafenautobahn führt beinahe zu Unfall",
+      "url": "https://www.tagesanzeiger.ch/geisterfahrer-auf-a11-bubenholztunnel-manoever-kostet-1700-franken-507829431868",
+      "summary": "Ein Autofahrer wechselt mitten auf der Autobahn die Fahrtrichtung. Das trägt dem 50-Jährigen hohe Kosten und eine Vorstrafe ein.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Badrans #Korrigendum: «Notwehr» gegen Leerkündigungen und Wuchermieten",
+      "url": "https://www.tagesanzeiger.ch/wohnschutz-initiative-warum-leerkuendigungen-system-haben-543061723437",
+      "summary": "Leerkündigungen haben epidemische Ausmasse angenommen. Was tun? Das Recht durchsetzen! Zürich hat jetzt die Chance dazu.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Migration in Winterthur: Neuer Stadtrundgang macht Migrationsgeschichte sichtbar",
+      "url": "https://www.tagesanzeiger.ch/migration-in-winterthur-neuer-stadtrundgang-macht-migrationsgeschichte-winterthurs-sichtbar-395859460229",
+      "summary": "llegale Kinder, Baracken und ein Schulsystem ohne Plan: Ein  Rundgang zeigt Winterthurs raue Seite der Zuwanderung. Die Erzählerinnen sind selbst Migrantinnen.",
+      "published": "2026-06-07T05:31:09.244656+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Pflicht für Schulsport soll fallen",
+      "url": "https://www.zentralplus.ch/news/pflicht-fuer-schulsport-soll-fallen-2876291/",
+      "summary": "Der Bund will die Schulsportpflicht streichen. Das berichtet die «Sonntagszeitung». Sie beruft sich auf einen Zwischenbericht aus dem Finanzdepartement des Bundes. Die Kantone finanzierten den Sportun",
+      "published": "2026-06-07T05:31:09.244656+00:00"
     }
   ]
 }
