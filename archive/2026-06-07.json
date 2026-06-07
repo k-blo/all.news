@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-07T21:01:07.705769+00:00",
+  "generated": "2026-06-07T21:30:30.582851+00:00",
   "date": "2026-06-07",
-  "count": 347,
+  "count": 349,
   "articles": [
     {
       "source": "Blick",
@@ -2431,6 +2431,20 @@
       "url": "https://www.watson.ch/schweiz/swiss/884538836-swiss-maschine-nach-delhi-dreht-um-und-fliegt-nach-zuerich-zurueck",
       "summary": "",
       "published": "2026-06-07T21:01:07.705769+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Kurs Richtung EU: Prowestliche Regierung liegt bei Wahl in Armenien vorn",
+      "url": "https://www.tagesanzeiger.ch/armenien-wahl-paschinjan-liegt-laut-hochrechnungen-vorn-571513505284",
+      "summary": "Das Land wird ersten Hochrechnungen zufolge seinen prowestlichen Kurs Richtung EU fortsetzen. Regierungschef Paschinjan kann demnach weiterregieren.",
+      "published": "2026-06-07T21:30:30.582851+00:00"
+    },
+    {
+      "source": "Persönlich",
+      "title": "Neue KI-Funktionen zu erwarten",
+      "url": "https://www.persoenlich.com/digital/neue-ki-funktionen-zu-erwarten",
+      "summary": "An der WWDC, die am Montagabend in Cupertino startet, steht vor allem eine lang angekündigte Neuerung im Fokus: eine verbesserte Siri, die komplexere Aufgaben übernehmen soll – zwei Jahre nach der ers",
+      "published": "2026-06-07T21:30:30.582851+00:00"
     }
   ]
 }
