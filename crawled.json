@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-07T20:00:31.757973+00:00",
+  "generated": "2026-06-07T20:30:34.595577+00:00",
   "date": "2026-06-07",
-  "count": 335,
+  "count": 340,
   "articles": [
     {
       "source": "Blick",
@@ -2347,6 +2347,41 @@
       "url": "https://www.watson.ch/international/iran/957823536-israelische-armee-iran-feuert-raketen-in-richtung-israel",
       "summary": "",
       "published": "2026-06-07T20:00:31.757973+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Zufriedenheit im Job: Kündigungen halbiert: «Es steht und fällt mit mir als Teamleaderin»",
+      "url": "https://www.tagesanzeiger.ch/fachkraeftemangel-warum-fuehrung-der-schluessel-ist-862893624047",
+      "summary": "Viele Betriebe klagen über fehlende Fachkräfte. Eine Notfallstation und ein Pflegeheim beweisen nun: Wenn Chefs lernen, richtig zu loben und Verantwortung abzugeben, führen sie plötzlich Wartelisten f",
+      "published": "2026-06-07T20:30:34.595577+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Ich und mein Beruf: Sie holt für die Schweiz hunderte Millionen Franken rein",
+      "url": "https://www.tagesanzeiger.ch/nina-ulrich-leitet-den-urteilsvollzug-der-bundesanwaltschaft-609427600389",
+      "summary": "Nina Ulrich leitet den Urteilsvollzug der Bundesanwaltschaft. Sie sucht verborgene Konten, macht Wein- und Autosammlungen zu Geld und konnte mit ihrem Team dem Bund schon über 300 Millionen Franken üb",
+      "published": "2026-06-07T20:30:34.595577+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Verkehrswende in Äthiopien: Ein armes Land will zu einem Pionier von E-Autos werden",
+      "url": "https://www.tagesanzeiger.ch/aethiopien-will-ein-land-der-e-autos-werden-686639003741",
+      "summary": "Äthiopien hat als erster Staat der Welt den Import von Autos mit Verbrennern verboten – und ist darauf jetzt in der Ölkrise ziemlich stolz. Äthiopier, die ein Elektroauto besitzen, sind besser unterwe",
+      "published": "2026-06-07T20:30:34.595577+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Brandgeruch im Tower: Flughafen München stellt Betrieb ein",
+      "url": "https://www.bernerzeitung.ch/brand-im-tower-flughafen-muenchen-raeumt-turm-786078432017",
+      "summary": "Der Tower des Flughafens München ist wegen Brandgeruchs evakuiert worden. Der Flugbetrieb wurde eingestellt.",
+      "published": "2026-06-07T20:30:34.595577+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Klage gegen Trumps UFC-Show vor dem Weissen Haus",
+      "url": "https://www.watson.ch/sport/blogs/600457479-klage-gegen-trumps-ufc-show-vor-dem-weissen-haus",
+      "summary": "",
+      "published": "2026-06-07T20:30:34.595577+00:00"
     }
   ]
 }
