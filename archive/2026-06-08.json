@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-07T23:01:01.839867+00:00",
+  "generated": "2026-06-07T23:30:38.819472+00:00",
   "date": "2026-06-08",
-  "count": 2,
+  "count": 3,
   "articles": [
     {
       "source": "Blick",
@@ -16,6 +16,13 @@
       "url": "https://www.zentralplus.ch/news/angriff-sei-als-warnung-zu-verstehen-2876384/",
       "summary": "«Laut iranischen Medien zielte der Angriff auf eine israelische Militärbasis und der Angriff sei als Warnung an Israel zu verstehen», erklärt Nahost-Korrespondentin Anita Bünter. «Israelische Medien z",
       "published": "2026-06-07T22:30:37.938064+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Blockade dauert an: Einbussen für Kurti bei vorgezogener Wahl im Kosovo",
+      "url": "https://www.tagesanzeiger.ch/einbussen-fuer-kurti-bei-vorgezogener-wahl-im-kosovo-798200470705",
+      "summary": "Regierungschef Albin Kurti gewinnt die Wahl im Kosovo, muss aber deutliche Verluste hinnehmen. Was noch schwerer wiegt: Die Blockade um die Wahl eines neuen Staatsoberhauptes bleibt wohl unaufgelöst.",
+      "published": "2026-06-07T23:30:38.819472+00:00"
     }
   ]
 }
