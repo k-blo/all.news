@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-08T01:00:45.898212+00:00",
+  "generated": "2026-06-08T01:31:10.577980+00:00",
   "date": "2026-06-08",
-  "count": 10,
+  "count": 14,
   "articles": [
     {
       "source": "Blick",
@@ -72,6 +72,34 @@
       "url": "https://www.watson.ch/international/natur/178486024-schweres-erdbeben-vor-philippinen-tsunami-warnung",
       "summary": "",
       "published": "2026-06-08T01:00:45.898212+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Fünf Verletzte bei Messerangriff an New Yorker Penn Station",
+      "url": "https://www.20min.ch/story/belebter-bahnhof-fuenf-verletzte-bei-messerangriff-an-new-yorker-penn-station-103578347",
+      "summary": "Kurz vor der NBA-Finalserie und der Fussball-WM sind bei einem Messerangriff in der New Yorker Penn Station fünf Menschen verletzt worden.",
+      "published": "2026-06-08T01:31:10.577980+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Philippinen warnen vor Tsunami",
+      "url": "https://www.zentralplus.ch/news/philippinen-warnen-vor-tsunami-2876386/",
+      "summary": "Auf den Philippinen hat sich ein schweres Erdbeben ereignet. Laut dem örtlichen Institut für Vulkanologie und Seismologie (Phivolcs) hatte das Beben auf der Insel Mindanao eine Stärke von 7,8. Das Ins",
+      "published": "2026-06-08T01:31:10.577980+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Audrey Werro: Weshalb ihre Fabelzeit kaum hoch genug einzuschätzen ist",
+      "url": "https://www.watson.ch/schweiz/sport/161888942-audrey-werro-weshalb-ihre-fabelzeit-kaum-hoch-genug-einzuschaetzen-ist",
+      "summary": "",
+      "published": "2026-06-08T01:31:10.577980+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Proeuropäische Regierung liegt bei Wahl in Armenien vorn",
+      "url": "https://www.watson.ch/international/eu/478287252-proeuropaeische-regierung-liegt-bei-wahl-in-armenien-vorn",
+      "summary": "",
+      "published": "2026-06-08T01:31:10.577980+00:00"
     }
   ]
 }
