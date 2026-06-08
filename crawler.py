@@ -34,6 +34,8 @@ FEEDS = [
     {"source": "20 Minuten",    "url": "https://partner-feeds.20min.ch/rss/20minuten"},
     {"source": "Tages-Anzeiger","url": "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/"},
     {"source": "Berner Zeitung","url": "https://partner-feeds.publishing.tamedia.ch/rss/bernerzeitung/"},
+    {"source": "Der Bund",      "url": "https://partner-feeds.publishing.tamedia.ch/rss/derbund/"},
+    {"source": "Basler Zeitung","url": "https://partner-feeds.publishing.tamedia.ch/rss/bazonline/"},
     #{"source": "Tribune de Genève","url": "https://partner-feeds.publishing.tamedia.ch/rss/tdg/"},
     {"source": "Zentralplus",   "url": "https://www.zentralplus.ch/feed/"},
     #{"source": "Heidi.news",    "url": "https://www.heidi.news/articles.rss"},
@@ -71,8 +73,13 @@ REPUBLIK_MAX = 50
 SUEDOSTSCHWEIZ_MAX = 50
 # CH Media regional papers: /sitemap/YYYY/MM/sitemap.xml, URLs end in -ld.NNNNNNN
 CH_MEDIA_SOURCES = [
-    {"source": "Luzerner Zeitung",  "base": "https://www.luzernerzeitung.ch",  "max": 50},
-    {"source": "Aargauer Zeitung",  "base": "https://www.aargauerzeitung.ch",  "max": 50},
+    {"source": "Luzerner Zeitung",   "base": "https://www.luzernerzeitung.ch",   "max": 50},
+    {"source": "Aargauer Zeitung",   "base": "https://www.aargauerzeitung.ch",   "max": 50},
+    {"source": "St. Galler Tagblatt","base": "https://www.tagblatt.ch",          "max": 50},
+    {"source": "Thurgauer Zeitung",  "base": "https://www.thurgauerzeitung.ch",  "max": 50},
+    {"source": "bz Basel",           "base": "https://www.bzbasel.ch",           "max": 50},
+    {"source": "Solothurner Zeitung","base": "https://www.solothurnerzeitung.ch","max": 50},
+    {"source": "Oltner Tagblatt",    "base": "https://www.oltnertagblatt.ch",    "max": 50},
 ]
 
 
@@ -354,6 +361,31 @@ def crawl_ch_media(source, base, limit):
     return crawl_sitemap_source(source, rows, re.compile(r"/([^/]+)-ld\.\d+$"), limit)
 
 
+def crawl_woz():
+    """Drupal sitemapindex — newest articles are on the last page. URL pattern:
+    /ISSUE/rubric/slug/!HASH — title from slug (second-to-last segment)."""
+    index = ET.fromstring(fetch("https://www.woz.ch/sitemaps/editorial_content/sitemap.xml"))
+    pages = []
+    for loc in index.iter():
+        if local(loc) == "loc" and loc.text:
+            m = re.search(r"[?&]page=(\d+)", loc.text)
+            if m:
+                pages.append((int(m.group(1)), loc.text))
+    if not pages:
+        raise ValueError("no sitemap pages found")
+    newest_url = max(pages)[1]
+    article_re = re.compile(r"/\d+/[^/]+/([^/]+)/![A-Z0-9]+$")
+    rows = sitemap_rows(fetch(newest_url), article_re)
+    return crawl_sitemap_source("WOZ", rows, article_re, 50)
+
+
+def crawl_nau():
+    """Monthly Google-News sitemap — real <news:title> + publication_date."""
+    ym = datetime.now(timezone.utc).strftime("%Y-%m")
+    url = f"https://www.nau.ch/_sitemap/monthly/{ym}"
+    return crawl_news_sitemap("Nau", url, 50)
+
+
 def crawl_bilanz():
     """Monthly time-limited sitemap. URL = .../slug/<id>, so slug is the
     second-to-last path segment. Builds current month's URL."""
@@ -433,6 +465,8 @@ def main():
         ("Bilanz", crawl_bilanz),
         ("Republik", crawl_republik),
         ("Südostschweiz", crawl_suedostschweiz),
+        ("Nau", crawl_nau),
+        ("WOZ", crawl_woz),
     ]
     sitemap_jobs += [
         (s["source"], (lambda s: lambda: crawl_ch_media(s["source"], s["base"], s["max"]))(s))
