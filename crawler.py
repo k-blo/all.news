@@ -538,6 +538,7 @@ def write_colors_js():
 def write_rendered_html(articles, dest_path, *, title, description, canonical, day_link):
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
+    articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
     items = "\n".join(render_article_html(a) for a in articles)
     count = f"{len(articles)} artikel"
     html = (tmpl
