@@ -5,8 +5,9 @@ body {
 }
 h1 { font-size: 1.0rem; margin: 0 0 0.5rem; display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
 #meta { color: #999; font-size: 0.7rem; font-weight: normal; }
-#excludeBox { font-size: 0.75rem; font-weight: normal; }
-#dayLink { font-size: 0.75rem; font-weight: normal; }
+#excludeBox { font-size: 0.7rem; font-weight: normal; }
+#dayLink { font-size: 0.7rem; font-weight: normal; }
+#excludeBox { margin-left: 0.5rem; }
 #excludeBox summary { cursor: pointer; }
 #filters { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: 0.4rem; }
 #filters label { white-space: nowrap; }
