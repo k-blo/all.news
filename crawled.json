@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-08T03:31:05.771594+00:00",
+  "generated": "2026-06-08T04:01:29.463466+00:00",
   "date": "2026-06-08",
-  "count": 43,
+  "count": 60,
   "articles": [
     {
       "source": "Blick",
@@ -303,6 +303,125 @@
       "url": "https://www.watson.ch/international/reisen/190578494-muenchner-flughafen-musste-betrieb-stundenlang-einstellen",
       "summary": "",
       "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Schlechte Zeiten für Goliath: Drohnen haben eine neue Ära der asymmetrischen Kriegsführung eingeläutet",
+      "url": "https://www.nzz.ch/meinung/schlechte-zeiten-fuer-goliath-drohnen-haben-eine-neue-aera-der-asymmetrischen-kriegsfuehrung-eingelaeutet-ld.10009653",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Im Ukraine-Krieg strecken alle Seiten diplomatische Fühler aus",
+      "url": "https://www.nzz.ch/international/schroeder-im-kreml-selenski-in-london-im-ukraine-krieg-testen-alle-seiten-die-diplomatie-ld.10010276",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "DER ANDERE BLICK - Bei der Pflegereform bestraft die deutsche Gesundheitsministerin Nina Warken die Fleissigen",
+      "url": "https://www.nzz.ch/der-andere-blick/bei-der-pflegereform-bestraft-die-deutsche-gesundheitsministerin-nina-warken-die-fleissigen-ld.10010257",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Spioniert Israel die USA aus? Das Pentagon ist offenbar in höchster Alarmbereitschaft",
+      "url": "https://www.nzz.ch/international/spioniert-israel-die-usa-aus-das-pentagon-ist-offenbar-in-hoechster-alarmbereitschaft-ld.10010243",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Alain Geiger sagt, wie Roy Hodgson die Schweizer Fussballer einte – und warum es an der WM 1994 trotzdem Probleme gab",
+      "url": "https://www.nzz.ch/sport/alain-geiger-sagt-wie-roy-hodgson-die-schweizer-fussballer-einte-und-warum-es-an-der-wm-1994-trotzdem-probleme-gab-ld.10010219",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Späte Strafe: Lex Greensill darf neun Jahre keine britischen Firmen mehr leiten",
+      "url": "https://www.nzz.ch/wirtschaft/spaete-strafe-lex-greensill-darf-9-jahre-keine-britischen-firmen-mehr-leiten-ld.10010213",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "«Je mehr KI ich anzapfe, desto mehr Tokens verbrauche ich. Deshalb kann das exponentiell teuer werden»",
+      "url": "https://www.nzz.ch/wirtschaft/je-mehr-ki-ich-anzapfe-desto-mehr-tokens-verbrauche-ich-deshalb-kann-das-sehr-schnell-exponentiell-teuer-werden-ld.10010028",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "PODCAST «NZZ AKZENT» - Wie die iranische Diaspora in Los Angeles gegen das Mullahregime kämpft",
+      "url": "https://www.nzz.ch/podcast/wie-die-iranische-diaspora-in-los-angeles-gegen-das-mullahregime-kaempft-ld.10009918",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Kaytranada: Für die Spannung in seinem Hip-Hop-Track sorgen die Defekte in der Matrix",
+      "url": "https://www.nzz.ch/feuilleton/kaytranada-wie-der-star-dj-hip-hop-und-house-neu-definiert-ld.10009913",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Nickel, Kohle, Palmöl: Indonesien will die Giganten des globalen Rohstoffhandels ausstechen",
+      "url": "https://www.nzz.ch/pro/nickel-kohle-palmoel-indonesien-will-die-giganten-des-globalen-rohstoffhandels-ausstechen-ld.10009829",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Geste der Freundschaft: Zwischen Peking und Pjongjang fährt die Eisenbahn wieder – aber unter grösster Geheimhaltung",
+      "url": "https://www.nzz.ch/international/peking-pjongjang-express-rollt-wieder-aber-in-groesster-diskretion-ld.10009814",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Vom Filmstar zum Chefminister von Tamil Nadu: Der Aufstieg von Joseph Vijay mischt Indiens Politik auf",
+      "url": "https://www.nzz.ch/international/joseph-vijay-vom-filmstar-zum-chefminister-von-tamil-nadu-ld.10009449",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "GASTKOMMENTAR - Wie konnte aus Edgar Morin ein Mann werden, der Israel als «Krebs» bezeichnete und Islamisten wie Tariq Ramadan hofierte?",
+      "url": "https://www.nzz.ch/feuilleton/pascal-bruckner-nachruf-edgar-morin-gestapo-widerstand-israel-mohammed-karikaturen-islamogauchismus-ld.10009436",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "«Unsere Ehe mit der EU war toxisch, und darauf folgte eine teure Scheidung», sagt der ehemalige Speaker des britischen Unterhauses John Bercow zum Brexit",
+      "url": "https://www.nzz.ch/wirtschaft/ex-parlamentssprecher-john-bercow-interview-zu-brexit-labour-starmer-farage-ld.10009380",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Tesla-Jäger zum Schnäppchenpreis: wie MG mit IM den Schweizer Markt aufmischen will",
+      "url": "https://www.nzz.ch/mobilitaet/tesla-jaeger-zum-schnaeppchenpreis-wie-mg-mit-im-den-schweizer-markt-aufmischen-will-ld.10009341",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Abkehr vom Mythos als «Hitlers erstes Opfer»: wie die Waldheim-Affäre Österreich zwang, sich seiner Geschichte zu stellen",
+      "url": "https://www.nzz.ch/international/waldheim-affaere-vor-vierzig-jahren-veraenderte-oesterreich-ld.10009053",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Forscher warnen vor Wettrüsten der Atommächte",
+      "url": "https://www.watson.ch/international/nordkorea/198850391-forscher-warnen-vor-wettruesten-der-atommaechte",
+      "summary": "",
+      "published": "2026-06-08T04:01:29.463466+00:00"
     }
   ]
 }
