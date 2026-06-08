@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-08T03:00:54.828883+00:00",
+  "generated": "2026-06-08T03:31:05.771594+00:00",
   "date": "2026-06-08",
-  "count": 33,
+  "count": 43,
   "articles": [
     {
       "source": "Blick",
@@ -233,6 +233,76 @@
       "url": "https://www.suedostschweiz.ch/glarus/pingpong-gegen-das-vergessen-tischtennis-gibt-christian-chrigel-neue-kraft-1911461",
       "summary": "",
       "published": "2026-06-08T03:00:54.828883+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Millionen-«Züglete» – Basler Museum zieht um: 12 Millionen Objekte in Bewegung",
+      "url": "https://www.srf.ch/news/schweiz/millionen-zueglete-basler-museum-zieht-um-12-millionen-objekte-in-bewegung",
+      "summary": "Das Naturhistorische Museum Basel zügelt in einen Neubau beim Bahnhof St. Johann. Der Umzug dauert ein Jahr.",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "«Apropos» – der tägliche Podcast: «Immer höhere Anforderungen»: Jetzt werden Klassen­lehr­personen zum Politikum",
+      "url": "https://www.tagesanzeiger.ch/klassenlehrpersonen-warum-die-politik-jetzt-handelt-413878099369",
+      "summary": "Immer mehr Schulen haben Mühe, Klassen­lehrpersonen zu finden. Und die, die den Job machen, leisten ziemlich viele Überstunden. Wo liegt das Problem?",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Frühstunde streichen: Zug kann von der Ostschweiz lernen",
+      "url": "https://www.zentralplus.ch/beruf-und-bildung/fruehstunde-streichen-zug-kann-von-der-ostschweiz-lernen-2875951/",
+      "summary": "Sollen jugendliche Schüler länger schlafen können? Obwohl eine kürzlich erschienene Studie sehr dafür spricht, ist der Zuger Regierungsrat nicht restlos überzeugt vom Vorschlag der ALG. Lernfähigere K",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "GASTKOMMENTAR - Es herrscht der Nebel des Krieges – doch Freiheit darf für die geschundenen Iraner keine Fata Morgana bleiben",
+      "url": "https://www.nzz.ch/meinung/es-herrscht-der-nebel-des-krieges-doch-freiheit-darf-fuer-die-geschundenen-iraner-keine-fata-morgana-bleiben-ld.10008837",
+      "summary": "",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "GASTKOMMENTAR - Das Zuhause der Leute schützen und Veränderung ermöglichen",
+      "url": "https://www.nzz.ch/meinung/das-zuhause-der-leute-schuetzen-und-veraenderung-ermoeglichen-ld.10009509",
+      "summary": "",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "ERKLÄRT - Linke wollen, dass der Zürcher Gemeinderat künftig über Taxen in städtischen Alterszentren befindet – Bürgerliche sind dagegen",
+      "url": "https://www.nzz.ch/zuerich/abstimmung-am-14-juni-in-zuerich-taxen-in-staedtischen-alterszentren-ld.10009446",
+      "summary": "",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Ein Ex-Manager des Schnäppchenportals «Dein Deal» hat Geschäftsgeheimnisse an Konkurrenzfirma weitergegeben",
+      "url": "https://www.nzz.ch/zuerich/ex-manager-von-dein-deal-wegen-geheimnisverrat-verurteilt-ld.10008118",
+      "summary": "",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Brauchst du positive News? Hier kommt 19 Mal Balsam für die Seele",
+      "url": "https://www.watson.ch/leben/gerechtigkeit-siegt/656986986-brauchst-du-positive-news-hier-kommt-19-mal-balsam-fuer-die-seele",
+      "summary": "",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Die Schweiz liebt Festivals – doch das Geschäft wird schwieriger",
+      "url": "https://www.watson.ch/wirtschaft/schweiz/634084243-die-schweiz-liebt-festivals-doch-das-geschaeft-wird-schwieriger",
+      "summary": "",
+      "published": "2026-06-08T03:31:05.771594+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Münchner Flughafen musste Betrieb stundenlang einstellen",
+      "url": "https://www.watson.ch/international/reisen/190578494-muenchner-flughafen-musste-betrieb-stundenlang-einstellen",
+      "summary": "",
+      "published": "2026-06-08T03:31:05.771594+00:00"
     }
   ]
 }
