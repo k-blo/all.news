@@ -43,7 +43,7 @@ const SOURCE_COLORS = {
   "Der Bund": "#1a3a5c",
   "Basler Zeitung": "#8b0000",
   "Nau": "#e67e22",
-  "WOZ": "#b45309",
+  "WOZ": "#c2b501",
   "Rathuus": "#5c6bc0",
   "Vorwärts": "#c62828",
   "Persönlich": "#6d4c41",
