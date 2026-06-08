@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-08T23:01:34.089813+00:00",
+  "generated": "2026-06-08T23:31:13.830277+00:00",
   "date": "2026-06-09",
-  "count": 2,
+  "count": 4,
   "articles": [
     {
       "source": "Blick",
@@ -16,6 +16,20 @@
       "url": "https://www.tagesanzeiger.ch/apple-wwdc-2026-siri-neu-mit-google-ai-746788074501",
       "summary": "Das iPhone und die anderen Apple-Geräte bekommen neue Software. Das sind die spannendsten Neuerungen und die versteckten Nebenschauplätze.",
       "published": "2026-06-08T23:01:34.089813+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "IT-Panne bei Arbeitsvermittlungen",
+      "url": "https://www.zentralplus.ch/news/it-panne-bei-arbeitsvermittlungen-2876641/",
+      "summary": "Bei den Arbeitsvermittlungszentren von Bund und Kantonen ist es im Mai erneut zu einer IT-Panne gekommen. Das hat der Bundesrat in der Fragestunde des Nationalrates bestätigt. Die regionalen Arbeitsve",
+      "published": "2026-06-08T23:31:13.830277+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Verdacht auf sexuelle Übergriffe: Das Weltstrafgericht suspendiert seinen Chefankläger",
+      "url": "https://www.nzz.ch/international/verdacht-auf-sexuelle-uebergriffe-das-weltstrafgericht-suspendiert-seinen-chefanklaeger-ld.10010471",
+      "summary": "",
+      "published": "2026-06-08T23:31:13.830277+00:00"
     }
   ]
 }
