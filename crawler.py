@@ -58,7 +58,8 @@ NEBELSPALTER_SITEMAP = "https://nebelspalter.ch/sitemap.xml"
 NEBELSPALTER_MAX = 50  # newest N /themen/YYYY/MM/slug articles
 # Google-News sitemaps: real <news:title> + publication_date (no slug guessing).
 NEWS_SITEMAPS = [
-    {"source": "Watson",    "url": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml",    "max": 50},
+    {"source": "Watson",               "url": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml",            "max": 50},
+    {"source": "Freiburger Nachrichten","url": "https://www.freiburger-nachrichten.ch/sitemap_latest_news.xml", "max": 50},
     #{"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
@@ -80,6 +81,15 @@ CH_MEDIA_SOURCES = [
     {"source": "bz Basel",           "base": "https://www.bzbasel.ch",           "max": 50},
     {"source": "Solothurner Zeitung","base": "https://www.solothurnerzeitung.ch","max": 50},
     {"source": "Oltner Tagblatt",    "base": "https://www.oltnertagblatt.ch",    "max": 50},
+    {"source": "Badener Tagblatt",   "base": "https://www.badenertagblatt.ch",   "max": 50},
+    {"source": "Grenchner Tagblatt", "base": "https://www.grenchnertagblatt.ch", "max": 50},
+    {"source": "Limmattaler Zeitung","base": "https://www.limmattalerzeitung.ch","max": 50},
+    {"source": "Zofinger Tagblatt",  "base": "https://www.zofingertagblatt.ch",  "max": 50},
+    {"source": "Appenzeller Zeitung","base": "https://www.appenzellerzeitung.ch","max": 50},
+    {"source": "Zuger Zeitung",      "base": "https://www.zugerzeitung.ch",      "max": 50},
+    {"source": "Nidwaldner Zeitung", "base": "https://www.nidwaldnerzeitung.ch", "max": 50},
+    {"source": "Obwaldner Zeitung",  "base": "https://www.obwaldnerzeitung.ch",  "max": 50},
+    {"source": "Urner Zeitung",      "base": "https://www.urnerzeitung.ch",      "max": 50},
 ]
 
 
