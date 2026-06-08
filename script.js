@@ -44,6 +44,8 @@ const SOURCE_COLORS = {
   "Basler Zeitung": "#8b0000",
   "Nau": "#e67e22",
   "WOZ": "#b45309",
+  "Rathuus": "#5c6bc0",
+  "Vorwärts": "#c62828",
   "Persönlich": "#6d4c41",
   "Tachles": "#1565c0",
 };

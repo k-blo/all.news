@@ -67,6 +67,8 @@ NEWS_SITEMAPS = [
 WP_SOURCES = [
     {"source": "Inside Paradeplatz", "index": "https://insideparadeplatz.ch/wp-sitemap.xml", "max": 50},
     {"source": "Infosperber",        "index": "https://www.infosperber.ch/wp-sitemap.xml",   "max": 50},
+    {"source": "Rathuus",            "index": "https://rathuus.ch/sitemap.xml",              "max": 50},
+    {"source": "Vorwärts",           "index": "https://www.vorwaerts.ch/wp-sitemap.xml",      "max": 50},
 ]
 BILANZ_MAX = 30      # https://www.bilanz.ch/sitemap-articles-time-limited-YYYY-MM.xml
 REPUBLIK_SITEMAP = "https://www.republik.ch/sitemap.xml"  # index of per-year sitemaps
