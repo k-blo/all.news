@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>swissnews | archiv</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Crect width='320' height='320' fill='%23FF0000'/%3E%3Crect x='130' y='60' width='60' height='200' fill='white'/%3E%3Crect x='60' y='130' width='200' height='60' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1><a href="index.html" style="text-decoration:none;color:inherit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" style="height:0.85em;vertical-align:-0.1em"><rect width="320" height="320" fill="#FF0000"/><rect x="130" y="60" width="60" height="200" fill="white"/><rect x="60" y="130" width="200" height="60" fill="white"/></svg> swissnews</a> — archiv</h1>
+  <ul id="list"></ul>
+  <script>
+    fetch("archive/index.json")
+      .then((r) => r.json())
+      .then((idx) => {
+        const list = document.getElementById("list");
+        for (const d of (idx.dates || [])) {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = `index.html?day=${d}`;
+          a.textContent = d;
+          li.appendChild(a);
+          list.appendChild(li);
+        }
+      })
+      .catch(() => {
+        document.getElementById("list").textContent = "archiv nicht verfügbar";
+      });
+  </script>
+</body>
+</html>

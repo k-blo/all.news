@@ -154,7 +154,7 @@ function render(articles, mode) {
 
 const meta = document.getElementById("meta");
 const setMeta = (t) => { if (meta) meta.textContent = t; };
-const daySel = document.getElementById("day");
+
 function sortMode() {
   const el = document.querySelector('input[name="sort"]:checked');
   return el ? el.value : "date";
@@ -196,20 +196,16 @@ function load(url) {
     .catch((e) => { setMeta("failed to load " + url + ": " + e); });
 }
 
-// Populate day picker from the archive index; "latest" = newest crawl.
-fetch("archive/index.json")
-  .then((r) => r.json())
-  .then((idx) => {
-    const dates = idx.dates || [];
-    const opts = dates.map((d, i) =>
-      `<option value="${i === 0 ? "crawled.json" : `archive/${d}.json`}">${d}</option>`
-    );
-    daySel.innerHTML = opts.join("") || '<option value="crawled.json">latest</option>';
-  })
-  .catch(() => { daySel.innerHTML = '<option value="crawled.json">latest</option>'; })
-  .finally(() => load(daySel.value));
+const dayParam = new URLSearchParams(location.search).get("day");
+const dayLink = document.getElementById("dayLink");
+if (dayParam) {
+  if (dayLink) dayLink.textContent = "← archiv";
+  setMeta(dayParam);
+  load(`archive/${dayParam}.json`);
+} else {
+  load("crawled.json");
+}
 
-daySel.addEventListener("change", () => load(daySel.value));
 for (const radio of document.querySelectorAll('input[name="sort"]')) {
   radio.addEventListener("change", () => render(current, sortMode()));
 }
