@@ -16,6 +16,7 @@ import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
+from html import escape
 from zoneinfo import ZoneInfo
 
 ZURICH = ZoneInfo("Europe/Zurich")
@@ -451,6 +452,119 @@ def crawl_news_sitemap(source, url, limit):
     ]
 
 
+SOURCE_COLORS = {
+    "SRF": "#d52b1e",
+    "RTS": "#e2001a",
+    "Le Temps": "#1a3c5e",
+    "Blick": "#e2001a",
+    "20 Minuten": "#0055aa",
+    "Tages-Anzeiger": "#1c1c1c",
+    "NZZ": "#444444",
+    "Weltwoche": "#7a0019",
+    "Nebelspalter": "#282f5c",
+    "Watson": "#ff0066",
+    "Watson FR": "#cc0052",
+    "Inside Paradeplatz": "#2e7d32",
+    "Infosperber": "#6a1b9a",
+    "Berner Zeitung": "#003a70",
+    "Tribune de Genève": "#0a4a8f",
+    "Zentralplus": "#e94e1b",
+    "Heidi.news": "#00897b",
+    "Finews": "#1565c0",
+    "Netzwoche": "#d81e05",
+    "Le Courrier": "#b71c1c",
+    "Inside IT": "#00838f",
+    "Bilanz": "#9e2a2b",
+    "Republik": "#111111",
+    "Südostschweiz": "#2e6b3e",
+    "Luzerner Zeitung": "#0277bd",
+    "Aargauer Zeitung": "#e65100",
+    "St. Galler Tagblatt": "#005ca9",
+    "Thurgauer Zeitung": "#388e3c",
+    "bz Basel": "#c62828",
+    "Solothurner Zeitung": "#7b5e3a",
+    "Oltner Tagblatt": "#4a7c59",
+    "Badener Tagblatt": "#a0522d",
+    "Grenchner Tagblatt": "#1976d2",
+    "Limmattaler Zeitung": "#00796b",
+    "Zofinger Tagblatt": "#558b2f",
+    "Appenzeller Zeitung": "#ad1457",
+    "Zuger Zeitung": "#1a237e",
+    "Nidwaldner Zeitung": "#d32f2f",
+    "Obwaldner Zeitung": "#bf360c",
+    "Urner Zeitung": "#f9a825",
+    "Freiburger Nachrichten": "#37474f",
+    "Der Bund": "#1a3a5c",
+    "Basler Zeitung": "#8b0000",
+    "Nau": "#e67e22",
+    "WOZ": "#c2b501",
+    "Rathuus": "#5c6bc0",
+    "Vorwärts": "#c62828",
+    "Persönlich": "#6d4c41",
+    "Tachles": "#1565c0",
+}
+
+
+def fmt_datetime(iso_str):
+    """Format ISO datetime as Swiss local time YYYY-MM-DD HH:MM:SS (mirrors fmtDateTime in script.js)."""
+    if not iso_str:
+        return ""
+    try:
+        dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
+        return dt.astimezone(ZURICH).strftime("%Y-%m-%d %H:%M:%S")
+    except (ValueError, TypeError):
+        return ""
+
+
+def render_article_html(article):
+    color = SOURCE_COLORS.get(article["source"], "#888")
+    return (
+        f'  <li>'
+        f'<a href="{escape(article["url"])}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
+        f'<div class="info">'
+        f'<span class="date">{escape(fmt_datetime(article.get("published", "")))}</span>'
+        f'<span class="source" style="background:{color}">{escape(article["source"])}</span>'
+        f'</div>'
+        f'</li>'
+    )
+
+
+def write_colors_js():
+    pairs = ",\n  ".join(f'"{k}": "{v}"' for k, v in SOURCE_COLORS.items())
+    with open("colors.js", "w", encoding="utf-8") as f:
+        f.write(f"const SOURCE_COLORS = {{\n  {pairs}\n}};\n")
+
+
+def write_rendered_html(articles, dest_path, *, title, description, canonical, day_link):
+    with open("template.html", encoding="utf-8") as f:
+        tmpl = f.read()
+    items = "\n".join(render_article_html(a) for a in articles)
+    count = f"{len(articles)} artikel"
+    html = (tmpl
+            .replace("<!-- TITLE -->", escape(title))
+            .replace("<!-- DESCRIPTION -->", escape(description))
+            .replace("<!-- CANONICAL -->", escape(canonical))
+            .replace("<!-- META_COUNT -->", count)
+            .replace("<!-- DAY_LINK -->", day_link)
+            .replace("<!-- ARTICLES -->", items))
+    with open(dest_path, "w", encoding="utf-8") as f:
+        f.write(html)
+
+
+def write_sitemap(dates):
+    urls = [
+        '  <url><loc>https://www.swissnews.org/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>',
+        '  <url><loc>https://www.swissnews.org/archive.html</loc><changefreq>daily</changefreq><priority>0.5</priority></url>',
+    ]
+    for d in dates:
+        urls.append(f'  <url><loc>https://www.swissnews.org/archive/{d}.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>')
+    with open("sitemap.xml", "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+        f.write("\n".join(urls))
+        f.write("\n</urlset>\n")
+
+
 def main():
     global _http_cache
     os.makedirs(ARCHIVE_DIR, exist_ok=True)
@@ -538,8 +652,26 @@ def main():
     write_json("crawled.json", data)                       # newest crawl
     write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"), data)  # this date's crawl
     write_json(SEEN_FILE, sorted(seen | batch))
-    write_json(INDEX_FILE, {"dates": archive_dates()})
+    all_dates = archive_dates()
+    write_json(INDEX_FILE, {"dates": all_dates})
     write_json(HTTP_CACHE_FILE, _http_cache)
+
+    write_colors_js()
+    write_rendered_html(
+        result, "index.html",
+        title="swissnews – Schweizer Nachrichten im Überblick",
+        description="Alle Schweizer Nachrichtenquellen auf einen Blick: SRF, NZZ, Tages-Anzeiger, Blick, Watson und 40+ weitere Medien. Stündlich aktualisiert.",
+        canonical="https://www.swissnews.org/",
+        day_link='<a id="dayLink" href="/archive.html">archiv</a>',
+    )
+    write_rendered_html(
+        result, os.path.join(ARCHIVE_DIR, f"{today}.html"),
+        title=f"swissnews – {today}",
+        description=f"Schweizer Nachrichtenlinks vom {today}.",
+        canonical=f"https://www.swissnews.org/archive/{today}.html",
+        day_link='<a id="dayLink" href="/archive.html">← archiv</a>',
+    )
+    write_sitemap(all_dates)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} total today ({today})",
           file=sys.stderr)
 

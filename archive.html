@@ -26,7 +26,7 @@
         for (const d of (idx.dates || [])) {
           const li = document.createElement("li");
           const a = document.createElement("a");
-          a.href = `index.html?day=${d}`;
+          a.href = `archive/${d}.html`;
           a.textContent = d;
           li.appendChild(a);
           list.appendChild(li);
