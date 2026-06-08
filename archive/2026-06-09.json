@@ -1,6 +1,21 @@
 {
-  "generated": "2026-06-08T22:31:22.832185+00:00",
+  "generated": "2026-06-08T23:01:34.089813+00:00",
   "date": "2026-06-09",
-  "count": 0,
-  "articles": []
+  "count": 2,
+  "articles": [
+    {
+      "source": "Blick",
+      "title": "Schweizer Islam-Fluencer warnt vor Badi-Besuchen – Expertin warnt vor ihm: «Wir haben es hier mit einem radikalen Salafisten zu tun»",
+      "url": "https://www.blick.ch/schweiz/schweizer-islam-fluencer-warnt-vor-badi-besuchen-expertin-warnt-vor-ihm-wir-haben-es-hier-mit-einem-radikalen-salafisten-zu-tun-id22009278.html",
+      "summary": "«Badis sind nichts für Muslime», sagt Besnik K. (32) auf Tiktok. Der Schweizer Islam-Fluencer verbreitet stockkonservative Botschaften, die laut einer Islamismus-Expertin spalten und eine Radikalisier",
+      "published": "2026-06-08T23:01:34.089813+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Super-Siri und viele Kleinigkeiten: 7 Highlights und 4 Enttäuschungen vom Apple Event",
+      "url": "https://www.tagesanzeiger.ch/apple-wwdc-2026-siri-neu-mit-google-ai-746788074501",
+      "summary": "Das iPhone und die anderen Apple-Geräte bekommen neue Software. Das sind die spannendsten Neuerungen und die versteckten Nebenschauplätze.",
+      "published": "2026-06-08T23:01:34.089813+00:00"
+    }
+  ]
 }
