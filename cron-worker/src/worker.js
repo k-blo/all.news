@@ -18,7 +18,12 @@ async function handleProxy(request, env) {
   const body = await resp.arrayBuffer();
   return new Response(body, {
     status: resp.status,
-    headers: { "Content-Type": resp.headers.get("Content-Type") || "text/xml" },
+    headers: {
+      "Content-Type": resp.headers.get("Content-Type") || "text/xml",
+      // Proves the request reached the worker; if absent on a 403, the edge blocked us.
+      "X-Proxy-Reached": "1",
+      "X-Upstream-Status": String(resp.status),
+    },
   });
 }
 

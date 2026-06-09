@@ -35,9 +35,12 @@ jobs:
             *) echo "Proxy host: other/unexpected" ;;
           esac
           ENCODED="https%3A%2F%2Fwww.luzernerzeitung.ch%2Fsitemap%2F2026%2F06%2Fsitemap.xml"
-          echo "Proxy status (browser UA):"
-          curl -s -o /dev/null -w "%{http_code}\n" -A "Mozilla/5.0 (compatible; SwissNewsBot/0.1)" \
-            "$CF_PROXY_URL/proxy?token=$CF_PROXY_TOKEN&url=$ENCODED"
+          echo "=== Proxy response headers ==="
+          curl -s -D - -o /tmp/body -A "Mozilla/5.0 (compatible; SwissNewsBot/0.1)" \
+            "$CF_PROXY_URL/proxy?token=$CF_PROXY_TOKEN&url=$ENCODED" \
+            | grep -iE "^HTTP/|^x-proxy-reached|^x-upstream-status|^server|^cf-mitigated" || true
+          echo "=== Body snippet ==="
+          head -c 300 /tmp/body; echo
         env:
           CF_PROXY_URL: ${{ secrets.CF_PROXY_URL }}
           CF_PROXY_TOKEN: ${{ secrets.CF_PROXY_TOKEN }}
