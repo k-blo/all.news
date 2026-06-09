@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-09T19:01:41.683801+00:00",
+  "generated": "2026-06-09T19:06:02.362333+00:00",
   "date": "2026-06-09",
-  "count": 879,
+  "count": 880,
   "articles": [
     {
       "source": "Blick",
@@ -6155,6 +6155,13 @@
       "url": "https://www.watson.ch/sport/usa/116306238-omar-artan-der-schiedsrichter-war-fuer-die-wm-nominiert",
       "summary": "",
       "published": "2026-06-09T19:01:41.683801+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Curacao",
+      "url": "https://www.nau.ch/sport/fussball-int/wm-2026-curacao-reist-im-schulbus-ohne-fenster-67136580",
+      "summary": "",
+      "published": "2026-06-09T19:06:02.362333+00:00"
     }
   ]
 }
