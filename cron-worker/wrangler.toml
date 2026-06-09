@@ -4,7 +4,7 @@ compatibility_date = "2024-11-01"
 
 # Reliable hourly trigger (Cloudflare cron, unlike GitHub's best-effort schedule).
 [triggers]
-crons = ["0 * * * *"]
+crons = ["*/30 * * * *"]
 
 [vars]
 OWNER = "k-blo"           # GitHub user/org
