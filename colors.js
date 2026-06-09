@@ -47,5 +47,6 @@ const SOURCE_COLORS = {
   "Rathuus": "#5c6bc0",
   "Vorwärts": "#c62828",
   "Persönlich": "#6d4c41",
-  "Tachles": "#1565c0"
+  "Tachles": "#1565c0",
+  "Bauernzeitung": "#558b2f"
 };
