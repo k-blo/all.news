@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-09T23:01:41.170501+00:00",
+  "generated": "2026-06-09T23:31:46.530119+00:00",
   "date": "2026-06-10",
-  "count": 8,
+  "count": 10,
   "articles": [
     {
       "source": "Zentralplus",
@@ -58,6 +58,20 @@
       "url": "https://www.nau.ch/news/wirtschaft/eu-kommission-will-dungerkosten-abfedern-67137188",
       "summary": "",
       "published": "2026-06-09T23:01:41.170501+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "NHL: Vegas Golden Knights gegen Carolina Hurricanes ab 02:00 live",
+      "url": "https://www.nau.ch/sport/matchcenter/nhl-vegas-golden-knights-gegen-carolina-hurricanes-ab-0200-live-67137191",
+      "summary": "",
+      "published": "2026-06-09T23:31:46.530119+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "US-Präsident Donald Trump spricht mit Reportern bevor er an Bord der Air Force One geht. Foto: Mark Schiefelbein/AP/dpa",
+      "url": "https://www.nau.ch/politik/international/nach-helikopter-abschuss-us-militar-greift-ziele-im-iran-an-67137190",
+      "summary": "",
+      "published": "2026-06-09T23:31:46.530119+00:00"
     }
   ]
 }
