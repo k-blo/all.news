@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-09T23:31:46.530119+00:00",
+  "generated": "2026-06-09T23:56:21.362334+00:00",
   "date": "2026-06-10",
-  "count": 10,
+  "count": 12,
   "articles": [
     {
       "source": "Zentralplus",
@@ -72,6 +72,20 @@
       "url": "https://www.nau.ch/politik/international/nach-helikopter-abschuss-us-militar-greift-ziele-im-iran-an-67137190",
       "summary": "",
       "published": "2026-06-09T23:31:46.530119+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Zermatt will neue Weltcupstrecke",
+      "url": "https://www.zentralplus.ch/news/zermatt-will-neue-weltcupstrecke-2876923/",
+      "summary": "Die Zermatterinnen und Zermatter haben sich deutlich für eine neue Abfahrtsstrecke im Ski-Weltcup ausgesprochen. An der Gemeindeversammlung stimmten 159 Personen dafür, bei wenigen Gegenstimmen und En",
+      "published": "2026-06-09T23:56:21.362334+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Eskaliert die Lage im Iran-Krieg wieder?",
+      "url": "https://www.nau.ch/news/ausland/us-militar-vergeltungsschlage-gegen-den-iran-begonnen-67137189",
+      "summary": "",
+      "published": "2026-06-09T23:56:21.362334+00:00"
     }
   ]
 }
