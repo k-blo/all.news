@@ -25,6 +25,14 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Check proxy config
+        run: |
+          [ -n "$CF_PROXY_URL" ] && echo "CF_PROXY_URL is set" || echo "CF_PROXY_URL is EMPTY"
+          [ -n "$CF_PROXY_TOKEN" ] && echo "CF_PROXY_TOKEN is set" || echo "CF_PROXY_TOKEN is EMPTY"
+        env:
+          CF_PROXY_URL: ${{ secrets.CF_PROXY_URL }}
+          CF_PROXY_TOKEN: ${{ secrets.CF_PROXY_TOKEN }}
+
       - name: Crawl feeds
         run: python3 crawler.py   # stdlib only, no pip install
         env:
