@@ -29,6 +29,11 @@ jobs:
         run: |
           [ -n "$CF_PROXY_URL" ] && echo "CF_PROXY_URL is set" || echo "CF_PROXY_URL is EMPTY"
           [ -n "$CF_PROXY_TOKEN" ] && echo "CF_PROXY_TOKEN is set" || echo "CF_PROXY_TOKEN is EMPTY"
+          TARGET="https://www.luzernerzeitung.ch/sitemap/2026/06/sitemap.xml"
+          ENCODED=$(python3 -c "import urllib.parse,os;print(urllib.parse.quote(os.environ['T'],safe=''))" T="$TARGET")
+          echo "Proxy status (browser UA):"
+          curl -s -o /dev/null -w "%{http_code}\n" -A "Mozilla/5.0 (compatible; SwissNewsBot/0.1)" \
+            "$CF_PROXY_URL/proxy?token=$CF_PROXY_TOKEN&url=$ENCODED"
         env:
           CF_PROXY_URL: ${{ secrets.CF_PROXY_URL }}
           CF_PROXY_TOKEN: ${{ secrets.CF_PROXY_TOKEN }}
