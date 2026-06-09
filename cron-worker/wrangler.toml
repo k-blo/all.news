@@ -6,6 +6,12 @@ compatibility_date = "2024-11-01"
 [triggers]
 crons = ["*/30 * * * *"]
 
+# Custom domain on our own zone — workers.dev's baseline bot management 403s
+# datacenter IPs (GitHub Actions/Azure), so the /proxy endpoint needs this host.
+[[routes]]
+pattern = "proxy.swissnews.org"
+custom_domain = true
+
 [vars]
 OWNER = "k-blo"           # GitHub user/org
 REPO = "suisse-news"      # exact GitHub repo name (used in API URL)
