@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-09T22:31:24.844717+00:00",
+  "generated": "2026-06-09T23:01:41.170501+00:00",
   "date": "2026-06-10",
-  "count": 5,
+  "count": 8,
   "articles": [
     {
       "source": "Zentralplus",
@@ -37,6 +37,27 @@
       "url": "https://www.nau.ch/news/europa/nach-messerattacke-fahrzeuge-brennen-in-belfast-67137183",
       "summary": "",
       "published": "2026-06-09T22:31:24.844717+00:00"
+    },
+    {
+      "source": "Blick",
+      "title": "Stefanie Künzi (40) eröffnet neue Mutthornhütte – und trotzt damit dem Klimawandel: «Flipflop-Touristen werden es hierhin nicht schaffen»",
+      "url": "https://www.blick.ch/schweiz/bern/stefanie-kuenzi-40-eroeffnet-neue-mutthornhuette-und-trotzt-damit-dem-klimawandel-flipflop-touristen-werden-es-hierhin-nicht-schaffen-id22015195.html",
+      "summary": "Ein Absturz drohte der alten Mutthornhütte. Die Behörden schlossen sie. Vier Jahre später eröffnet die neue SAC-Hütte und will nachhaltiger als alle anderen funktionieren. Ein wackliger Plan auf feste",
+      "published": "2026-06-09T23:01:41.170501+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Ausschreitungen in Belfast eskalieren",
+      "url": "https://www.zentralplus.ch/news/ausschreitungen-in-belfast-eskalieren-2876921/",
+      "summary": "In der nordirischen Hauptstadt Belfast ist es am Dienstagabend zu Ausschreitungen gekommen. Mehrere Fahrzeuge, darunter auch ein Linienbus, wurden in Brand gesetzt. Laut Medienberichten versammelten s",
+      "published": "2026-06-09T23:01:41.170501+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Europas Landwirte sind mit hohen Düngemittelpreisen konfrontiert. Die Europäische Kommission hat Hilfe angekündigt. Jetzt werden Zahlen bekannt. (Archivbild)",
+      "url": "https://www.nau.ch/news/wirtschaft/eu-kommission-will-dungerkosten-abfedern-67137188",
+      "summary": "",
+      "published": "2026-06-09T23:01:41.170501+00:00"
     }
   ]
 }
