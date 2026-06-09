@@ -12,8 +12,19 @@ async function handleProxy(request, env) {
   if (!target || !target.startsWith("https://")) {
     return new Response("Missing or invalid url param", { status: 400 });
   }
+  // Full browser-like headers — CH Media's Cloudflare bot protection challenges
+  // requests that don't look like a real browser.
   const resp = await fetch(target, {
-    headers: { "User-Agent": "SwissNewsBot/0.1 (+https://github.com/yourname/swissnews; POC)" },
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+      "Accept-Language": "de-CH,de;q=0.9,en;q=0.8",
+      "Accept-Encoding": "gzip, deflate, br",
+      "Sec-Fetch-Dest": "document",
+      "Sec-Fetch-Mode": "navigate",
+      "Sec-Fetch-Site": "none",
+      "Upgrade-Insecure-Requests": "1",
+    },
   });
   const body = await resp.arrayBuffer();
   return new Response(body, {
