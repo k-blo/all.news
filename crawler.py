@@ -117,7 +117,9 @@ _http_cache: dict = {}
 
 
 def fetch(url):
-    headers = {"User-Agent": USER_AGENT}
+    # Cloudflare bot-protection on workers.dev blocks non-browser UAs; proxy URLs need a browser UA.
+    ua = "Mozilla/5.0 (compatible; SwissNewsBot/0.1)" if _CF_PROXY_URL and url.startswith(_CF_PROXY_URL) else USER_AGENT
+    headers = {"User-Agent": ua}
     entry = _http_cache.get(url, {})
     if entry.get("last_modified"):
         headers["If-Modified-Since"] = entry["last_modified"]
