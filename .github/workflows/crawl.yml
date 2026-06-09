@@ -27,6 +27,9 @@ jobs:
 
       - name: Crawl feeds
         run: python3 crawler.py   # stdlib only, no pip install
+        env:
+          CF_PROXY_URL: ${{ secrets.CF_PROXY_URL }}
+          CF_PROXY_TOKEN: ${{ secrets.CF_PROXY_TOKEN }}
 
       - name: Commit if changed
         run: |

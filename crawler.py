@@ -11,6 +11,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
@@ -95,6 +96,17 @@ CH_MEDIA_SOURCES = [
     {"source": "Obwaldner Zeitung",  "base": "https://www.obwaldnerzeitung.ch",  "max": 50},
     {"source": "Urner Zeitung",      "base": "https://www.urnerzeitung.ch",      "max": 50},
 ]
+
+
+_CF_PROXY_URL = os.environ.get("CF_PROXY_URL", "").rstrip("/")
+_CF_PROXY_TOKEN = os.environ.get("CF_PROXY_TOKEN", "")
+
+
+def proxied(url):
+    """Route url through the Cloudflare Worker proxy when env vars are set."""
+    if not (_CF_PROXY_URL and _CF_PROXY_TOKEN):
+        return url
+    return f"{_CF_PROXY_URL}/proxy?token={_CF_PROXY_TOKEN}&url={urllib.parse.quote(url, safe='')}"
 
 
 class NotModified(Exception):
@@ -371,7 +383,7 @@ def crawl_ch_media(source, base, limit):
     y = datetime.now(timezone.utc).strftime("%Y")
     m = datetime.now(timezone.utc).strftime("%m")
     url = f"{base}/sitemap/{y}/{m}/sitemap.xml"
-    rows = sitemap_rows(fetch(url), re.compile(r"/[^/]+-ld\.\d+$"))
+    rows = sitemap_rows(fetch(proxied(url)), re.compile(r"/[^/]+-ld\.\d+$"))
     return crawl_sitemap_source(source, rows, re.compile(r"/([^/]+)-ld\.\d+$"), limit)
 
 

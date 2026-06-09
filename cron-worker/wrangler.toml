@@ -12,5 +12,6 @@ REPO = "suisse-news"      # exact GitHub repo name (used in API URL)
 WORKFLOW = "crawl.yml"    # workflow filename in .github/workflows/
 REF = "main"              # branch to run on
 
-# Secret (NOT here): set with `wrangler secret put GITHUB_TOKEN`
-# Fine-grained PAT, repo = swissnews, permission: Actions = Read and write.
+# Secrets (NOT here): set with `wrangler secret put <name>`
+#   GITHUB_TOKEN  — fine-grained PAT, repo = swissnews, Actions = Read and write
+#   PROXY_TOKEN   — random string; also set as CF_PROXY_TOKEN in GitHub Actions secrets
