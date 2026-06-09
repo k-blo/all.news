@@ -1,6 +1,42 @@
 {
-  "generated": "2026-06-09T22:02:07.200364+00:00",
+  "generated": "2026-06-09T22:31:24.844717+00:00",
   "date": "2026-06-10",
-  "count": 0,
-  "articles": []
+  "count": 5,
+  "articles": [
+    {
+      "source": "Zentralplus",
+      "title": "USA starten Angriffe gegen Iran",
+      "url": "https://www.zentralplus.ch/news/usa-starten-angriffe-gegen-iran-2876919/",
+      "summary": "Die US-Armee hat nach eigenen Angaben neue Angriffe gegen den Iran gestartet. Die Schläge seien eine «verhältnismässige» Reaktion darauf, dass der Iran einen US-Kampfhelikopter abgeschossen habe. Iran",
+      "published": "2026-06-09T22:31:24.844717+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Freundschaftsspiele: Brazil U17 gegen United States U17 ab 01:00 live",
+      "url": "https://www.nau.ch/sport/matchcenter/freundschaftsspiele-brazil-u17-gegen-united-states-u17-ab-0100-live-67137187",
+      "summary": "",
+      "published": "2026-06-09T22:31:24.844717+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Freundschaftsspiele: Saudi Arabien gegen Senegal ab 01:00 live",
+      "url": "https://www.nau.ch/sport/matchcenter/freundschaftsspiele-saudi-arabien-gegen-senegal-ab-0100-live-67137186",
+      "summary": "",
+      "published": "2026-06-09T22:31:24.844717+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Einem Bericht zufolge könnte sich die EU viel stärker auf die Produktion erneuerbarer Energien verlassen. (Archivbild)",
+      "url": "https://www.nau.ch/news/wirtschaft/windkraft-und-e-autos-europas-ausweg-aus-der-energiekrise-67137185",
+      "summary": "",
+      "published": "2026-06-09T22:31:24.844717+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Krawalle nach brutaler Messerattacke in Belfast.",
+      "url": "https://www.nau.ch/news/europa/nach-messerattacke-fahrzeuge-brennen-in-belfast-67137183",
+      "summary": "",
+      "published": "2026-06-09T22:31:24.844717+00:00"
+    }
+  ]
 }
