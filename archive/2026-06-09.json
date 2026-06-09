@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-09T04:31:09.171163+00:00",
+  "generated": "2026-06-09T05:02:46.192734+00:00",
   "date": "2026-06-09",
-  "count": 120,
+  "count": 127,
   "articles": [
     {
       "source": "Blick",
@@ -842,6 +842,55 @@
       "url": "https://www.watson.ch/wirtschaft/international/975548889-openai-beantragt-boersengang-details-bleiben-geheim",
       "summary": "",
       "published": "2026-06-09T04:31:09.171163+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Betrug in Winterthur: 81-Jähriger übergibt 2400 Franken – dann nimmt die Polizei vier Personen fest",
+      "url": "https://www.tagesanzeiger.ch/enkeltrick-winterthur-vier-tatverdaechtige-festgenommen-165467273316",
+      "summary": "Zwei Frauen sollen einen Senior mit einer vorgetäuschten Notlage um Geld gebeten haben. Beim nächsten Treffen griff die Stadtpolizei zu.",
+      "published": "2026-06-09T05:02:46.192734+00:00"
+    },
+    {
+      "source": "Basler Zeitung",
+      "title": "Restaurant Lindenhof in Mariastein: Ein Familienbetrieb mit süssen Überraschungen",
+      "url": "https://www.bazonline.ch/restaurant-lindenhof-mariastein-familienbeiz-im-leimental-840875673482",
+      "summary": "Der Lindenhof in Mariastein ist eines jener Lokale, in denen man sich von Anfang an wohlfühlt – und nicht enttäuscht wird.",
+      "published": "2026-06-09T05:02:46.192734+00:00"
+    },
+    {
+      "source": "Basler Zeitung",
+      "title": "Mehrere Detonationen in Oberwil: «Wir wurden durch drei heftige Knalle aus dem Schlaf gerissen»",
+      "url": "https://www.bazonline.ch/oberwil-ubs-bankomat-gesprengt-gebaeude-beschaedigt-860649998352",
+      "summary": "In Oberwil wurde der UBS-Bancomat im Dorfzentrum gesprengt. Das Gebäude wurde dabei stark beschädigt – ein Feuerwehreinsatz läuft noch.",
+      "published": "2026-06-09T05:02:46.192734+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Rund 10'000 Atomwaffen sind derzeit weltweit einsatzbereit.",
+      "url": "https://www.nau.ch/news/europa/bericht-mehr-als-2900-franken-pro-sekunde-in-atomwaffen-investiert-67136836",
+      "summary": "",
+      "published": "2026-06-09T05:02:46.192734+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Donald Trump streicht sämtliche Konzerte bei der 250. Jubiläum der USA.",
+      "url": "https://www.nau.ch/news/amerika/gericht-pfeift-trump-zuruck-keine-100000-dollar-fur-visum-67136834",
+      "summary": "",
+      "published": "2026-06-09T05:02:46.192734+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Was wohl Ukraine-Präsident Wolodymyr Selenskyj von der angeblichen Russlandfreundlichkeit von Steve Witkoff hält?",
+      "url": "https://www.nau.ch/news/europa/nach-london-treffen-selenskyj-spricht-mit-us-vermittlern-67136835",
+      "summary": "",
+      "published": "2026-06-09T05:02:46.192734+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Itamar Ben-Gvir ist israelischer Polizeiminister.",
+      "url": "https://www.nau.ch/news/europa/italienische-justiz-ermittelt-gegen-israelischen-minister-67136833",
+      "summary": "",
+      "published": "2026-06-09T05:02:46.192734+00:00"
     }
   ]
 }
