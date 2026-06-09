@@ -29,7 +29,11 @@ jobs:
         run: |
           [ -n "$CF_PROXY_URL" ] && echo "CF_PROXY_URL is set" || echo "CF_PROXY_URL is EMPTY"
           [ -n "$CF_PROXY_TOKEN" ] && echo "CF_PROXY_TOKEN is set" || echo "CF_PROXY_TOKEN is EMPTY"
-          echo "Proxy host: $CF_PROXY_URL"
+          case "$CF_PROXY_URL" in
+            *proxy.swissnews.org*) echo "Proxy host: custom-domain" ;;
+            *workers.dev*) echo "Proxy host: workers-dev (secret NOT updated)" ;;
+            *) echo "Proxy host: other/unexpected" ;;
+          esac
           ENCODED="https%3A%2F%2Fwww.luzernerzeitung.ch%2Fsitemap%2F2026%2F06%2Fsitemap.xml"
           echo "Proxy status (browser UA):"
           curl -s -o /dev/null -w "%{http_code}\n" -A "Mozilla/5.0 (compatible; SwissNewsBot/0.1)" \
