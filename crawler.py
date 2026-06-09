@@ -75,6 +75,7 @@ BILANZ_MAX = 30      # https://www.bilanz.ch/sitemap-articles-time-limited-YYYY-
 REPUBLIK_SITEMAP = "https://www.republik.ch/sitemap.xml"  # index of per-year sitemaps
 REPUBLIK_MAX = 50
 SUEDOSTSCHWEIZ_MAX = 50
+BAUERNZEITUNG_MAX = 50
 # CH Media regional papers: /sitemap/YYYY/MM/sitemap.xml, URLs end in -ld.NNNNNNN
 CH_MEDIA_SOURCES = [
     {"source": "Luzerner Zeitung",   "base": "https://www.luzernerzeitung.ch",   "max": 50},
@@ -392,6 +393,26 @@ def crawl_woz():
     return crawl_sitemap_source("WOZ", rows, article_re, 50)
 
 
+def crawl_bauernzeitung():
+    """TYPO3 sitemapindex of paged article sitemaps — newest articles are on the
+    highest page=N (ascending lastmod). Article URLs are /artikel/[category/]
+    slug-<id> (id may be prefixed -0); title from slug, trailing id stripped."""
+    index = ET.fromstring(fetch("https://www.bauernzeitung.ch/sitemap.xml"))
+    pages = []
+    for loc in index.iter():
+        if local(loc) == "loc" and loc.text and "sitemap=articles" in loc.text:
+            m = re.search(r"[?&]page=(\d+)", loc.text)
+            if m:
+                pages.append((int(m.group(1)), loc.text))
+    if not pages:
+        raise ValueError("no paged article sitemap entries found")
+    newest = max(pages)[1]
+    rows = sitemap_rows(fetch(newest), re.compile(r"/artikel/"))
+    return crawl_sitemap_source(
+        "Bauernzeitung", rows,
+        re.compile(r"/artikel/(?:[^/]+/)*([^/]+?)(?:-0)?-\d+$"), BAUERNZEITUNG_MAX)
+
+
 def crawl_nau():
     """Monthly Google-News sitemap — real <news:title> + publication_date."""
     ym = datetime.now(timezone.utc).strftime("%Y-%m")
@@ -502,6 +523,7 @@ SOURCE_COLORS = {
     "Vorwärts": "#c62828",
     "Persönlich": "#6d4c41",
     "Tachles": "#1565c0",
+    "Bauernzeitung": "#558b2f",
 }
 
 
@@ -594,6 +616,7 @@ def main():
         ("Südostschweiz", crawl_suedostschweiz),
         ("Nau", crawl_nau),
         ("WOZ", crawl_woz),
+        ("Bauernzeitung", crawl_bauernzeitung),
     ]
     sitemap_jobs += [
         (s["source"], (lambda s: lambda: crawl_ch_media(s["source"], s["base"], s["max"]))(s))
