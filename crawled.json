@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-09T17:22:53.143702+00:00",
+  "generated": "2026-06-09T17:24:40.066999+00:00",
   "date": "2026-06-09",
-  "count": 833,
+  "count": 835,
   "articles": [
     {
       "source": "Blick",
@@ -5833,6 +5833,20 @@
       "url": "https://www.watson.ch/international/liveticker/455779172-trump-usa-werden-auf-abschuss-eines-militaerhelikopters-reagieren",
       "summary": "",
       "published": "2026-06-09T17:22:53.143702+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Skandal um Gold: Aus 358 Millionen wurden plötzlich 127 Milliarden Franken Umsatz",
+      "url": "https://www.tagesanzeiger.ch/valcambi-indische-behoerde-wirft-bilanzmanipulation-vor-811502187489",
+      "summary": "Die indische Finanzmarktaufsicht wirft dem Goldkonzern Rajesh Exports vor, seine Geschäftszahlen über Jahre massiv aufgebläht zu haben. Im Zentrum der Untersuchungen stehen auch zwei Schweizer Gesells",
+      "published": "2026-06-09T17:24:40.066999+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Deutsches Bauprojekt: Instagram­tauglich ist er, der neue Stuttgarter Tief­bahn­hof – nur nicht verkehrs­tauglich",
+      "url": "https://www.tagesanzeiger.ch/stuttgart-21-neuer-bahnhof-erst-2031-fertig-192865560828",
+      "summary": "Der Tiefbahnhof der deutschen Grossstadt ist noch immer nicht fertig. Eine Zumutung für die Einwohner – und peinlich für Deutschland.",
+      "published": "2026-06-09T17:24:40.066999+00:00"
     }
   ]
 }
