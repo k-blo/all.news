@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-09T01:01:15.687940+00:00",
+  "generated": "2026-06-09T01:31:05.156229+00:00",
   "date": "2026-06-09",
-  "count": 15,
+  "count": 23,
   "articles": [
     {
       "source": "Blick",
@@ -107,6 +107,62 @@
       "url": "https://www.nau.ch/sport/matchcenter/freundschaftsspiele-equatorial-guinea-gegen-comoros-ab-2100-live-67136819",
       "summary": "",
       "published": "2026-06-09T00:31:46.934640+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Freundschaftsspiele: Peru gegen Spanien ab 04:00 live",
+      "url": "https://www.nau.ch/sport/matchcenter/freundschaftsspiele-peru-gegen-spanien-ab-0400-live-67136825",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Swiss League: GCK Lions gegen Red Ice ab 20:00 live",
+      "url": "https://www.nau.ch/sport/matchcenter/swiss-league-gck-lions-gegen-red-ice-ab-2000-live-67136824",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Bericht: Fast 3000 Franken pro Sekunde in Atomwaffen investiert",
+      "url": "https://www.watson.ch/international/waffen/154581328-bericht-fast-3000-franken-pro-sekunde-in-atomwaffen-investiert",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Greenpeace projiziert den Schrei als Protest aufs Bundeshaus",
+      "url": "https://www.watson.ch/schweiz/energie/462578385-greenpeace-projiziert-den-schrei-als-protest-aufs-bundeshaus",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Schweiz unterzeichnet Erklärung zur Unterstützung des Gazastreifens",
+      "url": "https://www.watson.ch/schweiz/international/504547633-schweiz-unterzeichnet-erklaerung-zur-unterstuetzung-des-gazastreifens",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Gericht pfeift Trump zurück: Keine 100'000 Dollar für Facharbeiter-Visum",
+      "url": "https://www.watson.ch/international/usa/345965196-gericht-pfeift-trump-zurueck-keine-100-000-dollar-fuer-facharbeiter-visum",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Schwere Vorwürfe: Weltstrafgericht suspendiert Chefankläger Karim Khan",
+      "url": "https://www.watson.ch/international/usa/162955382-schwere-vorwuerfe-weltstrafgericht-suspendiert-chefanklaeger-karim-khan",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Italienische Justiz ermittelt gegen israelischen Minister Ben-Gvir",
+      "url": "https://www.watson.ch/international/israel/737994909-italienische-justiz-ermittelt-gegen-israelischen-minister-ben-gvir",
+      "summary": "",
+      "published": "2026-06-09T01:31:05.156229+00:00"
     }
   ]
 }
