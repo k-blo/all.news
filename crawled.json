@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-10T21:02:05.703880+00:00",
+  "generated": "2026-06-10T21:31:49.005487+00:00",
   "date": "2026-06-10",
-  "count": 921,
+  "count": 922,
   "articles": [
     {
       "source": "Zentralplus",
@@ -6449,6 +6449,13 @@
       "url": "https://www.watson.ch/sport/fussball/212941766-wm-2026-gianni-infantino-spricht-ueber-iran-und-referee-omar-artan",
       "summary": "",
       "published": "2026-06-10T21:02:05.703880+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Dämpfer für den SC Düdingen",
+      "url": "https://www.freiburger-nachrichten.ch/story/270249/d%C3%A4mpfer-f%C3%BCr-den-sc-d%C3%BCdingen",
+      "summary": "",
+      "published": "2026-06-10T21:31:49.005487+00:00"
     }
   ]
 }
