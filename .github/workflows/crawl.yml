@@ -25,8 +25,27 @@ jobs:
         with:
           python-version: "3.12"
 
+      # CH Media papers 403 datacenter ASNs (Azure = GitHub runners). A Surfshark
+      # Swiss exit lands in an allowed ASN, so route the whole crawl through it.
+      # WG_CONF secret = a Surfshark manual WireGuard config (Switzerland).
+      - name: Connect VPN
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq wireguard-tools
+          printf '%s\n' "$WG_CONF" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          # Drop DNS= so wg-quick doesn't need resolvconf; runner DNS resolves fine.
+          sudo sed -i '/^DNS/d' /etc/wireguard/wg0.conf
+          sudo chmod 600 /etc/wireguard/wg0.conf
+          sudo wg-quick up wg0
+          echo "Egress now: $(curl -sS --max-time 20 https://ipinfo.io/org)"
+        env:
+          WG_CONF: ${{ secrets.WG_CONF }}
+
       - name: Crawl feeds
         run: python3 crawler.py   # stdlib only, no pip install
+
+      - name: Disconnect VPN
+        if: always()
+        run: sudo wg-quick down wg0 || true
 
       - name: Commit if changed
         run: |
