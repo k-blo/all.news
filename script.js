@@ -24,13 +24,13 @@ function ts(a) {
 const SOURCE_PRIORITY = [
   "Inside Paradeplatz",
   "Infosperber",
+  "Rathuus",
   "Inside IT",
   "Nebelspalter",
   "Bilanz",
   "Republik",
   "Weltwoche",
   "NZZ",
-  "Tages-Anzeiger",
 ];
 function prio(a) {
   const i = SOURCE_PRIORITY.indexOf(a.source);

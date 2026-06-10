@@ -460,7 +460,9 @@ def crawl_news_sitemap(source, url, limit):
             name = local(el)
             if name == "loc" and not loc:
                 loc = (el.text or "").strip()
-            elif name == "title":
+            elif name == "title" and "sitemap-news" in el.tag:
+                # news:title is the headline; image:title is the photo caption,
+                # which also has local name "title" and would otherwise clobber it.
                 title = (el.text or "").strip()
             elif name == "publication_date":
                 pub = (el.text or "").strip()
@@ -614,7 +616,8 @@ def main():
         ("Bilanz", crawl_bilanz),
         ("Republik", crawl_republik),
         ("Südostschweiz", crawl_suedostschweiz),
-        ("Nau", crawl_nau),
+        # Nau disabled: mostly reposts copied from other outlets, little original content
+        # ("Nau", crawl_nau),
         ("WOZ", crawl_woz),
         ("Bauernzeitung", crawl_bauernzeitung),
     ]
