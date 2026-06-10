@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-10T04:01:15.504928+00:00",
+  "generated": "2026-06-10T04:11:15.595182+00:00",
   "date": "2026-06-10",
-  "count": 111,
+  "count": 117,
   "articles": [
     {
       "source": "Zentralplus",
@@ -779,6 +779,48 @@
       "url": "https://www.freiburger-nachrichten.ch/story/270106/frieden-mit-putin-illusion-oder-reale-chance",
       "summary": "",
       "published": "2026-06-10T04:01:15.504928+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Arbeitsmarkt für Lehrpersonen – Rekordanmeldungen an PHs: Ist der Lehrpersonenmangel vorbei?",
+      "url": "https://www.srf.ch/news/schweiz/arbeitsmarkt-fuer-lehrpersonen-rekordanmeldungen-an-phs-ist-der-lehrpersonenmangel-vorbei",
+      "summary": "Pädagogische Hochschulen boomen: Was heisst das für den Lehrpersonenmangel?",
+      "published": "2026-06-10T04:11:15.595182+00:00"
+    },
+    {
+      "source": "Der Bund",
+      "title": "Neue App: Er will Berner Autofahrern Parkplätze vermitteln – die Stadt ist nicht begeistert",
+      "url": "https://www.derbund.ch/p2park-app-fuer-private-parkplaetze-expandiert-nach-bern-923197849420",
+      "summary": "Thibaut Rangers «Airbnb für Parkplätze» bringt Autofahrende an private Parkpätze. Gemeinderat Matthias Aebischer ist kritisch: «Wir wollen ja nicht, dass die Leute mit dem Auto in die Stadt kommen.»",
+      "published": "2026-06-10T04:11:15.595182+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Der Ueberlandpark in Zürich-Schwamendingen erhält den Binding-Preis für Biodiversität 2026.",
+      "url": "https://www.nau.ch/politik/regional/binding-preis-fur-biodiversitat-geht-an-zurcher-ueberlandpark-67137203",
+      "summary": "",
+      "published": "2026-06-10T04:11:15.595182+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Gegen den Design-Strom: Der Zeekr 001 bricht mit dem klassischen SUV-Trend und setzt stattdessen auf eine sportlich-elegante Shooting-Brake-Silhouette.",
+      "url": "https://www.nau.ch/lifestyle/auto/echt-ungewohnlich-stromer-am-limit-67137075",
+      "summary": "",
+      "published": "2026-06-10T04:11:15.595182+00:00"
+    },
+    {
+      "source": "Bauernzeitung",
+      "title": "Select Star die Erste Private Kb Station der Schweiz ist Nun 30 Jährig",
+      "url": "https://www.bauernzeitung.ch/artikel/tiere/select-star-die-erste-private-kb-station-der-schweiz-ist-nun-30-jaehrig-0-555713",
+      "summary": "",
+      "published": "2026-06-10T04:11:15.595182+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "«Deal» und gleichzeitig Vergeltung: Trump-Rhetorik irritiert erneut",
+      "url": "https://www.watson.ch/international/iran/756485113-deal-und-gleichzeitig-vergeltung-trump-rhetorik-irritiert-erneut",
+      "summary": "",
+      "published": "2026-06-10T04:11:15.595182+00:00"
     }
   ]
 }
