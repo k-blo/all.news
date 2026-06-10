@@ -44,6 +44,8 @@ All source definitions live at the top of the file. There are several crawler st
 
 **Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `script.js`.
 
+**Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.)
+
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
 Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.
