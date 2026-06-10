@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.swissnews.org/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.swissnews.org/archive.html</loc><changefreq>daily</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.swissnews.org/archive/2026-06-11.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.swissnews.org/archive/2026-06-10.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.swissnews.org/archive/2026-06-09.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.swissnews.org/archive/2026-06-08.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>
