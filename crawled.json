@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-10T19:39:16.010776+00:00",
+  "generated": "2026-06-10T19:57:33.665388+00:00",
   "date": "2026-06-10",
-  "count": 904,
+  "count": 906,
   "articles": [
     {
       "source": "Zentralplus",
@@ -6330,6 +6330,20 @@
       "url": "https://www.watson.ch/schweiz/svp/667769026-stadler-praesident-spuhler-erwartet-nein-zur-10-millionen-initiative",
       "summary": "",
       "published": "2026-06-10T19:39:16.010776+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "«Kinder benehmen sich besser»: Was dänische Eltern anders machen",
+      "url": "https://www.20min.ch/story/daenische-erziehung-was-eltern-in-daenemark-anders-machen-103579662",
+      "summary": "Dänemark gehört seit Jahren zu den glücklichsten Ländern der Welt. Laut einer Schriftstellerin liegt das auch an der Kindheit der Däninnen und Dänen.",
+      "published": "2026-06-10T19:57:33.665388+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Mission zum Mond: Artemis-3-Crew ohne Frauen – Nasa-Chef verteidigt Vorgehen",
+      "url": "https://www.tagesanzeiger.ch/nasa-chef-isaacman-verteidigt-rein-maennliche-artemis-3-crew-882953042133",
+      "summary": "Das Programm ist nach der Mondgöttin benannt und soll die Raumfahrt weiblicher machen. Warum besteht die neue Crew nur aus Männern?",
+      "published": "2026-06-10T19:57:33.665388+00:00"
     }
   ]
 }
