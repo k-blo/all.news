@@ -47,7 +47,7 @@ FEEDS = [
     {"source": "NZZ",           "url": "https://www.nzz.ch/recent.rss", "summary": False},
     {"source": "Persönlich",    "url": "https://www.persoenlich.com/rss/news.xml"},
     {"source": "Tachles",       "url": "https://www.tachles.ch/feed"},
-    {"source": "ETH Zürich",     "url": "https://www.ethz.ch/de/news-und-veranstaltungen/eth-news/news/_jcr_content.feed"},
+    #{"source": "ETH Zürich",     "url": "https://www.ethz.ch/de/news-und-veranstaltungen/eth-news/news/_jcr_content.feed"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
