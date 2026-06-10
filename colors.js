@@ -48,5 +48,6 @@ const SOURCE_COLORS = {
   "Vorwärts": "#c62828",
   "Persönlich": "#6d4c41",
   "Tachles": "#1565c0",
-  "Bauernzeitung": "#558b2f"
+  "Bauernzeitung": "#558b2f",
+  "ETH Zürich": "#0072ac"
 };
