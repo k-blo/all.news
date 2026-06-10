@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-10T20:29:48.199344+00:00",
+  "generated": "2026-06-10T20:31:52.403298+00:00",
   "date": "2026-06-10",
-  "count": 915,
+  "count": 918,
   "articles": [
     {
       "source": "Zentralplus",
@@ -6407,6 +6407,27 @@
       "url": "https://www.watson.ch/international/russland/638061406-satellitenbilder-zeigen-russische-aufruestung-an-nato-grenze",
       "summary": "",
       "published": "2026-06-10T20:29:48.199344+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Papst-Besuch in Barcelona: Leo XIV. würdigt Sagrada Familia als Meisterwerk",
+      "url": "https://www.tagesanzeiger.ch/papst-leo-xiv-feiert-messe-in-der-sagrada-familia-327705657571",
+      "summary": "Zum 100. Todestag des Architekten Antoni Gaudí feierte Papst Leo XIV. eine Messe in der Sagrada Familia in Barcelona.",
+      "published": "2026-06-10T20:31:52.403298+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Kanye West vor Gericht: Model wirft ihm Übergriff bei Videodreh vor",
+      "url": "https://www.freiburger-nachrichten.ch/story/270259/kanye-west-vor-gericht-model-wirft-ihm-%C3%BCbergriff-bei-videodreh-vor",
+      "summary": "",
+      "published": "2026-06-10T20:31:52.403298+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Die grosse WM-Prognose: Diese zehn Nationen träumen vom Titel",
+      "url": "https://www.freiburger-nachrichten.ch/story/270263/die-grosse-wmprognose-diese-zehn-nationen-tr%C3%A4umen-vom-titel",
+      "summary": "",
+      "published": "2026-06-10T20:31:52.403298+00:00"
     }
   ]
 }
