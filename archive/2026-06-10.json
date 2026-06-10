@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-10T15:09:32.392926+00:00",
+  "generated": "2026-06-10T15:19:45.538147+00:00",
   "date": "2026-06-10",
-  "count": 686,
+  "count": 697,
   "articles": [
     {
       "source": "Zentralplus",
@@ -4804,6 +4804,83 @@
       "url": "https://www.bzbasel.ch/basel/baselland/baselbiet-waehlt-zwischen-schoch-und-liechti-ld.4181401",
       "summary": "",
       "published": "2026-06-10T15:09:32.392926+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Pöstler nach 42 Jahren entlassen: «Ich hoffe natürlich noch»",
+      "url": "https://www.20min.ch/story/interview-poestler-nach-42-jahren-entlassen-ich-hoffe-natuerlich-noch-103579942",
+      "summary": "Nachdem die Kündigung von Jean-Daniel Taverney nationale Aufmerksamkeit erregt hat, bieten viele dem 59-Jährigen ihre Unterstützung an. Auch eine Gewerkschaft kämpft für seine Wiederanstellung.",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Fussball-WM 2026: Die grosse Liste der Public Viewings in Zürich",
+      "url": "https://www.tagesanzeiger.ch/public-viewing-zuerich-wo-die-wm-2026-laeuft-760870587290",
+      "summary": "Am 11. Juni ist Anpfiff für die grösste WM aller Zeiten. Wir zeigen, in welchen Bars, Eventlokals und auf welchen Plätzen man sein Team anfeuern kann. Und wo ausnahmslos alle Spiele zu sehen sind.",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Aufarbeitung der Affäre: Bill Gates sagt vor US-Kongress zu Epstein-Kontakten aus",
+      "url": "https://www.tagesanzeiger.ch/bill-gates-sagt-vor-epstein-ausschuss-im-us-parlament-aus-593412029944",
+      "summary": "Der Microsoft-Mitgründer erschien am Mittwoch vor dem Kontrollausschuss in Washington. Er hoffe, dass seine Aussage «Gerechtigkeit für die Opfer» bringe.",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Geschichten aus 20 Jahren Greenfield: «Riecht es überall schön nach Käsefuss und Bier?» – «Jaaaaaa!»",
+      "url": "https://www.bernerzeitung.ch/greenfield-festival-20-jahre-hagel-sturm-und-legenden-119795748791",
+      "summary": "Geflutete Zelte, Sturmevakuierungen, Hagelschäden und unvergessliche Bühnenmomente – das Festival hat den Metalfans in Interlaken schon so einiges beschert. Unsere Redaktoren packen ihre liebsten Gree",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Sauerei auf der Alp: «Irgendjemand muss das aufräumen»: Berner SVP-Nationalrat rechnet mit chaotischen Wildcampern ab",
+      "url": "https://www.bernerzeitung.ch/wildcampieren-svp-nationalrat-zeigt-abfall-auf-berner-alp-556083529660",
+      "summary": "In einem viel beachteten Video beschwert sich Ernst Wandfluh über einen Wildcamper, der auf der Alp Ueschenen ob Kandersteg viel Abfall liegen liess – was für Tiere gefährlich werden kann.",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Bilanz",
+      "title": "Urteil des Bundesgerichts Kommunale Mindestlöhne Gültig",
+      "url": "https://www.bilanz.ch/urteil-des-bundesgerichts-kommunale-mindestloehne-gueltig/g63m3nx",
+      "summary": "",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Bilanz",
+      "title": "Alexander Pieper Sohn von Michael Pieper Verstorben",
+      "url": "https://www.bilanz.ch/people/alexander-pieper-sohn-von-michael-pieper-verstorben/39hwcv8",
+      "summary": "",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Bilanz",
+      "title": "Schweizer Asset Manager Steigern Vermögen Weiter Margendruck Nimmt zu",
+      "url": "https://www.bilanz.ch/invest/schweizer-asset-manager-steigern-vermoegen-weiter-margendruck-nimmt-zu/q043bgf",
+      "summary": "",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Bauernzeitung",
+      "title": "Weniger Kuhprobleme Mehr Gewinn Bis zu 10 15 Potenzial",
+      "url": "https://www.bauernzeitung.ch/artikel/organisationen-firmen/weniger-kuhprobleme-mehr-gewinn-bis-zu-10-15-potenzial-0-555710",
+      "summary": "",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Der Papst Trifft Bad Bunny Ausgerechnet Trump Verbindet die Beiden",
+      "url": "https://www.aargauerzeitung.ch/international/der-papst-trifft-bad-bunny-ausgerechnet-trump-verbindet-die-beiden-ld.4182920",
+      "summary": "",
+      "published": "2026-06-10T15:19:45.538147+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Gian Tudisco aus Frick ist Vize Schweizermeister im Speed Climbing",
+      "url": "https://www.aargauerzeitung.ch/aargau/fricktal/gian-tudisco-aus-frick-ist-vize-schweizermeister-im-speed-climbing-ld.4182558",
+      "summary": "",
+      "published": "2026-06-10T15:19:45.538147+00:00"
     }
   ]
 }
