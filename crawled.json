@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-10T01:01:23.322013+00:00",
+  "generated": "2026-06-10T01:31:56.210589+00:00",
   "date": "2026-06-10",
-  "count": 22,
+  "count": 25,
   "articles": [
     {
       "source": "Zentralplus",
@@ -156,6 +156,27 @@
       "url": "https://www.nau.ch/news/europa/jennifer-lopez-zieht-millionen-vor-den-bildschirm-67137196",
       "summary": "",
       "published": "2026-06-10T01:01:23.322013+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die US-Streitkräfte fliegen nach Helikopter-Abschluss neue Angriffe gegen Iran. Er habe notgedrungen reagieren müssen, sagt Trump",
+      "url": "https://www.nzz.ch/international/die-us-streitkraefte-fliegen-nach-helikopter-abschluss-neue-angriffe-gegen-iran-er-habe-notgedrungen-reagieren-muessen-sagt-trump-ld.10010638",
+      "summary": "",
+      "published": "2026-06-10T01:31:56.210589+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "UEFA Championship - Women: England W schlägt Italy W 2:1",
+      "url": "https://www.nau.ch/sport/matchcenter/uefa-championship-women-england-w-schlagt-italy-w-21-67137198",
+      "summary": "",
+      "published": "2026-06-10T01:31:56.210589+00:00"
+    },
+    {
+      "source": "Nau",
+      "title": "Swiss League: EHC Winterthur gegen La Chaux-de-Fonds ab 20:00 live",
+      "url": "https://www.nau.ch/sport/matchcenter/swiss-league-ehc-winterthur-gegen-la-chaux-de-fonds-ab-2000-live-67137197",
+      "summary": "",
+      "published": "2026-06-10T01:31:56.210589+00:00"
     }
   ]
 }
