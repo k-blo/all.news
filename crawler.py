@@ -11,7 +11,6 @@ import json
 import os
 import re
 import sys
-import urllib.parse
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
@@ -98,17 +97,6 @@ CH_MEDIA_SOURCES = [
 ]
 
 
-_CF_PROXY_URL = os.environ.get("CF_PROXY_URL", "").rstrip("/")
-_CF_PROXY_TOKEN = os.environ.get("CF_PROXY_TOKEN", "")
-
-
-def proxied(url):
-    """Route url through the Cloudflare Worker proxy when env vars are set."""
-    if not (_CF_PROXY_URL and _CF_PROXY_TOKEN):
-        return url
-    return f"{_CF_PROXY_URL}/proxy?token={_CF_PROXY_TOKEN}&url={urllib.parse.quote(url, safe='')}"
-
-
 class NotModified(Exception):
     pass
 
@@ -117,9 +105,7 @@ _http_cache: dict = {}
 
 
 def fetch(url):
-    # Cloudflare bot-protection on workers.dev blocks non-browser UAs; proxy URLs need a browser UA.
-    ua = "Mozilla/5.0 (compatible; SwissNewsBot/0.1)" if _CF_PROXY_URL and url.startswith(_CF_PROXY_URL) else USER_AGENT
-    headers = {"User-Agent": ua}
+    headers = {"User-Agent": USER_AGENT}
     entry = _http_cache.get(url, {})
     if entry.get("last_modified"):
         headers["If-Modified-Since"] = entry["last_modified"]
@@ -385,7 +371,7 @@ def crawl_ch_media(source, base, limit):
     y = datetime.now(timezone.utc).strftime("%Y")
     m = datetime.now(timezone.utc).strftime("%m")
     url = f"{base}/sitemap/{y}/{m}/sitemap.xml"
-    rows = sitemap_rows(fetch(proxied(url)), re.compile(r"/[^/]+-ld\.\d+$"))
+    rows = sitemap_rows(fetch(url), re.compile(r"/[^/]+-ld\.\d+$"))
     return crawl_sitemap_source(source, rows, re.compile(r"/([^/]+)-ld\.\d+$"), limit)
 
 
