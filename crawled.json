@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-10T23:31:51.785378+00:00",
+  "generated": "2026-06-11T00:02:01.308835+00:00",
   "date": "2026-06-11",
-  "count": 4,
+  "count": 5,
   "articles": [
     {
       "source": "Persönlich",
@@ -30,6 +30,13 @@
       "url": "https://www.20min.ch/story/fussball-wm-trump-schwaenzt-bei-wm-auftakt-der-usa-103580212",
       "summary": "Ausgerechnet beim ersten WM-Spiel der US-Nationalmannschaft im eigenen Land wird US-Präsident Donald Trump nicht dabei sein.",
       "published": "2026-06-10T23:31:51.785378+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Iran-Krieg: Nach Trump-Aussagen: USA greifen erneut den Iran an",
+      "url": "https://www.watson.ch/international/liveticker/455779172-iran-krieg-nach-trump-aussagen-usa-greifen-erneut-den-iran-an",
+      "summary": "",
+      "published": "2026-06-11T00:02:01.308835+00:00"
     }
   ]
 }
