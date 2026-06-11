@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-11T05:09:09.716560+00:00",
+  "generated": "2026-06-11T05:31:38.284912+00:00",
   "date": "2026-06-11",
-  "count": 178,
+  "count": 184,
   "articles": [
     {
       "source": "Persönlich",
@@ -1248,6 +1248,48 @@
       "url": "https://www.watson.ch/sport/wm-tagesticker/896058623-wm-2026-im-tagesticker-england-gewinnt-letzten-test-gegen-costa-rica",
       "summary": "",
       "published": "2026-06-11T05:09:09.716560+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Verheerendes Palisades-Feuer: Staatsanwaltschaft: Brand in L.A. war vorsätzliche Brandstiftung",
+      "url": "https://www.tagesanzeiger.ch/palisades-feuer-prozess-um-brandstiftung-in-los-angeles-518904033975",
+      "summary": "Im Prozess um das Palisades-Feuer präsentiert die Anklage ungewöhnliche Indizien: Der Angeklagte soll Monate vor dem Brand eine brennende Waldszene per KI generiert haben.",
+      "published": "2026-06-11T05:31:38.284912+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "26 Grad Celsius auf den Lofoten: Der Norden beginnt, sich wie der Süden anzufühlen",
+      "url": "https://www.nzz.ch/reisen/26-grad-celsius-auf-den-lofoten-der-norden-beginnt-sich-wie-der-sueden-anzufuehlen-ld.10008771",
+      "summary": "",
+      "published": "2026-06-11T05:31:38.284912+00:00"
+    },
+    {
+      "source": "St. Galler Tagblatt",
+      "title": "Fussball im Toggenburg Möglicherweise Folgenschwere Niederlage für Kirchberg",
+      "url": "https://www.tagblatt.ch/ostschweiz/toggenburg/fussball-im-toggenburg-moeglicherweise-folgenschwere-niederlage-fuer-kirchberg-ld.4183199",
+      "summary": "",
+      "published": "2026-06-11T05:31:38.284912+00:00"
+    },
+    {
+      "source": "Limmattaler Zeitung",
+      "title": "Kreis 11 Mann bei Auseinandersetzung mit Stichwaffe Verletzt",
+      "url": "https://www.limmattalerzeitung.ch/limmattal/zuerich/kreis-11-mann-bei-auseinandersetzung-mit-stichwaffe-verletzt-ld.4183200",
+      "summary": "",
+      "published": "2026-06-11T05:31:38.284912+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Sportnews-Ticker: NY Knicks fehlt nach Rekord-Aufholjagd noch ein Sieg",
+      "url": "https://www.watson.ch/sport/sport-news/195933263-sportnews-ticker-ny-knicks-fehlt-nach-rekord-aufholjagd-noch-ein-sieg",
+      "summary": "",
+      "published": "2026-06-11T05:31:38.284912+00:00"
+    },
+    {
+      "source": "Inside Paradeplatz",
+      "title": "Blackrock Hildebrand Big Pleite Big Bittibätti",
+      "url": "https://insideparadeplatz.ch/2026/06/11/blackrock-hildebrand-big-pleite-big-bittibaetti/",
+      "summary": "",
+      "published": "2026-06-11T05:31:38.284912+00:00"
     }
   ]
 }
