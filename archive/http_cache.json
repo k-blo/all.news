@@ -7,7 +7,7 @@
     "etag": "W/\"18bab-eZPllUhEp+YTmV5SIM5HoMgdZYo\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/": {
-    "etag": "W/\"f6ae-MHzNs5nj8W/qU9GDgK3X+I/u+uk\""
+    "etag": "W/\"f6d4-Vxlf4YIgKXcshr5NIXYYSV8jiAA\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/bernerzeitung/": {
     "etag": "W/\"f7e4-aMEDNJv2q/9C5qGUfl8z7EY2i5A\""
@@ -16,32 +16,32 @@
     "last_modified": "Thu, 11 Jun 2026 04:41:57 GMT"
   },
   "https://www.finews.ch/news?format=feed": {
-    "last_modified": "Thu, 11 Jun 2026 06:01:09 GMT"
+    "last_modified": "Thu, 11 Jun 2026 06:14:34 GMT"
   },
   "https://www.netzwoche.ch/rss.xml": {
-    "last_modified": "Thu, 11 Jun 2026 04:10:55 GMT",
-    "etag": "\"1781151055\""
+    "last_modified": "Thu, 11 Jun 2026 06:10:51 GMT",
+    "etag": "\"1781158251\""
   },
   "https://www.nzz.ch/recent.rss": {
-    "last_modified": "Thu, 11 Jun 2026 06:00:40 GMT"
+    "last_modified": "Thu, 11 Jun 2026 06:10:39 GMT"
   },
   "https://www.bilanz.ch/sitemap-articles-time-limited-2026-06.xml": {
     "last_modified": "Wed, 10 Jun 2026 16:15:41 GMT",
     "etag": "\"f4d3960ec7c034ae16640e5c73c623f0\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/derbund/": {
-    "etag": "W/\"f007-K2T3mUyuyaSlCe+8BuIVDQ8zTC8\""
+    "etag": "W/\"f001-4Qu7FhYRJIavG6wO/bPItKk7E1o\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/bazonline/": {
-    "etag": "W/\"e97d-Mlx32krrC+9ZtS0TB5/F40aXiFA\""
+    "etag": "W/\"e949-kmdWOvrU1mYT600ceALvoHvRog4\""
   },
   "https://www.woz.ch/sitemaps/editorial_content/sitemap.xml": {
-    "last_modified": "Thu, 11 Jun 2026 05:28:29 GMT",
-    "etag": "\"1781155709\""
+    "last_modified": "Thu, 11 Jun 2026 05:54:29 GMT",
+    "etag": "\"1781157269\""
   },
   "https://www.woz.ch/sitemaps/editorial_content/sitemap.xml?page=15": {
-    "last_modified": "Thu, 11 Jun 2026 05:28:29 GMT",
-    "etag": "\"1781155709\""
+    "last_modified": "Thu, 11 Jun 2026 05:54:29 GMT",
+    "etag": "\"1781157269\""
   },
   "https://www.freiburger-nachrichten.ch/sitemap_latest_news.xml": {
     "etag": "W/\"2186e-7SH4hHIg/S6K9l0tAznf7H7x0+c\""
