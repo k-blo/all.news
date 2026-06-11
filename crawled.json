@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-11T04:02:06.271080+00:00",
+  "generated": "2026-06-11T04:10:58.082178+00:00",
   "date": "2026-06-11",
-  "count": 163,
+  "count": 164,
   "articles": [
     {
       "source": "Persönlich",
@@ -1143,6 +1143,13 @@
       "url": "https://www.freiburger-nachrichten.ch/story/270325/akwverbot-hat-sich-albert-r%C3%B6sti-verpokert",
       "summary": "",
       "published": "2026-06-11T04:02:06.271080+00:00"
+    },
+    {
+      "source": "Der Bund",
+      "title": "Motorengeheul mitten im Quartier: Der schwierige Kampf der Städte gegen Autoposer",
+      "url": "https://www.derbund.ch/autoposer-in-bern-stadt-fordert-laermblitzer-124924336223",
+      "summary": "In Bern sind die Autoposer unterwegs. Mit ihren Fahrzeugen sorgen sie auch in Wohnquartieren für Ärger. Die Städte fordern vom Bund die Zulassung von Lärmblitzern – doch dieser winkt ab.",
+      "published": "2026-06-11T04:10:58.082178+00:00"
     }
   ]
 }
