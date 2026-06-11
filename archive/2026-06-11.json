@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-11T02:14:17.048593+00:00",
+  "generated": "2026-06-11T02:26:32.256612+00:00",
   "date": "2026-06-11",
-  "count": 14,
+  "count": 16,
   "articles": [
     {
       "source": "Persönlich",
@@ -100,6 +100,20 @@
       "url": "https://www.thurgauerzeitung.ch/ostschweiz/kanton-thurgau/thurgauer-konvikt-vor-dem-aus-erinnerungen-an-die-zweite-heimat-ld.4174047",
       "summary": "",
       "published": "2026-06-11T02:14:17.048593+00:00"
+    },
+    {
+      "source": "St. Galler Tagblatt",
+      "title": "Volley Amriswils Jöl Hauck Debütiert im Schweizer Nationalteam",
+      "url": "https://www.tagblatt.ch/sport/thurgau/volley-amriswils-joel-hauck-debuetiert-im-schweizer-nationalteam-ld.4183190",
+      "summary": "",
+      "published": "2026-06-11T02:26:32.256612+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "USA haben laut Trump zahlreiche Schiffe durch Hormus-Strasse geschleust",
+      "url": "https://www.watson.ch/international/iran/396166124-usa-haben-laut-trump-zahlreiche-schiffe-durch-hormus-strasse-geschleust",
+      "summary": "",
+      "published": "2026-06-11T02:26:32.256612+00:00"
     }
   ]
 }
