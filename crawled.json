@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-11T05:01:45.885933+00:00",
+  "generated": "2026-06-11T05:09:09.716560+00:00",
   "date": "2026-06-11",
-  "count": 177,
+  "count": 178,
   "articles": [
     {
       "source": "Persönlich",
@@ -1241,6 +1241,13 @@
       "url": "https://insideparadeplatz.ch/2026/06/11/due-diligence-fuer-revolut-ein-fremdwort/",
       "summary": "",
       "published": "2026-06-11T05:01:45.885933+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026 im Tagesticker: England gewinnt letzten Test gegen Costa Rica",
+      "url": "https://www.watson.ch/sport/wm-tagesticker/896058623-wm-2026-im-tagesticker-england-gewinnt-letzten-test-gegen-costa-rica",
+      "summary": "",
+      "published": "2026-06-11T05:09:09.716560+00:00"
     }
   ]
 }
