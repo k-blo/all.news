@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-11T04:10:58.082178+00:00",
+  "generated": "2026-06-11T04:26:32.273601+00:00",
   "date": "2026-06-11",
-  "count": 164,
+  "count": 166,
   "articles": [
     {
       "source": "Persönlich",
@@ -1150,6 +1150,20 @@
       "url": "https://www.derbund.ch/autoposer-in-bern-stadt-fordert-laermblitzer-124924336223",
       "summary": "In Bern sind die Autoposer unterwegs. Mit ihren Fahrzeugen sorgen sie auch in Wohnquartieren für Ärger. Die Städte fordern vom Bund die Zulassung von Lärmblitzern – doch dieser winkt ab.",
       "published": "2026-06-11T04:10:58.082178+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "FIS-Präsidentenwahl: Wird Johan Eliasch von Alexander Ospelt abgelöst?",
+      "url": "https://www.watson.ch/sport/skispringen/125434630-fis-praesidentenwahl-wird-johan-eliasch-von-alexander-ospelt-abgeloest",
+      "summary": "",
+      "published": "2026-06-11T04:26:32.273601+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Anthropic-Chef Amodei: Regierung sollte riskante KI stoppen können",
+      "url": "https://www.watson.ch/digital/international/708390456-anthropic-chef-amodei-regierung-sollte-riskante-ki-stoppen-koennen",
+      "summary": "",
+      "published": "2026-06-11T04:26:32.273601+00:00"
     }
   ]
 }
