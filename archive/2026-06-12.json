@@ -1,6 +1,35 @@
 {
-  "generated": "2026-06-11T22:01:55.550996+00:00",
+  "generated": "2026-06-11T22:31:54.944315+00:00",
   "date": "2026-06-12",
-  "count": 0,
-  "articles": []
+  "count": 4,
+  "articles": [
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Bauprojekt in Seebach: Auf der letzten Zürcher Industriebrache entstehen bis zu 225 genossenschaftliche Wohnungen",
+      "url": "https://www.tagesanzeiger.ch/stierli-areal-seebach-200-guenstige-wohnungen-geplant-275467947155",
+      "summary": "Wo früher Aufzüge und Autos gebaut wurden, soll ein Wohnquartier entstehen. Interessierte Mieterinnen und Mieter brauchen Geduld.",
+      "published": "2026-06-11T22:31:54.944315+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Beschwingt, aber nicht originell: Mit Shakira wird im Aztekenstadion von Mexiko die Fussball-WM eröffnet",
+      "url": "https://www.nzz.ch/sport/fussball/beschwingt-aber-nicht-originell-mit-shakira-wird-im-aztekenstadion-von-mexiko-die-fussball-wm-eroeffnet-ld.10011007",
+      "summary": "",
+      "published": "2026-06-11T22:31:54.944315+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026 im Tagesticker: Südkorea-Fan feiert mit Mexikanern",
+      "url": "https://www.watson.ch/sport/wm-tagesticker/896058623-wm-2026-im-tagesticker-suedkorea-fan-feiert-mit-mexikanern",
+      "summary": "",
+      "published": "2026-06-11T22:31:54.944315+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026: Die Auffälligkeiten vom Eröffnungsspiel Mexiko – Südafrika",
+      "url": "https://www.watson.ch/sport/fussball/982005259-wm-2026-die-auffaelligkeiten-vom-eroeffnungsspiel-mexiko-suedafrika",
+      "summary": "",
+      "published": "2026-06-11T22:31:54.944315+00:00"
+    }
+  ]
 }
