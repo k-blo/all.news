@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T01:01:35.819142+00:00",
+  "generated": "2026-06-12T01:31:58.441953+00:00",
   "date": "2026-06-12",
-  "count": 14,
+  "count": 15,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -100,6 +100,13 @@
       "url": "https://www.luzernerzeitung.ch/aboplus/ausfluege/world-nature-forum-in-naters-abo-2-fuer-1-ld.4177551",
       "summary": "",
       "published": "2026-06-12T01:01:35.819142+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Zweiter Fall in diesem Jahr: Erneut Journalist in Mexiko getötet",
+      "url": "https://www.tagesanzeiger.ch/journalist-in-mexiko-erschossen-zweiter-fall-in-veracruz-534343267628",
+      "summary": "In Mexiko ist ein Journalist von Unbekannten erschossen worden. Es war die zweite Tötung eines Medienschaffenden in Mexiko in diesem Jahr – beide Taten ereigneten sich im Bundesstaat Veracruz, der als",
+      "published": "2026-06-12T01:31:58.441953+00:00"
     }
   ]
 }
