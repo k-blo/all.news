@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T03:32:11.388057+00:00",
+  "generated": "2026-06-12T04:01:45.416133+00:00",
   "date": "2026-06-12",
-  "count": 133,
+  "count": 170,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -933,6 +933,265 @@
       "url": "https://www.freiburger-nachrichten.ch/story/270186/foodfestival-in-d%C3%BCdingen-14-kulturen-14-men%C3%BCs",
       "summary": "",
       "published": "2026-06-12T03:32:11.388057+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "100. Jahrestag des «Zyklons» – Der Tornado, der den Jura verwüstete",
+      "url": "https://www.srf.ch/kultur/gesellschaft-religion/100-jahrestag-des-zyklons-der-tornado-der-den-jura-verwuestete",
+      "summary": "Es war einer der schwersten Tornados in der Schweizer Geschichte. Eine Ausstellung widmet sich nun der Naturkatastrophe.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Zu alte Milch – Kühe melken sich selber – Problem für Bezeichnung als Emmentaler",
+      "url": "https://www.srf.ch/news/schweiz/zu-alte-milch-kuehe-melken-sich-selber-problem-fuer-bezeichnung-als-emmentaler",
+      "summary": "Weil Kühe selbst bestimmen, wann der Roboter sie melkt, ist ein Teil der Milch zu alt. Nun soll eine Regeländerung her.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Lärm ab 8 Uhr erwartet: Super-Puma-Helikopter donnert über den Zürichsee",
+      "url": "https://www.tagesanzeiger.ch/messfluege-super-puma-misst-radioaktivitaet-ueber-zuerichsee-142824078008",
+      "summary": "Zwischen dem 15. und 18. Juni führt die Nationale Alarmzentrale des Bundes routinemässige Messflüge durch. Dabei wird der Helikopter auch über Richterswil kreisen und die Radioaktivität messen.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Bauprojekt in Dietlikon: 50-Meter-Turm statt Erotikmarkt und Fressnapf",
+      "url": "https://www.tagesanzeiger.ch/dietlikon-50-meter-turm-soll-erotikmarkt-ersetzen-436381039279",
+      "summary": "Es ist der Auftakt zur Entwicklung des Derendinger-Areals. In den Ikon-Turm werden 60 Millionen Franken investiert. Baustart ist für Sommer 2028 geplant.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Ausgehtipps fürs Wochenende: Das läuft im Zürcher Unterland",
+      "url": "https://www.tagesanzeiger.ch/ausgehtipps-fuers-wochenende-das-laeuft-im-zuercher-unterland-629636301561",
+      "summary": "Ein Trio sorgt in Otelfingen für frische Volksmusik. Carmen Vidal erzählt in Bachs über den Tierschutzalltag in Spanien.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Berner Kulturlokal: Der Prozess hat Hilfe nötig",
+      "url": "https://www.bernerzeitung.ch/kulturlokal-prozess-bern-crowdfunding-fuer-die-bar-131934010130",
+      "summary": "Der Kulturort in Bern-Holligen setzt erneut auf ein Crowdfunding. Wie steht es wirklich um den Prozess, den Ex-Bee-flat-Leiter Christian Krebs aufgebaut hat?",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Touristenansturm im Kandertal: Kandersteg sperrt eigen­mächtig National­strasse – Ärger in Kandergrund",
+      "url": "https://www.bernerzeitung.ch/kandersteg-runder-tisch-nach-verkehrschaos-an-pfingsten-691548112373",
+      "summary": "An Pfingsten wurde Kander­steg derart von Autos überflutet, dass die Gemeinde die Reiss­leine zog: In Kander­grund bat ein Verkehrs­dienst Auto­fahrer, zu wenden. Das kam nicht überall gut an.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Schwinger-Chef Res Schmid: Der Schwingerkönig lobt ihn – das ist der Mann mit dem Fischerhut",
+      "url": "https://www.bernerzeitung.ch/res-schmid-darum-traegt-berns-schwinger-chef-einen-fischerhut-344520448366",
+      "summary": "Er steht lieber im Hintergrund und fällt doch immer auf: Der neue technische Leiter der Berner Schwinger lebt für die Einteilung – wie schon sein Vater.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "René Schudel am Greenfield Festival: Der TV-Koch am «schönsten Festival der Schweiz»",
+      "url": "https://www.bernerzeitung.ch/greenfield-festival-fernsehkoch-schudel-bekocht-die-vips-481029417078",
+      "summary": "Mit angehenden Pizzaiolos aus Napoli und gestandenen Profis bekocht TV-Koch René Schudel die VIPs am Greenfield. Das Festival ist für ihn eine Herzensangelegenheit.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "88 Unfälle in 5 Jahren: Das Tempolimit über den Gurnigel beträgt bald 60 statt 80 Stunden­kilometer",
+      "url": "https://www.bernerzeitung.ch/gurnigelpass-tempolimit-sinkt-auf-60-km-h-719819116270",
+      "summary": "Wegen schwerer Verkehrsunfälle und viel Lärm: Auf der Pass­strasse müssen sich Auto­fahrer und Motorrad­lenkerinnen künftig mässigen.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Immer diese Examen: Prüfung bestanden – dank ganz wenig Wind oder aufreizender Vorsicht",
+      "url": "https://www.bernerzeitung.ch/fahrpruefung-in-bern-wenn-vorsicht-zum-hindernis-wird-715030841849",
+      "summary": "Die Prüfungszeit im Univiertel in der Berner Länggasse lässt Erinnerungen hochkommen an teils weit zurückligende Testsituationen.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Panini-Fieber in Bern: «Eine innere Stimme hat mir gesagt, ich solle mir immer mehr Bilder kaufen»",
+      "url": "https://www.bernerzeitung.ch/panini-tauschboerse-in-bern-sammelfieber-vor-der-fussball-wm-309732105925",
+      "summary": "Ein Schulkind gibt sein Erspartes ab, eine Mutter ist begeisterter als ihr Sohn, und ein Student verliert seine Einkleberechte: Während der Panini-Sammelbörse herrscht in der Bibliothek Länggasse Ausn",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Kunst und Körperbilder: «Es kann nur spannender werden»: Sie fotografiert ihren alternden, nackten Körper",
+      "url": "https://www.bernerzeitung.ch/brigitte-lustenberger-fotografien-ihres-alternden-koerpers-510791182153",
+      "summary": "Ältere Frauen seien in der Fotografie weitgehend ausgeblendet, sagt Brigitte Lustenberger (56). Ein Gespräch über Nacktbilder und die Schönheit alter Haut.",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "KOMMENTAR - Dorfkönige unter Verdacht – nach Crans-Montana braucht die Schweiz einen ehrlichen Blick auf das Milizsystem",
+      "url": "https://www.nzz.ch/meinung/dorfkoenige-unter-verdacht-nach-crans-montana-braucht-die-schweiz-einen-ehrlichen-blick-auf-das-milizsystem-ld.10007884",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "INTERVIEW - «In hundert Jahren werden Historiker die KI interviewen, um Epochen zu erforschen»",
+      "url": "https://www.nzz.ch/technologie/in-hundert-jahren-werden-historiker-die-ki-interviewen-um-epochen-zu-erforschen-ld.10006527",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die Zeitenwende belastet die deutsch-französische Freundschaft",
+      "url": "https://www.nzz.ch/pro/fcas-aus-die-zeitenwende-belastet-die-deutsch-franzoesische-freundschaft-ld.10010940",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Michael Pieper hält die Zügel auch mit 80 in der Hand. Doch der Tod seines Sohnes Alexander Pieper zwingt den schwerreichen Unternehmer zu einer Zäsur",
+      "url": "https://www.nzz.ch/wirtschaft/tod-von-alexander-pieper-zwingt-franke-und-artemis-zu-neubestimmung-ld.10010851",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Neymar: das Dauerdrama um den vermeintlichen Jahrhundertkicker",
+      "url": "https://www.nzz.ch/sport/neymar-oder-das-dauerdrama-um-den-vermeintlichen-jahrhundertkicker-ld.10010850",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "«Ein Lehrer, der sich bloss als netter Coach auf Augenhöhe anbiedert, wird von den Schülern nicht ernst genommen», sagt Roland Reichenbach",
+      "url": "https://www.nzz.ch/schweiz/ein-lehrer-der-sich-bloss-als-netter-coach-auf-augenhoehe-anbiedert-wird-von-den-schuelern-nicht-ernst-genommen-sagt-roland-reichenbach-ld.10010821",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Heute tritt der neue EU-Asylpakt in Kraft – trotz jahrelanger Vorlaufzeit sind zahlreiche Länder nicht bereit",
+      "url": "https://www.nzz.ch/international/heute-tritt-der-neue-eu-asylpakt-in-kraft-trotz-jahrelanger-vorlaufzeit-sind-zahlreiche-laender-nicht-bereit-ld.10010786",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "DER ANDERE BLICK - Merz und Höcke liegen beide historisch daneben",
+      "url": "https://www.nzz.ch/der-andere-blick/merz-und-hoecke-liegen-beide-historisch-daneben-ld.10010740",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Neuer ORF-Chef: Clemens Pig übernimmt einen Sender in der Glaubwürdigkeitskrise",
+      "url": "https://www.nzz.ch/international/neuer-orf-chef-clemens-pig-uebernimmt-einen-sender-in-der-glaubwuerdigkeitskrise-ld.10010709",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Schweigen in der Leitung: Jahrzehntelang war das Telefon das zentrale Medium der Gesellschaft. Jetzt stirbt es einen leisen Tod",
+      "url": "https://www.nzz.ch/feuilleton/schweigen-in-der-leitung-jahrzehntelang-war-das-telefon-das-zentrale-medium-der-gesellschaft-jetzt-stirbt-es-einen-leisen-tod-ld.10010701",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Nein, die Schweizer hassen uns nicht",
+      "url": "https://www.nzz.ch/schweiz/10-millionen-schweiz-was-die-initiative-zur-begrenzung-der-zuwanderung-bedeutet-ld.10010658",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Elon Musk hat das grösste Stück, aber auch Google und Peter Thiel kauften sich früh ein. Wem gehört SpaceX?",
+      "url": "https://www.nzz.ch/technologie/elon-musk-hat-das-groesste-stueck-aber-auch-google-und-peter-thiel-kauften-sich-frueh-ein-wem-gehoert-spacex-ld.10010656",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Der Frieden lässt auf sich warten: Trumps grosser Plan für Gaza stockt – und die Palästinenser verlieren die Hoffnung",
+      "url": "https://www.nzz.ch/international/der-frieden-laesst-auf-sich-warten-trumps-grosser-plan-fuer-gaza-stockt-und-die-palaestinenser-verlieren-die-hoffnung-ld.10010615",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "PODCAST «NZZ QUANTENSPRUNG» - Proteine aus Luft: Diese Bakterien produzieren nachhaltige Lebensmittel – in der Stadt, der Wüste oder im Weltall",
+      "url": "https://www.nzz.ch/podcast/proteine-aus-luft-diese-bakterien-produzieren-nachhaltige-lebensmittel-in-der-stadt-der-wueste-oder-im-weltall-ld.10010561",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Der Lokführer, der auf der Simplonstrecke aus dem fahrenden Zug sprang",
+      "url": "https://www.nzz.ch/schweiz/der-lokfuehrer-der-auf-der-simplonstrecke-aus-dem-fahrendem-zug-sprang-ld.10010488",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Protein für die menschliche Ernährung stammt normalerweise aus Pflanzen oder aus Tieren. Dieses hier ist aus Luft",
+      "url": "https://www.nzz.ch/wissenschaft/protein-aus-luft-bakterien-stellen-nachhaltiges-eiweiss-her-ld.10010392",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Abstiegskampf in der 2 Liga Interregional Klingnau und Rothrist",
+      "url": "https://www.aargauerzeitung.ch/sport/aargau/abstiegskampf-in-der-2-liga-interregional-klingnau-und-rothrist-ld.4183419",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026 im Tagesticker: Mexikos Quiñones imitiert Tshabalala-Jubel",
+      "url": "https://www.watson.ch/sport/wm-tagesticker/896058623-wm-2026-im-tagesticker-mexikos-quinones-imitiert-tshabalala-jubel",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Neuer Vorstand übernimmt die Zukunft des EHC SenSee Future",
+      "url": "https://www.freiburger-nachrichten.ch/story/270403/neuer-vorstand-%C3%BCbernimmt-die-zukunft-des-ehc-sensee-future",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Windräder ohne tote Vögel: Schweizer Forscher zeigen, wie das Kollisionsrisiko kleiner wird",
+      "url": "https://www.freiburger-nachrichten.ch/story/270485/windr%C3%A4der-ohne-tote-v%C3%B6gel-schweizer-forscher-zeigen-wie-das-kollisionsrisiko-kleiner-wird",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Polizei, Pancakes und Proteine: So bereitet sich die Schweizer Nati auf das erste WM-Spiel vor",
+      "url": "https://www.freiburger-nachrichten.ch/story/270487/polizei-pancakes-und-proteine-so-bereitet-sich-die-schweizer-nati-auf-das-erste-wmspiel-vor",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Nati alleine in Amerika? So viele Fans reisen wirklich aus der Schweiz an die WM-Spiele",
+      "url": "https://www.freiburger-nachrichten.ch/story/270482/nati-alleine-in-amerika-so-viele-fans-reisen-wirklich-aus-der-schweiz-an-die-wmspiele",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Finanzskandal um indische Goldfirma führt nach Luzern",
+      "url": "https://www.freiburger-nachrichten.ch/story/270483/finanzskandal-um-indische-goldfirma-f%C3%BChrt-nach-luzern",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Das ist der Unterricht, der Kinder weiterbringt",
+      "url": "https://www.freiburger-nachrichten.ch/story/270484/das-ist-der-unterricht-der-kinder-weiterbringt",
+      "summary": "",
+      "published": "2026-06-12T04:01:45.416133+00:00"
     }
   ]
 }
