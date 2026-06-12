@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T23:02:28.984727+00:00",
+  "generated": "2026-06-12T23:32:23.203217+00:00",
   "date": "2026-06-13",
-  "count": 1,
+  "count": 3,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -9,6 +9,20 @@
       "url": "https://www.tagesanzeiger.ch/ex-krypto-koenig-sam-bankman-fried-ftx-gruender-berufung-gescheitert-919324842413",
       "summary": "Einst wurde Sam Bankman-Fried als Finanzgenie und Galionsfigur einer Zukunftswelt des Digitalgelds gefeiert. Mit einem Einspruch gegen seine Verurteilung als Betrüger blitzt er nun vor Gericht ab.",
       "published": "2026-06-12T23:02:28.984727+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Ex-Krypto-König scheitert mit Berufungsantrag",
+      "url": "https://www.20min.ch/story/ftx-gruender-sam-bankman-fried-krypto-koenig-berufung-gescheitert-103581642",
+      "summary": "Einst wurde Sam Bankman-Fried als Finanzgenie und Galionsfigur einer Zukunftswelt des Digitalgelds gefeiert. Mit einem Einspruch gegen seine Verurteilung als Betrüger blitzt er nun vor Gericht ab.",
+      "published": "2026-06-12T23:32:23.203217+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Umstände noch umklar: Drei Bergsteiger an italienischem Viertausender getötet",
+      "url": "https://www.tagesanzeiger.ch/italien-gran-paradiso-drei-bergsteiger-alpinisten-tot-an-nordwand-626476101663",
+      "summary": "Der Gran Paradiso gilt als verhältnismässig einfach zu besteigender Viertausender in den Alpen. Dennoch kommen beim Aufstieg drei Alpinisten ums Leben.",
+      "published": "2026-06-12T23:32:23.203217+00:00"
     }
   ]
 }
