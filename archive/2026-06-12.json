@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T11:09:50.808181+00:00",
+  "generated": "2026-06-12T11:32:30.783907+00:00",
   "date": "2026-06-12",
-  "count": 482,
+  "count": 495,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -3376,6 +3376,97 @@
       "url": "https://www.20min.ch/story/am-samstag-achtung-wenn-du-nach-italien-fliegst-flugstreik-im-ganzen-land-103581202",
       "summary": "Am Samstag kommt es zu einem 18-stündigen Ausfall der Easyjet-Flüge in ganz Italien. Bereits am Donnerstag streikte die italienische Bahn landesweit.",
       "published": "2026-06-12T11:09:50.808181+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Baume-Schneider will Frühfranzösisch retten – zur Not per Zwang",
+      "url": "https://www.20min.ch/story/medienkonferenz-baume-schneider-will-fruehfranzoesisch-retten-zur-not-per-zwang-103581185",
+      "summary": "Einige Kantone wollen den Französischunterricht in der Primarschule abschaffen – der Bundesrat interveniert nun. Innenministerin Elisabeth Baume-Schneider droht mit einer Gesetzesänderung, sollten die",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Streit um Sprachunterricht: Der Bundesrat setzt seine Drohung beim Frühfranzösisch um",
+      "url": "https://www.tagesanzeiger.ch/schweiz-bundesrat-will-fruehfranzoesisch-schweizweit-sichern-698368963200",
+      "summary": "Die Landes­regierung will durch­greifen, wenn einzelne Kantone Früh­französisch aus dem Primar­schul­unterricht streichen. Die Droh­kulisse richtet sich vor allem an Zürich und die Ostschweiz.",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Stadtpolizei Uster: «Beidseitiger Vertrauensverlust»: Uster trennt sich von Polizeikommandanten",
+      "url": "https://www.tagesanzeiger.ch/stadtpolizei-uster-kommandant-ende-oktober-weg-262532520917",
+      "summary": "Die Stadt Uster löst das Arbeitsverhältnis mit ihrem Polizeikommandanten per Ende Oktober auf. Grund war das Verhalten während einer internen Untersuchung.",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Rückruf: Zwilling ruft Küchengrill Enfinigy wegen Stromschlag-Gefahr zurück",
+      "url": "https://www.tagesanzeiger.ch/produktrueckruf-zwilling-grill-42bz92-wegen-stromschlaggefahr-414960850646",
+      "summary": "Die Enfinigy-Kontaktgrills von Zwilling mit der Produktbezeichnung 42BZ92 dürfen nicht mehr verwendet werden.",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Vorstoss im Gemeinderat Zürich: Grüne wollen Fussstützen für Velofahrende an Ampeln",
+      "url": "https://www.tagesanzeiger.ch/zuerich-gruene-fordern-fussstuetzen-fuer-velofahrende-984185212492",
+      "summary": "Die Stützen erleichtern Velofahrenden das Warten bei Rot, sind Grüne Parlamentarier überzeugt. Sie wollen vom Stadtrat wissen, ob solche Massnahmen auch in Zürich eingeführt werden könnten.",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Unfall in Leissigen: Auto überschlägt sich in Linkskurve – Einfahrt sieben Stunden gesperrt",
+      "url": "https://www.bernerzeitung.ch/selbstunfall-in-leissigen-lenker-ins-spital-eingeliefert-921021885621",
+      "summary": "Ein Auto prallte am Donnerstagabend gegen zwei Leitplanken. Drittpersonen kümmerten sich um den verletzten Lenker, bis die Ambulanz eintraf.",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Südostschweiz",
+      "title": "Weshalb die Weite Welt Jetzt Mehr über Bündner Frauen oder den Kuriosen Pater Weiss",
+      "url": "https://www.suedostschweiz.ch/graubuenden/weshalb-die-weite-welt-jetzt-mehr-ueber-buendner-frauen-oder-den-kuriosen-pater-weiss-1920965",
+      "summary": "",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Luzerner Zeitung",
+      "title": "Stoos Schwinget 2026 Spitzenpaarungen",
+      "url": "https://www.luzernerzeitung.ch/sport/zentralschweiz/stoos-schwinget-2026-spitzenpaarungen-ld.4184111",
+      "summary": "",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Lenzburg Swl Verzeichnet Mehr Gewinn bei Tieferem Umsatz",
+      "url": "https://www.aargauerzeitung.ch/aargau/lenzburg/lenzburg-swl-verzeichnet-mehr-gewinn-bei-tieferem-umsatz-ld.4182870",
+      "summary": "",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Badener Tagblatt",
+      "title": "Gebenstorf Investiert 124 Millionen in Schulhaus Ausbau",
+      "url": "https://www.badenertagblatt.ch/aargau/baden/gebenstorf-investiert-124-millionen-in-schulhaus-ausbau-ld.4183994",
+      "summary": "",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Zuger Zeitung",
+      "title": "85 Jahre Trachtengruppe Ennetsee Cham",
+      "url": "https://www.zugerzeitung.ch/leserbeitrag/zz/85-jahre-trachtengruppe-ennetsee-cham-ld.4183951",
+      "summary": "",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "EU-Asylpakt: Polen nimmt keine zusätzlichen Flüchtlinge auf",
+      "url": "https://www.watson.ch/international/eu/730750017-eu-asylpakt-polen-nimmt-keine-zusaetzlichen-fluechtlinge-auf",
+      "summary": "",
+      "published": "2026-06-12T11:32:30.783907+00:00"
+    },
+    {
+      "source": "Rathuus",
+      "title": "Warum Jane Bailey Dann Doch Nicht Archäologin Wurde",
+      "url": "https://rathuus.ch/warum-jane-bailey-dann-doch-nicht-archaeologin-wurde/",
+      "summary": "",
+      "published": "2026-06-12T11:32:30.783907+00:00"
     }
   ]
 }
