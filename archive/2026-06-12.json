@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T00:01:34.123122+00:00",
+  "generated": "2026-06-12T00:31:42.681925+00:00",
   "date": "2026-06-12",
-  "count": 4,
+  "count": 10,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -30,6 +30,48 @@
       "url": "https://www.watson.ch/sport/fussball/982005259-wm-2026-die-auffaelligkeiten-vom-eroeffnungsspiel-mexiko-suedafrika",
       "summary": "",
       "published": "2026-06-11T22:31:54.944315+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Dan Jarvis ist neuer britischer Verteidigungsminister",
+      "url": "https://www.tagesanzeiger.ch/dan-jarvis-grossbritannien-hat-neuen-verteidigungsminister-894361544952",
+      "summary": "Dan Jarvis übernimmt das Verteidigungsministerium in London. Der Labour-Politiker bringt militärische Erfahrung aus Einsätzen im Kosovo, Nordirland, Irak und Afghanistan mit.",
+      "published": "2026-06-12T00:31:42.681925+00:00"
+    },
+    {
+      "source": "Nebelspalter",
+      "title": "Ständemehr eine Ohrfeige für die Eu Turbos",
+      "url": "https://www.nebelspalter.ch/themen/2026/06/staendemehr-eine-ohrfeige-fuer-die-eu-turbos",
+      "summary": "",
+      "published": "2026-06-12T00:31:42.681925+00:00"
+    },
+    {
+      "source": "Nebelspalter",
+      "title": "Neue Falschaussage von Jürg Grossen zu Solarstrom",
+      "url": "https://www.nebelspalter.ch/themen/2026/06/neue-falschaussage-von-juerg-grossen-zu-solarstrom",
+      "summary": "",
+      "published": "2026-06-12T00:31:42.681925+00:00"
+    },
+    {
+      "source": "Nebelspalter",
+      "title": "Die Millennials Sind die Umfangreichste Generation der Schweiz Nicht die Babyboomer Its The Immigration Stupid",
+      "url": "https://www.nebelspalter.ch/themen/2026/06/die-millennials-sind-die-umfangreichste-generation-der-schweiz-nicht-die-babyboomer-its-the-immigration-stupid",
+      "summary": "",
+      "published": "2026-06-12T00:31:42.681925+00:00"
+    },
+    {
+      "source": "Nebelspalter",
+      "title": "Elon Musk und Sein Nächstes Grosses Ziel eine Fahrkarte zum Mars",
+      "url": "https://www.nebelspalter.ch/themen/2026/06/elon-musk-und-sein-naechstes-grosses-ziel-eine-fahrkarte-zum-mars",
+      "summary": "",
+      "published": "2026-06-12T00:31:42.681925+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Transfer-News: Real Madrid vor Verpflichtung von ManCity-Star Silva",
+      "url": "https://www.watson.ch/sport/transferticker/483686793-transfer-news-real-madrid-vor-verpflichtung-von-mancity-star-silva",
+      "summary": "",
+      "published": "2026-06-12T00:31:42.681925+00:00"
     }
   ]
 }
