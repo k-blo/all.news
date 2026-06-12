@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T00:57:15.310302+00:00",
+  "generated": "2026-06-12T01:01:35.819142+00:00",
   "date": "2026-06-12",
-  "count": 11,
+  "count": 14,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -79,6 +79,27 @@
       "url": "https://www.watson.ch/sport/liveticker/694770208-suedkorea-gegen-tschechien-wm-2026-live-in-ticker-und-tv",
       "summary": "",
       "published": "2026-06-12T00:57:15.310302+00:00"
+    },
+    {
+      "source": "Luzerner Zeitung",
+      "title": "Tattoo On Stage 5x 2 Tickets zu Gewinnen",
+      "url": "https://www.luzernerzeitung.ch/aboplus/wettbewerbe/tattoo-on-stage-5x-2-tickets-zu-gewinnen-ld.4166946",
+      "summary": "",
+      "published": "2026-06-12T01:01:35.819142+00:00"
+    },
+    {
+      "source": "Luzerner Zeitung",
+      "title": "Open Air Kino im Wasserschloss Wyher mit Abo Card",
+      "url": "https://www.luzernerzeitung.ch/aboplus/veranstaltungen/open-air-kino-im-wasserschloss-wyher-mit-abo-card-ld.4177502",
+      "summary": "",
+      "published": "2026-06-12T01:01:35.819142+00:00"
+    },
+    {
+      "source": "Luzerner Zeitung",
+      "title": "World Nature Forum in Naters Abo 2 für 1",
+      "url": "https://www.luzernerzeitung.ch/aboplus/ausfluege/world-nature-forum-in-naters-abo-2-fuer-1-ld.4177551",
+      "summary": "",
+      "published": "2026-06-12T01:01:35.819142+00:00"
     }
   ]
 }
