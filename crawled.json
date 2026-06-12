@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T20:02:24.879378+00:00",
+  "generated": "2026-06-12T20:32:39.093700+00:00",
   "date": "2026-06-12",
-  "count": 867,
+  "count": 870,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -6071,6 +6071,27 @@
       "url": "https://www.watson.ch/international/eu/198558322-eu-beginnt-ueber-beitritt-von-ukraine-und-moldau-zu-verhandeln",
       "summary": "",
       "published": "2026-06-12T19:32:36.303943+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Deal oder no Deal: Ein Abkommen zwischen den USA und Iran scheint in Griffnähe – aber das Verwirrspiel geht weiter",
+      "url": "https://www.nzz.ch/international/trumps-verwirrspiel-mit-dem-iran-krieg-erreicht-neue-extreme-ld.10011029",
+      "summary": "",
+      "published": "2026-06-12T20:32:39.093700+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "So erklärt die FIFA die vielen leeren Plätze bei Südkorea – Tschechien",
+      "url": "https://www.watson.ch/sport/fussball/194569290-so-erklaert-die-fifa-die-vielen-leeren-plaetze-bei-suedkorea-tschechien",
+      "summary": "",
+      "published": "2026-06-12T20:32:39.093700+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Ukraine Krieg Russland: So viele tote Zivilisten wie seit April 2022 nicht",
+      "url": "https://www.watson.ch/international/uno/220731350-ukraine-krieg-russland-so-viele-tote-zivilisten-wie-seit-april-2022-nicht",
+      "summary": "",
+      "published": "2026-06-12T20:32:39.093700+00:00"
     }
   ]
 }
