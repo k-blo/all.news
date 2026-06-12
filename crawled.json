@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T00:52:49.011967+00:00",
+  "generated": "2026-06-12T00:57:15.310302+00:00",
   "date": "2026-06-12",
-  "count": 10,
+  "count": 11,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -72,6 +72,13 @@
       "url": "https://www.watson.ch/sport/transferticker/483686793-transfer-news-real-madrid-vor-verpflichtung-von-mancity-star-silva",
       "summary": "",
       "published": "2026-06-12T00:31:42.681925+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Südkorea gegen Tschechien – WM 2026 live in Ticker und TV",
+      "url": "https://www.watson.ch/sport/liveticker/694770208-suedkorea-gegen-tschechien-wm-2026-live-in-ticker-und-tv",
+      "summary": "",
+      "published": "2026-06-12T00:57:15.310302+00:00"
     }
   ]
 }
