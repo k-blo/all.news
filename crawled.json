@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T04:01:45.416133+00:00",
+  "generated": "2026-06-12T04:04:50.845520+00:00",
   "date": "2026-06-12",
-  "count": 170,
+  "count": 171,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -1192,6 +1192,13 @@
       "url": "https://www.freiburger-nachrichten.ch/story/270484/das-ist-der-unterricht-der-kinder-weiterbringt",
       "summary": "",
       "published": "2026-06-12T04:01:45.416133+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026: Südkorea schlägt Tschechien nach Wende verdient",
+      "url": "https://www.watson.ch/sport/liveticker/694770208-wm-2026-suedkorea-schlaegt-tschechien-nach-wende-verdient",
+      "summary": "",
+      "published": "2026-06-12T04:04:50.845520+00:00"
     }
   ]
 }
