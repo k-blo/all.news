@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T01:31:58.441953+00:00",
+  "generated": "2026-06-12T01:53:53.176943+00:00",
   "date": "2026-06-12",
-  "count": 15,
+  "count": 16,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -107,6 +107,13 @@
       "url": "https://www.tagesanzeiger.ch/journalist-in-mexiko-erschossen-zweiter-fall-in-veracruz-534343267628",
       "summary": "In Mexiko ist ein Journalist von Unbekannten erschossen worden. Es war die zweite Tötung eines Medienschaffenden in Mexiko in diesem Jahr – beide Taten ereigneten sich im Bundesstaat Veracruz, der als",
       "published": "2026-06-12T01:31:58.441953+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Nach Budget-Streit: Dan Jarvis ist neuer britischer Verteidigungsminister",
+      "url": "https://www.bernerzeitung.ch/dan-jarvis-grossbritannien-hat-neuen-verteidigungsminister-894361544952",
+      "summary": "Dan Jarvis übernimmt das Verteidigungsministerium in London. Der Labour-Politiker bringt militärische Erfahrung aus Einsätzen im Kosovo, Nordirland, Irak und Afghanistan mit.",
+      "published": "2026-06-12T01:53:53.176943+00:00"
     }
   ]
 }
