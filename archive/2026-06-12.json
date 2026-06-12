@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T07:21:34.510182+00:00",
+  "generated": "2026-06-12T07:31:37.426279+00:00",
   "date": "2026-06-12",
-  "count": 240,
+  "count": 257,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -1682,6 +1682,125 @@
       "url": "https://www.watson.ch/sport/fussball/653719277-wm-2026-die-bilanz-der-schweiz-gegen-ihre-gruppengegner",
       "summary": "",
       "published": "2026-06-12T07:21:34.510182+00:00"
+    },
+    {
+      "source": "SRF",
+      "title": "Ursache unklar – Stundelanger Stromausfall in der Stadt Biel",
+      "url": "https://www.srf.ch/news/schweiz/ursache-unklar-stundelanger-stromausfall-in-der-stadt-biel",
+      "summary": "Die Bevölkerung durfte keine Lifte benutzen und musste alle netzbetriebenen Geräte ausschalten.",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Unfall auf Urner Axenstrasse: Auto mit ausländischem Kennzeichen brennt aus – tote Person noch nicht identifiziert",
+      "url": "https://www.bernerzeitung.ch/axenstrasse-sisikon-toedlicher-unfall-bei-buggitalgalerie-691949665666",
+      "summary": "In der Nacht auf Freitag kam es auf der Axenstrassse in Sisikon zu einem tödlichen Unfall. Die Person ist noch nicht identifziert.",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Bilanz",
+      "title": "Usa Jubiläum Spacex Börse And Trump Amerika Welle Rollt",
+      "url": "https://www.bilanz.ch/bilanz-briefing/usa-jubilaeum-spacex-boerse-and-trump-amerika-welle-rollt/xm7fpv5",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Luzerner Zeitung",
+      "title": "Suva Prämien Sinken Erneut Erstattung von 709 Millionen",
+      "url": "https://www.luzernerzeitung.ch/wirtschaft/zentralschweiz/suva-praemien-sinken-erneut-erstattung-von-709-millionen-ld.4183647",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Aarau Stadt und Ok Einigen Sich auf Finanzierung des Maienzug Vorabends",
+      "url": "https://www.aargauerzeitung.ch/aargau/aarau/aarau-stadt-und-ok-einigen-sich-auf-finanzierung-des-maienzug-vorabends-ld.4183207",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Nidwaldner Zeitung",
+      "title": "Gewerbeverein Wächst Weiter und Ehrt Ersten Ehrenpräsidenten",
+      "url": "https://www.nidwaldnerzeitung.ch/leserbeitrag/nz/gewerbeverein-waechst-weiter-und-ehrt-ersten-ehrenpraesidenten-ld.4184020",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Hecht im Letzigrund: Das willst du zum Ticketverkauf wissen",
+      "url": "https://www.watson.ch/leben/zuerich/595527165-hecht-im-letzigrund-das-willst-du-zum-ticketverkauf-wissen",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "86 47 auf Rasen in Washington beunruhigt Trump-Regierung in den USA",
+      "url": "https://www.watson.ch/international/usa/568111659-86-47-auf-rasen-in-washington-beunruhigt-trump-regierung-in-den-usa",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "«Jagd nach dem Unmöglichen»: Elon Musks absurder SpaceX-Plan an der Börse",
+      "url": "https://www.freiburger-nachrichten.ch/story/270500/jagd-nach-dem-unm%C3%B6glichen-elon-musks-absurder-spacexplan-an-der-b%C3%B6rse",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Zwei Wege ins Dunkel",
+      "url": "https://www.freiburger-nachrichten.ch/story/270143/zwei-wege-ins-dunkel",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Pérolles-Fest",
+      "url": "https://www.freiburger-nachrichten.ch/story/270210/prollesfest",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Mikrobrauereien aus der Region entdecken",
+      "url": "https://www.freiburger-nachrichten.ch/story/269020/mikrobrauereien-aus-der-region-entdecken",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Air Brushen – Murtens Narren heben ab!",
+      "url": "https://www.freiburger-nachrichten.ch/story/270494/air-brushen-murtens-narren-heben-ab",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Samsonite eröffnet ersten Schweizer Laden – das soll erst der Anfang sein",
+      "url": "https://www.freiburger-nachrichten.ch/story/270499/samsonite-er%C3%B6ffnet-ersten-schweizer-laden-das-soll-erst-der-anfang-sein",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Stromausfall in der ganzen Stadt Biel: Jetzt ist die Ursache bekannt",
+      "url": "https://www.freiburger-nachrichten.ch/story/270497/stromausfall-in-der-ganzen-stadt-biel-jetzt-ist-die-ursache-bekannt",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "So bereitet sich die Schweizer Nati auf den ersten WM-Ernstkampf gegen Katar vor",
+      "url": "https://www.freiburger-nachrichten.ch/story/270487/so-bereitet-sich-die-schweizer-nati-auf-den-ersten-wmernstkampf-gegen-katar-vor",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Nati alleine in Amerika? So wenige Fans reisen wirklich aus der Schweiz an",
+      "url": "https://www.freiburger-nachrichten.ch/story/270482/nati-alleine-in-amerika-so-wenige-fans-reisen-wirklich-aus-der-schweiz-an",
+      "summary": "",
+      "published": "2026-06-12T07:31:37.426279+00:00"
     }
   ]
 }
