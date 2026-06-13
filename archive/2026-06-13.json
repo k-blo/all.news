@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T00:32:15.202073+00:00",
+  "generated": "2026-06-13T01:02:13.176561+00:00",
   "date": "2026-06-13",
-  "count": 11,
+  "count": 13,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -79,6 +79,20 @@
       "url": "https://www.watson.ch/sport/fifa/848949657-wm-2026-gianni-infantino-macht-italiener-mit-witz-haessig",
       "summary": "",
       "published": "2026-06-13T00:32:15.202073+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Ohne Trump im Stadion: Was zeigt die USA gegen Paraguay?",
+      "url": "https://www.20min.ch/story/usa-paraguay-ohne-trump-im-stadion-was-zeigt-die-usa-gegen-paraguay-103581600",
+      "summary": "Die USA treffen in ihrem ersten Spiel der WM auf Paraguay. Die Partie ab 03 Uhr live.",
+      "published": "2026-06-13T01:02:13.176561+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "WM mit 228 Teams – «Vielleicht ist Italien dann dabei»?",
+      "url": "https://www.20min.ch/story/fifa-boss-gianni-infantino-spott-ueber-italien-wm-qualifikation-reaktion-103581645",
+      "summary": "Fifa-Chef Gianni Infantino verspottet in einem Interview Italiens zuletzt chronisches Scheitern in der WM-Qualifikation. Das kommt im Land des viermaligen Weltmeisters gar nicht gut an.",
+      "published": "2026-06-13T01:02:13.176561+00:00"
     }
   ]
 }
