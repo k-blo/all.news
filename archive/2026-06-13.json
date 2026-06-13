@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T20:38:51.832049+00:00",
+  "generated": "2026-06-13T20:42:15.290528+00:00",
   "date": "2026-06-13",
-  "count": 540,
+  "count": 542,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -3782,6 +3782,20 @@
       "url": "https://www.watson.ch/international/gesellschaft-politik/285103763-orban-bleibt-fidesz-chef-und-will-die-partei-grundlegend-erneuern",
       "summary": "",
       "published": "2026-06-13T20:28:14.620787+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Crans-Montana: Anzeige gegen den Buchhalter der Morettis",
+      "url": "https://www.tagesanzeiger.ch/crans-montana-anzeige-gegen-buchhalter-der-familie-moretti-776249433360",
+      "summary": "Dem ehemaligen Besitzer des Treuhandbüros der Morettis, Daniel Donnet-Monay, werden verdächtige Finanzpraktiken und Waffengeschäfte vorgeworfen. Er bestreitet alle Vorwürfe.",
+      "published": "2026-06-13T20:42:15.290528+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "KKW-Laufzeitverlängerung: Können die Reaktoren in Gösgen und Leibstadt tatsächlich 80 Jahre durchhalten?",
+      "url": "https://www.tagesanzeiger.ch/kernkraftwerk-goesgen-wie-sicher-ist-der-langzeitbetrieb-504287571030",
+      "summary": "Der Bundesrat hält 80 Jahre Betrieb für technisch möglich, Kritiker warnen vor Materialalterung an nicht ersetzbaren Komponenten. Das Ensi hält neue KKW für sicherer – und sieht ein Problem beim Langz",
+      "published": "2026-06-13T20:42:15.290528+00:00"
     }
   ]
 }
