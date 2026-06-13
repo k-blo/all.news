@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T22:39:20.880182+00:00",
+  "generated": "2026-06-13T23:02:19.933602+00:00",
   "date": "2026-06-14",
-  "count": 5,
+  "count": 6,
   "articles": [
     {
       "source": "Blick",
@@ -37,6 +37,13 @@
       "url": "https://www.bote.ch/nachrichten/sport/fussball-wm-2026-die-noten-zum-startspiel-der-schweizer-nati-gegen-katar-art-1707911",
       "summary": "",
       "published": "2026-06-13T22:32:48.818767+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026: Nati-Trainer Murat Yakin nach Katar-Remis: «Es ist aufgegangen»",
+      "url": "https://www.watson.ch/sport/fussball/991775152-wm-2026-nati-trainer-murat-yakin-nach-katar-remis-es-ist-aufgegangen",
+      "summary": "",
+      "published": "2026-06-13T23:02:19.933602+00:00"
     }
   ]
 }
