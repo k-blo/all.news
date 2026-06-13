@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T21:32:25.342484+00:00",
+  "generated": "2026-06-13T21:44:17.610543+00:00",
   "date": "2026-06-13",
-  "count": 557,
+  "count": 558,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -3901,6 +3901,13 @@
       "url": "https://www.bote.ch/nachrichten/sport/fussball-wm-schweiz-spielt-gegen-katar-nur-11-art-1707905",
       "summary": "",
       "published": "2026-06-13T21:32:25.342484+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "WM-Auftakt verpatzt: Die Schweizer dominieren, lassen zu viele Chancen aus und kassieren spät das 1:1",
+      "url": "https://www.nzz.ch/sport/wm-2026-schweizer-dominieren-kassieren-aber-spaeten-ausgleich-ld.10010906",
+      "summary": "",
+      "published": "2026-06-13T21:44:17.610543+00:00"
     }
   ]
 }
