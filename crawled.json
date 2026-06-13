@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T03:02:21.268569+00:00",
+  "generated": "2026-06-13T03:32:19.905908+00:00",
   "date": "2026-06-13",
-  "count": 95,
+  "count": 119,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -667,6 +667,174 @@
       "url": "https://www.urnerzeitung.ch/zentralschweiz/uri/eidgenoessisches-jodlerfest-2026-in-basel-diese-urnerinnen-und-urner-sind-dabei-ld.4183871",
       "summary": "",
       "published": "2026-06-13T03:02:21.268569+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Flughafen Zürich: Was machte dieses Flugzeug bis kurz vor 2 Uhr morgens?",
+      "url": "https://www.tagesanzeiger.ch/flughafen-zuerich-messfluege-bis-2-uhr-fuer-neues-ils-piste-28-812708106534",
+      "summary": "Am Flughafen Zürich war eine zweimotorige Propellermaschine mitten in der Nacht unterwegs. Wo sie mehr als 20-mal durchflog – und weshalb.",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Zu wenige AKW-Fachleute: Bleibt das Neubauverbot bestehen, wackelt auch der Langzeitbetrieb von Gösgen und Leibstadt",
+      "url": "https://www.nzz.ch/wirtschaft/zu-wenige-akw-arbeiter-bleibt-das-neubauverbot-bestehen-wackelt-auch-der-langzeitbetrieb-von-goesgen-und-leibstadt-ld.10011099",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "WM-Flop 2022, Krieg, Hausarrest und Qualifikation in extremis: Vor dem Spiel gegen die Schweiz spricht wenig für Katar",
+      "url": "https://www.nzz.ch/sport/wm-2026-schlechte-vorzeichen-fuer-den-ersten-schweizer-gegner-katar-ld.10011022",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Bis zu 150 Euro für ein WM-Trikot: So lukrativ ist das Geschäft für Adidas und Puma",
+      "url": "https://www.nzz.ch/wirtschaft/bis-zu-150-euro-fuer-ein-wm-trikot-so-lukrativ-ist-das-geschaeft-fuer-adidas-und-puma-ld.10011008",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Suspendierung von Karim Khan wegen Verdachts auf sexuelle Übergriffe: Dem Internationalen Strafgerichtshof stellen sich unangenehme Fragen",
+      "url": "https://www.nzz.ch/international/suspendierung-von-karim-khan-wegen-verdachts-auf-sexuelle-uebergriffe-dem-internationalen-strafgerichtshof-stellen-sich-unangenehme-fragen-ld.10011001",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Anthropic-Börsengang: Eine Basler Gruppe gehört zu den frühesten Investoren des wertvollsten KI-Startups der Welt",
+      "url": "https://www.nzz.ch/wirtschaft/anthropic-boersengang-eine-basler-gruppe-gehoert-zu-den-fruehesten-investoren-des-wertvollsten-ki-startups-der-welt-ld.10010965",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Vier verbrannte Erdbeerpflücker erinnern daran, was in Italiens Landwirtschaft schiefläuft",
+      "url": "https://www.nzz.ch/panorama/vier-verbrannte-erdbeerpfluecker-erinnern-daran-was-in-italiens-landwirtschaft-schieflaeuft-ld.10010846",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die Satelliten von Starlink haben die Kriegsführung verändert. Doch das ist erst der Anfang: SpaceX wird noch wichtiger",
+      "url": "https://www.nzz.ch/pro/die-satelliten-von-starlink-haben-die-kriegsfuehrung-veraendert-doch-das-ist-erst-der-anfang-spacex-wird-noch-wichtiger-ld.10010834",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Einst waren die Huthi eine Erweckungsbewegung. Jetzt herrschen sie über ein halbes Land",
+      "url": "https://www.nzz.ch/international/einst-waren-die-huthi-eine-erweckungsbewegung-jetzt-herrschen-sie-ueber-ein-halbes-land-ld.10010812",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Ballsaal, Triumphbogen und «Trump Promenade» – der Präsident baut seine Hauptstadt um",
+      "url": "https://www.nzz.ch/international/ballsaal-triumphbogen-und-trump-promenade-der-praesident-baut-seine-hauptstadt-um-ld.10010776",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die Welt ist ein Buch und das Dasein ein Spiel mit dem Chaos: Warum James Joyces «Finnegans Wake» das Leben ein bisschen leichter macht",
+      "url": "https://www.nzz.ch/feuilleton/die-welt-ist-ein-buch-und-das-dasein-ein-spiel-mit-dem-chaos-warum-james-joyces-finnegans-wake-das-leben-ein-bisschen-leichter-macht-ld.10010691",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Acht tote Elefanten: Das klingt verdächtig",
+      "url": "https://www.nzz.ch/wissenschaft/acht-tote-elefanten-im-zoo-das-klingt-verdaechtig-ld.10010663",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Viel Angst vor wenig Gift: warum wir uns vor der Nosferatu-Spinne fürchten",
+      "url": "https://www.nzz.ch/wissenschaft/von-einer-nosferatu-spinne-gebissen-wie-gefaehrlich-ist-ihr-gift-ld.10010493",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "«Mein Ziel ist, die Analysten auf neue Ideen zu bringen», sagt der ETH-Forscher, der an der Fussball-WM die Gegner der Schweizer Nati mathematisch zerlegt",
+      "url": "https://www.nzz.ch/wissenschaft/mein-ziel-ist-dass-die-analysten-nichts-uebersehen-sagt-der-eth-forscher-der-an-der-fussball-wm-die-gegner-der-schweizer-nati-mathematisch-zerlegt-ld.10010424",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Kritische Rohstoffe: Mit ihrer bisherigen Strategie bleibt die EU vom chinesischen Wohlwollen abhängig",
+      "url": "https://www.nzz.ch/wirtschaft/kritische-rohstoffe-mit-ihrer-bisherigen-strategie-bleibt-die-eu-vom-chinesischen-wohlwollen-abhaengig-ld.10010419",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Was könnte sich Elon Musk mit seinem neuen Reichtum kaufen? Eine fiktive Shoppingtour durch die Schweiz",
+      "url": "https://www.nzz.ch/wirtschaft/was-koennte-sich-elon-musk-mit-seinem-neuen-reichtum-kaufen-eine-fiktive-shoppingtour-durch-die-schweiz-ld.10010413",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Stille am Start, Sprint an der Ampel: Wie E-Motorräder das Biken verändern",
+      "url": "https://www.nzz.ch/mobilitaet/stille-am-start-sprint-an-der-ampel-wie-e-motorraeder-das-biken-veraendern-ld.10010384",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Nach 20 Jahren Zelgli Aarau Beendet Zusammenarbeit mit Erlinsbach",
+      "url": "https://www.aargauerzeitung.ch/sport/aargau/nach-20-jahren-zelgli-aarau-beendet-zusammenarbeit-mit-erlinsbach-ld.4184171",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "Oltner Tagblatt",
+      "title": "Gösger Gin aus Niedergösgen Kommt Gut an",
+      "url": "https://www.oltnertagblatt.ch/solothurn/niederamt/goesger-gin-aus-niedergoesgen-kommt-gut-an-ld.4183791",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "Nidwaldner Zeitung",
+      "title": "Das Projekt für den Modernisierten Flugplatz Buochs ist Ausgearbeitet",
+      "url": "https://www.nidwaldnerzeitung.ch/zentralschweiz/nidwalden/das-projekt-fuer-den-modernisierten-flugplatz-buochs-ist-ausgearbeitet-ld.4183794",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "Nidwaldner Zeitung",
+      "title": "Nidwaldner Landratspräsidentin Erika Liem Gander Zieht Bilanz",
+      "url": "https://www.nidwaldnerzeitung.ch/zentralschweiz/nidwalden/nidwaldner-landratspraesidentin-erika-liem-gander-zieht-bilanz-ld.4183206",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "Urner Zeitung",
+      "title": "Pfas im Kanton Uri Regierung Sieht Keine Grossflächige Belastung",
+      "url": "https://www.urnerzeitung.ch/zentralschweiz/uri/pfas-im-kanton-uri-regierung-sieht-keine-grossflaechige-belastung-ld.4183775",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026: USA starten beeindruckend und schlagen Paraguay 4:1",
+      "url": "https://www.watson.ch/sport/usa/955503639-wm-2026-usa-starten-beeindruckend-und-schlagen-paraguay-4-1",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "120 Variationen eines Meeressäugers",
+      "url": "https://www.freiburger-nachrichten.ch/story/270568/120-variationen-eines-meeress%C3%A4ugers",
+      "summary": "",
+      "published": "2026-06-13T03:32:19.905908+00:00"
     }
   ]
 }
