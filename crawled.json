@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-12T23:32:23.203217+00:00",
+  "generated": "2026-06-13T00:02:30.835336+00:00",
   "date": "2026-06-13",
-  "count": 3,
+  "count": 5,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -23,6 +23,20 @@
       "url": "https://www.tagesanzeiger.ch/italien-gran-paradiso-drei-bergsteiger-alpinisten-tot-an-nordwand-626476101663",
       "summary": "Der Gran Paradiso gilt als verhältnismässig einfach zu besteigender Viertausender in den Alpen. Dennoch kommen beim Aufstieg drei Alpinisten ums Leben.",
       "published": "2026-06-12T23:32:23.203217+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Drei Bergsteiger am Gran Paradiso getötet",
+      "url": "https://www.20min.ch/story/italien-bergunglueck-drei-alpinisten-tot-am-gran-paradiso-103581644",
+      "summary": "Der Viertausender gilt als verhältnismässig einfach zu besteigender Gipfel in den Alpen. Dennoch kommen beim Aufstieg drei Alpinisten ums Leben.",
+      "published": "2026-06-13T00:02:30.835336+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "USA gegen Paraguay – WM 2026 live in Ticker und TV",
+      "url": "https://www.watson.ch/sport/liveticker/955503639-usa-gegen-paraguay-wm-2026-live-in-ticker-und-tv",
+      "summary": "",
+      "published": "2026-06-13T00:02:30.835336+00:00"
     }
   ]
 }
