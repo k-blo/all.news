@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T06:45:19.071630+00:00",
+  "generated": "2026-06-13T07:02:18.949517+00:00",
   "date": "2026-06-13",
-  "count": 187,
+  "count": 190,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -1311,6 +1311,27 @@
       "url": "https://www.watson.ch/schweiz/oev/633135814-der-sbb-bericht-ueber-ki-vorteile-ist-voller-ki-halluzinationen",
       "summary": "",
       "published": "2026-06-13T06:32:32.993240+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "«Geht uns gut, aber der Nordirlandkonflikt schwingt überall mit»",
+      "url": "https://www.20min.ch/story/gespaltene-stadt-geht-uns-gut-aber-der-nordirlandkonflikt-schwingt-ueberall-mit-103581463",
+      "summary": "Die aktuellen Randalen in Belfast sind Ausdruck einer aufgestauten Wut. Die Unzufriedenheit geht aber über Migrationsfragen hinaus.",
+      "published": "2026-06-13T07:02:18.949517+00:00"
+    },
+    {
+      "source": "Basler Zeitung",
+      "title": "Grüneres Basel: Versicherung begrünt Fassade am Aeschenplatz mit 6240 Pflanzen",
+      "url": "https://www.bazonline.ch/basel-pax-versicherung-begruent-fassade-mit-6240-pflanzen-624574043616",
+      "summary": "Die neue Fassade kostet die Pax rund 300’000 Franken – knapp ein Drittel davon stammt aus einem öffentlichen Fördertopf.",
+      "published": "2026-06-13T07:02:18.949517+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Drohnen: Deutscher Innenminister befürchtet Angriffe auf Bundestag",
+      "url": "https://www.watson.ch/international/deutschland/597079724-drohnen-deutscher-innenminister-befuerchtet-angriffe-auf-bundestag",
+      "summary": "",
+      "published": "2026-06-13T07:02:18.949517+00:00"
     }
   ]
 }
