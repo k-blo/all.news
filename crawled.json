@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T01:02:13.176561+00:00",
+  "generated": "2026-06-13T01:32:17.308027+00:00",
   "date": "2026-06-13",
-  "count": 13,
+  "count": 14,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -93,6 +93,13 @@
       "url": "https://www.20min.ch/story/fifa-boss-gianni-infantino-spott-ueber-italien-wm-qualifikation-reaktion-103581645",
       "summary": "Fifa-Chef Gianni Infantino verspottet in einem Interview Italiens zuletzt chronisches Scheitern in der WM-Qualifikation. Das kommt im Land des viermaligen Weltmeisters gar nicht gut an.",
       "published": "2026-06-13T01:02:13.176561+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "KURZMELDUNGEN - Wirtschaft: Ex-Krypto-König Bankman-Fried scheitert mit Berufungsantrag +++ IWF senkt Wachstums-Prognosen für Euro-Zone",
+      "url": "https://www.nzz.ch/wirtschaft/wirtschaft-ex-krypto-koenig-bankman-fried-scheitert-mit-berufungsantrag-iwf-senkt-wachstums-prognosen-fuer-euro-zone-ld.10010807",
+      "summary": "",
+      "published": "2026-06-13T01:32:17.308027+00:00"
     }
   ]
 }
