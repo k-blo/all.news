@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T09:02:20.011632+00:00",
+  "generated": "2026-06-13T09:32:29.548042+00:00",
   "date": "2026-06-13",
-  "count": 240,
+  "count": 257,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -1682,6 +1682,125 @@
       "url": "https://www.zugerzeitung.ch/zentralschweiz/zug/genuss-film-festival-zug-12-ausgabe-mit-spitzenkoechen-ld.4184429",
       "summary": "",
       "published": "2026-06-13T09:02:20.011632+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Rotes Kreuz auf Ebola-Mission: «Unsere Helfer werden angegriffen»",
+      "url": "https://www.20min.ch/story/ebola-einsatz-kongo-rotes-kreuz-vorurteile-103580591",
+      "summary": "Seit drei Wochen ist Bruno Michon im Osten der Demokratischen Republik Kongo für das Schweizerische Rote Kreuz gegen Ebola im Einsatz. Doch er und die weiteren Helfer kämpfen nicht nur gegen das Virus",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Neymar wieder verletzt: Der Abwesende, um den sich in Brasilien (fast) alles dreht",
+      "url": "https://www.tagesanzeiger.ch/wm-2026-neymar-fehlt-gegen-marokko-326043354461",
+      "summary": "Der 34-Jährige fehlt beim WM-Auftakt gegen Marokko verletzt. Trotzdem prägt er das Turnier seines Landes schon jetzt: als Hoffnung, Risiko und Erinnerung an einen Fussballer, der einmal alles sein sol",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Feuer in Schlieren: Zwei Personen durch Wohnungsbrand verletzt",
+      "url": "https://www.tagesanzeiger.ch/schlieren-zwei-verletzte-nach-wohnungsbrand-906260695367",
+      "summary": "Die beiden erlitten möglicherweise eine Rauchgasvergiftung. Die vom Brand betroffene Wohnung ist nicht mehr bewohnbar.",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Klage von Medienunternehmen: Dieser Gerichtsentscheid könnte weitreichende Folgen haben: Google haftet für KI-Übersichten",
+      "url": "https://www.tagesanzeiger.ch/google-haftet-fuer-falsche-ai-uebersichten-730263849903",
+      "summary": "Google muss für fehlerhafte Antworten in den Suchergebnissen geradestehen, entschied ein Gericht in München. Das Urteil könnte die Spielregeln für KI-Suchmaschinen grundlegend verändern.",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Prävention gegen Missbrauch in der Kirche: Strafregisterauszug in der Kirchenarbeit: Anfangs verweigerten sich 30 Freiwillige, nun noch 3",
+      "url": "https://www.tagesanzeiger.ch/kirchgemeinde-weinland-mitte-streit-um-strafregisterauszuege-beigelegt-657603942183",
+      "summary": "In einer Weinländer Kirchgemeinde weigerten sich freiwillige Mitarbeitende, einen Sonderprivatauszug vorzulegen. Jetzt spricht die Kirchenpflege von einer «positiven Verständigung».",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Anlass in Winterthur: Charity-Turnier sammelt 30’000 Franken für lokalen Nachwuchssport",
+      "url": "https://www.tagesanzeiger.ch/golfdate-winterthur-30000-franken-fuer-nachwuchssport-602870945386",
+      "summary": "80 Teilnehmende spielten im Golfclub Schloss Goldenberg für den Nachwuchs. Sieben Winterthurer Vereine teilen sich die Summe – der FCW erhält am meisten.",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Schweiz vor WM-Start: «Sicher, langweilig, effektiv» wie Schweizer Banken? Warum das National­team sträflich unterschätzt wird",
+      "url": "https://www.tagesanzeiger.ch/wm-2026-murat-yakins-schweizer-nationalteam-wird-unterschaetzt-705238797991",
+      "summary": "Die Nati startet als klarer Favorit ihrer Gruppe ins Turnier. Und trotzdem scheint sie niemand wirklich ernst zu nehmen. Das ist ein Fehler. Ihre Voraussetzungen sind vielleicht so gut wie nie.",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Verkehrsunfall in Konolfingen: Zwei Verletzte nach nächtlicher Kollision – Strasse gesperrt",
+      "url": "https://www.bernerzeitung.ch/verkehrsunfall-i-konolfingen-zwei-verletzte-auf-thunstrasse-935913260148",
+      "summary": "Ein Auto geriet in der Nacht auf Samstag auf der Thunstrasse auf die Gegenfahrbahn und prallte in einen Lieferwagen. Zwei Personen mussten mit der Ambulanz ins Spital gebracht werden.",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Café in Luzerner Altstadt will neue Aussenplätze",
+      "url": "https://www.zentralplus.ch/gastronomie/cafe-in-luzerner-altstadt-will-neue-aussenplaetze-2877828/",
+      "summary": "Das neue Café am Weinmarkt gibt sich nicht mit dem Start zufrieden. Ein Baugesuch zeigt, welchen Schritt die Betreiberin als Nächstes angehen will. Das «Anotr Café» will auf dem Luzerner Weinmarkt ein",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Die 10-Millionen-Schweiz: Wie es in der Wohnraumpolitik nach dem Wahlsonntag weitergehen könnte",
+      "url": "https://www.nzz.ch/wirtschaft/die-10-millionen-schweiz-wie-es-in-der-wohnraumpolitik-nach-dem-wahlsonntag-weitergehen-koennte-ld.10010790",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Südostschweiz",
+      "title": "Es ist Wieder Wm Zeit für Nostalgie das Waren Unsere Geilsten Glarner Fuss",
+      "url": "https://www.suedostschweiz.ch/glarus/es-ist-wieder-wm-zeit-fuer-nostalgie-das-waren-unsere-geilsten-glarner-fuss-1921827",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Südostschweiz",
+      "title": "Es ist Wieder Wm Zeit für Nostalgie das Waren die Wildesten Fussballpartys in Glarus",
+      "url": "https://www.suedostschweiz.ch/glarus/es-ist-wieder-wm-zeit-fuer-nostalgie-das-waren-die-wildesten-fussballpartys-in-glarus-1922694",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Luzerner Zeitung",
+      "title": "Luzerner Grundwasser Schadstoffe Beschäftigen den Kanton",
+      "url": "https://www.luzernerzeitung.ch/zentralschweiz/kanton-luzern/luzerner-grundwasser-schadstoffe-beschaeftigen-den-kanton-ld.4183709",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Ukraine greift Seeterminal in Südrussland an – ein Toter",
+      "url": "https://www.watson.ch/international/russland/649870872-ukraine-greift-seeterminal-in-suedrussland-an-ein-toter",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Schweizer Start zur Fussball-WM: Nati will mit Siegen Euphorie wecken",
+      "url": "https://www.watson.ch/sport/kommentar/415597764-schweizer-start-zur-fussball-wm-nati-will-mit-siegen-euphorie-wecken",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "«Wir sind froh, wenn unsere Botschaft nach aussen getragen wird»",
+      "url": "https://www.freiburger-nachrichten.ch/story/270223/wir-sind-froh-wenn-unsere-botschaft-nach-aussen-getragen-wird",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Oberamt des Seebezirks: Eine zweite Chance für Julia Senti",
+      "url": "https://www.freiburger-nachrichten.ch/story/270622/oberamt-des-seebezirks-eine-zweite-chance-f%C3%BCr-julia-senti",
+      "summary": "",
+      "published": "2026-06-13T09:32:29.548042+00:00"
     }
   ]
 }
