@@ -7,16 +7,16 @@
     "etag": "W/\"18d4e-J70qBxT+YZsiQN5kKI9NckqjLes\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/": {
-    "etag": "W/\"11bbb-UZQSE7N7PBU6bWQq5WYwneZ3QnI\""
+    "etag": "W/\"11bb9-NefHyDg7unbxjzZKLyIKSowkfVI\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/bernerzeitung/": {
-    "etag": "W/\"ff8f-eDNecId1dB3FtvpBGKaRn6jXeRM\""
+    "etag": "W/\"ff8d-wheWSVbvxhEQCjygetgEg6Uh1ME\""
   },
   "https://www.zentralplus.ch/feed/": {
     "last_modified": "Sat, 13 Jun 2026 14:48:00 GMT"
   },
   "https://www.finews.ch/news?format=feed": {
-    "last_modified": "Sat, 13 Jun 2026 20:57:42 GMT"
+    "last_modified": "Sat, 13 Jun 2026 21:00:47 GMT"
   },
   "https://www.netzwoche.ch/rss.xml": {
     "last_modified": "Sat, 13 Jun 2026 18:50:58 GMT",
@@ -30,10 +30,10 @@
     "etag": "\"416b6e1718bae3199f2afafb85e3d529\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/derbund/": {
-    "etag": "W/\"f866-i2IxHvVsAHAFS9n4pjSsTi6Csns\""
+    "etag": "W/\"f864-ALxVcy3PFvZQA7MYYfvf2m97Gxw\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/bazonline/": {
-    "etag": "W/\"116b0-xON+P1NeECsrpKHnBbYn1x9EcZw\""
+    "etag": "W/\"116ae-CBKbWL6IQlkzVePgzq3taoabaJ0\""
   },
   "https://www.woz.ch/sitemaps/editorial_content/sitemap.xml": {
     "last_modified": "Sat, 13 Jun 2026 20:41:50 GMT",
@@ -44,15 +44,15 @@
     "etag": "\"1781383310\""
   },
   "https://www.freiburger-nachrichten.ch/sitemap_latest_news.xml": {
-    "etag": "W/\"cb-vNBI8dvR3k21HZQ+ZYmSNW7Hw9s\""
+    "etag": "W/\"219f2-o+WP6gCbGVaNPgIVPHZgiIezzAI\""
   },
   "https://www.woz.ch/sitemaps/editorial_content/sitemap.xml?page=14": {
     "last_modified": "Wed, 10 Jun 2026 21:55:43 GMT",
     "etag": "\"1781128543\""
   },
   "https://www.shn.ch/rss.xml": {
-    "last_modified": "Sat, 13 Jun 2026 20:55:07 GMT",
-    "etag": "W/\"1781384107-gzip\""
+    "last_modified": "Sat, 13 Jun 2026 21:00:48 GMT",
+    "etag": "W/\"1781384448-gzip\""
   },
   "https://schweizermonat.ch/feed/": {
     "last_modified": "Sat, 13 Jun 2026 08:25:10 GMT",
