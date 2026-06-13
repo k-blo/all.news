@@ -49,5 +49,8 @@ const SOURCE_COLORS = {
   "Persönlich": "#6d4c41",
   "Tachles": "#1565c0",
   "Bauernzeitung": "#558b2f",
-  "ETH Zürich": "#0072ac"
+  "ETH Zürich": "#0072ac",
+  "Schaffhauser Nachrichten": "#1a4f8b",
+  "Schweizer Monat": "#8a6d3b",
+  "Bote der Urschweiz": "#b8242a"
 };
