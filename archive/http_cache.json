@@ -7,33 +7,33 @@
     "etag": "W/\"18d54-ztpUKwdMeWy2IieCQxgipe4cigw\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/": {
-    "etag": "W/\"11b1e-E5A22xhmqRKYz0OSJkXp83Ov1xo\""
+    "etag": "W/\"11b17-bKBDnkRX2v53xVO8gLHvKD93PeA\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/bernerzeitung/": {
-    "etag": "W/\"fecf-VldC5ViYfBTYTu5l2e1b4u8WskA\""
+    "etag": "W/\"fec8-PHwSmk+ZrrCxj1LpjBFS5VCaKMk\""
   },
   "https://www.zentralplus.ch/feed/": {
     "last_modified": "Sat, 13 Jun 2026 14:48:00 GMT"
   },
   "https://www.finews.ch/news?format=feed": {
-    "last_modified": "Sat, 13 Jun 2026 20:28:57 GMT"
+    "last_modified": "Sat, 13 Jun 2026 20:32:07 GMT"
   },
   "https://www.netzwoche.ch/rss.xml": {
     "last_modified": "Sat, 13 Jun 2026 18:50:58 GMT",
     "etag": "\"1781376658\""
   },
   "https://www.nzz.ch/recent.rss": {
-    "last_modified": "Sat, 13 Jun 2026 20:26:49 GMT"
+    "last_modified": "Sat, 13 Jun 2026 20:31:50 GMT"
   },
   "https://www.bilanz.ch/sitemap-articles-time-limited-2026-06.xml": {
     "last_modified": "Sat, 13 Jun 2026 13:15:29 GMT",
     "etag": "\"416b6e1718bae3199f2afafb85e3d529\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/derbund/": {
-    "etag": "W/\"f761-0YAn94CMWQsP7paN/lPxJ0NICH4\""
+    "etag": "W/\"f75a-CqcfZh/dGpsBT+7NUXrQWcxqr3o\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/bazonline/": {
-    "etag": "W/\"115ab-RtfDJEduiTTcl9V2S84eeIzt7gw\""
+    "etag": "W/\"115a4-l6gwkop7zvSXvVLynuyArR8Hf2Y\""
   },
   "https://www.woz.ch/sitemaps/editorial_content/sitemap.xml": {
     "last_modified": "Sat, 13 Jun 2026 20:19:59 GMT",
@@ -51,15 +51,15 @@
     "etag": "\"1781128543\""
   },
   "https://www.shn.ch/rss.xml": {
-    "last_modified": "Sat, 13 Jun 2026 20:25:54 GMT",
-    "etag": "W/\"1781382354-gzip\""
+    "last_modified": "Sat, 13 Jun 2026 20:30:12 GMT",
+    "etag": "W/\"1781382612-gzip\""
   },
   "https://schweizermonat.ch/feed/": {
     "last_modified": "Sat, 13 Jun 2026 08:25:10 GMT",
     "etag": "\"1a5ca89e27def93823ad78f36e7f4293\""
   },
   "https://www.bote.ch/googlenews.sitemap.xml": {
-    "last_modified": "Sat, 13 Jun 2026 20:26:00 GMT",
-    "etag": "\"1781382360\""
+    "last_modified": "Sat, 13 Jun 2026 20:30:02 GMT",
+    "etag": "\"1781382602\""
   }
 }
