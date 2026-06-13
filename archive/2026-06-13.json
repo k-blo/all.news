@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-13T07:02:18.949517+00:00",
+  "generated": "2026-06-13T07:32:45.224071+00:00",
   "date": "2026-06-13",
-  "count": 190,
+  "count": 198,
   "articles": [
     {
       "source": "Tages-Anzeiger",
@@ -1332,6 +1332,62 @@
       "url": "https://www.watson.ch/international/deutschland/597079724-drohnen-deutscher-innenminister-befuerchtet-angriffe-auf-bundestag",
       "summary": "",
       "published": "2026-06-13T07:02:18.949517+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Künstliche Intelligenz: Anthropic sperrt Top-KI-Modell nach Anordnung der US-Regierung",
+      "url": "https://www.tagesanzeiger.ch/anthropic-us-regierung-sperrt-ai-modell-fable-5-717891918998",
+      "summary": "So etwas gab es noch nicht: Der OpenAI-Rivale Anthropic muss den Zugang zu seinem besten KI-Modell plötzlich blockieren, weil die US-Regierung ein Sicherheitsrisiko befürchtet. Vieles ist noch unklar.",
+      "published": "2026-06-13T07:32:45.224071+00:00"
+    },
+    {
+      "source": "Tages-Anzeiger",
+      "title": "Interview mit Tee-Papst: «Matcha kein Hype, sondern mehr als 800 Jahre alt»",
+      "url": "https://www.tagesanzeiger.ch/tipps-vom-experten-wie-erkennt-man-guten-matcha-814970132677",
+      "summary": "Teewissenschaftler Thomas Grömer ist der Mann, der Matcha aus Japan nach Europa brachte. Ein Gespräch über Qualität, Preis und Zubereitung des grünen Pulvers.",
+      "published": "2026-06-13T07:32:45.224071+00:00"
+    },
+    {
+      "source": "Zentralplus",
+      "title": "Der Sommer ist zurück – bis zu 35 Grad im Anmarsch",
+      "url": "https://www.zentralplus.ch/wetter/der-sommer-ist-zurueck-bis-zu-35-grad-im-anmarsch-2877800/",
+      "summary": "Das Wetter in Luzern und Zug wird richtig sommerlich. Zuerst wird es angenehm warm, dann folgt die Hitzewelle mit bis zu 35 Grad. Hier findest du den Wetterbericht für Zug und Luzern für die nächsten ",
+      "published": "2026-06-13T07:32:45.224071+00:00"
+    },
+    {
+      "source": "Limmattaler Zeitung",
+      "title": "Faustball Stv Schlieren Liebäugelt nach Sieg Gegen Meister mit Nla Finalturnier",
+      "url": "https://www.limmattalerzeitung.ch/limmattal/region-limmattal/faustball-stv-schlieren-liebaeugelt-nach-sieg-gegen-meister-mit-nla-finalturnier-ld.4184281",
+      "summary": "",
+      "published": "2026-06-13T07:32:45.224071+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026 im Tagesticker: Trainingsausrüstung von England gestohlen",
+      "url": "https://www.watson.ch/sport/wm-tagesticker/896058623-wm-2026-im-tagesticker-trainingsausruestung-von-england-gestohlen",
+      "summary": "",
+      "published": "2026-06-13T07:32:45.224071+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Materialwart Roger Kaspar gibt einen Einblick in Schweizer Fussballnati",
+      "url": "https://www.watson.ch/sport/videos/499349766-materialwart-roger-kaspar-gibt-einen-einblick-in-schweizer-fussballnati",
+      "summary": "",
+      "published": "2026-06-13T07:32:45.224071+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Haiangriff in Sydney: Frau schwer verletzt",
+      "url": "https://www.watson.ch/international/australien/749138759-haiangriff-in-sydney-frau-schwer-verletzt",
+      "summary": "",
+      "published": "2026-06-13T07:32:45.224071+00:00"
+    },
+    {
+      "source": "Freiburger Nachrichten",
+      "title": "Staatsrat will digitale Behördendienstleistungen gesetzlich verankern",
+      "url": "https://www.freiburger-nachrichten.ch/story/270209/staatsrat-will-digitale-beh%C3%B6rdendienstleistungen-gesetzlich-verankern",
+      "summary": "",
+      "published": "2026-06-13T07:32:45.224071+00:00"
     }
   ]
 }
