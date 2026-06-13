@@ -47,6 +47,8 @@ FEEDS = [
     {"source": "NZZ",           "url": "https://www.nzz.ch/recent.rss", "summary": False},
     {"source": "Persönlich",    "url": "https://www.persoenlich.com/rss/news.xml"},
     {"source": "Tachles",       "url": "https://www.tachles.ch/feed"},
+    {"source": "Schaffhauser Nachrichten", "url": "https://www.shn.ch/rss.xml"},
+    {"source": "Schweizer Monat","url": "https://schweizermonat.ch/feed/"},
     #{"source": "ETH Zürich",     "url": "https://www.ethz.ch/de/news-und-veranstaltungen/eth-news/news/_jcr_content.feed"},
 ]
 
@@ -62,6 +64,7 @@ NEBELSPALTER_MAX = 50  # newest N /themen/YYYY/MM/slug articles
 NEWS_SITEMAPS = [
     {"source": "Watson",               "url": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml",            "max": 50},
     {"source": "Freiburger Nachrichten","url": "https://www.freiburger-nachrichten.ch/sitemap_latest_news.xml", "max": 50},
+    {"source": "Bote der Urschweiz",   "url": "https://www.bote.ch/googlenews.sitemap.xml",                    "max": 50},
     #{"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
@@ -528,6 +531,9 @@ SOURCE_COLORS = {
     "Tachles": "#1565c0",
     "Bauernzeitung": "#558b2f",
     "ETH Zürich": "#0072ac",
+    "Schaffhauser Nachrichten": "#1a4f8b",
+    "Schweizer Monat": "#8a6d3b",
+    "Bote der Urschweiz": "#b8242a",
 }
 
 
