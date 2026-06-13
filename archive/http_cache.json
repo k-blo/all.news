@@ -4,7 +4,7 @@
     "etag": "\"1fd5ae1f76cb4a3a8bf8574b8ee19d03\""
   },
   "https://partner-feeds.20min.ch/rss/20minuten": {
-    "etag": "W/\"18d61-TCIyoK9qZd2AQWJ+83tdlE4L5iQ\""
+    "etag": "W/\"18d42-5XO69gJem+ihIUYta85u1u+BegA\""
   },
   "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/": {
     "etag": "W/\"11b9e-Q4/WHLNpTJ7HfoqKps/b4OiBNig\""
@@ -16,11 +16,11 @@
     "last_modified": "Sat, 13 Jun 2026 14:48:00 GMT"
   },
   "https://www.finews.ch/news?format=feed": {
-    "last_modified": "Sat, 13 Jun 2026 21:08:53 GMT"
+    "last_modified": "Sat, 13 Jun 2026 21:11:52 GMT"
   },
   "https://www.netzwoche.ch/rss.xml": {
-    "last_modified": "Sat, 13 Jun 2026 18:50:58 GMT",
-    "etag": "\"1781376658\""
+    "last_modified": "Sat, 13 Jun 2026 21:10:57 GMT",
+    "etag": "\"1781385057\""
   },
   "https://www.nzz.ch/recent.rss": {
     "last_modified": "Sat, 13 Jun 2026 21:07:00 GMT"
@@ -51,15 +51,15 @@
     "etag": "\"1781128543\""
   },
   "https://www.shn.ch/rss.xml": {
-    "last_modified": "Sat, 13 Jun 2026 21:03:51 GMT",
-    "etag": "W/\"1781384631-gzip\""
+    "last_modified": "Sat, 13 Jun 2026 21:10:12 GMT",
+    "etag": "W/\"1781385012-gzip\""
   },
   "https://schweizermonat.ch/feed/": {
     "last_modified": "Sat, 13 Jun 2026 08:25:10 GMT",
     "etag": "\"1a5ca89e27def93823ad78f36e7f4293\""
   },
   "https://www.bote.ch/googlenews.sitemap.xml": {
-    "last_modified": "Sat, 13 Jun 2026 21:07:00 GMT",
-    "etag": "\"1781384820\""
+    "last_modified": "Sat, 13 Jun 2026 21:12:01 GMT",
+    "etag": "\"1781385121\""
   }
 }
