@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-14T23:01:48.287181+00:00",
+  "generated": "2026-06-14T23:31:16.704431+00:00",
   "date": "2026-06-15",
-  "count": 14,
+  "count": 15,
   "articles": [
     {
       "source": "Luzerner Zeitung",
@@ -100,6 +100,13 @@
       "url": "https://www.watson.ch/schweiz/international/459097527-iran-und-usa-schliessen-rahmenabkommen-ab",
       "summary": "",
       "published": "2026-06-14T23:01:48.287181+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Transfer-News: Real Madrid schnappt sich wohl Nationalspieler Spaniens",
+      "url": "https://www.watson.ch/sport/transferticker/483686793-transfer-news-real-madrid-schnappt-sich-wohl-nationalspieler-spaniens",
+      "summary": "",
+      "published": "2026-06-14T23:31:16.704431+00:00"
     }
   ]
 }
