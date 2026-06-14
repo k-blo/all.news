@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-14T22:31:50.238723+00:00",
+  "generated": "2026-06-14T23:01:48.287181+00:00",
   "date": "2026-06-15",
-  "count": 13,
+  "count": 14,
   "articles": [
     {
       "source": "Luzerner Zeitung",
@@ -93,6 +93,13 @@
       "url": "https://www.bote.ch/nachrichten/schwyz/der-tourismus-award-geht-an-das-heirassa-festival-art-1708005",
       "summary": "",
       "published": "2026-06-14T22:31:50.238723+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Iran und USA schliessen Rahmenabkommen ab",
+      "url": "https://www.watson.ch/schweiz/international/459097527-iran-und-usa-schliessen-rahmenabkommen-ab",
+      "summary": "",
+      "published": "2026-06-14T23:01:48.287181+00:00"
     }
   ]
 }
