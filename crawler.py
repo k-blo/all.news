@@ -548,16 +548,55 @@ def fmt_datetime(iso_str):
         return ""
 
 
+DE_MONTHS = ["", "Jan.", "Feb.", "März", "Apr.", "Mai", "Juni",
+             "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."]
+
+# Small external-link glyph shown next to the time (mirrors EXT_SVG in script.js).
+EXT_SVG = ('<svg class="ext" viewBox="0 0 24 24" width="12" height="12" fill="none" '
+           'stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>')
+
+
+def fmt_time(iso_str):
+    """Format ISO datetime as Swiss local HH:MM (mirrors fmtTime in script.js)."""
+    if not iso_str:
+        return ""
+    try:
+        dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
+        return dt.astimezone(ZURICH).strftime("%H:%M")
+    except (ValueError, TypeError):
+        return ""
+
+
+def fmt_day_heading(date_iso):
+    """'2026-08-08' -> '08. Aug. 2026'."""
+    try:
+        y, m, d = date_iso.split("-")
+        return f"{d}. {DE_MONTHS[int(m)]} {y}"
+    except (ValueError, IndexError):
+        return date_iso
+
+
 def render_article_html(article):
     color = SOURCE_COLORS.get(article["source"], "#888")
     return (
-        f'  <li>'
-        f'<a href="{escape(article["url"])}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
-        f'<div class="info">'
-        f'<span class="date">{escape(fmt_datetime(article.get("published", "")))}</span>'
+        '      <li class="article">'
+        '<div class="meta-col">'
         f'<span class="source" style="background:{color}">{escape(article["source"])}</span>'
-        f'</div>'
-        f'</li>'
+        f'<span class="time">{escape(fmt_time(article.get("published", "")))} {EXT_SVG}</span>'
+        '</div>'
+        f'<a class="title" href="{escape(article["url"])}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
+        '</li>'
+    )
+
+
+def render_older_dates(dates):
+    """Collapsible-looking date rows that link to each day's static archive page."""
+    chev = ('<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" '
+            'stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>')
+    return "\n".join(
+        f'      <a class="day-row" href="/archive/{d}.html">'
+        f'<span>{fmt_day_heading(d)}</span>{chev}</a>'
+        for d in dates
     )
 
 
@@ -567,18 +606,28 @@ def write_colors_js():
         f.write(f"const SOURCE_COLORS = {{\n  {pairs}\n}};\n")
 
 
-def write_rendered_html(articles, dest_path, *, title, description, canonical, day_link):
+AD_EVERY = 25  # insert an ad slot after every N articles (mirrors AD_EVERY in script.js)
+AD_SLOT = '      <li class="ad-slot">Werbung</li>'
+
+
+def write_rendered_html(articles, dest_path, *, title, description, canonical,
+                        date_heading, older_dates=()):
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
-    items = "\n".join(render_article_html(a) for a in articles)
-    count = f"{len(articles)} artikel"
+    rows = []
+    for i, a in enumerate(articles):
+        rows.append(render_article_html(a))
+        if (i + 1) % AD_EVERY == 0 and i + 1 < len(articles):
+            rows.append(AD_SLOT)
+    items = "\n".join(rows)
     html = (tmpl
             .replace("<!-- TITLE -->", escape(title))
             .replace("<!-- DESCRIPTION -->", escape(description))
             .replace("<!-- CANONICAL -->", escape(canonical))
-            .replace("<!-- META_COUNT -->", count)
-            .replace("<!-- DAY_LINK -->", day_link)
+            .replace("<!-- COUNT -->", str(len(articles)))
+            .replace("<!-- DATE_HEADING -->", escape(date_heading))
+            .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates))
             .replace("<!-- ARTICLES -->", items))
     with open(dest_path, "w", encoding="utf-8") as f:
         f.write(html)
@@ -692,19 +741,22 @@ def main():
     write_json(HTTP_CACHE_FILE, _http_cache)
 
     write_colors_js()
+    older = [d for d in all_dates if d != today]
     write_rendered_html(
         result, "index.html",
         title="all.news – Schweizer Nachrichten im Überblick",
         description="Alle Schweizer Nachrichtenquellen auf einen Blick: SRF, NZZ, Tages-Anzeiger, Blick, Watson und 40+ weitere Medien. Stündlich aktualisiert.",
         canonical="https://all.news/",
-        day_link='<a id="dayLink" href="/archive.html">archiv</a>',
+        date_heading=fmt_day_heading(today),
+        older_dates=older,
     )
     write_rendered_html(
         result, os.path.join(ARCHIVE_DIR, f"{today}.html"),
         title=f"all.news – {today}",
         description=f"Schweizer Nachrichtenlinks vom {today}.",
         canonical=f"https://all.news/archive/{today}.html",
-        day_link='<a id="dayLink" href="/archive.html">← archiv</a>',
+        date_heading=fmt_day_heading(today),
+        older_dates=[],
     )
     write_sitemap(all_dates)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} total today ({today})",
