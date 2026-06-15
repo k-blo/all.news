@@ -16,24 +16,48 @@
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
   <!-- Analytics placeholder: all.news runs its own analytics. Insert measurement tag here. -->
 </head>
 <body>
-  <h1><a href="index.html" style="text-decoration:none;color:inherit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" style="height:0.85em;vertical-align:-0.1em"><rect width="320" height="320" fill="#FF0000"/><rect x="130" y="60" width="60" height="200" fill="white"/><rect x="60" y="130" width="200" height="60" fill="white"/></svg> all.news</a> — archiv</h1>
-  <ul id="list"></ul>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <a href="/" class="brand-link">all.news</a>
+      </div>
+      <a href="/" class="more-btn" style="text-decoration:none">← zurück</a>
+    </header>
+
+    <main class="view">
+      <h2 class="day-heading">Archiv</h2>
+      <nav class="older-dates" id="list"></nav>
+    </main>
+
+    <footer class="site-footer">
+      <span>© Copyright 2026 all.news</span>
+      <span>all.news is not responsible for the content of external sites</span>
+    </footer>
+  </div>
+
   <script>
+    const chev = '<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
+    const MONTHS = ["", "Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."];
+    function heading(d) {
+      const [y, m, day] = d.split("-");
+      return `${day}. ${MONTHS[+m]} ${y}`;
+    }
     fetch("archive/index.json")
       .then((r) => r.json())
       .then((idx) => {
         const list = document.getElementById("list");
         for (const d of (idx.dates || [])) {
-          const li = document.createElement("li");
           const a = document.createElement("a");
+          a.className = "day-row";
           a.href = `archive/${d}.html`;
-          a.textContent = d;
-          li.appendChild(a);
-          list.appendChild(li);
+          a.innerHTML = `<span>${heading(d)}</span>${chev}`;
+          list.appendChild(a);
         }
       })
       .catch(() => {

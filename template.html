@@ -16,6 +16,8 @@
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="/favicon-192.png">
+  <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/inter-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -29,21 +31,138 @@
   <!-- Analytics placeholder: all.news runs its own analytics. Insert measurement tag here. -->
 </head>
 <body>
-  <h1>
-    <a href="/" style="color:inherit;text-decoration:none;display:flex;align-items:baseline;gap:0.4rem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" style="height:0.85em;vertical-align:-0.1em"><rect width="320" height="320" fill="#FF0000"/><rect x="130" y="60" width="60" height="200" fill="white"/><rect x="60" y="130" width="200" height="60" fill="white"/></svg>
-    all.news</a>
-    <span id="meta"><!-- META_COUNT --></span>
-    <!-- DAY_LINK -->
-    <details id="excludeBox">
-      <summary>quellen</summary>
-      <div id="filters"></div>
-    </details>
-  </h1>
-  <input type="search" id="search" placeholder="suchen…" autocomplete="off" aria-label="Artikel durchsuchen">
-  <ul id="list">
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <a href="/" class="brand-link">all.news</a>
+        <button id="feedToggle" class="icon-btn" aria-expanded="false" aria-controls="settingsView" aria-label="Feed-Einstellungen">
+          <span class="icon chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+        </button>
+      </div>
+      <button id="moreToggle" class="more-btn" aria-expanded="false" aria-controls="moreView">
+        More
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></span>
+      </button>
+    </header>
+
+    <!-- ===== Feed view ===== -->
+    <main id="feedView" class="view">
+      <div class="hero">
+        <h1 class="wordmark">all.news<span class="count-badge"><!-- COUNT --></span></h1>
+      </div>
+
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="suchen…" autocomplete="off" aria-label="Artikel durchsuchen">
+      </div>
+
+      <h2 class="day-heading"><!-- DATE_HEADING --></h2>
+      <ul id="list" class="feed-list">
 <!-- ARTICLES -->
-  </ul>
+      </ul>
+
+      <nav class="older-dates">
+<!-- OLDER_DATES -->
+      </nav>
+    </main>
+
+    <!-- ===== Feed settings view ===== -->
+    <section id="settingsView" class="view" hidden>
+      <div class="feed-settings">
+        <!-- Categories / Countries / Languages are placeholders: the article data
+             model has no category/country/language fields yet (see CLAUDE.md).
+             Only "Medias" (source filtering) is wired up. -->
+        <div class="fs-group">
+          <button type="button" class="fs-head">Categories <span class="plus">+</span></button>
+          <ul class="fs-list" aria-disabled="true">
+            <li>Breaking News</li>
+            <li>Business · Finance</li>
+            <li>Climate · Environment</li>
+            <li>Crime · Security</li>
+            <li>Culture · Entertainment</li>
+            <li>Health · Medicine</li>
+            <li>Local · Regions</li>
+            <li>Media · Digital</li>
+            <li>Opinion · Analysis</li>
+            <li>Science · Research</li>
+            <li>Society · Lifestyle</li>
+            <li>Sports</li>
+            <li>Space</li>
+            <li>Technology</li>
+            <li>Travel · Mobility</li>
+            <li>World · Politics</li>
+          </ul>
+        </div>
+
+        <div class="fs-group">
+          <button type="button" class="fs-head">Countries <span class="plus">+</span></button>
+          <ul class="fs-list" aria-disabled="true">
+            <li class="off">Australia</li>
+            <li class="off">Austria</li>
+            <li class="off">Belgium</li>
+            <li class="off">Canada</li>
+            <li class="off">Denmark</li>
+            <li class="off">Estonia</li>
+            <li class="off">Finland</li>
+            <li class="off">Germany</li>
+            <li class="off">Japan</li>
+            <li class="off">Netherlands</li>
+            <li class="off">Norway</li>
+            <li class="off">Singapore</li>
+            <li class="off">South Korea</li>
+            <li class="off">Sweden</li>
+            <li>Switzerland</li>
+            <li class="off">United Kingdom</li>
+            <li class="off">United States</li>
+          </ul>
+        </div>
+
+        <div class="fs-group">
+          <button type="button" class="fs-head">Languages <span class="plus">+</span></button>
+          <ul class="fs-list" aria-disabled="true">
+            <li>Deutsch</li>
+            <li class="off">English</li>
+            <li class="off">Français</li>
+            <li class="off">Italiano</li>
+            <li class="off">Rumantsch</li>
+          </ul>
+        </div>
+
+        <div class="fs-group">
+          <button type="button" class="fs-head">Medias <span class="plus">+</span></button>
+          <div class="fs-list" id="filters"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== More view ===== -->
+    <section id="moreView" class="view" hidden>
+      <div class="more-list">
+        <details class="more-item">
+          <summary>Help · FAQ <span class="plus">+</span></summary>
+          <div class="more-body">all.news aggregates headlines from news outlets and links straight to the original articles. Pick a date to browse that day's links; use the search field to filter by keyword or source.</div>
+        </details>
+        <details class="more-item">
+          <summary>Settings · Privacy <span class="plus">+</span></summary>
+          <div class="more-body">Source filters are stored in the page URL, not in cookies. all.news runs its own independent analytics — no third-party advertising trackers are loaded by default.</div>
+        </details>
+        <details class="more-item">
+          <summary>Terms · Conditions <span class="plus">+</span></summary>
+          <div class="more-body">Headlines and short excerpts remain the property of their respective publishers. all.news is not responsible for the content of external sites.</div>
+        </details>
+        <details class="more-item">
+          <summary>Mobile App <span class="plus">+</span></summary>
+          <div class="more-body">A mobile app is on the roadmap. For now, add all.news to your home screen for a full-screen experience.</div>
+        </details>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span>© Copyright 2026 all.news</span>
+      <span>all.news is not responsible for the content of external sites</span>
+    </footer>
+  </div>
+
   <script src="/colors.js"></script>
-  <script src="/script.js?v=4"></script>
+  <script src="/script.js?v=5"></script>
 </body>
 </html>

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """One-shot backfill: generate archive/YYYY-MM-DD.html for every existing JSON."""
 import json, os
-from crawler import write_rendered_html, write_colors_js, write_sitemap, archive_dates
+from crawler import (write_rendered_html, write_colors_js, write_sitemap,
+                    archive_dates, fmt_day_heading)
 
 write_colors_js()
 
@@ -17,7 +18,8 @@ for d in dates:
         title=f"all.news – {d}",
         description=f"Schweizer Nachrichtenlinks vom {d}.",
         canonical=f"https://all.news/archive/{d}.html",
-        day_link='<a id="dayLink" href="/archive.html">← archiv</a>',
+        date_heading=fmt_day_heading(d),
+        older_dates=[],
     )
     print(f"  wrote {dest}")
 
