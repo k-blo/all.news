@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-14T23:31:16.704431+00:00",
+  "generated": "2026-06-15T00:01:42.946262+00:00",
   "date": "2026-06-15",
-  "count": 15,
+  "count": 16,
   "articles": [
     {
       "source": "Luzerner Zeitung",
@@ -107,6 +107,13 @@
       "url": "https://www.watson.ch/sport/transferticker/483686793-transfer-news-real-madrid-schnappt-sich-wohl-nationalspieler-spaniens",
       "summary": "",
       "published": "2026-06-14T23:31:16.704431+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "WM 2026 im Tagesticker: FIFA schreibt Namen eines Spielers falsch",
+      "url": "https://www.watson.ch/sport/wm-tagesticker/896058623-wm-2026-im-tagesticker-fifa-schreibt-namen-eines-spielers-falsch",
+      "summary": "",
+      "published": "2026-06-15T00:01:42.946262+00:00"
     }
   ]
 }
