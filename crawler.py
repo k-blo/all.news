@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""swissnews crawler — POC.
+"""all.news crawler — POC.
 
 Fetches RSS feeds from Swiss news sites, extracts title + link (+ short summary),
 writes crawled.json for the static site to consume.
@@ -53,7 +53,7 @@ FEEDS = [
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
-USER_AGENT = "SwissNewsBot/0.1 (+https://github.com/yourname/swissnews; POC)"
+USER_AGENT = "AllNewsBot/0.1 (+https://github.com/yourname/all.news; POC)"
 TIMEOUT = 15
 SUMMARY_MAX = 200  # keep snippets short — legal caution
 WELTWOCHE_SITEMAP_INDEX = "https://weltwoche.ch/sitemap_index.xml"
@@ -586,11 +586,11 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical, d
 
 def write_sitemap(dates):
     urls = [
-        '  <url><loc>https://www.swissnews.org/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>',
-        '  <url><loc>https://www.swissnews.org/archive.html</loc><changefreq>daily</changefreq><priority>0.5</priority></url>',
+        '  <url><loc>https://all.news/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>',
+        '  <url><loc>https://all.news/archive.html</loc><changefreq>daily</changefreq><priority>0.5</priority></url>',
     ]
     for d in dates:
-        urls.append(f'  <url><loc>https://www.swissnews.org/archive/{d}.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>')
+        urls.append(f'  <url><loc>https://all.news/archive/{d}.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>')
     with open("sitemap.xml", "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
@@ -694,16 +694,16 @@ def main():
     write_colors_js()
     write_rendered_html(
         result, "index.html",
-        title="swissnews – Schweizer Nachrichten im Überblick",
+        title="all.news – Schweizer Nachrichten im Überblick",
         description="Alle Schweizer Nachrichtenquellen auf einen Blick: SRF, NZZ, Tages-Anzeiger, Blick, Watson und 40+ weitere Medien. Stündlich aktualisiert.",
-        canonical="https://www.swissnews.org/",
+        canonical="https://all.news/",
         day_link='<a id="dayLink" href="/archive.html">archiv</a>',
     )
     write_rendered_html(
         result, os.path.join(ARCHIVE_DIR, f"{today}.html"),
-        title=f"swissnews – {today}",
+        title=f"all.news – {today}",
         description=f"Schweizer Nachrichtenlinks vom {today}.",
-        canonical=f"https://www.swissnews.org/archive/{today}.html",
+        canonical=f"https://all.news/archive/{today}.html",
         day_link='<a id="dayLink" href="/archive.html">← archiv</a>',
     )
     write_sitemap(all_dates)

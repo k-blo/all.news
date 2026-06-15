@@ -1,6 +1,8 @@
-# swissnews
+# all.news
 
-Swiss news aggregator. Hourly crawl, filterable by source.
+News aggregator. Hourly crawl, filterable by source. Currently covers Swiss
+sources; scope is expanding to more countries. Runs its own pipeline and
+analytics, separate from the original swissnews.org project.
 
 ## Architecture
 

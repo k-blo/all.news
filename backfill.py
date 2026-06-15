@@ -14,9 +14,9 @@ for d in dates:
     data = json.load(open(src, encoding="utf-8"))
     write_rendered_html(
         data["articles"], dest,
-        title=f"swissnews – {d}",
+        title=f"all.news – {d}",
         description=f"Schweizer Nachrichtenlinks vom {d}.",
-        canonical=f"https://www.swissnews.org/archive/{d}.html",
+        canonical=f"https://all.news/archive/{d}.html",
         day_link='<a id="dayLink" href="/archive.html">← archiv</a>',
     )
     print(f"  wrote {dest}")
