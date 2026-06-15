@@ -59,10 +59,21 @@ function isExcluded(a) {
   return excluded.has(a.source.toLowerCase());
 }
 
+// Free-text search over title + source, persisted in the URL: ?q=…
+let query = (new URLSearchParams(location.search).get("q") || "").trim().toLowerCase();
+
+function matchesQuery(a) {
+  if (!query) return true;
+  return a.title.toLowerCase().includes(query) ||
+         a.source.toLowerCase().includes(query);
+}
+
 function syncUrl() {
   const params = new URLSearchParams(location.search);
   if (excluded.size) params.set("exclude", [...excluded].join(","));
   else params.delete("exclude");
+  if (query) params.set("q", query);
+  else params.delete("q");
   const qs = params.toString();
   history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
 }
@@ -70,7 +81,9 @@ function syncUrl() {
 function render(articles, mode) {
   const list = document.getElementById("list");
   list.innerHTML = "";
-  for (const a of sortArticles(articles, mode).filter((a) => !isExcluded(a))) {
+  const visible = sortArticles(articles, mode)
+    .filter((a) => !isExcluded(a) && matchesQuery(a));
+  for (const a of visible) {
     const li = document.createElement("li");
 
     const link = document.createElement("a");
@@ -100,6 +113,7 @@ function render(articles, mode) {
     li.appendChild(meta);
     list.appendChild(li);
   }
+  setMeta(query ? `${visible.length} treffer` : `${articles.length} artikel`);
 }
 
 const meta = document.getElementById("meta");
@@ -140,7 +154,7 @@ function load(url) {
       current = data.articles;
       setMeta(`${data.count} artikel`);
       buildFilters(current);
-      if (excluded.size) render(current, sortMode());
+      if (excluded.size || query) render(current, sortMode());
     })
     .catch((e) => { setMeta("fehler: " + url); });
 }
@@ -158,4 +172,14 @@ if (dayParam) {
 
 for (const radio of document.querySelectorAll('input[name="sort"]')) {
   radio.addEventListener("change", () => render(current, sortMode()));
+}
+
+const searchInput = document.getElementById("search");
+if (searchInput) {
+  searchInput.value = query;
+  searchInput.addEventListener("input", () => {
+    query = searchInput.value.trim().toLowerCase();
+    syncUrl();
+    render(current, sortMode());
+  });
 }

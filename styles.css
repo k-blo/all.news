@@ -11,6 +11,17 @@ h1 { font-size: 1.0rem; margin: 0 0 0.5rem; display: flex; align-items: baseline
 #excludeBox summary { cursor: pointer; }
 #filters { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; margin-top: 0.4rem; }
 #filters label { white-space: nowrap; }
+#search {
+  font-family: inherit;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.5rem;
+  margin: 0 0 0.9rem;
+  width: 100%;
+  max-width: 24rem;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
 ul { list-style: none; padding: 0; margin: 0; }
 li { margin-bottom: 0.8rem; }
 a { color: #000; }
