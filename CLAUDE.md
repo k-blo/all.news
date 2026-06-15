@@ -2,6 +2,21 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Overview
+
+**all.news** is a news aggregator served at `https://all.news/`. It currently covers
+Swiss sources only, but the project was forked from swissnews.org with the intent to
+expand its scope to more countries. all.news runs its own independent pipeline and
+analytics; the original swissnews.org project keeps running separately. When generalizing
+beyond Switzerland, the Swiss-specific framing still in the codebase will need revisiting:
+the German `lang="de"` and "Schweizer Nachrichten" taglines, the Swiss-flag logo
+(`favicon.svg` and the inline SVG in `template.html`/`archive.html`), and the
+single-timezone "today" check (`ZURICH`) in `crawler.py`.
+
+Analytics is intentionally left as a placeholder (see the "Analytics placeholder" comment
+in `template.html` and `archive.html`) — wire up all.news's own analytics there rather than
+reusing swissnews.org's tag.
+
 ## Commands
 
 ```bash
@@ -42,7 +57,7 @@ All source definitions live at the top of the file. There are several crawler st
 
 **Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added to `crawled.json` if their `published` date is today (Swiss local time) and their URL has never been seen before.
 
-**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `script.js`.
+**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`).
 
 **Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.)
 
@@ -50,6 +65,6 @@ All source definitions live at the top of the file. There are several crawler st
 
 Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.
 
-`SOURCE_COLORS` in `script.js` must have an entry for every source name used in `crawler.py` — missing entries fall back to `#888`.
+`SOURCE_COLORS` is defined in `crawler.py` and generated into `colors.js` (loaded by `script.js`). It must have an entry for every source name used in `crawler.py` — missing entries fall back to `#888`.
 
 The article list is JS-rendered, so search engines see an empty `<ul>` without executing JS. Pre-rendering this server-side (or at crawl time) is a known open improvement.

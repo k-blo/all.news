@@ -1,4 +1,4 @@
-name = "swissnews-cron"
+name = "all-news-cron"
 main = "src/worker.js"
 compatibility_date = "2024-11-01"
 
@@ -8,9 +8,9 @@ crons = ["*/30 * * * *"]
 
 [vars]
 OWNER = "k-blo"           # GitHub user/org
-REPO = "suisse-news"      # exact GitHub repo name (used in API URL)
+REPO = "all.news"         # TODO: set to the all.news GitHub repo (separate pipeline from swissnews)
 WORKFLOW = "crawl.yml"    # workflow filename in .github/workflows/
 REF = "main"              # branch to run on
 
 # Secret (NOT here): set with `wrangler secret put GITHUB_TOKEN`
-# Fine-grained PAT, repo = swissnews, permission: Actions = Read and write.
+# Fine-grained PAT, repo = all.news, permission: Actions = Read and write.
