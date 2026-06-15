@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-15T01:31:52.385416+00:00",
+  "generated": "2026-06-15T02:01:38.801502+00:00",
   "date": "2026-06-15",
-  "count": 26,
+  "count": 28,
   "articles": [
     {
       "source": "Luzerner Zeitung",
@@ -184,6 +184,20 @@
       "url": "https://www.watson.ch/sport/liveticker/342094762-wm-2026-manuniteds-diallo-schiesst-elfenbeinkueste-zu-sieg-gegen-ecuador",
       "summary": "",
       "published": "2026-06-15T01:31:52.385416+00:00"
+    },
+    {
+      "source": "20 Minuten",
+      "title": "Reaktionen zum Iran-Deal",
+      "url": "https://www.20min.ch/story/iran-konflikt-reaktionen-zum-iran-deal-103583148",
+      "summary": "Iran und USA bestätigen, dass sie sich auf ein Rahmenabkommen geeinigt haben, das am Freitag in Genf unterzeichnet werden soll. Die ersten Reaktionen.",
+      "published": "2026-06-15T02:01:38.801502+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Berühmtes Höhlenkloster in Kiew brennt nach russischen Angriffen",
+      "url": "https://www.watson.ch/international/russland/559008598-beruehmtes-hoehlenkloster-in-kiew-brennt-nach-russischen-angriffen",
+      "summary": "",
+      "published": "2026-06-15T02:01:38.801502+00:00"
     }
   ]
 }
