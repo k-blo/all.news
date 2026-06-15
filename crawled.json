@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-15T00:31:26.086305+00:00",
+  "generated": "2026-06-15T01:01:39.422957+00:00",
   "date": "2026-06-15",
-  "count": 23,
+  "count": 24,
   "articles": [
     {
       "source": "Luzerner Zeitung",
@@ -163,6 +163,13 @@
       "url": "https://www.watson.ch/sport/usa/757304574-wm-2026-trump-beauftragter-verteidigt-abschiebung-von-schiri-erneut",
       "summary": "",
       "published": "2026-06-15T00:31:26.086305+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "USA-Iran-Krieg: Ölpreise fallen nach Einigung deutlich",
+      "url": "https://www.watson.ch/international/liveticker/455779172-usa-iran-krieg-oelpreise-fallen-nach-einigung-deutlich",
+      "summary": "",
+      "published": "2026-06-15T01:01:39.422957+00:00"
     }
   ]
 }
