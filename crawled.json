@@ -1,7 +1,7 @@
 {
-  "generated": "2026-06-15T07:01:29.090074+00:00",
+  "generated": "2026-06-15T07:31:35.006553+00:00",
   "date": "2026-06-15",
-  "count": 256,
+  "count": 279,
   "articles": [
     {
       "source": "Luzerner Zeitung",
@@ -1794,6 +1794,167 @@
       "url": "https://www.bote.ch/nachrichten/schweizundwelt/mette-marits-sohn-verurteilt-marius-borg-hoiby-muss-vier-jahre-ins-gefaengnis-art-1708112",
       "summary": "",
       "published": "2026-06-15T07:01:29.090074+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Für Wohnraum und Infrastruktur: Thun will 50 Millionen-Rahmen­kredit für Immobilien­käufe",
+      "url": "https://www.bernerzeitung.ch/thun-50-millionen-rahmenkredit-fuer-immobilienkaeufe-677580722461",
+      "summary": "Der Gemeinderat beantragt einen Rahmenkredit über zehn Jahre, um flexibel Grundstücke zu erwerben. Die Vorlage kommt vors Volk.",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Berner Zeitung",
+      "title": "Nach Aufstieg mit der U21: Gygax verlässt den FC Thun nach einer Saison bereits wieder",
+      "url": "https://www.bernerzeitung.ch/daniel-gygax-verlaesst-fc-thun-fuer-fc-luzern-709820353499",
+      "summary": "Der FC Thun muss einen neuen Trainer für die U21 suchen. Daniel Gygax wechselt zum FC Luzern.",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Basler Zeitung",
+      "title": "Art Basel 2026: Im Office des Social Club bekommt die gläserne Decke Beine – Basel im Kunstfieber",
+      "url": "https://www.bazonline.ch/art-basel-das-laeuft-auf-und-abseits-der-kunstmesse-589673606790",
+      "summary": "Während einer Woche wird Basel zur Kunst-Welthauptstadt. Wir berichten laufend von der Art Basel und dem bunten Begleitprogramm abseits der Messe.",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Netzwoche",
+      "title": "\"Die steigenden Anforderungen stärken die Rolle der lokalen RZ-An­bieter\"",
+      "url": "https://www.netzwoche.ch/news/2026-06-15/die-steigenden-anforderungen-staerken-die-rolle-der-lokalen-rz-an-bieter",
+      "summary": "KI und Datensouveränität sind derzeit die ­dominierenden Trends im Markt für ICT-Infrastruktur- und Connectivity-Services. Wie lokale Anbieter davon profitieren, sagt Andreas Schwizer, Leiter Geschäft",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Gegen die Verbürgerlichung der Kunst – der nachhaltige Einfluss von Konrad Fischer",
+      "url": "https://www.nzz.ch/feuilleton/konrad-fischer-revolutionaer-der-minimal-art-und-konzeptkunst-ld.10011311",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Jung und anders: Das Auktionshaus am Grunewald geht seinen Weg",
+      "url": "https://www.nzz.ch/feuilleton/auktionshaus-am-grunewald-kunst-fuer-junge-sammler-ab-100-euro-ld.10011310",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "GASTKOMMENTAR - Die Vereinnahmung der Galerien durch die künstliche Intelligenz",
+      "url": "https://www.nzz.ch/feuilleton/wie-ki-den-kunstmarkt-veraendert-und-warum-regeln-fehlen-ld.10011309",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Mumbai erfindet das Museum neu",
+      "url": "https://www.nzz.ch/feuilleton/mumbai-wie-das-nmacc-ein-neues-museumskonzept-etabliert-ld.10011308",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Usbekistan: Ein Land entdeckt in der Kunst seine Zukunft",
+      "url": "https://www.nzz.ch/feuilleton/usbekistan-und-die-kunst-wie-ein-land-seine-zukunft-gestaltet-ld.10011305",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Marinella Senatores radikale Freiheit",
+      "url": "https://www.nzz.ch/feuilleton/marinella-senatores-radikale-freiheit-kunst-als-manifest-der-menschlichkeit-ld.10011304",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Visionen und Träume in Ton gebrannt",
+      "url": "https://www.nzz.ch/feuilleton/seyni-awa-camara-mythische-keramiken-der-senegalesischen-magierin-ld.10011160",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "NZZ",
+      "title": "Kunstsommer 2026: Basel und Venedig im Zeichen grosser Künstlerinnen",
+      "url": "https://www.nzz.ch/feuilleton/kunstsommer-2026-basel-und-venedig-im-zeichen-grosser-kuenstlerinnen-ld.10011144",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Persönlich",
+      "title": "Erst die Marke, dann der Stadtteil",
+      "url": "https://www.persoenlich.com/kategorie-werbung/erst-die-marke-dann-der-stadtteil",
+      "summary": "Der Stadtteil existiert erst auf dem Papier, die Marke ab sofort im Netz: Rhystadt AG hat für ihr Entwicklungsareal im Basler Norden den Vermarktungsbrand «Neues Klybeck» lanciert – mit Website und di",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Persönlich",
+      "title": "Klassische Umfrage per E-Mail verliert an Relevanz",
+      "url": "https://www.persoenlich.com/marketing/klassische-umfrage-per-e-mail-verliert-an-relevanz",
+      "summary": "Millionen Schweizerinnen und Schweizer sind so nicht mehr erreichbar. Repräsentative Befragungen werden damit schwieriger.",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Schweizer Monat",
+      "title": "Die Angstkampagne gegen die 10-Millionen-Initiative hat Erfolg",
+      "url": "https://schweizermonat.ch/die-angstkampagne-gegen-die-10-millionen-initiative-hat-erfolg/",
+      "summary": "Die Schweiz sagt Nein zur 10-Millionen-Initiative. Giuseppe Gracia und Lukas Leuzinger diskutieren über die Gründe – und die Folgen für die Europapolitik.\nSource",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Jean Pierre Gallati bei der Svp Holziken",
+      "url": "https://www.aargauerzeitung.ch/leserbeitrag/az/jean-pierre-gallati-bei-der-svp-holziken-ld.4184782",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Aargauer Zeitung",
+      "title": "Mozart Festival Solothurn Tickets für Konzerte 2026",
+      "url": "https://www.aargauerzeitung.ch/test/mozart-festival-solothurn-tickets-fuer-konzerte-2026-ld.4182388",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Oltner Tagblatt",
+      "title": "Waldhüttenhöck der Grauen Panther Olten und Umgebung",
+      "url": "https://www.oltnertagblatt.ch/leserbeitrag/ot/waldhuettenhoeck-der-grauen-panther-olten-und-umgebung-ld.4184792",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Sie war Kate Tanner: «Alf»-Star Anne Schedeen ist tot",
+      "url": "https://www.watson.ch/international/usa/631250203-sie-war-kate-tanner-alf-star-anne-schedeen-ist-tot",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Tyra Banks verklagt Netflix laut Bericht wegen Doku über Castingshow",
+      "url": "https://www.watson.ch/international/people-news/950254933-tyra-banks-verklagt-netflix-laut-bericht-wegen-doku-ueber-castingshow",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Ente im Mexiko-Trikot – tierischer Fussballfan geht an WM 2026 viral",
+      "url": "https://www.watson.ch/sport/fussball/176387001-ente-im-mexiko-trikot-tierischer-fussballfan-geht-an-wm-2026-viral",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Watson",
+      "title": "Wohlenschwil AG: Autolenker stirbt nach Kollision mit Brückenpfeiler",
+      "url": "https://www.watson.ch/schweiz/polizeirapport/354004813-wohlenschwil-ag-autolenker-stirbt-nach-kollision-mit-brueckenpfeiler",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
+    },
+    {
+      "source": "Bote der Urschweiz",
+      "title": "Aufregung in Deutschland: Jürgen Klopp bringt sich als Nationaltrainer ins Spiel – und muss sich bei Julian Nagelsmann entschuldigen",
+      "url": "https://www.bote.ch/nachrichten/sport/juergen-klopp-neuer-deutscher-nationaltrainer-entschuldigung-bei-nagelsmann-art-1708117",
+      "summary": "",
+      "published": "2026-06-15T07:31:35.006553+00:00"
     }
   ]
 }
