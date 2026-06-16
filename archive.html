@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>all.news – Archiv</title>
-  <meta name="description" content="Archiv aller täglich gesammelten Schweizer Nachrichtenlinks von all.news.">
+  <title>Browse the News Archive by Date – all.news</title>
+  <meta name="description" content="Browse the all.news archive of past world news headlines by date. Every day's collected links from hundreds of global sources, in one place.">
   <link rel="canonical" href="https://all.news/archive.html">
-  <meta property="og:title" content="all.news – Archiv">
-  <meta property="og:description" content="Archiv aller täglich gesammelten Schweizer Nachrichtenlinks von all.news.">
+  <meta property="og:title" content="Browse the News Archive by Date – all.news">
+  <meta property="og:description" content="Browse the all.news archive of past world news headlines by date. Every day's collected links from hundreds of global sources, in one place.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://all.news/archive.html">
   <meta property="og:image" content="https://all.news/og-image.png">
@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="/favicon-192.png">
   <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-latin-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=5">
   <!-- Analytics placeholder: all.news runs its own analytics. Insert measurement tag here. -->
 </head>
 <body>
@@ -26,13 +26,18 @@
     <header class="topbar">
       <div class="brand">
         <a href="/" class="brand-link">all.news</a>
+        <a href="/" class="icon-btn" aria-label="Zurück zum Feed">
+          <span class="icon chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+        </a>
       </div>
-      <a href="/" class="more-btn" style="text-decoration:none">← zurück</a>
+      <a href="/" class="more-btn" style="text-decoration:none">
+        More
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></span>
+      </a>
     </header>
 
     <main class="view">
-      <h2 class="day-heading">Archiv</h2>
-      <nav class="older-dates" id="list"></nav>
+      <div class="archive" id="archive"></div>
     </main>
 
     <footer class="site-footer">
@@ -42,26 +47,64 @@
   </div>
 
   <script>
+    const MONTHS = ["", "Januar", "Februar", "März", "April", "Mai", "Juni",
+                    "Juli", "August", "September", "Oktober", "November", "Dezember"];
     const chev = '<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-    const MONTHS = ["", "Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."];
-    function heading(d) {
+
+    function dayHeading(d) {
       const [y, m, day] = d.split("-");
-      return `${day}. ${MONTHS[+m]} ${y}`;
+      return `${+day}. ${MONTHS[+m]} ${y}`;
     }
+
     fetch("archive/index.json")
       .then((r) => r.json())
       .then((idx) => {
-        const list = document.getElementById("list");
-        for (const d of (idx.dates || [])) {
-          const a = document.createElement("a");
-          a.className = "day-row";
-          a.href = `archive/${d}.html`;
-          a.innerHTML = `<span>${heading(d)}</span>${chev}`;
-          list.appendChild(a);
+        const root = document.getElementById("archive");
+        const dates = (idx.dates || []).slice().sort().reverse(); // newest first
+
+        // Group dates by year-month, preserving newest-first order.
+        const groups = [];
+        const byKey = {};
+        for (const d of dates) {
+          const [y, m] = d.split("-");
+          const key = `${y}-${m}`;
+          if (!byKey[key]) {
+            byKey[key] = { label: MONTHS[+m], days: [] };
+            groups.push(byKey[key]);
+          }
+          byKey[key].days.push(d);
         }
+
+        if (!groups.length) {
+          root.textContent = "archiv nicht verfügbar";
+          return;
+        }
+
+        groups.forEach((g, i) => {
+          const det = document.createElement("details");
+          det.className = "archive-month";
+          if (i === 0) det.open = true; // newest month expanded by default
+
+          const sum = document.createElement("summary");
+          sum.className = "month-head";
+          sum.innerHTML = `<span>${g.label}</span>${chev}`;
+          det.appendChild(sum);
+
+          const days = document.createElement("div");
+          days.className = "month-days";
+          for (const d of g.days) {
+            const a = document.createElement("a");
+            a.className = "day-row";
+            a.href = `archive/${d}.html`;
+            a.innerHTML = `<span>${dayHeading(d)}</span>${chev}`;
+            days.appendChild(a);
+          }
+          det.appendChild(days);
+          root.appendChild(det);
+        });
       })
       .catch(() => {
-        document.getElementById("list").textContent = "archiv nicht verfügbar";
+        document.getElementById("archive").textContent = "archiv nicht verfügbar";
       });
   </script>
 </body>

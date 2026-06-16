@@ -3,6 +3,30 @@
 const AD_EVERY = 25; // insert an ad slot after every N visible articles
 const EXT_SVG =
   '<svg class="ext" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+const OPEN_SVG =
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+const LINK_SVG =
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+
+// Stable per-article anchor id (mirrors article_id() in crawler.py). Used for
+// "Artikel teilen" deep-links: https://all.news/#<id>
+function slugify(s) {
+  return (s || "")
+    .toLowerCase()
+    .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60)
+    .replace(/^-+|-+$/g, "");
+}
+function djb2(s) {
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) h = ((h * 33) + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+function articleId(a) {
+  return `${slugify(a.title)}-${djb2(a.url).toString(16)}`;
+}
 
 function fmtTime(s) {
   if (!s) return "";
@@ -81,6 +105,7 @@ function syncUrl() {
 function articleNode(a) {
   const li = document.createElement("li");
   li.className = "article";
+  li.id = articleId(a);
 
   const metaCol = document.createElement("div");
   metaCol.className = "meta-col";
@@ -103,8 +128,15 @@ function articleNode(a) {
   link.target = "_blank";
   link.rel = "noopener";
 
+  const actions = document.createElement("div");
+  actions.className = "row-actions";
+  actions.innerHTML =
+    `<a class="row-act open" href="${a.url}" target="_blank" rel="noopener"><span class="label">Open</span> ${OPEN_SVG}</a>` +
+    `<button class="row-act share" type="button"><span class="label">Share</span> ${LINK_SVG}</button>`;
+
   li.appendChild(metaCol);
   li.appendChild(link);
+  li.appendChild(actions);
   return li;
 }
 
@@ -127,6 +159,7 @@ function render(articles, mode) {
       list.appendChild(adNode());
     }
   });
+  highlightFromHash(); // re-apply highlight if the list was rebuilt
 }
 
 function sortMode() {
@@ -232,3 +265,56 @@ if (searchInput) {
     render(current, sortMode());
   });
 }
+
+// ---------- Article sharing & deep-link highlighting ----------
+// "Artikel teilen" copies a link to the article's anchor on this page; arriving
+// with that #hash highlights the row and scrolls it to the top.
+function highlightFromHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  for (const el of document.querySelectorAll(".article.highlight")) {
+    el.classList.remove("highlight");
+  }
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add("highlight");
+    el.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+}
+
+function shareArticle(li, btn) {
+  const url = `${location.origin}${location.pathname}#${li.id}`;
+  const done = () => {
+    const label = btn.querySelector(".label");
+    if (!label) return;
+    const prev = label.textContent;
+    label.textContent = "Copied!";
+    setTimeout(() => { label.textContent = prev; }, 1500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(done, done);
+  } else {
+    const ta = document.createElement("textarea");
+    ta.value = url;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) { /* ignore */ }
+    ta.remove();
+    done();
+  }
+}
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".row-act.share");
+  if (!btn) return;
+  const li = btn.closest(".article");
+  if (li) shareArticle(li, btn);
+  // Don't keep focus on the button: :focus-within would otherwise hold the
+  // row's white "card" state open after the pointer leaves.
+  btn.blur();
+});
+
+window.addEventListener("hashchange", highlightFromHash);
+highlightFromHash(); // honor an initial #hash on the server-rendered list

@@ -28,16 +28,19 @@
   src: url("/fonts/inter-latin-700.woff2") format("woff2");
 }
 
-/* ---------- Theme ---------- */
+/* ---------- Theme (Colors.png branding palette) ---------- */
 :root {
-  --bg: #000;
-  --fg: #fff;
-  --muted: #8a8a8a;
-  --dim: #4f4f4f;
-  --line: #242424;
-  --panel: #121212;
+  --bg: #1a1a1a;          /* Background Default */
+  --panel: #252525;       /* Background Highlight */
+  --line: #333333;        /* Lines / Dividers */
+  --fg: #ffffff;          /* Font Default */
+  --muted: #8a8a8a;       /* secondary text (time, chevrons) */
+  --hover: #b2b2b2;       /* Font Hover */
+  --dim: #4d4d4d;         /* Font Inactive */
+  --accent: #ff4433;      /* Branding / Error */
+  --accent-hover: #e53d2e;/* Red Hover */
+  --link: #0a3fe0;        /* row action links (per States Sharing) */
   --col: 760px;
-  --accent: #ff3b30;
 }
 
 * { box-sizing: border-box; }
@@ -146,13 +149,75 @@ a { color: inherit; }
 .feed-list { list-style: none; margin: 0; padding: 0; }
 
 .article {
+  position: relative;
   display: grid;
   grid-template-columns: 130px 1fr;
   gap: 24px;
   align-items: start;
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
+  scroll-margin-top: 80px;
 }
+/* Hover / shared-link card (States Sharing): row turns into a white card */
+.article::before {
+  content: "";
+  position: absolute;
+  inset: 4px -14px;
+  border-radius: 14px;
+  background: transparent;
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.12s ease;
+}
+.article > * { position: relative; z-index: 1; }
+.article:hover::before,
+.article.highlight::before { background: #fff; }
+.article:hover,
+.article.highlight { border-bottom-color: transparent; }
+.article:hover .title,
+.article.highlight .title { color: #000; }
+.article:hover .title:visited,
+.article.highlight .title:visited { color: var(--dim); }
+.article:hover .time,
+.article.highlight .time { color: var(--dim); }
+
+/* Row actions: Öffnen + Artikel teilen, revealed on hover / when highlighted */
+.row-actions {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 20%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 22px;
+  background: linear-gradient(to right, rgba(255,255,255,0), #fff 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+  z-index: 2;
+}
+.article:hover .row-actions,
+.article:focus-within .row-actions,
+.article.highlight .row-actions { opacity: 1; pointer-events: auto; }
+.row-act {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--link);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.row-act:hover { text-decoration: underline; }
+.row-act svg { flex: none; }
 .meta-col {
   display: flex;
   flex-direction: column;
@@ -188,7 +253,7 @@ a { color: inherit; }
   line-height: 1.38;
 }
 .title:hover { text-decoration: underline; }
-.title:visited { color: #9a9a9a; }
+.title:visited { color: var(--dim); } /* Font Inactive — already-visited links */
 
 /* Ad slot */
 .ad-slot {
@@ -265,6 +330,15 @@ a { color: inherit; }
   cursor: default;
 }
 .fs-head .plus { display: none; }
+.fs-archive {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0 0 14px;
+}
+.fs-archive:hover { text-decoration: underline; }
 .fs-list {
   list-style: none;
   margin: 0;
@@ -321,6 +395,7 @@ a { color: inherit; }
   .feed-settings { grid-template-columns: 1fr; gap: 0; }
   .fs-group { border-bottom: 1px solid var(--line); }
   .fs-head { padding: 18px 2px; cursor: pointer; }
+  .fs-archive { display: block; padding: 18px 2px; }
   .fs-head .plus {
     display: inline-block;
     color: var(--muted);
@@ -339,4 +414,44 @@ a { color: inherit; }
   .title { font-size: 17px; }
   .day-heading, .day-row { font-size: 22px; }
   .site-footer { flex-direction: column; gap: 6px; }
+}
+
+/* Touch devices have no hover: expose "Artikel teilen" as a persistent icon */
+@media (hover: none) {
+  .row-actions {
+    opacity: 1;
+    pointer-events: auto;
+    top: 16px;
+    bottom: auto;
+    left: auto;
+    gap: 16px;
+    background: none;
+  }
+  .row-act { color: var(--muted); }
+  .row-act .label { display: none; }
+  .row-act.open { display: none; } /* the title link already opens the article */
+}
+
+/* ---------- Archive page (month accordions) ---------- */
+.archive { margin-top: 8px; }
+.archive-month { border-bottom: 1px solid var(--line); }
+.month-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 2px;
+  font-size: 36px;
+  font-weight: 600;
+}
+.month-head::-webkit-details-marker { display: none; }
+.month-head .chev { color: var(--fg); transition: transform 0.15s ease; }
+.archive-month[open] > .month-head .chev { transform: rotate(180deg); }
+.month-days { padding: 4px 0 16px; }
+.month-days .day-row { font-size: 20px; font-weight: 500; padding: 14px 2px; }
+
+@media (max-width: 640px) {
+  .month-head { font-size: 26px; padding: 18px 2px; }
+  .month-days .day-row { font-size: 17px; }
 }

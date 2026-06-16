@@ -576,15 +576,63 @@ def fmt_day_heading(date_iso):
         return date_iso
 
 
+EN_MONTHS = ["", "January", "February", "March", "April", "May", "June",
+             "July", "August", "September", "October", "November", "December"]
+
+
+def fmt_day_en(date_iso):
+    """'2026-08-08' -> '8 August 2026' (English, for SEO meta tags)."""
+    try:
+        y, m, d = date_iso.split("-")
+        return f"{int(d)} {EN_MONTHS[int(m)]} {y}"
+    except (ValueError, IndexError):
+        return date_iso
+
+
+# Action icons next to each row on hover (mirror OPEN_SVG / LINK_SVG in script.js).
+OPEN_SVG = ('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" '
+            'stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>')
+LINK_SVG = ('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" '
+            'stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/>'
+            '<path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>')
+
+_SLUG_TRANSLIT = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
+
+
+def slugify(s):
+    """Lowercase ASCII slug (mirrors slugify() in script.js)."""
+    s = (s or "").lower().translate(_SLUG_TRANSLIT)
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return s[:60].strip("-")
+
+
+def djb2(s):
+    """djb2 hash, 32-bit (mirrors djb2() in script.js)."""
+    h = 5381
+    for ch in s:
+        h = ((h * 33) + ord(ch)) & 0xFFFFFFFF
+    return h
+
+
+def article_id(article):
+    """Stable per-article anchor id (mirrors articleId() in script.js)."""
+    return f"{slugify(article['title'])}-{djb2(article['url']):x}"
+
+
 def render_article_html(article):
     color = SOURCE_COLORS.get(article["source"], "#888")
+    url = escape(article["url"])
     return (
-        '      <li class="article">'
+        f'      <li class="article" id="{escape(article_id(article))}">'
         '<div class="meta-col">'
         f'<span class="source" style="background:{color}">{escape(article["source"])}</span>'
         f'<span class="time">{escape(fmt_time(article.get("published", "")))} {EXT_SVG}</span>'
         '</div>'
-        f'<a class="title" href="{escape(article["url"])}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
+        f'<a class="title" href="{url}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
+        '<div class="row-actions">'
+        f'<a class="row-act open" href="{url}" target="_blank" rel="noopener"><span class="label">Open</span> {OPEN_SVG}</a>'
+        f'<button class="row-act share" type="button"><span class="label">Share</span> {LINK_SVG}</button>'
+        '</div>'
         '</li>'
     )
 
@@ -744,16 +792,16 @@ def main():
     older = [d for d in all_dates if d != today]
     write_rendered_html(
         result, "index.html",
-        title="all.news – Schweizer Nachrichten im Überblick",
-        description="Alle Schweizer Nachrichtenquellen auf einen Blick: SRF, NZZ, Tages-Anzeiger, Blick, Watson und 40+ weitere Medien. Stündlich aktualisiert.",
+        title="World News From Every Source in One Place – all.news",
+        description="Read world news from hundreds of sources on one page. all.news aggregates global headlines and updates hourly — filter by source, language and more.",
         canonical="https://all.news/",
         date_heading=fmt_day_heading(today),
         older_dates=older,
     )
     write_rendered_html(
         result, os.path.join(ARCHIVE_DIR, f"{today}.html"),
-        title=f"all.news – {today}",
-        description=f"Schweizer Nachrichtenlinks vom {today}.",
+        title=f"News Archive for {fmt_day_en(today)} – all.news",
+        description=f"All world news headlines collected on {fmt_day_en(today)} by all.news — links from hundreds of global sources, gathered in one place.",
         canonical=f"https://all.news/archive/{today}.html",
         date_heading=fmt_day_heading(today),
         older_dates=[],
