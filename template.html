@@ -27,7 +27,7 @@
     "logo": "https://all.news/favicon-512.png"
   }
   </script>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v=5">
   <!-- Analytics placeholder: all.news runs its own analytics. Insert measurement tag here. -->
 </head>
 <body>
@@ -68,9 +68,15 @@
     <!-- ===== Feed settings view ===== -->
     <section id="settingsView" class="view" hidden>
       <div class="feed-settings">
-        <!-- Categories / Countries / Languages are placeholders: the article data
-             model has no category/country/language fields yet (see CLAUDE.md).
-             Only "Medias" (source filtering) is wired up. -->
+        <!-- Countries / Languages are placeholders: the article data model has no
+             country/language fields yet (see CLAUDE.md). Only "Medias" (source
+             filtering) is wired up. -->
+        <!-- Archive link (replaces Categories for now) -->
+        <div class="fs-group">
+          <a class="fs-archive" href="/archive.html">Archiv</a>
+        </div>
+
+        <!-- Categories: hidden for now — no category data model yet. Re-add later.
         <div class="fs-group">
           <button type="button" class="fs-head">Categories <span class="plus">+</span></button>
           <ul class="fs-list" aria-disabled="true">
@@ -92,6 +98,7 @@
             <li>World · Politics</li>
           </ul>
         </div>
+        -->
 
         <div class="fs-group">
           <button type="button" class="fs-head">Countries <span class="plus">+</span></button>
@@ -163,6 +170,6 @@
   </div>
 
   <script src="/colors.js"></script>
-  <script src="/script.js?v=5"></script>
+  <script src="/script.js?v=8"></script>
 </body>
 </html>
