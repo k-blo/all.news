@@ -308,12 +308,30 @@ function shareArticle(li, btn) {
 
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".row-act.share");
-  if (!btn) return;
-  const li = btn.closest(".article");
-  if (li) shareArticle(li, btn);
-  // Don't keep focus on the button: :focus-within would otherwise hold the
-  // row's white "card" state open after the pointer leaves.
-  btn.blur();
+  if (btn) {
+    const li = btn.closest(".article");
+    if (li) shareArticle(li, btn);
+    // Don't keep focus on the button: :focus-within would otherwise hold the
+    // row's white "card" state open after the pointer leaves.
+    btn.blur();
+    return;
+  }
+  // Title link and "Open" navigate on their own; just drop focus so
+  // :focus-within doesn't leave the card stuck in its white "card" state.
+  const link = e.target.closest(".article a");
+  if (link) {
+    link.blur();
+    return;
+  }
+  // Clicking anywhere else on the card opens the article in a new tab —
+  // unless the user is selecting text.
+  const sel = window.getSelection();
+  if (sel && sel.toString()) return;
+  const li = e.target.closest(".article");
+  if (li) {
+    const title = li.querySelector("a.title");
+    if (title) window.open(title.href, "_blank", "noopener");
+  }
 });
 
 window.addEventListener("hashchange", highlightFromHash);

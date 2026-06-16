@@ -157,6 +157,7 @@ a { color: inherit; }
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
   scroll-margin-top: 80px;
+  cursor: pointer;
 }
 /* Hover / shared-link card (States Sharing): row turns into a white card */
 .article::before {
