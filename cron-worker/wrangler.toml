@@ -8,7 +8,7 @@ crons = ["*/30 * * * *"]
 
 [vars]
 OWNER = "k-blo"           # GitHub user/org
-REPO = "all.news"         # TODO: set to the all.news GitHub repo (separate pipeline from swissnews)
+REPO = "all.news"         # all.news repo (separate pipeline from swissnews); redeploy after changing
 WORKFLOW = "crawl.yml"    # workflow filename in .github/workflows/
 REF = "main"              # branch to run on
 

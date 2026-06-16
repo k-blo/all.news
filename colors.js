@@ -4,7 +4,7 @@ const SOURCE_COLORS = {
   "Le Temps": "#1a3c5e",
   "Blick": "#e2001a",
   "20 Minuten": "#0055aa",
-  "Tages-Anzeiger": "#1c1c1c",
+  "Tages-Anzeiger": "#565656",
   "NZZ": "#444444",
   "Weltwoche": "#7a0019",
   "Nebelspalter": "#282f5c",
