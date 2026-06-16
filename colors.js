@@ -21,7 +21,7 @@ const SOURCE_COLORS = {
   "Le Courrier": "#b71c1c",
   "Inside IT": "#00838f",
   "Bilanz": "#9e2a2b",
-  "Republik": "#111111",
+  "Republik": "#6f6f6f",
   "Südostschweiz": "#2e6b3e",
   "Luzerner Zeitung": "#0277bd",
   "Aargauer Zeitung": "#e65100",
