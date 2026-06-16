@@ -199,11 +199,11 @@ a { color: inherit; }
   transition: opacity 0.12s ease; /* fade out immediately on leave */
   z-index: 2;
 }
-/* Reveal only on a deliberate hover: wait 2s, then fade in quickly. */
+/* Reveal only on a deliberate hover: wait 1s, then fade in over 1s. */
 .article:hover .row-actions {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0.3s ease 2s, pointer-events 0s 2s;
+  transition: opacity 1s ease 1s, pointer-events 0s 1s;
 }
 /* Keyboard focus reveals immediately. */
 .article:focus-within .row-actions { opacity: 1; pointer-events: auto; }
