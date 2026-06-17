@@ -381,8 +381,6 @@ a { color: inherit; }
 }
 .fs-list .opt.off, .fs-list li.off { color: var(--dim); }
 .fs-list .opt[aria-pressed="false"] { color: var(--dim); }
-/* Language not available for the selected country: non-selectable, extra-dimmed. */
-.fs-list .opt:disabled { color: var(--dim); opacity: 0.4; cursor: default; }
 
 /* More view: accordion rows */
 .more-list { border-top: 1px solid var(--line); }

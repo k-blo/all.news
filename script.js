@@ -328,7 +328,7 @@ function buildCountryFilters(articles) {
       persistCountry();             // remember the choice for next visit
       persistLang();                // language set may have been pruned above
       buildCountryFilters(current); // refresh pressed states across the group
-      buildLangFilters(current);    // languages not available for this country become disabled
+      buildLangFilters(current);    // show only languages the selected countries publish
       buildFilters(current);        // refresh the Medias list to match the country selection
       render(current, sortMode());
     });
@@ -342,26 +342,17 @@ function buildLangFilters(articles) {
   const box = document.getElementById("langFilters");
   if (!box) return;
   box.innerHTML = "";
-  const codes = [...new Set(articles.map((a) => (a.lang || "").toLowerCase()).filter(Boolean))]
+  // Only the languages published by the currently-selected countries (every
+  // language when no country is selected).
+  const pool = articles.filter((a) =>
+    includedCountries.size === 0 || includedCountries.has((a.country || "").toLowerCase()));
+  const codes = [...new Set(pool.map((a) => (a.lang || "").toLowerCase()).filter(Boolean))]
     .sort((a, b) => (LANG_NAMES[a] || a).localeCompare(LANG_NAMES[b] || b));
-  // Languages that actually exist under the current country selection (all of
-  // them when no country is selected). Others are shown disabled + extra-dimmed.
-  const available = new Set(
-    articles
-      .filter((a) => includedCountries.size === 0 || includedCountries.has((a.country || "").toLowerCase()))
-      .map((a) => (a.lang || "").toLowerCase())
-  );
   for (const code of codes) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "opt";
     btn.textContent = LANG_NAMES[code] || code;
-    if (includedCountries.size && !available.has(code)) {
-      btn.disabled = true;
-      btn.setAttribute("aria-pressed", "false");
-      box.appendChild(btn);
-      continue;
-    }
     const on = () => includedLangs.size === 0 || includedLangs.has(code);
     btn.setAttribute("aria-pressed", String(on()));
     btn.addEventListener("click", () => {
