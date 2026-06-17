@@ -16,18 +16,32 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  crawl:
+  # ---- Map: non-VPN sources (plain feeds/sitemaps) ----
+  crawl-main:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Crawl (main group)
+        run: python3 crawler.py --group main --out partial-main.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: partial-main
+          path: partial-main.json
 
-      # CH Media papers 403 datacenter ASNs (Azure = GitHub runners). A Surfshark
-      # Swiss exit lands in an allowed ASN, so route the whole crawl through it.
-      # WG_CONF secret = a Surfshark manual WireGuard config (Switzerland).
+  # ---- Map: CH Media behind the Swiss VPN ----
+  # CH Media papers 403 datacenter ASNs (Azure = GitHub runners). A Surfshark
+  # Swiss exit lands in an allowed ASN, so route only this group through it.
+  # WG_CONF secret = a Surfshark manual WireGuard config (Switzerland).
+  crawl-vpn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Connect VPN
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq wireguard-tools
@@ -39,14 +53,38 @@ jobs:
           echo "Egress now: $(curl -sS --max-time 20 https://ipinfo.io/org)"
         env:
           WG_CONF: ${{ secrets.WG_CONF }}
-
-      - name: Crawl feeds
-        run: python3 crawler.py   # stdlib only, no pip install
-
+      - name: Crawl (vpn group)
+        run: python3 crawler.py --group vpn --out partial-vpn.json
       - name: Disconnect VPN
         if: always()
         run: sudo wg-quick down wg0 || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: partial-vpn
+          path: partial-vpn.json
 
+  # ---- Reduce: merge partials, regenerate outputs, commit ----
+  reduce:
+    needs: [crawl-main, crawl-vpn]
+    if: always()   # proceed with whatever partials succeeded
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          path: partials
+          pattern: partial-*
+          merge-multiple: true
+      - name: Reduce + write
+        run: |
+          if ls partials/*.json >/dev/null 2>&1; then
+            python3 crawler.py --reduce partials/*.json
+          else
+            echo "no partials produced — nothing to reduce"; exit 0
+          fi
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"

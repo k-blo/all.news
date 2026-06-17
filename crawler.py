@@ -364,9 +364,11 @@ class NotModified(Exception):
 
 
 _http_cache: dict = {}
+_fetched_urls: set = set()  # URLs fetched this run — used to emit the per-shard cache delta
 
 
 def fetch(url):
+    _fetched_urls.add(url)
     headers = {"User-Agent": USER_AGENT}
     entry = _http_cache.get(url, {})
     if entry.get("last_modified"):
@@ -1063,27 +1065,16 @@ def write_sitemap(dates):
         f.write("\n</urlset>\n")
 
 
-def main():
-    global _http_cache
-    os.makedirs(ARCHIVE_DIR, exist_ok=True)
-    try:
-        with open(HTTP_CACHE_FILE, encoding="utf-8") as f:
-            _http_cache = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        _http_cache = {}
+# ---- Crawl jobs, grouped so the GitHub Actions matrix can run them in parallel.
+# "vpn"  = CH Media papers (403 datacenter ASNs → must run behind the Swiss VPN).
+# "main" = everything else (plain feeds/sitemaps, no VPN needed).
+def feed_jobs():
+    return [(f["source"], (lambda f: lambda: parse_feed(f["source"], fetch(f["url"]), f.get("summary", True)))(f))
+            for f in FEEDS]
 
-    articles = []
-    for feed in FEEDS:
-        src, url = feed["source"], feed["url"]
-        try:
-            articles += parse_feed(src, fetch(url), feed.get("summary", True))
-            print(f"  ok   {src}: {url}", file=sys.stderr)
-        except NotModified:
-            print(f"  skip {src}: not modified", file=sys.stderr)
-        except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError, OSError) as e:
-            print(f"  fail {src}: {url} -> {e}", file=sys.stderr)
 
-    sitemap_jobs = [
+def main_sitemap_jobs():
+    jobs = [
         ("Weltwoche", crawl_weltwoche),
         ("Nebelspalter", crawl_nebelspalter),
         ("Bilanz", crawl_bilanz),
@@ -1095,28 +1086,77 @@ def main():
         ("Bauernzeitung", crawl_bauernzeitung),
         ("Die Zeit", crawl_zeit),
     ]
-    sitemap_jobs += [
-        (s["source"], (lambda s: lambda: crawl_ch_media(s["source"], s["base"], s["max"]))(s))
-        for s in CH_MEDIA_SOURCES
-    ]
-    sitemap_jobs += [
-        (n["source"], (lambda n: lambda: crawl_news_sitemap(n["source"], n["url"], n["max"]))(n))
-        for n in NEWS_SITEMAPS
-    ]
-    sitemap_jobs += [
-        (w["source"], (lambda w: lambda: crawl_wp(w["source"], w["index"], w["max"]))(w))
-        for w in WP_SOURCES
-    ]
-    for name, fn in sitemap_jobs:
+    jobs += [(n["source"], (lambda n: lambda: crawl_news_sitemap(n["source"], n["url"], n["max"]))(n))
+             for n in NEWS_SITEMAPS]
+    jobs += [(w["source"], (lambda w: lambda: crawl_wp(w["source"], w["index"], w["max"]))(w))
+             for w in WP_SOURCES]
+    return jobs
+
+
+def ch_media_jobs():
+    return [(s["source"], (lambda s: lambda: crawl_ch_media(s["source"], s["base"], s["max"]))(s))
+            for s in CH_MEDIA_SOURCES]
+
+
+def jobs_for(group):
+    if group == "vpn":
+        return ch_media_jobs()
+    if group == "main":
+        return feed_jobs() + main_sitemap_jobs()
+    return feed_jobs() + main_sitemap_jobs() + ch_media_jobs()  # full run (local)
+
+
+def run_jobs(jobs):
+    """Run each crawl job, tolerating per-source failures (as before). Returns the
+    combined raw rows; dedup/date-filtering/stamping happens later in write_outputs."""
+    rows = []
+    for name, fn in jobs:
         try:
-            rows = fn()
-            articles += rows
-            print(f"  ok   {name}: {len(rows)} stories (sitemap)", file=sys.stderr)
+            r = fn()
+            rows += r
+            print(f"  ok   {name}: {len(r)} rows", file=sys.stderr)
         except NotModified:
             print(f"  skip {name}: not modified", file=sys.stderr)
         except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError, OSError, ValueError) as e:
             print(f"  fail {name}: {e}", file=sys.stderr)
+    return rows
 
+
+def load_http_cache():
+    global _http_cache
+    try:
+        with open(HTTP_CACHE_FILE, encoding="utf-8") as f:
+            _http_cache = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        _http_cache = {}
+
+
+def run_map(group, out_path):
+    """Crawl one group and write a partial artifact (raw rows + the cache entries
+    this shard touched) for the reduce step to merge."""
+    load_http_cache()
+    rows = run_jobs(jobs_for(group))
+    cache_delta = {u: _http_cache[u] for u in _fetched_urls if u in _http_cache}
+    write_json(out_path, {"rows": rows, "http_cache": cache_delta})
+    print(f"wrote {out_path}: {len(rows)} rows, {len(cache_delta)} cache entries ({group})",
+          file=sys.stderr)
+
+
+def run_reduce(partial_paths):
+    """Merge shard partials, then dedup/date-filter/stamp and write all outputs."""
+    global _http_cache
+    rows, merged_cache = [], {}
+    for p in partial_paths:
+        with open(p, encoding="utf-8") as f:
+            part = json.load(f)
+        rows += part.get("rows", [])
+        merged_cache.update(part.get("http_cache", {}))  # groups crawl disjoint URLs
+    _http_cache = merged_cache
+    write_outputs(rows)
+
+
+def write_outputs(articles):
+    os.makedirs(ARCHIVE_DIR, exist_ok=True)
     # One crawl per day. Keep only articles whose SOURCE date is today AND whose
     # URL was never crawled before (seen.json) — so a sitemap re-dating an old
     # article never re-adds it. Each kept article is stamped with the crawl time.
@@ -1182,5 +1222,24 @@ def main():
           file=sys.stderr)
 
 
+def main():
+    """Full local run: crawl every group in one process and write all outputs."""
+    load_http_cache()
+    write_outputs(run_jobs(jobs_for(None)))
+
+
 if __name__ == "__main__":
-    main()
+    import argparse
+    ap = argparse.ArgumentParser(description="all.news crawler")
+    ap.add_argument("--group", choices=["vpn", "main"],
+                    help="crawl only this group and write a partial artifact (map step)")
+    ap.add_argument("--out", help="partial artifact path (default: partial-<group>.json)")
+    ap.add_argument("--reduce", nargs="+", metavar="PARTIAL",
+                    help="merge partial artifacts and write all outputs (reduce step)")
+    args = ap.parse_args()
+    if args.reduce:
+        run_reduce(args.reduce)
+    elif args.group:
+        run_map(args.group, args.out or f"partial-{args.group}.json")
+    else:
+        main()
