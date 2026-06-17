@@ -137,66 +137,45 @@ function syncUrl() {
   history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
 }
 
-function articleNode(a) {
-  const li = document.createElement("li");
-  li.className = "article";
-  li.id = articleId(a);
-  // Origin labels for future language/country filtering (default: German/Swiss).
-  li.dataset.lang = a.lang || "de";
-  li.dataset.country = a.country || "CH";
-
-  const metaCol = document.createElement("div");
-  metaCol.className = "meta-col";
-
-  const src = document.createElement("span");
-  src.className = "source";
-  src.textContent = a.source;
-  src.style.background = SOURCE_COLORS[a.source] || "#888";
-  metaCol.appendChild(src);
-
-  const time = document.createElement("span");
-  time.className = "time";
-  time.innerHTML = `${fmtTime(a.published)} ${EXT_SVG}`;
-  metaCol.appendChild(time);
-
-  const link = document.createElement("a");
-  link.className = "title";
-  link.href = a.url;
-  link.textContent = a.title;
-  link.target = "_blank";
-  link.rel = "noopener";
-
-  const actions = document.createElement("div");
-  actions.className = "row-actions";
-  actions.innerHTML =
-    `<a class="row-act open" href="${a.url}" target="_blank" rel="noopener"><span class="label">Open</span> ${OPEN_SVG}</a>` +
-    `<button class="row-act share" type="button"><span class="label">Share</span> ${LINK_SVG}</button>`;
-
-  li.appendChild(metaCol);
-  li.appendChild(link);
-  li.appendChild(actions);
-  return li;
+// HTML-escape for text and attribute values (mirrors escape() in crawler.py).
+function esc(s) {
+  return (s == null ? "" : String(s))
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
-function adNode() {
-  const li = document.createElement("li");
-  li.className = "ad-slot";
-  li.textContent = "Werbung";
-  return li;
+// One row as an HTML string (mirrors render_article_html in crawler.py). Building
+// the whole list as a single string + one innerHTML assignment is far faster than
+// per-node DOM construction; clicks are handled by delegation, so no per-row
+// listeners are needed.
+function articleHTML(a) {
+  const color = SOURCE_COLORS[a.source] || "#888";
+  const url = esc(a.url);
+  return `<li class="article" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
+    `<div class="meta-col">` +
+    `<span class="source" style="background:${color}">${esc(a.source)}</span>` +
+    `<span class="time">${esc(fmtTime(a.published))} ${EXT_SVG}</span>` +
+    `</div>` +
+    `<a class="title" href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a>` +
+    `<div class="row-actions">` +
+    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Open</span> ${OPEN_SVG}</a>` +
+    `<button class="row-act share" type="button"><span class="label">Share</span> ${LINK_SVG}</button>` +
+    `</div></li>`;
 }
+
+const AD_SLOT_HTML = '<li class="ad-slot">Werbung</li>';
 
 function render(articles, mode) {
   const list = document.getElementById("list");
   if (!list) return;
-  list.innerHTML = "";
   const visible = sortArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
-  visible.forEach((a, i) => {
-    list.appendChild(articleNode(a));
-    if ((i + 1) % AD_EVERY === 0 && i + 1 < visible.length) {
-      list.appendChild(adNode());
-    }
-  });
+  const parts = [];
+  for (let i = 0; i < visible.length; i++) {
+    parts.push(articleHTML(visible[i]));
+    if ((i + 1) % AD_EVERY === 0 && i + 1 < visible.length) parts.push(AD_SLOT_HTML);
+  }
+  list.innerHTML = parts.join("");
   highlightFromHash(); // re-apply highlight if the list was rebuilt
 }
 
@@ -293,6 +272,27 @@ function buildLangFilters(articles) {
   }
 }
 
+// Instant filter pass over the server-rendered rows, using the data already in
+// the markup (data-lang / data-country / source + title text). Runs at boot so a
+// URL with filters hides non-matching rows immediately, without waiting for the
+// crawled.json fetch + full re-render.
+function applySsrFilter() {
+  const list = document.getElementById("list");
+  if (!list) return;
+  for (const li of list.querySelectorAll(".article")) {
+    const country = (li.dataset.country || "").toLowerCase();
+    const lang = (li.dataset.lang || "").toLowerCase();
+    const srcEl = li.querySelector(".source");
+    const source = (srcEl ? srcEl.textContent : "").toLowerCase();
+    const titleEl = li.querySelector(".title");
+    const title = (titleEl ? titleEl.textContent : "").toLowerCase();
+    const hide =
+      excluded.has(source) || excludedCountries.has(country) || excludedLangs.has(lang) ||
+      (query && !(title.includes(query) || source.includes(query)));
+    li.style.display = hide ? "none" : "";
+  }
+}
+
 function load(url) {
   fetch(url)
     .then((r) => r.json())
@@ -356,6 +356,9 @@ if (dayParam) {
   // archive/2026-06-07.html → 2026-06-07.json (sibling); else /crawled.json
   const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})\.html$/);
   const jsonUrl = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
+  // Filter the SSR rows right away so a filtered URL doesn't flash the full list
+  // while crawled.json loads; load() then does the authoritative re-render.
+  if (excluded.size || excludedCountries.size || excludedLangs.size || query) applySsrFilter();
   load(jsonUrl);
 }
 
