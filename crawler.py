@@ -105,6 +105,92 @@ FEEDS = [
     {"source": "elDiario.es",   "url": "https://www.eldiario.es/rss/"},
     {"source": "20minutos",     "url": "https://www.20minutos.es/rss/"},
     {"source": "El Confidencial","url": "https://rss.elconfidencial.com/espana/"},
+    # ===== Core-country expansion (≥20 sources/country; see SOURCE_ORIGIN) =====
+    # --- Germany (DE) ---
+    {"source": "Handelsblatt",       "url": "https://www.handelsblatt.com/contentexport/feed/schlagzeilen"},
+    {"source": "Tagesspiegel",       "url": "https://www.tagesspiegel.de/contentexport/feed/home"},
+    {"source": "Frankfurter Rundschau","url": "https://www.fr.de/rssfeed.rdf"},
+    {"source": "Heise",              "url": "https://www.heise.de/rss/heise-atom.xml"},
+    {"source": "WirtschaftsWoche",   "url": "https://www.wiwo.de/contentexport/feed/rss/schlagzeilen"},
+    {"source": "Manager Magazin",    "url": "https://www.manager-magazin.de/news/index.rss"},
+    {"source": "RP Online",          "url": "https://rp-online.de/feed.rss"},
+    {"source": "Merkur",             "url": "https://www.merkur.de/rssfeed.rdf"},
+    {"source": "MDR",                "url": "https://www.mdr.de/nachrichten/index-rss.xml"},
+    {"source": "Berliner Zeitung",   "url": "https://www.berliner-zeitung.de/feed.xml"},
+    {"source": "t-online",           "url": "https://www.t-online.de/nachrichten/feed.rss"},
+    {"source": "Stuttgarter Zeitung","url": "https://www.stuttgarter-zeitung.de/news.rss.feed"},
+    # --- France (FR) ---
+    {"source": "Courrier International","url": "https://www.courrierinternational.com/feed/all/rss.xml"},
+    {"source": "La Dépêche",         "url": "https://www.ladepeche.fr/rss.xml"},
+    {"source": "France Inter",       "url": "https://www.radiofrance.fr/franceinter/rss"},
+    {"source": "Europe 1",           "url": "https://www.europe1.fr/rss.xml"},
+    {"source": "Slate FR",           "url": "https://www.slate.fr/rss.xml"},
+    {"source": "Challenges",         "url": "https://www.challenges.fr/rss.xml"},
+    {"source": "France Bleu",        "url": "https://www.radiofrance.fr/francebleu/rss"},
+    {"source": "Numerama",           "url": "https://www.numerama.com/feed/"},
+    {"source": "Télérama",           "url": "https://www.telerama.fr/rss/une.xml"},
+    {"source": "HuffPost FR",        "url": "https://www.huffingtonpost.fr/feeds/index.xml"},
+    # --- United Kingdom (GB) ---
+    {"source": "Daily Star",         "url": "https://www.dailystar.co.uk/?service=rss"},
+    {"source": "iNews",              "url": "https://inews.co.uk/feed"},
+    {"source": "City AM",            "url": "https://www.cityam.com/feed/"},
+    {"source": "New Statesman",      "url": "https://www.newstatesman.com/feed"},
+    {"source": "Wales Online",       "url": "https://www.walesonline.co.uk/?service=rss"},
+    {"source": "The Scotsman",       "url": "https://www.scotsman.com/rss"},
+    {"source": "The Herald",         "url": "https://www.heraldscotland.com/news/rss/"},
+    {"source": "Manchester Evening News","url": "https://www.manchestereveningnews.co.uk/?service=rss"},
+    {"source": "Belfast Telegraph",  "url": "https://www.belfasttelegraph.co.uk/rss/"},
+    {"source": "The Conversation",   "url": "https://theconversation.com/uk/articles.atom"},
+    # --- United States (US) ---
+    {"source": "CBS News",           "url": "https://www.cbsnews.com/latest/rss/main"},
+    {"source": "CNBC",               "url": "https://www.cnbc.com/id/100003114/device/rss/rss.html"},
+    {"source": "The Atlantic",       "url": "https://www.theatlantic.com/feed/all/"},
+    {"source": "Vox",                "url": "https://www.vox.com/rss/index.xml"},
+    {"source": "The Verge",          "url": "https://www.theverge.com/rss/index.xml"},
+    {"source": "TechCrunch",         "url": "https://techcrunch.com/feed/"},
+    {"source": "Newsweek",           "url": "https://www.newsweek.com/rss"},
+    {"source": "PBS NewsHour",       "url": "https://www.pbs.org/newshour/feeds/rss/headlines"},
+    {"source": "NY Post",            "url": "https://nypost.com/feed/"},
+    {"source": "The Daily Beast",    "url": "https://www.thedailybeast.com/arc/outboundfeeds/rss/"},
+    {"source": "Wired",              "url": "https://www.wired.com/feed/rss"},
+    {"source": "ProPublica",         "url": "https://www.propublica.org/feeds/propublica/main"},
+    # --- Italy (IT) ---
+    {"source": "Rai News",           "url": "https://www.rainews.it/rss/cronaca"},
+    {"source": "Adnkronos",          "url": "https://www.adnkronos.com/RSS_PrimaPagina.xml"},
+    {"source": "TGcom24",            "url": "https://www.tgcom24.mediaset.it/rss/homepage.xml"},
+    {"source": "Open",               "url": "https://www.open.online/feed/"},
+    {"source": "Il Giorno",          "url": "https://www.ilgiorno.it/rss"},
+    {"source": "Il Resto del Carlino","url": "https://www.ilrestodelcarlino.it/rss"},
+    {"source": "La Nazione",         "url": "https://www.lanazione.it/rss"},
+    {"source": "AGI",                "url": "https://www.agi.it/cronaca/rss"},
+    {"source": "Today",              "url": "https://www.today.it/rss"},
+    {"source": "Wired Italia",       "url": "https://www.wired.it/feed/rss"},
+    {"source": "Il Mattino",         "url": "https://www.ilmattino.it/rss/home.xml"},
+    {"source": "Il Messaggero",      "url": "https://www.ilmessaggero.it/rss/home.xml"},
+    {"source": "Il Gazzettino",      "url": "https://www.ilgazzettino.it/rss/home.xml"},
+    {"source": "Quotidiano.net",     "url": "https://www.quotidiano.net/rss"},
+    {"source": "askanews",           "url": "https://www.askanews.it/feed/"},
+    {"source": "Domani",             "url": "https://www.editorialedomani.it/rss"},
+    {"source": "Il Secolo XIX",      "url": "https://www.ilsecoloxix.it/rss"},
+    # --- Spain (ES) ---
+    {"source": "El Español",         "url": "https://www.elespanol.com/rss/"},
+    {"source": "COPE",               "url": "https://www.cope.es/api/es/news/rss.xml"},
+    {"source": "Europa Press",       "url": "https://www.europapress.es/rss/rss.aspx"},
+    {"source": "Marca",              "url": "https://e00-marca.uecdn.es/rss/portada.xml"},
+    {"source": "Expansión",          "url": "https://e00-expansion.uecdn.es/rss/portada.xml"},
+    {"source": "La Vanguardia",      "url": "https://www.lavanguardia.com/rss/home.xml"},
+    {"source": "El Correo",          "url": "https://www.elcorreo.com/rss/2.0/portada"},
+    {"source": "infoLibre",          "url": "https://www.infolibre.es/rss/"},
+    {"source": "Mundo Deportivo",    "url": "https://www.mundodeportivo.com/rss/home.xml"},
+    {"source": "El Salto",           "url": "https://www.elsaltodiario.com/general/feed"},
+    {"source": "Las Provincias",     "url": "https://www.lasprovincias.es/rss/2.0/portada"},
+    {"source": "La Verdad",          "url": "https://www.laverdad.es/rss/2.0/portada"},
+    {"source": "Ideal",              "url": "https://www.ideal.es/rss/2.0/portada"},
+    {"source": "Diario Sur",         "url": "https://www.diariosur.es/rss/2.0/portada"},
+    {"source": "El Diario Vasco",    "url": "https://www.diariovasco.com/rss/2.0/portada"},
+    {"source": "Newtral",            "url": "https://www.newtral.es/feed/"},
+    {"source": "Maldita",            "url": "https://maldita.es/feed/"},
+    {"source": "El Independiente",   "url": "https://www.elindependiente.com/feed/"},
     # ===== Additional countries (see SOURCE_ORIGIN for lang/country) =====
     # --- Netherlands (NL, nl) ---
     {"source": "NOS",           "url": "https://feeds.nos.nl/nosnieuwsalgemeen"},
@@ -350,6 +436,53 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "elDiario.es":      {"lang": "es", "country": "ES"},
     "20minutos":        {"lang": "es", "country": "ES"},
     "El Confidencial":  {"lang": "es", "country": "ES"},
+    # ===== Core-country expansion =====
+    # Germany
+    "Handelsblatt": {"lang":"de","country":"DE"}, "Tagesspiegel": {"lang":"de","country":"DE"},
+    "Frankfurter Rundschau": {"lang":"de","country":"DE"}, "Heise": {"lang":"de","country":"DE"},
+    "WirtschaftsWoche": {"lang":"de","country":"DE"}, "Manager Magazin": {"lang":"de","country":"DE"},
+    "RP Online": {"lang":"de","country":"DE"}, "Merkur": {"lang":"de","country":"DE"},
+    "MDR": {"lang":"de","country":"DE"}, "Berliner Zeitung": {"lang":"de","country":"DE"},
+    "t-online": {"lang":"de","country":"DE"}, "Stuttgarter Zeitung": {"lang":"de","country":"DE"},
+    # France
+    "Courrier International": {"lang":"fr","country":"FR"}, "La Dépêche": {"lang":"fr","country":"FR"},
+    "France Inter": {"lang":"fr","country":"FR"}, "Europe 1": {"lang":"fr","country":"FR"},
+    "Slate FR": {"lang":"fr","country":"FR"}, "Challenges": {"lang":"fr","country":"FR"},
+    "France Bleu": {"lang":"fr","country":"FR"}, "Numerama": {"lang":"fr","country":"FR"},
+    "Télérama": {"lang":"fr","country":"FR"}, "HuffPost FR": {"lang":"fr","country":"FR"},
+    # United Kingdom
+    "Daily Star": {"lang":"en","country":"GB"}, "iNews": {"lang":"en","country":"GB"},
+    "City AM": {"lang":"en","country":"GB"}, "New Statesman": {"lang":"en","country":"GB"},
+    "Wales Online": {"lang":"en","country":"GB"}, "The Scotsman": {"lang":"en","country":"GB"},
+    "The Herald": {"lang":"en","country":"GB"}, "Manchester Evening News": {"lang":"en","country":"GB"},
+    "Belfast Telegraph": {"lang":"en","country":"GB"}, "The Conversation": {"lang":"en","country":"GB"},
+    # United States
+    "CBS News": {"lang":"en","country":"US"}, "CNBC": {"lang":"en","country":"US"},
+    "The Atlantic": {"lang":"en","country":"US"}, "Vox": {"lang":"en","country":"US"},
+    "The Verge": {"lang":"en","country":"US"}, "TechCrunch": {"lang":"en","country":"US"},
+    "Newsweek": {"lang":"en","country":"US"}, "PBS NewsHour": {"lang":"en","country":"US"},
+    "NY Post": {"lang":"en","country":"US"}, "The Daily Beast": {"lang":"en","country":"US"},
+    "Wired": {"lang":"en","country":"US"}, "ProPublica": {"lang":"en","country":"US"},
+    # Italy
+    "Rai News": {"lang":"it","country":"IT"}, "Adnkronos": {"lang":"it","country":"IT"},
+    "TGcom24": {"lang":"it","country":"IT"}, "Open": {"lang":"it","country":"IT"},
+    "Il Giorno": {"lang":"it","country":"IT"}, "Il Resto del Carlino": {"lang":"it","country":"IT"},
+    "La Nazione": {"lang":"it","country":"IT"}, "AGI": {"lang":"it","country":"IT"},
+    "Today": {"lang":"it","country":"IT"}, "Wired Italia": {"lang":"it","country":"IT"},
+    "Il Mattino": {"lang":"it","country":"IT"}, "Il Messaggero": {"lang":"it","country":"IT"},
+    "Il Gazzettino": {"lang":"it","country":"IT"}, "Quotidiano.net": {"lang":"it","country":"IT"},
+    "askanews": {"lang":"it","country":"IT"}, "Domani": {"lang":"it","country":"IT"},
+    "Il Secolo XIX": {"lang":"it","country":"IT"},
+    # Spain
+    "El Español": {"lang":"es","country":"ES"}, "COPE": {"lang":"es","country":"ES"},
+    "Europa Press": {"lang":"es","country":"ES"}, "Marca": {"lang":"es","country":"ES"},
+    "Expansión": {"lang":"es","country":"ES"}, "La Vanguardia": {"lang":"es","country":"ES"},
+    "El Correo": {"lang":"es","country":"ES"}, "infoLibre": {"lang":"es","country":"ES"},
+    "Mundo Deportivo": {"lang":"es","country":"ES"}, "El Salto": {"lang":"es","country":"ES"},
+    "Las Provincias": {"lang":"es","country":"ES"}, "La Verdad": {"lang":"es","country":"ES"},
+    "Ideal": {"lang":"es","country":"ES"}, "Diario Sur": {"lang":"es","country":"ES"},
+    "El Diario Vasco": {"lang":"es","country":"ES"}, "Newtral": {"lang":"es","country":"ES"},
+    "Maldita": {"lang":"es","country":"ES"}, "El Independiente": {"lang":"es","country":"ES"},
 }
 
 
@@ -392,6 +525,22 @@ def strip_html(text):
     return re.sub(r"<[^>]+>", "", text or "").strip()
 
 
+# Localized month names → English abbreviation, for RSS pubDates that aren't in
+# English (e.g. Italian "mer, 17 giu 2026", Spanish "mié, 17 jun 2026"). The
+# leading localized weekday is stripped before parsing.
+_MONTH_ALIASES = {
+    # Italian
+    "gen": "Jan", "gennaio": "Jan", "febbraio": "Feb", "marzo": "Mar", "aprile": "Apr",
+    "mag": "May", "maggio": "May", "giu": "Jun", "giugno": "Jun", "lug": "Jul", "luglio": "Jul",
+    "ago": "Aug", "agosto": "Aug", "set": "Sep", "settembre": "Sep", "ott": "Oct", "ottobre": "Oct",
+    "novembre": "Nov", "dic": "Dec", "dicembre": "Dec",
+    # Spanish
+    "ene": "Jan", "enero": "Jan", "febrero": "Feb", "abr": "Apr", "abril": "Apr",
+    "mayo": "May", "jun": "Jun", "junio": "Jun", "jul": "Jul", "julio": "Jul",
+    "septiembre": "Sep", "sept": "Sep", "octubre": "Oct", "noviembre": "Nov", "diciembre": "Dec",
+}
+
+
 def parse_date(s):
     """Parse RSS pubDate or ISO/sitemap lastmod into an aware datetime, or None."""
     if not s:
@@ -403,6 +552,13 @@ def parse_date(s):
         pass
     try:
         return parsedate_to_datetime(s)
+    except (TypeError, ValueError):
+        pass
+    # Retry with a localized weekday dropped and month names mapped to English.
+    s2 = re.sub(r"^[^\s,]+,\s*", "", s)
+    s2 = re.sub(r"[A-Za-zÀ-ÿ]+", lambda m: _MONTH_ALIASES.get(m.group(0).lower(), m.group(0)), s2)
+    try:
+        return parsedate_to_datetime(s2)
     except (TypeError, ValueError):
         return None
 
@@ -893,6 +1049,30 @@ SOURCE_COLORS = {
     "Jerusalem Post": "#1d4e8f",
     "Al Jazeera": "#f59e0b",
     "SCMP": "#d99e00",
+    # ===== Core-country expansion =====
+    "Handelsblatt": "#d2820a", "Tagesspiegel": "#c8102e", "Frankfurter Rundschau": "#d1101a",
+    "Heise": "#cc3333", "WirtschaftsWoche": "#1a3c6e", "Manager Magazin": "#003a5d",
+    "RP Online": "#c20012", "Merkur": "#006bb3", "MDR": "#0a64a0", "Berliner Zeitung": "#b01217",
+    "t-online": "#e2001a", "Stuttgarter Zeitung": "#1f6cb0",
+    "Courrier International": "#2b2b6b", "La Dépêche": "#d6001c", "France Inter": "#ab1f24",
+    "Europe 1": "#d40d17", "Slate FR": "#6a1b9a", "Challenges": "#0a6b3a", "France Bleu": "#1d3f8f",
+    "Numerama": "#6c3fc4", "Télérama": "#d63d6a", "HuffPost FR": "#2a8c4a",
+    "Daily Star": "#e3001b", "iNews": "#d6293e", "City AM": "#d9008b", "New Statesman": "#b8242a",
+    "Wales Online": "#c8344a", "The Scotsman": "#1a3a6b", "The Herald": "#0a4f73",
+    "Manchester Evening News": "#d6001c", "Belfast Telegraph": "#0a3a6b", "The Conversation": "#d6601a",
+    "CBS News": "#0073c8", "CNBC": "#005594", "The Atlantic": "#1d1d1d", "Vox": "#f7c948",
+    "The Verge": "#5200ff", "TechCrunch": "#0a9e01", "Newsweek": "#c8102e", "PBS NewsHour": "#2638c4",
+    "NY Post": "#cf1f2e", "The Daily Beast": "#e2001a", "Wired": "#2b2b2b", "ProPublica": "#d9382b",
+    "Rai News": "#0a64a0", "Adnkronos": "#c8102e", "TGcom24": "#e2001a", "Open": "#1f1f1f",
+    "Il Giorno": "#b01217", "Il Resto del Carlino": "#15406b", "La Nazione": "#1a6b3a",
+    "AGI": "#0a4f9e", "Today": "#e2541b", "Wired Italia": "#2b2b2b", "Il Mattino": "#c20012",
+    "Il Messaggero": "#0a3a6b", "Il Gazzettino": "#1a5276", "Quotidiano.net": "#2e6da4",
+    "askanews": "#b8242a", "Domani": "#cf1f2e", "Il Secolo XIX": "#1a4f8b",
+    "El Español": "#c8102e", "COPE": "#003a8c", "Europa Press": "#0a6bb3", "Marca": "#e2001a",
+    "Expansión": "#d6a400", "La Vanguardia": "#2b2b2b", "El Correo": "#b8242a", "infoLibre": "#1a6b9e",
+    "Mundo Deportivo": "#cf1f2e", "El Salto": "#d6001c", "Las Provincias": "#1a6bb3",
+    "La Verdad": "#c8344a", "Ideal": "#0a6b4a", "Diario Sur": "#1a8cc4", "El Diario Vasco": "#1a5276",
+    "Newtral": "#00b3a4", "Maldita": "#1ab34a", "El Independiente": "#2b2b6b",
 }
 
 
