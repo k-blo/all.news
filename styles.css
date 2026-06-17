@@ -151,7 +151,7 @@ a { color: inherit; }
 .article {
   position: relative;
   display: grid;
-  grid-template-columns: 130px 1fr;
+  grid-template-columns: 150px 1fr;
   gap: 24px;
   align-items: start;
   padding: 16px 0;
