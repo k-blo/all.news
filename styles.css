@@ -339,7 +339,7 @@ a { color: inherit; }
   font-weight: 600;
   text-align: left;
   padding: 0 0 14px;
-  cursor: default;
+  cursor: pointer;
 }
 .fs-head .plus { display: none; }
 .fs-archive {
