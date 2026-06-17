@@ -53,5 +53,15 @@ const SOURCE_COLORS = {
   "Schaffhauser Nachrichten": "#1a4f8b",
   "Schweizer Monat": "#8a6d3b",
   "Bote der Urschweiz": "#b8242a",
-  "Die Zeit": "#1c1c1c"
+  "Die Zeit": "#1c1c1c",
+  "Tagesschau": "#0a3b75",
+  "Süddeutsche": "#222a5c",
+  "FAZ": "#2b2b2b",
+  "Die Welt": "#1a6cb4",
+  "taz": "#c0123c",
+  "n-tv": "#c8102e",
+  "Der Spiegel": "#e64415",
+  "Stern": "#e3000f",
+  "DW": "#00a8e1",
+  "Bild": "#d00000"
 };

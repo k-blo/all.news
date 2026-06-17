@@ -78,9 +78,17 @@ const excluded = new Set(
   (new URLSearchParams(location.search).get("exclude") || "")
     .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
 );
+// Excluded countries (ISO 3166-1 codes, lowercased), persisted as ?xc=de,ch
+const excludedCountries = new Set(
+  (new URLSearchParams(location.search).get("xc") || "")
+    .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
+);
+// ISO 3166-1 alpha-2 -> display name. Extend as the source scope widens.
+const COUNTRY_NAMES = { CH: "Switzerland", DE: "Germany" };
 
 function isExcluded(a) {
-  return excluded.has(a.source.toLowerCase());
+  return excluded.has(a.source.toLowerCase()) ||
+         excludedCountries.has((a.country || "").toLowerCase());
 }
 
 // Free-text search over title + source, persisted in the URL: ?q=…
@@ -96,6 +104,8 @@ function syncUrl() {
   const params = new URLSearchParams(location.search);
   if (excluded.size) params.set("exclude", [...excluded].join(","));
   else params.delete("exclude");
+  if (excludedCountries.size) params.set("xc", [...excludedCountries].join(","));
+  else params.delete("xc");
   if (query) params.set("q", query);
   else params.delete("q");
   const qs = params.toString();
@@ -196,14 +206,41 @@ function buildFilters(articles) {
   }
 }
 
+// "Countries" filter: clickable country toggles, persisted via ?xc=
+function buildCountryFilters(articles) {
+  const box = document.getElementById("countryFilters");
+  if (!box) return;
+  box.innerHTML = "";
+  const codes = [...new Set(articles.map((a) => (a.country || "").toUpperCase()).filter(Boolean))]
+    .sort((a, b) => (COUNTRY_NAMES[a] || a).localeCompare(COUNTRY_NAMES[b] || b));
+  for (const code of codes) {
+    const lc = code.toLowerCase();
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opt";
+    btn.textContent = COUNTRY_NAMES[code] || code;
+    const on = () => !excludedCountries.has(lc);
+    btn.setAttribute("aria-pressed", String(on()));
+    btn.addEventListener("click", () => {
+      if (on()) excludedCountries.add(lc);
+      else excludedCountries.delete(lc);
+      btn.setAttribute("aria-pressed", String(on()));
+      syncUrl();
+      render(current, sortMode());
+    });
+    box.appendChild(btn);
+  }
+}
+
 function load(url) {
   fetch(url)
     .then((r) => r.json())
     .then((data) => {
       current = data.articles;
       buildFilters(current);
+      buildCountryFilters(current);
       // Re-render if URL carried a filter/search; otherwise keep the SSR markup.
-      if (excluded.size || query) render(current, sortMode());
+      if (excluded.size || excludedCountries.size || query) render(current, sortMode());
     })
     .catch(() => {});
 }

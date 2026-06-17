@@ -50,6 +50,16 @@ FEEDS = [
     {"source": "Schaffhauser Nachrichten", "url": "https://www.shn.ch/rss.xml"},
     {"source": "Schweizer Monat","url": "https://schweizermonat.ch/feed/"},
     #{"source": "ETH Zürich",     "url": "https://www.ethz.ch/de/news-und-veranstaltungen/eth-news/news/_jcr_content.feed"},
+    # --- Germany (DE) — see SOURCE_ORIGIN for country labels ---
+    {"source": "Tagesschau",    "url": "https://www.tagesschau.de/index~rss2.xml"},
+    {"source": "Süddeutsche",   "url": "https://rss.sueddeutsche.de/rss/Topthemen"},
+    {"source": "FAZ",           "url": "https://www.faz.net/rss/aktuell/"},
+    {"source": "Die Welt",      "url": "https://www.welt.de/feeds/latest.rss"},
+    {"source": "taz",           "url": "https://taz.de/!p4608;rss/"},
+    {"source": "n-tv",          "url": "https://www.n-tv.de/rss"},
+    {"source": "Der Spiegel",   "url": "https://www.spiegel.de/schlagzeilen/tops/index.rss"},
+    {"source": "Stern",         "url": "https://www.stern.de/feed/standard/all/"},
+    {"source": "DW",            "url": "https://rss.dw.com/rdf/rss-de-all"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
@@ -65,6 +75,7 @@ NEWS_SITEMAPS = [
     {"source": "Watson",               "url": "https://www.watson.ch/api/2.0/feed/googlesitemap.xml",            "max": 50},
     {"source": "Freiburger Nachrichten","url": "https://www.freiburger-nachrichten.ch/sitemap_latest_news.xml", "max": 50},
     {"source": "Bote der Urschweiz",   "url": "https://www.bote.ch/googlenews.sitemap.xml",                    "max": 50},
+    {"source": "Bild",                 "url": "https://www.bild.de/sitemap-news.xml", "max": 50},  # DE; see SOURCE_ORIGIN
     #{"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
@@ -109,7 +120,18 @@ CH_MEDIA_SOURCES = [
 DEFAULT_LANG = "de"
 DEFAULT_COUNTRY = "CH"
 SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
-    "Die Zeit": {"country": "DE"},  # German-language, but Germany not Switzerland
+    # German-language outlets based in Germany (lang defaults to "de").
+    "Die Zeit":     {"country": "DE"},
+    "Tagesschau":   {"country": "DE"},
+    "Süddeutsche":  {"country": "DE"},
+    "FAZ":          {"country": "DE"},
+    "Die Welt":     {"country": "DE"},
+    "taz":          {"country": "DE"},
+    "n-tv":         {"country": "DE"},
+    "Der Spiegel":  {"country": "DE"},
+    "Stern":        {"country": "DE"},
+    "DW":           {"country": "DE"},
+    "Bild":         {"country": "DE"},
 }
 
 
@@ -235,7 +257,8 @@ def parse_feed(source, xml_bytes, allow_summary=True):
             "title": title,
             "url": link,
             "summary": summary,
-            "published": text_of(item, "pubdate", "published", "updated"),
+            # "date" = dc:date, used by RDF/RSS-1.0 feeds (e.g. Deutsche Welle).
+            "published": text_of(item, "pubdate", "published", "updated", "date"),
         })
     return out
 
@@ -565,6 +588,16 @@ SOURCE_COLORS = {
     "Schweizer Monat": "#8a6d3b",
     "Bote der Urschweiz": "#b8242a",
     "Die Zeit": "#1c1c1c",
+    "Tagesschau": "#0a3b75",
+    "Süddeutsche": "#222a5c",
+    "FAZ": "#2b2b2b",
+    "Die Welt": "#1a6cb4",
+    "taz": "#c0123c",
+    "n-tv": "#c8102e",
+    "Der Spiegel": "#e64415",
+    "Stern": "#e3000f",
+    "DW": "#00a8e1",
+    "Bild": "#d00000",
 }
 
 
