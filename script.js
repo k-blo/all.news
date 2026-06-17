@@ -377,6 +377,14 @@ if (moreToggle) {
   });
 }
 
+// "Change location" — re-run detection and show the welcome popup again.
+const changeLocationBtn = document.getElementById("changeLocation");
+if (changeLocationBtn) {
+  changeLocationBtn.addEventListener("click", () => {
+    detectCountry().then((c) => showWelcome(c, detectLanguage()));
+  });
+}
+
 // ---------- Mobile accordions for feed-settings groups ----------
 const mobile = window.matchMedia("(max-width: 760px)");
 for (const head of document.querySelectorAll(".fs-head")) {

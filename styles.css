@@ -343,6 +343,11 @@ a { color: inherit; }
   color: var(--fg);
   text-decoration: none;
   padding: 0 0 14px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
 }
 .fs-archive:hover { text-decoration: underline; }
 .fs-list {
