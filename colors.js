@@ -52,5 +52,6 @@ const SOURCE_COLORS = {
   "ETH Zürich": "#0072ac",
   "Schaffhauser Nachrichten": "#1a4f8b",
   "Schweizer Monat": "#8a6d3b",
-  "Bote der Urschweiz": "#b8242a"
+  "Bote der Urschweiz": "#b8242a",
+  "Die Zeit": "#1c1c1c"
 };
