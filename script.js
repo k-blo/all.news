@@ -89,9 +89,12 @@ const excludedLangs = new Set(
     .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
 );
 // ISO 3166-1 alpha-2 -> display name. Extend as the source scope widens.
-const COUNTRY_NAMES = { CH: "Switzerland", DE: "Germany", FR: "France" };
+const COUNTRY_NAMES = {
+  CH: "Switzerland", DE: "Germany", FR: "France",
+  GB: "United Kingdom", US: "United States", IT: "Italy", ES: "Spain",
+};
 // ISO 639-1 -> display name (shown in the source's own language).
-const LANG_NAMES = { de: "Deutsch", fr: "Français", en: "English", it: "Italiano" };
+const LANG_NAMES = { de: "Deutsch", fr: "Français", en: "English", it: "Italiano", es: "Español" };
 
 function isExcluded(a) {
   return excluded.has(a.source.toLowerCase()) ||
@@ -192,12 +195,21 @@ function sortMode() {
 
 let current = [];
 
-// "Medias" filter: clickable source toggles, persisted via ?exclude=
+// True if an article passes the current country + language filters (ignores the
+// per-source filter). Used to scope the "Medias" list to the active selection.
+function passesCountryLang(a) {
+  return !excludedCountries.has((a.country || "").toLowerCase()) &&
+         !excludedLangs.has((a.lang || "").toLowerCase());
+}
+
+// "Medias" filter: clickable source toggles, persisted via ?exclude=. Only lists
+// sources whose articles pass the active country/language filter, so toggling a
+// country or language shows/hides its sources here too.
 function buildFilters(articles) {
   const box = document.getElementById("filters");
   if (!box) return;
   box.innerHTML = "";
-  const sources = [...new Set(articles.map((a) => a.source))].sort();
+  const sources = [...new Set(articles.filter(passesCountryLang).map((a) => a.source))].sort();
   for (const s of sources) {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -236,6 +248,7 @@ function buildCountryFilters(articles) {
       else excludedCountries.delete(lc);
       btn.setAttribute("aria-pressed", String(on()));
       syncUrl();
+      buildFilters(current); // refresh the Medias list to match the country selection
       render(current, sortMode());
     });
     box.appendChild(btn);
@@ -261,6 +274,7 @@ function buildLangFilters(articles) {
       else excludedLangs.delete(code);
       btn.setAttribute("aria-pressed", String(on()));
       syncUrl();
+      buildFilters(current); // refresh the Medias list to match the language selection
       render(current, sortMode());
     });
     box.appendChild(btn);
