@@ -78,9 +78,11 @@ const excluded = new Set(
   (new URLSearchParams(location.search).get("exclude") || "")
     .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
 );
-// Excluded countries (ISO 3166-1 codes, lowercased), persisted as ?xc=de,ch
-const excludedCountries = new Set(
-  (new URLSearchParams(location.search).get("xc") || "")
+// Included countries (ISO 3166-1 codes, lowercased), persisted as ?country=ch,de.
+// INCLUDE model: empty set = show all countries; non-empty = show only those.
+// The welcome modal seeds this with the visitor's primary (home) country.
+const includedCountries = new Set(
+  (new URLSearchParams(location.search).get("country") || "")
     .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
 );
 // Excluded languages (ISO 639-1 codes, lowercased), persisted as ?xl=fr,de
@@ -109,8 +111,9 @@ const LANG_NAMES = {
 };
 
 function isExcluded(a) {
+  const country = (a.country || "").toLowerCase();
   return excluded.has(a.source.toLowerCase()) ||
-         excludedCountries.has((a.country || "").toLowerCase()) ||
+         (includedCountries.size > 0 && !includedCountries.has(country)) ||
          excludedLangs.has((a.lang || "").toLowerCase());
 }
 
@@ -127,8 +130,8 @@ function syncUrl() {
   const params = new URLSearchParams(location.search);
   if (excluded.size) params.set("exclude", [...excluded].join(","));
   else params.delete("exclude");
-  if (excludedCountries.size) params.set("xc", [...excludedCountries].join(","));
-  else params.delete("xc");
+  if (includedCountries.size) params.set("country", [...includedCountries].join(","));
+  else params.delete("country");
   if (excludedLangs.size) params.set("xl", [...excludedLangs].join(","));
   else params.delete("xl");
   if (query) params.set("q", query);
@@ -196,7 +199,8 @@ let current = [];
 // True if an article passes the current country + language filters (ignores the
 // per-source filter). Used to scope the "Medias" list to the active selection.
 function passesCountryLang(a) {
-  return !excludedCountries.has((a.country || "").toLowerCase()) &&
+  const country = (a.country || "").toLowerCase();
+  return (includedCountries.size === 0 || includedCountries.has(country)) &&
          !excludedLangs.has((a.lang || "").toLowerCase());
 }
 
@@ -226,27 +230,40 @@ function buildFilters(articles) {
   }
 }
 
-// "Countries" filter: clickable country toggles, persisted via ?xc=
+// "Countries" filter (INCLUDE model): a pressed button = country is shown. An
+// empty includedCountries set means "all shown" (all pressed). Toggling off the
+// first country switches to "all except", and re-selecting every country
+// normalizes back to the empty = all state. Persisted via ?country=.
 function buildCountryFilters(articles) {
   const box = document.getElementById("countryFilters");
   if (!box) return;
   box.innerHTML = "";
   const codes = [...new Set(articles.map((a) => (a.country || "").toUpperCase()).filter(Boolean))]
     .sort((a, b) => (COUNTRY_NAMES[a] || a).localeCompare(COUNTRY_NAMES[b] || b));
+  const allLc = codes.map((c) => c.toLowerCase());
   for (const code of codes) {
     const lc = code.toLowerCase();
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "opt";
     btn.textContent = COUNTRY_NAMES[code] || code;
-    const on = () => !excludedCountries.has(lc);
+    const on = () => includedCountries.size === 0 || includedCountries.has(lc);
     btn.setAttribute("aria-pressed", String(on()));
     btn.addEventListener("click", () => {
-      if (on()) excludedCountries.add(lc);
-      else excludedCountries.delete(lc);
-      btn.setAttribute("aria-pressed", String(on()));
+      if (includedCountries.size === 0) {
+        // currently all → turn this one off (include all others)
+        allLc.forEach((c) => includedCountries.add(c));
+        includedCountries.delete(lc);
+      } else if (includedCountries.has(lc)) {
+        includedCountries.delete(lc);
+      } else {
+        includedCountries.add(lc);
+      }
+      if (includedCountries.size === allLc.length) includedCountries.clear(); // all → empty (= all)
       syncUrl();
-      buildFilters(current); // refresh the Medias list to match the country selection
+      persistCountry();             // remember the choice for next visit
+      buildCountryFilters(current); // refresh pressed states across the group
+      buildFilters(current);        // refresh the Medias list to match the country selection
       render(current, sortMode());
     });
     box.appendChild(btn);
@@ -295,7 +312,9 @@ function applySsrFilter() {
     const titleEl = li.querySelector(".title");
     const title = (titleEl ? titleEl.textContent : "").toLowerCase();
     const hide =
-      excluded.has(source) || excludedCountries.has(country) || excludedLangs.has(lang) ||
+      excluded.has(source) ||
+      (includedCountries.size > 0 && !includedCountries.has(country)) ||
+      excludedLangs.has(lang) ||
       (query && !(title.includes(query) || source.includes(query)));
     li.style.display = hide ? "none" : "";
     if (!hide) visible++;
@@ -311,8 +330,8 @@ function load(url) {
       buildFilters(current);
       buildCountryFilters(current);
       buildLangFilters(current);
-      // Re-render if URL carried a filter/search; otherwise keep the SSR markup.
-      if (excluded.size || excludedCountries.size || excludedLangs.size || query)
+      // Re-render if a filter/search is active; otherwise keep the SSR markup.
+      if (excluded.size || includedCountries.size || excludedLangs.size || query)
         render(current, sortMode());
     })
     .catch(() => {});
@@ -357,6 +376,97 @@ for (const head of document.querySelectorAll(".fs-head")) {
   });
 }
 
+// ---------- Welcome modal & primary-country detection ----------
+const STORE_COUNTRY = "allnews.country";   // remembered primary country (csv), "" = all
+const STORE_WELCOMED = "allnews.welcomed"; // "1" once the welcome modal was dismissed
+
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
+
+function persistCountry() {
+  lsSet(STORE_COUNTRY, [...includedCountries].join(","));
+  lsSet(STORE_WELCOMED, "1");
+}
+
+// Timezone → ISO country, a no-network fallback when /cdn-cgi/trace is blocked.
+// Covers the countries we carry; extend alongside COUNTRY_NAMES.
+const TZ_COUNTRY = {
+  "Europe/Zurich": "CH", "Europe/Berlin": "DE", "Europe/Paris": "FR", "Europe/Rome": "IT",
+  "Europe/Madrid": "ES", "Europe/London": "GB", "Europe/Amsterdam": "NL", "Europe/Brussels": "BE",
+  "Europe/Vienna": "AT", "Europe/Lisbon": "PT", "Europe/Dublin": "IE", "Europe/Warsaw": "PL",
+  "Europe/Stockholm": "SE", "Europe/Oslo": "NO", "Europe/Copenhagen": "DK", "Europe/Helsinki": "FI",
+  "Europe/Athens": "GR", "Europe/Prague": "CZ", "Europe/Budapest": "HU", "Europe/Bucharest": "RO",
+  "Europe/Kyiv": "UA", "Europe/Kiev": "UA", "Europe/Istanbul": "TR",
+  "America/Toronto": "CA", "America/Vancouver": "CA", "America/Montreal": "CA",
+  "America/Mexico_City": "MX", "America/Sao_Paulo": "BR", "America/Argentina/Buenos_Aires": "AR",
+  "America/Bogota": "CO", "America/Lima": "PE",
+  "America/New_York": "US", "America/Chicago": "US", "America/Denver": "US", "America/Los_Angeles": "US",
+  "Australia/Sydney": "AU", "Australia/Melbourne": "AU", "Pacific/Auckland": "NZ",
+  "Asia/Kolkata": "IN", "Asia/Tokyo": "JP", "Asia/Seoul": "KR", "Asia/Singapore": "SG",
+  "Asia/Jakarta": "ID", "Asia/Manila": "PH", "Asia/Ho_Chi_Minh": "VN", "Asia/Karachi": "PK",
+  "Asia/Jerusalem": "IL", "Asia/Qatar": "QA", "Asia/Hong_Kong": "HK",
+};
+
+// Best-effort visitor country (ISO alpha-2): Cloudflare edge IP first, then
+// timezone, then the browser locale's region. null if undeterminable.
+async function detectCountry() {
+  try {
+    const txt = await fetch("/cdn-cgi/trace", { cache: "no-store" }).then((r) => r.text());
+    const m = txt.match(/^loc=([A-Z]{2})/m);
+    if (m) return m[1];
+  } catch (e) { /* fall through */ }
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (TZ_COUNTRY[tz]) return TZ_COUNTRY[tz];
+  } catch (e) { /* fall through */ }
+  const region = ((navigator.languages || [navigator.language || ""])[0] || "").split("-")[1];
+  return region && /^[A-Za-z]{2}$/.test(region) ? region.toUpperCase() : null;
+}
+
+// Apply a single primary country via the include model (null/"" = show all).
+function setPrimaryCountry(code) {
+  includedCountries.clear();
+  if (code) includedCountries.add(code.toLowerCase());
+}
+
+function refreshFeed() {
+  buildFilters(current); buildCountryFilters(current); buildLangFilters(current);
+  if (current.length) render(current, sortMode());
+  else applySsrFilter();
+}
+
+function showWelcome(code) {
+  const supported = code && (code in COUNTRY_NAMES) ? code : null;
+  const name = supported ? COUNTRY_NAMES[supported] : "around the world";
+  const overlay = document.createElement("div");
+  overlay.id = "welcomeOverlay";
+  overlay.className = "welcome-overlay";
+  overlay.innerHTML =
+    '<div class="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">' +
+    '<h2 id="welcomeTitle">Welcome.</h2>' +
+    '<p>Based on your location you see all.news from ' +
+    `<span class="country">${esc(name)}</span>.</p>` +
+    '<div class="welcome-actions">' +
+    '<button type="button" class="change">Change</button>' +
+    '<button type="button" class="continue">Continue ✓</button>' +
+    '</div></div>';
+  document.body.appendChild(overlay);
+  const close = () => { overlay.remove(); lsSet(STORE_WELCOMED, "1"); };
+  const change = () => {
+    close();
+    showView("settings"); // open the filter panel so the user can pick a country
+  };
+  overlay.querySelector(".continue").addEventListener("click", () => {
+    setPrimaryCountry(supported);
+    persistCountry();
+    close();
+    refreshFeed();
+  });
+  overlay.querySelector(".change").addEventListener("click", change);
+  // The underlined country name is also a shortcut to change it.
+  overlay.querySelector(".country").addEventListener("click", change);
+}
+
 // ---------- Boot ----------
 const dayParam = new URLSearchParams(location.search).get("day");
 if (dayParam) {
@@ -366,9 +476,18 @@ if (dayParam) {
   // archive/2026-06-07.html → 2026-06-07.json (sibling); else /crawled.json
   const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})\.html$/);
   const jsonUrl = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
-  // Filter the SSR rows right away so a filtered URL doesn't flash the full list
-  // while crawled.json loads; load() then does the authoritative re-render.
-  if (excluded.size || excludedCountries.size || excludedLangs.size || query) applySsrFilter();
+  const hasUrlFilter = excluded.size || includedCountries.size || excludedLangs.size || query;
+  if (hasUrlFilter) {
+    // A filtered/shared URL wins — pre-filter the SSR rows so there's no flash.
+    applySsrFilter();
+  } else if (lsGet(STORE_WELCOMED)) {
+    // Returning visitor: re-apply their remembered primary country (clean URL).
+    const saved = (lsGet(STORE_COUNTRY) || "").trim();
+    if (saved) { includedCountries.clear(); saved.split(",").forEach((c) => includedCountries.add(c)); applySsrFilter(); }
+  } else if (!archiveMatch) {
+    // First visit to the home page: detect location and offer the welcome modal.
+    detectCountry().then(showWelcome);
+  }
   load(jsonUrl);
 }
 
