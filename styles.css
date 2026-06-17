@@ -477,7 +477,8 @@ a { color: inherit; }
 .welcome-modal { width: 100%; max-width: 360px; }
 .welcome-modal h2 { font-size: 2.2rem; font-weight: 600; margin: 0 0 0.4em; }
 .welcome-modal p { font-size: 1.15rem; line-height: 1.5; margin: 0 0 2.4em; }
-.welcome-modal .country { text-decoration: underline; cursor: pointer; }
+.welcome-modal .country,
+.welcome-modal .lang { text-decoration: underline; cursor: pointer; }
 .welcome-actions { display: flex; align-items: center; justify-content: space-between; }
 .welcome-actions button {
   font: inherit;

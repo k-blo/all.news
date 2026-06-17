@@ -85,9 +85,10 @@ const includedCountries = new Set(
   (new URLSearchParams(location.search).get("country") || "")
     .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
 );
-// Excluded languages (ISO 639-1 codes, lowercased), persisted as ?xl=fr,de
-const excludedLangs = new Set(
-  (new URLSearchParams(location.search).get("xl") || "")
+// Included languages (ISO 639-1 codes, lowercased), persisted as ?lang=de,fr.
+// INCLUDE model like countries: empty = all languages; non-empty = only those.
+const includedLangs = new Set(
+  (new URLSearchParams(location.search).get("lang") || "")
     .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
 );
 // ISO 3166-1 alpha-2 -> display name. Extend as the source scope widens.
@@ -112,9 +113,10 @@ const LANG_NAMES = {
 
 function isExcluded(a) {
   const country = (a.country || "").toLowerCase();
+  const lang = (a.lang || "").toLowerCase();
   return excluded.has(a.source.toLowerCase()) ||
          (includedCountries.size > 0 && !includedCountries.has(country)) ||
-         excludedLangs.has((a.lang || "").toLowerCase());
+         (includedLangs.size > 0 && !includedLangs.has(lang));
 }
 
 // Free-text search over title + source, persisted in the URL: ?q=…
@@ -132,8 +134,8 @@ function syncUrl() {
   else params.delete("exclude");
   if (includedCountries.size) params.set("country", [...includedCountries].join(","));
   else params.delete("country");
-  if (excludedLangs.size) params.set("xl", [...excludedLangs].join(","));
-  else params.delete("xl");
+  if (includedLangs.size) params.set("lang", [...includedLangs].join(","));
+  else params.delete("lang");
   if (query) params.set("q", query);
   else params.delete("q");
   const qs = params.toString();
@@ -200,8 +202,9 @@ let current = [];
 // per-source filter). Used to scope the "Medias" list to the active selection.
 function passesCountryLang(a) {
   const country = (a.country || "").toLowerCase();
+  const lang = (a.lang || "").toLowerCase();
   return (includedCountries.size === 0 || includedCountries.has(country)) &&
-         !excludedLangs.has((a.lang || "").toLowerCase());
+         (includedLangs.size === 0 || includedLangs.has(lang));
 }
 
 // "Medias" filter: clickable source toggles, persisted via ?exclude=. Only lists
@@ -270,7 +273,8 @@ function buildCountryFilters(articles) {
   }
 }
 
-// "Languages" filter: clickable language toggles, persisted via ?xl=
+// "Languages" filter (INCLUDE model, mirrors Countries): pressed = language is
+// shown; empty includedLangs = all shown. Persisted via ?lang=.
 function buildLangFilters(articles) {
   const box = document.getElementById("langFilters");
   if (!box) return;
@@ -282,14 +286,22 @@ function buildLangFilters(articles) {
     btn.type = "button";
     btn.className = "opt";
     btn.textContent = LANG_NAMES[code] || code;
-    const on = () => !excludedLangs.has(code);
+    const on = () => includedLangs.size === 0 || includedLangs.has(code);
     btn.setAttribute("aria-pressed", String(on()));
     btn.addEventListener("click", () => {
-      if (on()) excludedLangs.add(code);
-      else excludedLangs.delete(code);
-      btn.setAttribute("aria-pressed", String(on()));
+      if (includedLangs.size === 0) {
+        codes.forEach((c) => includedLangs.add(c)); // all → turn this one off
+        includedLangs.delete(code);
+      } else if (includedLangs.has(code)) {
+        includedLangs.delete(code);
+      } else {
+        includedLangs.add(code);
+      }
+      if (includedLangs.size === codes.length) includedLangs.clear(); // all → empty (= all)
       syncUrl();
-      buildFilters(current); // refresh the Medias list to match the language selection
+      persistLang();
+      buildLangFilters(current); // refresh pressed states across the group
+      buildFilters(current);     // refresh the Medias list to match the language selection
       render(current, sortMode());
     });
     box.appendChild(btn);
@@ -314,7 +326,7 @@ function applySsrFilter() {
     const hide =
       excluded.has(source) ||
       (includedCountries.size > 0 && !includedCountries.has(country)) ||
-      excludedLangs.has(lang) ||
+      (includedLangs.size > 0 && !includedLangs.has(lang)) ||
       (query && !(title.includes(query) || source.includes(query)));
     li.style.display = hide ? "none" : "";
     if (!hide) visible++;
@@ -327,11 +339,12 @@ function load(url) {
     .then((r) => r.json())
     .then((data) => {
       current = data.articles;
+      if (autoDefault) relaxIfEmpty(); // never leave an auto-applied default empty
       buildFilters(current);
       buildCountryFilters(current);
       buildLangFilters(current);
       // Re-render if a filter/search is active; otherwise keep the SSR markup.
-      if (excluded.size || includedCountries.size || excludedLangs.size || query)
+      if (excluded.size || includedCountries.size || includedLangs.size || query)
         render(current, sortMode());
     })
     .catch(() => {});
@@ -376,9 +389,15 @@ for (const head of document.querySelectorAll(".fs-head")) {
   });
 }
 
-// ---------- Welcome modal & primary-country detection ----------
+// ---------- Welcome modal & primary country/language detection ----------
 const STORE_COUNTRY = "allnews.country";   // remembered primary country (csv), "" = all
+const STORE_LANG = "allnews.lang";         // remembered primary language (csv), "" = all
 const STORE_WELCOMED = "allnews.welcomed"; // "1" once the welcome modal was dismissed
+
+// True when the active country/language filter came from auto-detection or a
+// remembered preference (not from an explicit URL or user click). Such defaults
+// get relaxed rather than ever showing an empty feed.
+let autoDefault = false;
 
 function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
@@ -386,6 +405,23 @@ function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore
 function persistCountry() {
   lsSet(STORE_COUNTRY, [...includedCountries].join(","));
   lsSet(STORE_WELCOMED, "1");
+}
+
+function persistLang() {
+  lsSet(STORE_LANG, [...includedLangs].join(","));
+  lsSet(STORE_WELCOMED, "1");
+}
+
+// A browser language often has no sources in the detected country (e.g. an
+// English browser in Germany). Rather than show nothing, drop the language
+// constraint first, then the country, until the auto-applied default is non-empty.
+function relaxIfEmpty() {
+  if (!current.length) return;
+  const visible = () => current.filter((a) => !isExcluded(a) && matchesQuery(a)).length;
+  if (visible() > 0) return;
+  if (includedLangs.size) { includedLangs.clear(); persistLang(); }
+  if (visible() > 0) return;
+  if (includedCountries.size) { includedCountries.clear(); persistCountry(); }
 }
 
 // Timezone → ISO country, a no-network fallback when /cdn-cgi/trace is blocked.
@@ -423,29 +459,48 @@ async function detectCountry() {
   return region && /^[A-Za-z]{2}$/.test(region) ? region.toUpperCase() : null;
 }
 
-// Apply a single primary country via the include model (null/"" = show all).
+// Best-effort preferred language (ISO 639-1) from the browser, limited to the
+// languages we actually carry. null if none match.
+function detectLanguage() {
+  for (const tag of navigator.languages || [navigator.language || ""]) {
+    const code = (tag || "").split("-")[0].toLowerCase();
+    if (code in LANG_NAMES) return code;
+  }
+  return null;
+}
+
+// Apply a single primary country / language via the include model ("" = all).
 function setPrimaryCountry(code) {
   includedCountries.clear();
   if (code) includedCountries.add(code.toLowerCase());
 }
+function setPrimaryLang(code) {
+  includedLangs.clear();
+  if (code) includedLangs.add(code.toLowerCase());
+}
 
 function refreshFeed() {
+  if (autoDefault) relaxIfEmpty();
   buildFilters(current); buildCountryFilters(current); buildLangFilters(current);
   if (current.length) render(current, sortMode());
   else applySsrFilter();
 }
 
-function showWelcome(code) {
-  const supported = code && (code in COUNTRY_NAMES) ? code : null;
-  const name = supported ? COUNTRY_NAMES[supported] : "around the world";
+function showWelcome(code, langCode) {
+  const country = code && (code in COUNTRY_NAMES) ? code : null;
+  const cName = country ? COUNTRY_NAMES[country] : "around the world";
+  const lang = langCode && (langCode in LANG_NAMES) ? langCode : null;
+  const lName = lang ? LANG_NAMES[lang] : null;
+  const sentence = lName
+    ? `Based on your location you see all.news from <span class="country">${esc(cName)}</span> in <span class="lang">${esc(lName)}</span>.`
+    : `Based on your location you see all.news from <span class="country">${esc(cName)}</span>.`;
   const overlay = document.createElement("div");
   overlay.id = "welcomeOverlay";
   overlay.className = "welcome-overlay";
   overlay.innerHTML =
     '<div class="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">' +
     '<h2 id="welcomeTitle">Welcome.</h2>' +
-    '<p>Based on your location you see all.news from ' +
-    `<span class="country">${esc(name)}</span>.</p>` +
+    `<p>${sentence}</p>` +
     '<div class="welcome-actions">' +
     '<button type="button" class="change">Change</button>' +
     '<button type="button" class="continue">Continue ✓</button>' +
@@ -454,17 +509,20 @@ function showWelcome(code) {
   const close = () => { overlay.remove(); lsSet(STORE_WELCOMED, "1"); };
   const change = () => {
     close();
-    showView("settings"); // open the filter panel so the user can pick a country
+    showView("settings"); // open the filter panel so the user can pick country/language
   };
   overlay.querySelector(".continue").addEventListener("click", () => {
-    setPrimaryCountry(supported);
+    setPrimaryCountry(country);
+    setPrimaryLang(lang);
+    autoDefault = true; // relax the combo rather than show an empty feed
     persistCountry();
+    persistLang();
     close();
     refreshFeed();
   });
   overlay.querySelector(".change").addEventListener("click", change);
-  // The underlined country name is also a shortcut to change it.
-  overlay.querySelector(".country").addEventListener("click", change);
+  // The underlined country/language names are also shortcuts to change them.
+  overlay.querySelectorAll(".country, .lang").forEach((el) => el.addEventListener("click", change));
 }
 
 // ---------- Boot ----------
@@ -476,17 +534,20 @@ if (dayParam) {
   // archive/2026-06-07.html → 2026-06-07.json (sibling); else /crawled.json
   const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})\.html$/);
   const jsonUrl = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
-  const hasUrlFilter = excluded.size || includedCountries.size || excludedLangs.size || query;
+  const hasUrlFilter = excluded.size || includedCountries.size || includedLangs.size || query;
   if (hasUrlFilter) {
     // A filtered/shared URL wins — pre-filter the SSR rows so there's no flash.
     applySsrFilter();
   } else if (lsGet(STORE_WELCOMED)) {
-    // Returning visitor: re-apply their remembered primary country (clean URL).
-    const saved = (lsGet(STORE_COUNTRY) || "").trim();
-    if (saved) { includedCountries.clear(); saved.split(",").forEach((c) => includedCountries.add(c)); applySsrFilter(); }
+    // Returning visitor: re-apply their remembered primary country + language (clean URL).
+    const savedC = (lsGet(STORE_COUNTRY) || "").trim();
+    const savedL = (lsGet(STORE_LANG) || "").trim();
+    if (savedC) savedC.split(",").forEach((c) => includedCountries.add(c));
+    if (savedL) savedL.split(",").forEach((l) => includedLangs.add(l));
+    if (savedC || savedL) { autoDefault = true; applySsrFilter(); }
   } else if (!archiveMatch) {
-    // First visit to the home page: detect location and offer the welcome modal.
-    detectCountry().then(showWelcome);
+    // First visit to the home page: detect location + language, offer the welcome modal.
+    detectCountry().then((c) => showWelcome(c, detectLanguage()));
   }
   load(jsonUrl);
 }
