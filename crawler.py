@@ -80,6 +80,7 @@ REPUBLIK_SITEMAP = "https://www.republik.ch/sitemap.xml"  # index of per-year si
 REPUBLIK_MAX = 50
 SUEDOSTSCHWEIZ_MAX = 50
 BAUERNZEITUNG_MAX = 50
+ZEIT_MAX = 50  # https://www.zeit.de/gsitemaps/index.xml?date=YYYY-MM-01&unit=months&period=1
 # CH Media regional papers: /sitemap/YYYY/MM/sitemap.xml, URLs end in -ld.NNNNNNN
 CH_MEDIA_SOURCES = [
     {"source": "Luzerner Zeitung",   "base": "https://www.luzernerzeitung.ch",   "max": 50},
@@ -107,7 +108,9 @@ CH_MEDIA_SOURCES = [
 # Codes: lang = ISO 639-1 (e.g. "de", "fr"), country = ISO 3166-1 alpha-2 ("CH").
 DEFAULT_LANG = "de"
 DEFAULT_COUNTRY = "CH"
-SOURCE_ORIGIN: dict = {}  # source name -> {"lang": ..., "country": ...}
+SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
+    "Die Zeit": {"country": "DE"},  # German-language, but Germany not Switzerland
+}
 
 
 def origin_of(source):
@@ -384,6 +387,18 @@ def crawl_suedostschweiz():
         "Südostschweiz", rows, re.compile(r"/([^/]+)-\d+$"), SUEDOSTSCHWEIZ_MAX)
 
 
+def crawl_zeit():
+    """Die Zeit (Germany) — monthly Google sitemap at /gsitemaps/index.xml?
+    date=YYYY-MM-01&unit=months&period=1. urlset has <loc>+<lastmod> but no
+    news:title, so the title comes from the URL's last path segment. Article
+    URLs are /section/YYYY-MM/slug or /section/YYYY-MM/DD/slug."""
+    ym = datetime.now(timezone.utc).strftime("%Y-%m")
+    url = f"https://www.zeit.de/gsitemaps/index.xml?date={ym}-01&unit=months&period=1"
+    rows = sitemap_rows(fetch(url), re.compile(r"/\d{4}-\d{2}/.*[^/]$"))
+    return crawl_sitemap_source(
+        "Die Zeit", rows, re.compile(r"/([^/?]+)/?$"), ZEIT_MAX)
+
+
 def crawl_ch_media(source, base, limit):
     """CH Media regional papers — monthly sitemap /sitemap/YYYY/MM/sitemap.xml.
     URLs end in -ld.NNNNNNN; strip that suffix for the title slug."""
@@ -549,6 +564,7 @@ SOURCE_COLORS = {
     "Schaffhauser Nachrichten": "#1a4f8b",
     "Schweizer Monat": "#8a6d3b",
     "Bote der Urschweiz": "#b8242a",
+    "Die Zeit": "#1c1c1c",
 }
 
 
@@ -742,6 +758,7 @@ def main():
         # ("Nau", crawl_nau),
         ("WOZ", crawl_woz),
         ("Bauernzeitung", crawl_bauernzeitung),
+        ("Die Zeit", crawl_zeit),
     ]
     sitemap_jobs += [
         (s["source"], (lambda s: lambda: crawl_ch_media(s["source"], s["base"], s["max"]))(s))
