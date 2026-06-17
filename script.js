@@ -83,12 +83,20 @@ const excludedCountries = new Set(
   (new URLSearchParams(location.search).get("xc") || "")
     .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
 );
+// Excluded languages (ISO 639-1 codes, lowercased), persisted as ?xl=fr,de
+const excludedLangs = new Set(
+  (new URLSearchParams(location.search).get("xl") || "")
+    .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
+);
 // ISO 3166-1 alpha-2 -> display name. Extend as the source scope widens.
-const COUNTRY_NAMES = { CH: "Switzerland", DE: "Germany" };
+const COUNTRY_NAMES = { CH: "Switzerland", DE: "Germany", FR: "France" };
+// ISO 639-1 -> display name (shown in the source's own language).
+const LANG_NAMES = { de: "Deutsch", fr: "Français", en: "English", it: "Italiano" };
 
 function isExcluded(a) {
   return excluded.has(a.source.toLowerCase()) ||
-         excludedCountries.has((a.country || "").toLowerCase());
+         excludedCountries.has((a.country || "").toLowerCase()) ||
+         excludedLangs.has((a.lang || "").toLowerCase());
 }
 
 // Free-text search over title + source, persisted in the URL: ?q=…
@@ -106,6 +114,8 @@ function syncUrl() {
   else params.delete("exclude");
   if (excludedCountries.size) params.set("xc", [...excludedCountries].join(","));
   else params.delete("xc");
+  if (excludedLangs.size) params.set("xl", [...excludedLangs].join(","));
+  else params.delete("xl");
   if (query) params.set("q", query);
   else params.delete("q");
   const qs = params.toString();
@@ -232,6 +242,31 @@ function buildCountryFilters(articles) {
   }
 }
 
+// "Languages" filter: clickable language toggles, persisted via ?xl=
+function buildLangFilters(articles) {
+  const box = document.getElementById("langFilters");
+  if (!box) return;
+  box.innerHTML = "";
+  const codes = [...new Set(articles.map((a) => (a.lang || "").toLowerCase()).filter(Boolean))]
+    .sort((a, b) => (LANG_NAMES[a] || a).localeCompare(LANG_NAMES[b] || b));
+  for (const code of codes) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opt";
+    btn.textContent = LANG_NAMES[code] || code;
+    const on = () => !excludedLangs.has(code);
+    btn.setAttribute("aria-pressed", String(on()));
+    btn.addEventListener("click", () => {
+      if (on()) excludedLangs.add(code);
+      else excludedLangs.delete(code);
+      btn.setAttribute("aria-pressed", String(on()));
+      syncUrl();
+      render(current, sortMode());
+    });
+    box.appendChild(btn);
+  }
+}
+
 function load(url) {
   fetch(url)
     .then((r) => r.json())
@@ -239,8 +274,10 @@ function load(url) {
       current = data.articles;
       buildFilters(current);
       buildCountryFilters(current);
+      buildLangFilters(current);
       // Re-render if URL carried a filter/search; otherwise keep the SSR markup.
-      if (excluded.size || excludedCountries.size || query) render(current, sortMode());
+      if (excluded.size || excludedCountries.size || excludedLangs.size || query)
+        render(current, sortMode());
     })
     .catch(() => {});
 }

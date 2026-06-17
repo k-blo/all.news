@@ -29,20 +29,20 @@ HTTP_CACHE_FILE = os.path.join(ARCHIVE_DIR, "http_cache.json")
 # always safe to aggregate; summary truncated. Edit/extend this list freely.
 FEEDS = [
     {"source": "SRF",           "url": "https://www.srf.ch/news/bnf/rss/1890"},
-    #{"source": "RTS",           "url": "https://www.rts.ch/info/?format=rss/news"},
-    #{"source": "Le Temps",      "url": "https://www.letemps.ch/articles.rss"},
+    {"source": "RTS",           "url": "https://www.rts.ch/info/?format=rss/news"},
+    {"source": "Le Temps",      "url": "https://www.letemps.ch/articles.rss"},
     {"source": "Blick",         "url": "https://www.blick.ch/news/rss.xml"},
     {"source": "20 Minuten",    "url": "https://partner-feeds.20min.ch/rss/20minuten"},
     {"source": "Tages-Anzeiger","url": "https://partner-feeds.publishing.tamedia.ch/rss/tagesanzeiger/"},
     {"source": "Berner Zeitung","url": "https://partner-feeds.publishing.tamedia.ch/rss/bernerzeitung/"},
     {"source": "Der Bund",      "url": "https://partner-feeds.publishing.tamedia.ch/rss/derbund/"},
     {"source": "Basler Zeitung","url": "https://partner-feeds.publishing.tamedia.ch/rss/bazonline/"},
-    #{"source": "Tribune de Genève","url": "https://partner-feeds.publishing.tamedia.ch/rss/tdg/"},
+    {"source": "Tribune de Genève","url": "https://partner-feeds.publishing.tamedia.ch/rss/tdg/"},
     {"source": "Zentralplus",   "url": "https://www.zentralplus.ch/feed/"},
-    #{"source": "Heidi.news",    "url": "https://www.heidi.news/articles.rss"},
+    {"source": "Heidi.news",    "url": "https://www.heidi.news/articles.rss"},
     {"source": "Finews",        "url": "https://www.finews.ch/news?format=feed"},
     {"source": "Netzwoche",     "url": "https://www.netzwoche.ch/rss.xml"},
-    #{"source": "Le Courrier",   "url": "https://lecourrier.ch/feed/"},
+    {"source": "Le Courrier",   "url": "https://lecourrier.ch/feed/"},
     {"source": "Inside IT",     "url": "https://www.inside-it.ch/rss.xml"},
     {"source": "NZZ",           "url": "https://www.nzz.ch/recent.rss", "summary": False},
     {"source": "Persönlich",    "url": "https://www.persoenlich.com/rss/news.xml"},
@@ -60,6 +60,20 @@ FEEDS = [
     {"source": "Der Spiegel",   "url": "https://www.spiegel.de/schlagzeilen/tops/index.rss"},
     {"source": "Stern",         "url": "https://www.stern.de/feed/standard/all/"},
     {"source": "DW",            "url": "https://rss.dw.com/rdf/rss-de-all"},
+    # --- France (FR) — see SOURCE_ORIGIN for lang/country labels ---
+    {"source": "Le Monde",      "url": "https://www.lemonde.fr/rss/une.xml"},
+    {"source": "Le Figaro",     "url": "https://www.lefigaro.fr/rss/figaro_actualites.xml"},
+    {"source": "Libération",    "url": "https://www.liberation.fr/arc/outboundfeeds/rss-all/?outputType=xml"},
+    {"source": "franceinfo",    "url": "https://www.francetvinfo.fr/titres.rss"},
+    {"source": "France 24",     "url": "https://www.france24.com/fr/rss"},
+    {"source": "RFI",           "url": "https://www.rfi.fr/fr/rss"},
+    {"source": "L'Express",     "url": "https://www.lexpress.fr/rss/alaune.xml"},
+    {"source": "L'Obs",         "url": "https://www.nouvelobs.com/rss.xml"},
+    {"source": "La Croix",      "url": "https://www.la-croix.com/RSS"},
+    {"source": "20 Minutes",    "url": "https://www.20minutes.fr/feeds/rss-une.xml"},
+    {"source": "La Tribune",    "url": "https://www.latribune.fr/rss/rubriques/actualite.html"},
+    {"source": "BFM TV",        "url": "https://www.bfmtv.com/rss/news-24-7/"},
+    {"source": "Mediapart",     "url": "https://www.mediapart.fr/articles/feed"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
@@ -76,7 +90,7 @@ NEWS_SITEMAPS = [
     {"source": "Freiburger Nachrichten","url": "https://www.freiburger-nachrichten.ch/sitemap_latest_news.xml", "max": 50},
     {"source": "Bote der Urschweiz",   "url": "https://www.bote.ch/googlenews.sitemap.xml",                    "max": 50},
     {"source": "Bild",                 "url": "https://www.bild.de/sitemap-news.xml", "max": 50},  # DE; see SOURCE_ORIGIN
-    #{"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
+    {"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
 # wp-sitemap-posts-post-N. Titles from URL slug (last path segment).
@@ -132,6 +146,27 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Stern":        {"country": "DE"},
     "DW":           {"country": "DE"},
     "Bild":         {"country": "DE"},
+    # French-language outlets based in France.
+    "Le Monde":     {"lang": "fr", "country": "FR"},
+    "Le Figaro":    {"lang": "fr", "country": "FR"},
+    "Libération":   {"lang": "fr", "country": "FR"},
+    "franceinfo":   {"lang": "fr", "country": "FR"},
+    "France 24":    {"lang": "fr", "country": "FR"},
+    "RFI":          {"lang": "fr", "country": "FR"},
+    "L'Express":    {"lang": "fr", "country": "FR"},
+    "L'Obs":        {"lang": "fr", "country": "FR"},
+    "La Croix":     {"lang": "fr", "country": "FR"},
+    "20 Minutes":   {"lang": "fr", "country": "FR"},
+    "La Tribune":   {"lang": "fr", "country": "FR"},
+    "BFM TV":       {"lang": "fr", "country": "FR"},
+    "Mediapart":    {"lang": "fr", "country": "FR"},
+    # French-language outlets based in Switzerland (country defaults to CH).
+    "RTS":              {"lang": "fr"},
+    "Le Temps":         {"lang": "fr"},
+    "Tribune de Genève":{"lang": "fr"},
+    "Heidi.news":       {"lang": "fr"},
+    "Le Courrier":      {"lang": "fr"},
+    "Watson FR":        {"lang": "fr"},
 }
 
 
@@ -598,6 +633,19 @@ SOURCE_COLORS = {
     "Stern": "#e3000f",
     "DW": "#00a8e1",
     "Bild": "#d00000",
+    "Le Monde": "#0f0f0f",
+    "Le Figaro": "#0b3d63",
+    "Libération": "#cf0a2c",
+    "franceinfo": "#0a4d8c",
+    "France 24": "#142a6b",
+    "RFI": "#e30613",
+    "L'Express": "#b31217",
+    "L'Obs": "#7a1fa2",
+    "La Croix": "#2e5894",
+    "20 Minutes": "#e01b22",
+    "La Tribune": "#c0392b",
+    "BFM TV": "#d81e2c",
+    "Mediapart": "#a31515",
 }
 
 

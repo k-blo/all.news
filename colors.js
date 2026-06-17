@@ -63,5 +63,18 @@ const SOURCE_COLORS = {
   "Der Spiegel": "#e64415",
   "Stern": "#e3000f",
   "DW": "#00a8e1",
-  "Bild": "#d00000"
+  "Bild": "#d00000",
+  "Le Monde": "#0f0f0f",
+  "Le Figaro": "#0b3d63",
+  "Libération": "#cf0a2c",
+  "franceinfo": "#0a4d8c",
+  "France 24": "#142a6b",
+  "RFI": "#e30613",
+  "L'Express": "#b31217",
+  "L'Obs": "#7a1fa2",
+  "La Croix": "#2e5894",
+  "20 Minutes": "#e01b22",
+  "La Tribune": "#c0392b",
+  "BFM TV": "#d81e2c",
+  "Mediapart": "#a31515"
 };
