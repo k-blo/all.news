@@ -316,9 +316,19 @@ function buildCountryFilters(articles) {
         includedCountries.add(lc);
       }
       if (includedCountries.size === allLc.length) includedCountries.clear(); // all → empty (= all)
+      // Drop any selected languages that the new country selection doesn't
+      // publish, so the feed never ends up empty from a stale language pick.
+      if (includedLangs.size && includedCountries.size) {
+        const avail = new Set(current
+          .filter((a) => includedCountries.has((a.country || "").toLowerCase()))
+          .map((a) => (a.lang || "").toLowerCase()));
+        for (const l of [...includedLangs]) if (!avail.has(l)) includedLangs.delete(l);
+      }
       syncUrl();
       persistCountry();             // remember the choice for next visit
+      persistLang();                // language set may have been pruned above
       buildCountryFilters(current); // refresh pressed states across the group
+      buildLangFilters(current);    // languages not available for this country become disabled
       buildFilters(current);        // refresh the Medias list to match the country selection
       render(current, sortMode());
     });
@@ -334,11 +344,24 @@ function buildLangFilters(articles) {
   box.innerHTML = "";
   const codes = [...new Set(articles.map((a) => (a.lang || "").toLowerCase()).filter(Boolean))]
     .sort((a, b) => (LANG_NAMES[a] || a).localeCompare(LANG_NAMES[b] || b));
+  // Languages that actually exist under the current country selection (all of
+  // them when no country is selected). Others are shown disabled + extra-dimmed.
+  const available = new Set(
+    articles
+      .filter((a) => includedCountries.size === 0 || includedCountries.has((a.country || "").toLowerCase()))
+      .map((a) => (a.lang || "").toLowerCase())
+  );
   for (const code of codes) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "opt";
     btn.textContent = LANG_NAMES[code] || code;
+    if (includedCountries.size && !available.has(code)) {
+      btn.disabled = true;
+      btn.setAttribute("aria-pressed", "false");
+      box.appendChild(btn);
+      continue;
+    }
     const on = () => includedLangs.size === 0 || includedLangs.has(code);
     btn.setAttribute("aria-pressed", String(on()));
     btn.addEventListener("click", () => {
@@ -440,11 +463,14 @@ function showView(name) {
   window.scrollTo(0, 0);
 }
 
-if (feedToggle) {
-  feedToggle.addEventListener("click", () => {
-    showView(settingsView && settingsView.hidden ? "settings" : "feed");
-  });
+const brandToggle = document.getElementById("brandToggle");
+// Top-left "all.news" toggles the menu like the chevron next to it (the big
+// wordmark with the count is the home link instead).
+function toggleSettings() {
+  showView(settingsView && settingsView.hidden ? "settings" : "feed");
 }
+if (feedToggle) feedToggle.addEventListener("click", toggleSettings);
+if (brandToggle) brandToggle.addEventListener("click", toggleSettings);
 if (moreToggle) {
   moreToggle.addEventListener("click", () => {
     showView(moreView && moreView.hidden ? "more" : "feed");

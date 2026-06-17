@@ -34,7 +34,7 @@
   <div class="container">
     <header class="topbar">
       <div class="brand">
-        <a href="/" class="brand-link">all.news</a>
+        <button type="button" id="brandToggle" class="brand-link" aria-expanded="false" aria-controls="settingsView">all.news</button>
         <button id="feedToggle" class="icon-btn" aria-expanded="false" aria-controls="settingsView" aria-label="Feed-Einstellungen">
           <span class="icon chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
         </button>
@@ -48,7 +48,7 @@
     <!-- ===== Feed view ===== -->
     <main id="feedView" class="view">
       <div class="hero">
-        <h1 class="wordmark">all.news<span class="count-badge"><!-- COUNT --></span></h1>
+        <h1 class="wordmark"><a href="/" class="wordmark-home">all.news</a><span class="count-badge"><!-- COUNT --></span></h1>
       </div>
 
       <div class="search-wrap">
