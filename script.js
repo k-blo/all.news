@@ -92,9 +92,21 @@ const excludedLangs = new Set(
 const COUNTRY_NAMES = {
   CH: "Switzerland", DE: "Germany", FR: "France",
   GB: "United Kingdom", US: "United States", IT: "Italy", ES: "Spain",
+  NL: "Netherlands", BE: "Belgium", AT: "Austria", PT: "Portugal", IE: "Ireland",
+  PL: "Poland", SE: "Sweden", NO: "Norway", DK: "Denmark", FI: "Finland",
+  GR: "Greece", CZ: "Czechia", HU: "Hungary", RO: "Romania", UA: "Ukraine", TR: "Turkey",
+  CA: "Canada", MX: "Mexico", BR: "Brazil", AR: "Argentina", CO: "Colombia", PE: "Peru",
+  AU: "Australia", NZ: "New Zealand",
+  IN: "India", JP: "Japan", KR: "South Korea", SG: "Singapore", ID: "Indonesia",
+  PH: "Philippines", VN: "Vietnam", PK: "Pakistan", IL: "Israel", QA: "Qatar", HK: "Hong Kong",
 };
 // ISO 639-1 -> display name (shown in the source's own language).
-const LANG_NAMES = { de: "Deutsch", fr: "Français", en: "English", it: "Italiano", es: "Español" };
+const LANG_NAMES = {
+  de: "Deutsch", fr: "Français", en: "English", it: "Italiano", es: "Español",
+  nl: "Nederlands", pt: "Português", pl: "Polski", sv: "Svenska", no: "Norsk",
+  da: "Dansk", fi: "Suomi", el: "Ελληνικά", cs: "Čeština", hu: "Magyar", ro: "Română",
+  uk: "Українська", tr: "Türkçe", ja: "日本語", id: "Bahasa Indonesia", vi: "Tiếng Việt",
+};
 
 function isExcluded(a) {
   return excluded.has(a.source.toLowerCase()) ||

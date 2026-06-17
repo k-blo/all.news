@@ -105,6 +105,91 @@ FEEDS = [
     {"source": "elDiario.es",   "url": "https://www.eldiario.es/rss/"},
     {"source": "20minutos",     "url": "https://www.20minutos.es/rss/"},
     {"source": "El Confidencial","url": "https://rss.elconfidencial.com/espana/"},
+    # ===== Additional countries (see SOURCE_ORIGIN for lang/country) =====
+    # --- Netherlands (NL, nl) ---
+    {"source": "NOS",           "url": "https://feeds.nos.nl/nosnieuwsalgemeen"},
+    {"source": "NU.nl",         "url": "https://www.nu.nl/rss/Algemeen"},
+    # --- Belgium (BE, nl) ---
+    {"source": "VRT NWS",       "url": "https://www.vrt.be/vrtnws/nl.rss.articles.xml"},
+    # --- Austria (AT, de) ---
+    {"source": "ORF",           "url": "https://rss.orf.at/news.xml"},
+    {"source": "Der Standard",  "url": "https://www.derstandard.at/rss"},
+    # --- Portugal (PT, pt) ---
+    {"source": "RTP",           "url": "https://www.rtp.pt/noticias/rss"},
+    # --- Ireland (IE, en) ---
+    {"source": "RTÉ",           "url": "https://www.rte.ie/feeds/rss/?index=/news/&limit=50"},
+    # --- Poland (PL, pl) ---
+    {"source": "Onet",          "url": "https://wiadomosci.onet.pl/.feed"},
+    {"source": "WP.pl",         "url": "https://wiadomosci.wp.pl/rss.xml"},
+    # --- Sweden (SE, sv) ---
+    {"source": "SVT",           "url": "https://www.svt.se/nyheter/rss.xml"},
+    {"source": "Aftonbladet",   "url": "https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/"},
+    # --- Norway (NO, no) ---
+    {"source": "NRK",           "url": "https://www.nrk.no/toppsaker.rss"},
+    {"source": "VG",            "url": "https://www.vg.no/rss/feed"},
+    # --- Denmark (DK, da) ---
+    {"source": "DR",            "url": "https://www.dr.dk/nyheder/service/feeds/allenyheder"},
+    # --- Finland (FI, fi) ---
+    {"source": "YLE",           "url": "https://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss"},
+    {"source": "Iltalehti",     "url": "https://www.iltalehti.fi/rss/uutiset.xml"},
+    # --- Greece (GR, el) ---
+    {"source": "To Vima",       "url": "https://www.tovima.gr/feed/"},
+    # --- Czechia (CZ, cs) ---
+    {"source": "Novinky",       "url": "https://www.novinky.cz/rss"},
+    {"source": "ČT24",          "url": "https://ct24.ceskatelevize.cz/rss/hlavni-zpravy"},
+    # --- Hungary (HU, hu) ---
+    {"source": "Telex",         "url": "https://telex.hu/rss"},
+    {"source": "HVG",           "url": "https://hvg.hu/rss"},
+    # --- Romania (RO, ro) ---
+    {"source": "Digi24",        "url": "https://www.digi24.ro/rss"},
+    {"source": "HotNews",       "url": "https://www.hotnews.ro/rss"},
+    # --- Ukraine (UA, uk) ---
+    {"source": "Ukrainska Pravda","url": "https://www.pravda.com.ua/rss/"},
+    # --- Turkey (TR, tr) ---
+    {"source": "Hürriyet",      "url": "https://www.hurriyet.com.tr/rss/anasayfa"},
+    # --- Canada (CA, fr) ---
+    {"source": "Radio-Canada",  "url": "https://ici.radio-canada.ca/rss/4159"},
+    # --- Mexico (MX, es) ---
+    {"source": "La Jornada",    "url": "https://www.jornada.com.mx/rss/edicion.xml"},
+    # --- Brazil (BR, pt) ---
+    {"source": "G1",            "url": "https://g1.globo.com/rss/g1/"},
+    {"source": "Folha",         "url": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml"},
+    # --- Argentina (AR, es) ---
+    {"source": "La Nación",     "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/"},
+    # --- Colombia (CO, es) ---
+    {"source": "El Tiempo",     "url": "https://www.eltiempo.com/rss/colombia.xml"},
+    # --- Peru (PE, es) ---
+    {"source": "RPP",           "url": "https://rpp.pe/rss"},
+    # --- Australia (AU, en) ---
+    {"source": "ABC News AU",   "url": "https://www.abc.net.au/news/feed/2942460/rss.xml"},
+    {"source": "SMH",           "url": "https://www.smh.com.au/rss/feed.xml"},
+    # --- New Zealand (NZ, en) ---
+    {"source": "RNZ",           "url": "https://www.rnz.co.nz/rss/national.xml"},
+    # --- India (IN, en) ---
+    {"source": "The Hindu",     "url": "https://www.thehindu.com/news/national/feeder/default.rss"},
+    {"source": "NDTV",          "url": "https://feeds.feedburner.com/ndtvnews-top-stories"},
+    # --- Japan (JP, ja) ---
+    {"source": "NHK",           "url": "https://www.nhk.or.jp/rss/news/cat0.xml"},
+    # --- South Korea (KR, en) ---
+    {"source": "Yonhap",        "url": "https://en.yna.co.kr/RSS/news.xml"},
+    # --- Singapore (SG, en) ---
+    {"source": "Straits Times", "url": "https://www.straitstimes.com/news/singapore/rss.xml"},
+    {"source": "CNA",           "url": "https://www.channelnewsasia.com/rssfeeds/8395986"},
+    # --- Indonesia (ID, id) ---
+    {"source": "Tempo",         "url": "https://rss.tempo.co/nasional"},
+    # --- Philippines (PH, en) ---
+    {"source": "Rappler",       "url": "https://www.rappler.com/feed/"},
+    {"source": "Inquirer",      "url": "https://www.inquirer.net/fullfeed"},
+    # --- Vietnam (VN, vi) ---
+    {"source": "VnExpress",     "url": "https://vnexpress.net/rss/tin-moi-nhat.rss"},
+    # --- Pakistan (PK, en) ---
+    {"source": "Dawn",          "url": "https://www.dawn.com/feed"},
+    # --- Israel (IL, en) ---
+    {"source": "Jerusalem Post","url": "https://www.jpost.com/rss/rssfeedsfrontpage.aspx"},
+    # --- Qatar (QA, en) ---
+    {"source": "Al Jazeera",    "url": "https://www.aljazeera.com/xml/rss/all.xml"},
+    # --- Hong Kong (HK, en) ---
+    {"source": "SCMP",          "url": "https://www.scmp.com/rss/91/feed"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
@@ -198,6 +283,42 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Heidi.news":       {"lang": "fr"},
     "Le Courrier":      {"lang": "fr"},
     "Watson FR":        {"lang": "fr"},
+    # ===== Additional countries =====
+    "NOS": {"lang":"nl","country":"NL"}, "NU.nl": {"lang":"nl","country":"NL"},
+    "VRT NWS": {"lang":"nl","country":"BE"},
+    "ORF": {"lang":"de","country":"AT"}, "Der Standard": {"lang":"de","country":"AT"},
+    "RTP": {"lang":"pt","country":"PT"},
+    "RTÉ": {"lang":"en","country":"IE"},
+    "Onet": {"lang":"pl","country":"PL"}, "WP.pl": {"lang":"pl","country":"PL"},
+    "SVT": {"lang":"sv","country":"SE"}, "Aftonbladet": {"lang":"sv","country":"SE"},
+    "NRK": {"lang":"no","country":"NO"}, "VG": {"lang":"no","country":"NO"},
+    "DR": {"lang":"da","country":"DK"},
+    "YLE": {"lang":"fi","country":"FI"}, "Iltalehti": {"lang":"fi","country":"FI"},
+    "To Vima": {"lang":"el","country":"GR"},
+    "Novinky": {"lang":"cs","country":"CZ"}, "ČT24": {"lang":"cs","country":"CZ"},
+    "Telex": {"lang":"hu","country":"HU"}, "HVG": {"lang":"hu","country":"HU"},
+    "Digi24": {"lang":"ro","country":"RO"}, "HotNews": {"lang":"ro","country":"RO"},
+    "Ukrainska Pravda": {"lang":"uk","country":"UA"},
+    "Hürriyet": {"lang":"tr","country":"TR"},
+    "Radio-Canada": {"lang":"fr","country":"CA"},
+    "La Jornada": {"lang":"es","country":"MX"},
+    "G1": {"lang":"pt","country":"BR"}, "Folha": {"lang":"pt","country":"BR"},
+    "La Nación": {"lang":"es","country":"AR"},
+    "El Tiempo": {"lang":"es","country":"CO"},
+    "RPP": {"lang":"es","country":"PE"},
+    "ABC News AU": {"lang":"en","country":"AU"}, "SMH": {"lang":"en","country":"AU"},
+    "RNZ": {"lang":"en","country":"NZ"},
+    "The Hindu": {"lang":"en","country":"IN"}, "NDTV": {"lang":"en","country":"IN"},
+    "NHK": {"lang":"ja","country":"JP"},
+    "Yonhap": {"lang":"en","country":"KR"},
+    "Straits Times": {"lang":"en","country":"SG"}, "CNA": {"lang":"en","country":"SG"},
+    "Tempo": {"lang":"id","country":"ID"},
+    "Rappler": {"lang":"en","country":"PH"}, "Inquirer": {"lang":"en","country":"PH"},
+    "VnExpress": {"lang":"vi","country":"VN"},
+    "Dawn": {"lang":"en","country":"PK"},
+    "Jerusalem Post": {"lang":"en","country":"IL"},
+    "Al Jazeera": {"lang":"en","country":"QA"},
+    "SCMP": {"lang":"en","country":"HK"},
     # United Kingdom (English).
     "BBC News":         {"lang": "en", "country": "GB"},
     "The Guardian":     {"lang": "en", "country": "GB"},
@@ -735,6 +856,41 @@ SOURCE_COLORS = {
     "elDiario.es": "#0098c3",
     "20minutos": "#e8400c",
     "El Confidencial": "#c20e1a",
+    "NOS": "#cd2129", "NU.nl": "#c81e1e",
+    "VRT NWS": "#0084c6",
+    "ORF": "#d12421", "Der Standard": "#a51d2d",
+    "RTP": "#00a499",
+    "RTÉ": "#00843d",
+    "Onet": "#cc0000", "WP.pl": "#d6293e",
+    "SVT": "#d72b2b", "Aftonbladet": "#ff5a00",
+    "NRK": "#00457c", "VG": "#d0021b",
+    "DR": "#00306b",
+    "YLE": "#0091cd", "Iltalehti": "#d81e2c",
+    "To Vima": "#0a3d8f",
+    "Novinky": "#cc1122", "ČT24": "#0066b3",
+    "Telex": "#e8870c", "HVG": "#c2122a",
+    "Digi24": "#00529b", "HotNews": "#b22234",
+    "Ukrainska Pravda": "#d52027",
+    "Hürriyet": "#d40511",
+    "Radio-Canada": "#c9252b",
+    "La Jornada": "#8a0303",
+    "G1": "#c4170c", "Folha": "#b9121b",
+    "La Nación": "#0a2c6b",
+    "El Tiempo": "#003da5",
+    "RPP": "#d6001c",
+    "ABC News AU": "#1a7fc4", "SMH": "#163a5e",
+    "RNZ": "#006bb6",
+    "The Hindu": "#b8242a", "NDTV": "#d11a1a",
+    "NHK": "#0a5fa0",
+    "Yonhap": "#0a47a0",
+    "Straits Times": "#102a54", "CNA": "#e01a2b",
+    "Tempo": "#c41e1e",
+    "Rappler": "#ee7203", "Inquirer": "#14559e",
+    "VnExpress": "#8f1d22",
+    "Dawn": "#c8202a",
+    "Jerusalem Post": "#1d4e8f",
+    "Al Jazeera": "#f59e0b",
+    "SCMP": "#d99e00",
 }
 
 
