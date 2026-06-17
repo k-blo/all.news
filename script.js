@@ -169,6 +169,7 @@ function articleHTML(a) {
 }
 
 const AD_SLOT_HTML = '<li class="ad-slot">Werbung</li>';
+const PAGE = 120; // articles rendered per lazy batch (matches SSR_LIMIT head)
 
 // Reflect the number of currently-visible articles in the wordmark badge.
 function setCountBadge(n) {
@@ -176,19 +177,71 @@ function setCountBadge(n) {
   if (el) el.textContent = n;
 }
 
+// Lazy/windowed rendering: render() lays down the first PAGE rows + a scroll
+// sentinel; appendBatch() adds the next PAGE as the sentinel nears the viewport.
+// The full list can be thousands of rows, so we never build them all at once.
+let visibleArticles = [];
+let shownCount = 0;
+let scrollObserver = null;
+
 function render(articles, mode) {
   const list = document.getElementById("list");
   if (!list) return;
-  const visible = sortArticles(articles, mode)
+  visibleArticles = sortArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
-  setCountBadge(visible.length);
+  setCountBadge(visibleArticles.length);
+  if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
+  list.innerHTML = "";
+  shownCount = 0;
+  appendBatch();
+  ensureHashVisible(); // render far enough to reveal a deep-linked article
+  highlightFromHash();
+}
+
+function appendBatch() {
+  const list = document.getElementById("list");
+  if (!list) return;
+  const end = Math.min(shownCount + PAGE, visibleArticles.length);
   const parts = [];
-  for (let i = 0; i < visible.length; i++) {
-    parts.push(articleHTML(visible[i]));
-    if ((i + 1) % AD_EVERY === 0 && i + 1 < visible.length) parts.push(AD_SLOT_HTML);
+  for (let i = shownCount; i < end; i++) {
+    parts.push(articleHTML(visibleArticles[i]));
+    if ((i + 1) % AD_EVERY === 0 && i + 1 < visibleArticles.length) parts.push(AD_SLOT_HTML);
   }
-  list.innerHTML = parts.join("");
-  highlightFromHash(); // re-apply highlight if the list was rebuilt
+  const sentinel = document.getElementById("scrollSentinel");
+  if (sentinel) sentinel.insertAdjacentHTML("beforebegin", parts.join(""));
+  else list.insertAdjacentHTML("beforeend", parts.join(""));
+  shownCount = end;
+  updateSentinel();
+}
+
+function updateSentinel() {
+  const list = document.getElementById("list");
+  let sentinel = document.getElementById("scrollSentinel");
+  if (shownCount >= visibleArticles.length) { // all rendered — tear down
+    if (sentinel) sentinel.remove();
+    if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
+    return;
+  }
+  if (!sentinel) {
+    sentinel = document.createElement("li");
+    sentinel.id = "scrollSentinel";
+    sentinel.className = "scroll-sentinel";
+    list.appendChild(sentinel);
+    scrollObserver = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) appendBatch();
+    }, { rootMargin: "1000px" });
+    scrollObserver.observe(sentinel);
+  } else {
+    list.appendChild(sentinel); // keep it last after the freshly inserted rows
+  }
+}
+
+// If the URL targets an article (#id) beyond the current window, render up to it.
+function ensureHashVisible() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (!id || shownCount >= visibleArticles.length) return;
+  const idx = visibleArticles.findIndex((a) => articleId(a) === id);
+  while (idx >= shownCount && shownCount < visibleArticles.length) appendBatch();
 }
 
 function sortMode() {
@@ -343,9 +396,12 @@ function load(url) {
       buildFilters(current);
       buildCountryFilters(current);
       buildLangFilters(current);
-      // Re-render if a filter/search is active; otherwise keep the SSR markup.
-      if (excluded.size || includedCountries.size || includedLangs.size || query)
-        render(current, sortMode());
+      // The home page server-renders only a small head (SSR_LIMIT); take over with
+      // the windowed renderer so the rest lazy-loads on scroll. Archive pages keep
+      // their full SSR markup and only re-render when a filter/search is active.
+      const filterActive = excluded.size || includedCountries.size || includedLangs.size || query;
+      const onArchive = /\/archive\/\d{4}-\d{2}-\d{2}\.html$/.test(location.pathname);
+      if (filterActive || !onArchive) render(current, sortMode());
       // First visit: now that sources are loaded, detect and offer the welcome.
       if (firstVisit) {
         firstVisit = false;

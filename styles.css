@@ -467,6 +467,9 @@ a { color: inherit; }
   .month-days .day-row { font-size: 17px; }
 }
 
+/* Invisible scroll sentinel that triggers lazy-loading of more articles. */
+.scroll-sentinel { list-style: none; height: 1px; margin: 0; padding: 0; }
+
 /* ---------- Welcome modal (first-visit primary-country prompt) ---------- */
 .welcome-overlay {
   position: fixed;

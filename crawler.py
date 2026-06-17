@@ -1015,24 +1015,33 @@ def write_colors_js():
 
 AD_EVERY = 25  # insert an ad slot after every N articles (mirrors AD_EVERY in script.js)
 AD_SLOT = '      <li class="ad-slot">Werbung</li>'
+# index.html server-renders only the newest SSR_LIMIT articles for a fast first
+# paint; script.js lazy-renders the rest from crawled.json on scroll. Archive
+# pages are not capped. Keep this >= a couple of screens of rows for SEO.
+SSR_LIMIT = 120
 
 
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
-                        date_heading, older_dates=()):
+                        date_heading, older_dates=(), limit=None):
+    """Render a page. `limit` caps the server-rendered rows (used for index.html,
+    where script.js lazy-loads the rest on scroll); the count badge still shows
+    the full total. Archive pages pass no limit and render every article."""
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
+    total = len(articles)
+    head = articles[:limit] if limit else articles
     rows = []
-    for i, a in enumerate(articles):
+    for i, a in enumerate(head):
         rows.append(render_article_html(a))
-        if (i + 1) % AD_EVERY == 0 and i + 1 < len(articles):
+        if (i + 1) % AD_EVERY == 0 and i + 1 < len(head):
             rows.append(AD_SLOT)
     items = "\n".join(rows)
     html = (tmpl
             .replace("<!-- TITLE -->", escape(title))
             .replace("<!-- DESCRIPTION -->", escape(description))
             .replace("<!-- CANONICAL -->", escape(canonical))
-            .replace("<!-- COUNT -->", str(len(articles)))
+            .replace("<!-- COUNT -->", str(total))
             .replace("<!-- DATE_HEADING -->", escape(date_heading))
             .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates))
             .replace("<!-- ARTICLES -->", items))
@@ -1158,6 +1167,7 @@ def main():
         canonical="https://all.news/",
         date_heading=fmt_day_heading(today),
         older_dates=older,
+        limit=SSR_LIMIT,  # index head only; script.js lazy-loads the rest
     )
     write_rendered_html(
         result, os.path.join(ARCHIVE_DIR, f"{today}.html"),
