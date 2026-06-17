@@ -165,11 +165,18 @@ function articleHTML(a) {
 
 const AD_SLOT_HTML = '<li class="ad-slot">Werbung</li>';
 
+// Reflect the number of currently-visible articles in the wordmark badge.
+function setCountBadge(n) {
+  const el = document.querySelector(".count-badge");
+  if (el) el.textContent = n;
+}
+
 function render(articles, mode) {
   const list = document.getElementById("list");
   if (!list) return;
   const visible = sortArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
+  setCountBadge(visible.length);
   const parts = [];
   for (let i = 0; i < visible.length; i++) {
     parts.push(articleHTML(visible[i]));
@@ -279,6 +286,7 @@ function buildLangFilters(articles) {
 function applySsrFilter() {
   const list = document.getElementById("list");
   if (!list) return;
+  let visible = 0;
   for (const li of list.querySelectorAll(".article")) {
     const country = (li.dataset.country || "").toLowerCase();
     const lang = (li.dataset.lang || "").toLowerCase();
@@ -290,7 +298,9 @@ function applySsrFilter() {
       excluded.has(source) || excludedCountries.has(country) || excludedLangs.has(lang) ||
       (query && !(title.includes(query) || source.includes(query)));
     li.style.display = hide ? "none" : "";
+    if (!hide) visible++;
   }
+  setCountBadge(visible);
 }
 
 function load(url) {
