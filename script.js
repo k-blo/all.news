@@ -106,6 +106,9 @@ function articleNode(a) {
   const li = document.createElement("li");
   li.className = "article";
   li.id = articleId(a);
+  // Origin labels for future language/country filtering (default: German/Swiss).
+  li.dataset.lang = a.lang || "de";
+  li.dataset.country = a.country || "CH";
 
   const metaCol = document.createElement("div");
   metaCol.className = "meta-col";

@@ -101,6 +101,21 @@ CH_MEDIA_SOURCES = [
 ]
 
 
+# Origin labels stamped onto every article so they can be filtered by language
+# and country later. Every source so far is a German-language Swiss outlet; as
+# the scope widens beyond Switzerland, add per-source overrides to SOURCE_ORIGIN.
+# Codes: lang = ISO 639-1 (e.g. "de", "fr"), country = ISO 3166-1 alpha-2 ("CH").
+DEFAULT_LANG = "de"
+DEFAULT_COUNTRY = "CH"
+SOURCE_ORIGIN: dict = {}  # source name -> {"lang": ..., "country": ...}
+
+
+def origin_of(source):
+    o = SOURCE_ORIGIN.get(source, {})
+    return {"lang": o.get("lang", DEFAULT_LANG),
+            "country": o.get("country", DEFAULT_COUNTRY)}
+
+
 class NotModified(Exception):
     pass
 
@@ -623,7 +638,9 @@ def render_article_html(article):
     color = SOURCE_COLORS.get(article["source"], "#888")
     url = escape(article["url"])
     return (
-        f'      <li class="article" id="{escape(article_id(article))}">'
+        f'      <li class="article" id="{escape(article_id(article))}"'
+        f' data-lang="{escape(article.get("lang", DEFAULT_LANG))}"'
+        f' data-country="{escape(article.get("country", DEFAULT_COUNTRY))}">'
         '<div class="meta-col">'
         f'<span class="source" style="background:{color}">{escape(article["source"])}</span>'
         f'<span class="time">{escape(fmt_time(article.get("published", "")))} {EXT_SVG}</span>'
@@ -775,7 +792,8 @@ def main():
         t = a["title"].lower()
         if t in seen_titles:
             continue
-        new.append({**a, "published": now_iso})  # date = crawl time
+        # date = crawl time; lang/country label the article's origin
+        new.append({**a, "published": now_iso, **origin_of(a["source"])})
         batch.add(u)
         seen_titles.add(t)
 
