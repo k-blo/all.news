@@ -337,7 +337,7 @@ a { color: inherit; }
 }
 .fs-head .plus { display: none; }
 .fs-archive {
-  display: inline-block;
+  display: block;
   font-size: 18px;
   font-weight: 600;
   color: var(--fg);

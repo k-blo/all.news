@@ -346,8 +346,26 @@ function load(url) {
       // Re-render if a filter/search is active; otherwise keep the SSR markup.
       if (excluded.size || includedCountries.size || includedLangs.size || query)
         render(current, sortMode());
+      // First visit: now that sources are loaded, detect and offer the welcome.
+      if (firstVisit) {
+        firstVisit = false;
+        detectCountry().then((c) => showWelcome(c, detectLanguage()));
+      }
     })
     .catch(() => {});
+}
+
+// Languages we carry for a country, most-frequent first (derived from loaded data).
+function langsForCountry(code) {
+  if (!code || !current.length) return [];
+  const counts = {};
+  for (const a of current) {
+    if ((a.country || "").toLowerCase() === code.toLowerCase()) {
+      const l = (a.lang || "").toLowerCase();
+      if (l) counts[l] = (counts[l] || 0) + 1;
+    }
+  }
+  return Object.keys(counts).sort((x, y) => counts[y] - counts[x]);
 }
 
 // ---------- View switching (feed / settings / more) ----------
@@ -406,6 +424,9 @@ const STORE_WELCOMED = "allnews.welcomed"; // "1" once the welcome modal was dis
 // remembered preference (not from an explicit URL or user click). Such defaults
 // get relaxed rather than ever showing an empty feed.
 let autoDefault = false;
+// Set at boot for a first-time home-page visit; the welcome modal is shown once
+// crawled.json has loaded (so detected language can be validated against sources).
+let firstVisit = false;
 
 function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
@@ -497,7 +518,14 @@ function refreshFeed() {
 function showWelcome(code, langCode) {
   const country = code && (code in COUNTRY_NAMES) ? code : null;
   const cName = country ? COUNTRY_NAMES[country] : "around the world";
-  const lang = langCode && (langCode in LANG_NAMES) ? langCode : null;
+  // The detected browser language may not exist for this country (e.g. an
+  // English browser visiting from Switzerland). Only offer a language the
+  // country actually publishes in, falling back to its predominant one.
+  let lang = langCode && (langCode in LANG_NAMES) ? langCode : null;
+  if (country) {
+    const avail = langsForCountry(country);
+    if (avail.length && (!lang || !avail.includes(lang))) lang = avail[0];
+  }
   const lName = lang ? LANG_NAMES[lang] : null;
   const sentence = lName
     ? `Based on your location you see all.news from <span class="country">${esc(cName)}</span> in <span class="lang">${esc(lName)}</span>.`
@@ -515,11 +543,7 @@ function showWelcome(code, langCode) {
     '</div></div>';
   document.body.appendChild(overlay);
   const close = () => { overlay.remove(); lsSet(STORE_WELCOMED, "1"); };
-  const change = () => {
-    close();
-    showView("settings"); // open the filter panel so the user can pick country/language
-  };
-  overlay.querySelector(".continue").addEventListener("click", () => {
+  const apply = () => {
     setPrimaryCountry(country);
     setPrimaryLang(lang);
     autoDefault = true; // relax the combo rather than show an empty feed
@@ -527,7 +551,11 @@ function showWelcome(code, langCode) {
     persistLang();
     close();
     refreshFeed();
-  });
+  };
+  // "Change" applies the detected setting, then opens the menu so the user sees
+  // everything deselected except their auto-selected country/language.
+  const change = () => { apply(); showView("settings"); };
+  overlay.querySelector(".continue").addEventListener("click", apply);
   overlay.querySelector(".change").addEventListener("click", change);
   // The underlined country/language names are also shortcuts to change them.
   overlay.querySelectorAll(".country, .lang").forEach((el) => el.addEventListener("click", change));
@@ -554,8 +582,8 @@ if (dayParam) {
     if (savedL) savedL.split(",").forEach((l) => includedLangs.add(l));
     if (savedC || savedL) { autoDefault = true; applySsrFilter(); }
   } else if (!archiveMatch) {
-    // First visit to the home page: detect location + language, offer the welcome modal.
-    detectCountry().then((c) => showWelcome(c, detectLanguage()));
+    // First visit to the home page: show the welcome modal after load() has the data.
+    firstVisit = true;
   }
   load(jsonUrl);
 }
