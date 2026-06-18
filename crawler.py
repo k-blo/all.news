@@ -456,6 +456,19 @@ NEWS_SITEMAPS = [
     {"source": "Bote der Urschweiz",   "url": "https://www.bote.ch/googlenews.sitemap.xml",                    "max": 50},
     {"source": "Bild",                 "url": "https://www.bild.de/sitemap-news.xml", "max": 50},  # DE; see SOURCE_ORIGIN
     {"source": "Watson FR", "url": "https://www.watson.ch/fr/api/2.0/feed/googlesitemap.xml", "max": 50},
+    # --- News sitemaps for RSS-poor countries (real <news:title>; see SOURCE_ORIGIN) ---
+    {"source": "Excélsior",         "url": "https://www.excelsior.com.mx/sitemap-google-news.xml", "max": 50},
+    {"source": "Milenio",           "url": "https://www.milenio.com/sitemap/google-news/sitemap-google-news-current-1.xml", "max": 50},
+    {"source": "Al Jazeera Arabic", "url": "https://www.aljazeera.net/news-sitemap.xml", "max": 50},
+    {"source": "El Espectador",     "url": "https://www.elespectador.com/arc/outboundfeeds/news-sitemap/?outputType=xml", "max": 50},
+    {"source": "El Colombiano",     "url": "https://www.elcolombiano.com/sitemapforgoogle.xml", "max": 50},
+    {"source": "Semana",            "url": "https://www.semana.com/arc/outboundfeeds/news-sitemap/?outputType=xml", "max": 50},
+    {"source": "Chosun",            "url": "https://www.chosun.com/arc/outboundfeeds/news-sitemap/?outputType=xml", "max": 50},
+    {"source": "The News",          "url": "https://www.thenews.com.pk/assets/uploads/google_news_latest.xml", "max": 50},
+    {"source": "Geo News",          "url": "https://www.geo.tv/assets/uploads/google_news_latest.xml", "max": 50},
+    {"source": "Business Recorder", "url": "https://www.brecorder.com/feeds/sitemap", "max": 50},
+    {"source": "Globes",            "url": "https://www.globes.co.il/data/webservices/google-maps.ashx", "max": 50},
+    {"source": "Sankei",            "url": "https://www.sankei.com/feeds/google-sitemap/?outputType=xml&from=0", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
 # wp-sitemap-posts-post-N. Titles from URL slug (last path segment).
@@ -753,6 +766,16 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     # Ireland (en/IE)
     "Irish Independent": {"lang":"en","country":"IE"}, "The Journal": {"lang":"en","country":"IE"},
     "Irish Mirror": {"lang":"en","country":"IE"},
+    # News-sitemap sources for RSS-poor markets
+    "Excélsior": {"lang":"es","country":"MX"}, "Milenio": {"lang":"es","country":"MX"},
+    "Al Jazeera Arabic": {"lang":"ar","country":"QA"},
+    "El Espectador": {"lang":"es","country":"CO"}, "El Colombiano": {"lang":"es","country":"CO"},
+    "Semana": {"lang":"es","country":"CO"},
+    "Chosun": {"lang":"en","country":"KR"},
+    "The News": {"lang":"en","country":"PK"}, "Geo News": {"lang":"en","country":"PK"},
+    "Business Recorder": {"lang":"en","country":"PK"},
+    "Globes": {"lang":"he","country":"IL"},
+    "Sankei": {"lang":"ja","country":"JP"},
 }
 
 
