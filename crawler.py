@@ -1379,9 +1379,10 @@ def fmt_datetime(iso_str):
 DE_MONTHS = ["", "Jan.", "Feb.", "März", "Apr.", "Mai", "Juni",
              "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."]
 
-# Small external-link glyph shown next to the time (mirrors EXT_SVG in script.js).
-EXT_SVG = ('<svg class="ext" viewBox="0 0 24 24" width="12" height="12" fill="none" '
-           'stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>')
+# Icons reference a shared <symbol> sprite (defined once in template.html) via
+# <use>, instead of inlining the full SVG on every row — see ICON_SPRITE. Mirrors
+# the EXT_SVG/OPEN_SVG/LINK_SVG constants in script.js.
+EXT_SVG = '<svg class="ext" width="12" height="12"><use href="#ico-arrow"/></svg>'
 
 
 def fmt_time(iso_str):
@@ -1418,11 +1419,8 @@ def fmt_day_en(date_iso):
 
 
 # Action icons next to each row on hover (mirror OPEN_SVG / LINK_SVG in script.js).
-OPEN_SVG = ('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" '
-            'stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>')
-LINK_SVG = ('<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" '
-            'stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/>'
-            '<path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>')
+OPEN_SVG = '<svg width="14" height="14"><use href="#ico-arrow"/></svg>'
+LINK_SVG = '<svg width="14" height="14"><use href="#ico-link"/></svg>'
 
 _SLUG_TRANSLIT = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
 

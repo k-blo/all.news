@@ -31,6 +31,12 @@
   <!-- Analytics placeholder: all.news runs its own analytics. Insert measurement tag here. -->
 </head>
 <body>
+  <!-- Icon sprite: each row's icons reference these via <use>, so the glyphs are
+       defined once per page instead of inlined on every article (≈40% smaller). -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="ico-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+    <symbol id="ico-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></symbol>
+  </svg>
   <div class="container">
     <header class="topbar">
       <div class="brand">
