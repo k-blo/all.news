@@ -7,12 +7,14 @@ writes crawled.json for the static site to consume.
 Stdlib only. Run: python3 crawler.py
 """
 
+import gzip
 import json
 import os
 import re
 import sys
 import urllib.request
 import urllib.error
+import zlib
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -191,6 +193,167 @@ FEEDS = [
     {"source": "Newtral",            "url": "https://www.newtral.es/feed/"},
     {"source": "Maldita",            "url": "https://maldita.es/feed/"},
     {"source": "El Independiente",   "url": "https://www.elindependiente.com/feed/"},
+    # ===== Wider expansion: rest of the countries (see SOURCE_ORIGIN) =====
+    # Netherlands
+    {"source": "De Telegraaf","url": "https://www.telegraaf.nl/rss"},
+    {"source": "de Volkskrant","url": "https://www.volkskrant.nl/voorpagina/rss.xml"},
+    {"source": "NRC","url": "https://www.nrc.nl/rss/"},
+    {"source": "Trouw","url": "https://www.trouw.nl/voorpagina/rss.xml"},
+    {"source": "Het Parool","url": "https://www.parool.nl/voorpagina/rss.xml"},
+    {"source": "AD","url": "https://www.ad.nl/home/rss.xml"},
+    {"source": "Het Financieele Dagblad","url": "https://fd.nl/?rss"},
+    {"source": "De Limburger","url": "https://www.limburger.nl/rss"},
+    {"source": "Nederlands Dagblad","url": "https://www.nd.nl/rss"},
+    {"source": "De Gelderlander","url": "https://www.gelderlander.nl/home/rss.xml"},
+    {"source": "Brabants Dagblad","url": "https://www.bd.nl/home/rss.xml"},
+    {"source": "Tubantia","url": "https://www.tubantia.nl/home/rss.xml"},
+    {"source": "BN DeStem","url": "https://www.bndestem.nl/home/rss.xml"},
+    {"source": "Eindhovens Dagblad","url": "https://www.ed.nl/home/rss.xml"},
+    {"source": "PZC","url": "https://www.pzc.nl/home/rss.xml"},
+    {"source": "De Stentor","url": "https://www.destentor.nl/home/rss.xml"},
+    # Belgium
+    {"source": "Het Laatste Nieuws","url": "https://www.hln.be/home/rss.xml"},
+    {"source": "7sur7","url": "https://www.7sur7.be/home/rss.xml"},
+    {"source": "La Libre","url": "https://www.lalibre.be/arc/outboundfeeds/rss/?outputType=xml"},
+    {"source": "Le Vif","url": "https://www.levif.be/feed/"},
+    # Austria
+    {"source": "Kurier","url": "https://kurier.at/xml/rss"},
+    {"source": "Kleine Zeitung","url": "https://www.kleinezeitung.at/rss"},
+    {"source": "futurezone","url": "https://futurezone.at/xml/rss"},
+    # Portugal
+    {"source": "Observador","url": "https://observador.pt/feed/"},
+    {"source": "Expresso","url": "https://feeds.feedburner.com/expresso-geral"},
+    {"source": "ECO","url": "https://eco.sapo.pt/feed/"},
+    {"source": "Notícias ao Minuto","url": "https://www.noticiasaominuto.com/rss/ultima-hora"},
+    {"source": "Jornal de Negócios","url": "https://www.jornaldenegocios.pt/rss"},
+    {"source": "Sapo24","url": "https://24.sapo.pt/rss"},
+    # Sweden
+    {"source": "Dagens Nyheter","url": "https://www.dn.se/rss/"},
+    {"source": "Svenska Dagbladet","url": "https://www.svd.se/feed/articles.rss"},
+    {"source": "Expressen","url": "https://feeds.expressen.se/nyheter/"},
+    {"source": "Dagens Industri","url": "https://www.di.se/rss"},
+    {"source": "Sydsvenskan","url": "https://www.sydsvenskan.se/rss"},
+    {"source": "Göteborgs-Posten","url": "https://www.gp.se/rss"},
+    # Norway
+    {"source": "Aftenposten","url": "https://www.aftenposten.no/rss"},
+    {"source": "Bergens Tidende","url": "https://www.bt.no/rss"},
+    {"source": "Nettavisen","url": "https://www.nettavisen.no/service/rich-rss"},
+    {"source": "E24","url": "https://e24.no/rss"},
+    # Denmark
+    {"source": "Politiken","url": "https://politiken.dk/rss/senestenyt.rss"},
+    {"source": "Berlingske","url": "https://www.berlingske.dk/content/rss"},
+    {"source": "BT","url": "https://www.bt.dk/bt/seneste/rss"},
+    {"source": "Børsen","url": "https://borsen.dk/rss"},
+    # Finland
+    {"source": "Helsingin Sanomat","url": "https://www.hs.fi/rss/tuoreimmat.xml"},
+    {"source": "Ilta-Sanomat","url": "https://www.is.fi/rss/tuoreimmat.xml"},
+    {"source": "MTV Uutiset","url": "https://www.mtvuutiset.fi/api/feed/rss/uutiset_uusimmat"},
+    # Poland
+    {"source": "Rzeczpospolita","url": "https://www.rp.pl/rss_main"},
+    {"source": "TVN24","url": "https://tvn24.pl/najnowsze.xml"},
+    {"source": "Polsat News","url": "https://www.polsatnews.pl/rss/wszystkie.xml"},
+    {"source": "Interia","url": "https://fakty.interia.pl/feed"},
+    {"source": "Gazeta.pl","url": "https://rss.gazeta.pl/pub/rss/wiadomosci.xml"},
+    {"source": "Wprost","url": "https://www.wprost.pl/rss"},
+    {"source": "Newsweek Polska","url": "https://www.newsweek.pl/rss.xml"},
+    # Greece
+    {"source": "Ta Nea","url": "https://www.tanea.gr/feed/"},
+    {"source": "Naftemporiki","url": "https://www.naftemporiki.gr/feed/"},
+    {"source": "iefimerida","url": "https://www.iefimerida.gr/rss.xml"},
+    {"source": "in.gr","url": "https://www.in.gr/feed/"},
+    # Czechia
+    {"source": "Seznam Zprávy","url": "https://www.seznamzpravy.cz/rss"},
+    {"source": "Deník","url": "https://www.denik.cz/rss/zpravy.html"},
+    {"source": "České noviny","url": "https://www.ceskenoviny.cz/sluzby/rss/zpravy.php"},
+    {"source": "iROZHLAS","url": "https://www.irozhlas.cz/rss/irozhlas"},
+    {"source": "Deník N","url": "https://denikn.cz/feed/"},
+    # Hungary
+    {"source": "Index","url": "https://index.hu/24ora/rss/"},
+    {"source": "444","url": "https://444.hu/feed"},
+    {"source": "Portfolio","url": "https://www.portfolio.hu/rss/all.xml"},
+    {"source": "24.hu","url": "https://24.hu/feed/"},
+    {"source": "Qubit","url": "https://qubit.hu/feed"},
+    # Romania
+    {"source": "Adevărul","url": "https://adevarul.ro/rss"},
+    {"source": "Libertatea","url": "https://www.libertatea.ro/rss"},
+    {"source": "Gândul","url": "https://www.gandul.ro/rss"},
+    {"source": "ProTV Știrile","url": "https://stirileprotv.ro/rss"},
+    {"source": "G4Media","url": "https://www.g4media.ro/feed"},
+    # Ukraine
+    {"source": "Unian","url": "https://rss.unian.net/site/news_ukr.rss"},
+    {"source": "NV","url": "https://nv.ua/rss/all.xml"},
+    {"source": "Ukrinform","url": "https://www.ukrinform.net/rss/block-lastnews"},
+    # Turkey
+    {"source": "Sabah","url": "https://www.sabah.com.tr/rss/anasayfa.xml"},
+    {"source": "Milliyet","url": "https://www.milliyet.com.tr/rss/rssNew/gundemRss.xml"},
+    {"source": "Cumhuriyet","url": "https://www.cumhuriyet.com.tr/rss/son_dakika.xml"},
+    {"source": "NTV","url": "https://www.ntv.com.tr/gundem.rss"},
+    {"source": "TRT Haber","url": "https://www.trthaber.com/sondakika.rss"},
+    # Canada
+    {"source": "Global News","url": "https://globalnews.ca/feed/"},
+    {"source": "National Post","url": "https://nationalpost.com/feed/"},
+    {"source": "Financial Post","url": "https://financialpost.com/feed/"},
+    {"source": "Toronto Sun","url": "https://torontosun.com/feed/"},
+    {"source": "Le Devoir","url": "https://www.ledevoir.com/rss/manchettes.xml"},
+    # Brazil
+    {"source": "Veja","url": "https://veja.abril.com.br/feed/"},
+    {"source": "Metrópoles","url": "https://www.metropoles.com/feed"},
+    {"source": "Poder360","url": "https://www.poder360.com.br/feed/"},
+    # Argentina
+    {"source": "Clarín","url": "https://www.clarin.com/rss/lo-ultimo/"},
+    {"source": "Infobae","url": "https://www.infobae.com/arc/outboundfeeds/rss/"},
+    {"source": "Ámbito","url": "https://www.ambito.com/rss/pages/home.xml"},
+    {"source": "Perfil","url": "https://www.perfil.com/feed"},
+    {"source": "TN","url": "https://tn.com.ar/feed/"},
+    # Colombia
+    {"source": "La República","url": "https://www.larepublica.co/rss"},
+    # Peru
+    {"source": "Perú21","url": "https://peru21.pe/arc/outboundfeeds/rss/"},
+    {"source": "Andina","url": "https://andina.pe/agencia/rss.aspx"},
+    # Australia
+    {"source": "The Age","url": "https://www.theage.com.au/rss/feed.xml"},
+    {"source": "Guardian Australia","url": "https://www.theguardian.com/australia-news/rss"},
+    {"source": "Brisbane Times","url": "https://www.brisbanetimes.com.au/rss/feed.xml"},
+    {"source": "AFR","url": "https://www.afr.com/rss/feed.xml"},
+    {"source": "Conversation AU","url": "https://theconversation.com/au/articles.atom"},
+    # New Zealand
+    {"source": "The Spinoff","url": "https://thespinoff.co.nz/feed"},
+    {"source": "Newsroom","url": "https://www.newsroom.co.nz/feed"},
+    # India
+    {"source": "Times of India","url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms"},
+    {"source": "Hindustan Times","url": "https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml"},
+    {"source": "Economic Times","url": "https://economictimes.indiatimes.com/rssfeedstopstories.cms"},
+    {"source": "News18","url": "https://www.news18.com/rss/india.xml"},
+    {"source": "India Today","url": "https://www.indiatoday.in/rss/1206578"},
+    {"source": "Livemint","url": "https://www.livemint.com/rss/news"},
+    # Japan
+    {"source": "Mainichi","url": "https://mainichi.jp/rss/etc/mainichi-flash.rss"},
+    {"source": "Japan Today","url": "https://japantoday.com/feed"},
+    # South Korea
+    {"source": "Korea Times","url": "https://www.koreatimes.co.kr/www/rss/nation.xml"},
+    # Singapore
+    {"source": "The Independent SG","url": "https://theindependent.sg/feed/"},
+    # Indonesia
+    {"source": "CNN Indonesia","url": "https://www.cnnindonesia.com/rss"},
+    {"source": "Antara","url": "https://www.antaranews.com/rss/terkini"},
+    # Philippines
+    {"source": "Philstar","url": "https://www.philstar.com/rss/headlines"},
+    {"source": "GMA News","url": "https://data.gmanetwork.com/gno/rss/news/feed.xml"},
+    # Vietnam
+    {"source": "Thanh Nien","url": "https://thanhnien.vn/rss/home.rss"},
+    {"source": "Dan Tri","url": "https://dantri.com.vn/rss/home.rss"},
+    {"source": "VnExpress Intl","url": "https://e.vnexpress.net/rss/news.rss"},
+    # Pakistan
+    {"source": "ARY News","url": "https://arynews.tv/feed/"},
+    # Israel
+    {"source": "Ynet","url": "https://www.ynet.co.il/Integration/StoryRss2.xml"},
+    # Hong Kong
+    {"source": "HKFP","url": "https://hongkongfp.com/feed/"},
+    {"source": "RTHK","url": "https://rthk.hk/rthk/news/rss/e_expressnews_elocal.xml"},
+    # Ireland
+    {"source": "Irish Independent","url": "https://www.independent.ie/rss"},
+    {"source": "The Journal","url": "https://www.thejournal.ie/feed/"},
+    {"source": "Irish Mirror","url": "https://www.irishmirror.ie/?service=rss"},
     # ===== Additional countries (see SOURCE_ORIGIN for lang/country) =====
     # --- Netherlands (NL, nl) ---
     {"source": "NOS",           "url": "https://feeds.nos.nl/nosnieuwsalgemeen"},
@@ -483,6 +646,113 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Ideal": {"lang":"es","country":"ES"}, "Diario Sur": {"lang":"es","country":"ES"},
     "El Diario Vasco": {"lang":"es","country":"ES"}, "Newtral": {"lang":"es","country":"ES"},
     "Maldita": {"lang":"es","country":"ES"}, "El Independiente": {"lang":"es","country":"ES"},
+    # ===== Wider expansion: rest of the countries =====
+    # Netherlands (nl/NL)
+    "De Telegraaf": {"lang":"nl","country":"NL"}, "de Volkskrant": {"lang":"nl","country":"NL"},
+    "NRC": {"lang":"nl","country":"NL"}, "Trouw": {"lang":"nl","country":"NL"},
+    "Het Parool": {"lang":"nl","country":"NL"}, "AD": {"lang":"nl","country":"NL"},
+    "Het Financieele Dagblad": {"lang":"nl","country":"NL"}, "De Limburger": {"lang":"nl","country":"NL"},
+    "Nederlands Dagblad": {"lang":"nl","country":"NL"}, "De Gelderlander": {"lang":"nl","country":"NL"},
+    "Brabants Dagblad": {"lang":"nl","country":"NL"}, "Tubantia": {"lang":"nl","country":"NL"},
+    "BN DeStem": {"lang":"nl","country":"NL"}, "Eindhovens Dagblad": {"lang":"nl","country":"NL"},
+    "PZC": {"lang":"nl","country":"NL"}, "De Stentor": {"lang":"nl","country":"NL"},
+    # Belgium (nl/fr, BE)
+    "Het Laatste Nieuws": {"lang":"nl","country":"BE"}, "7sur7": {"lang":"nl","country":"BE"},
+    "La Libre": {"lang":"fr","country":"BE"}, "Le Vif": {"lang":"fr","country":"BE"},
+    # Austria (de/AT)
+    "Kurier": {"lang":"de","country":"AT"}, "Kleine Zeitung": {"lang":"de","country":"AT"},
+    "futurezone": {"lang":"de","country":"AT"},
+    # Portugal (pt/PT)
+    "Observador": {"lang":"pt","country":"PT"}, "Expresso": {"lang":"pt","country":"PT"},
+    "ECO": {"lang":"pt","country":"PT"}, "Notícias ao Minuto": {"lang":"pt","country":"PT"},
+    "Jornal de Negócios": {"lang":"pt","country":"PT"}, "Sapo24": {"lang":"pt","country":"PT"},
+    # Sweden (sv/SE)
+    "Dagens Nyheter": {"lang":"sv","country":"SE"}, "Svenska Dagbladet": {"lang":"sv","country":"SE"},
+    "Expressen": {"lang":"sv","country":"SE"}, "Dagens Industri": {"lang":"sv","country":"SE"},
+    "Sydsvenskan": {"lang":"sv","country":"SE"}, "Göteborgs-Posten": {"lang":"sv","country":"SE"},
+    # Norway (no/NO)
+    "Aftenposten": {"lang":"no","country":"NO"}, "Bergens Tidende": {"lang":"no","country":"NO"},
+    "Nettavisen": {"lang":"no","country":"NO"}, "E24": {"lang":"no","country":"NO"},
+    # Denmark (da/DK)
+    "Politiken": {"lang":"da","country":"DK"}, "Berlingske": {"lang":"da","country":"DK"},
+    "BT": {"lang":"da","country":"DK"}, "Børsen": {"lang":"da","country":"DK"},
+    # Finland (fi/FI)
+    "Helsingin Sanomat": {"lang":"fi","country":"FI"}, "Ilta-Sanomat": {"lang":"fi","country":"FI"},
+    "MTV Uutiset": {"lang":"fi","country":"FI"},
+    # Poland (pl/PL)
+    "Rzeczpospolita": {"lang":"pl","country":"PL"}, "TVN24": {"lang":"pl","country":"PL"},
+    "Polsat News": {"lang":"pl","country":"PL"}, "Interia": {"lang":"pl","country":"PL"},
+    "Gazeta.pl": {"lang":"pl","country":"PL"}, "Wprost": {"lang":"pl","country":"PL"},
+    "Newsweek Polska": {"lang":"pl","country":"PL"},
+    # Greece (el/GR)
+    "Ta Nea": {"lang":"el","country":"GR"}, "Naftemporiki": {"lang":"el","country":"GR"},
+    "iefimerida": {"lang":"el","country":"GR"}, "in.gr": {"lang":"el","country":"GR"},
+    # Czechia (cs/CZ)
+    "Seznam Zprávy": {"lang":"cs","country":"CZ"}, "Deník": {"lang":"cs","country":"CZ"},
+    "České noviny": {"lang":"cs","country":"CZ"}, "iROZHLAS": {"lang":"cs","country":"CZ"},
+    "Deník N": {"lang":"cs","country":"CZ"},
+    # Hungary (hu/HU)
+    "Index": {"lang":"hu","country":"HU"}, "444": {"lang":"hu","country":"HU"},
+    "Portfolio": {"lang":"hu","country":"HU"}, "24.hu": {"lang":"hu","country":"HU"},
+    "Qubit": {"lang":"hu","country":"HU"},
+    # Romania (ro/RO)
+    "Adevărul": {"lang":"ro","country":"RO"}, "Libertatea": {"lang":"ro","country":"RO"},
+    "Gândul": {"lang":"ro","country":"RO"}, "ProTV Știrile": {"lang":"ro","country":"RO"},
+    "G4Media": {"lang":"ro","country":"RO"},
+    # Ukraine (uk/en, UA)
+    "Unian": {"lang":"uk","country":"UA"}, "NV": {"lang":"uk","country":"UA"},
+    "Ukrinform": {"lang":"en","country":"UA"},
+    # Turkey (tr/TR)
+    "Sabah": {"lang":"tr","country":"TR"}, "Milliyet": {"lang":"tr","country":"TR"},
+    "Cumhuriyet": {"lang":"tr","country":"TR"}, "NTV": {"lang":"tr","country":"TR"},
+    "TRT Haber": {"lang":"tr","country":"TR"},
+    # Canada (en/fr, CA)
+    "Global News": {"lang":"en","country":"CA"}, "National Post": {"lang":"en","country":"CA"},
+    "Financial Post": {"lang":"en","country":"CA"}, "Toronto Sun": {"lang":"en","country":"CA"},
+    "Le Devoir": {"lang":"fr","country":"CA"},
+    # Brazil (pt/BR)
+    "Veja": {"lang":"pt","country":"BR"}, "Metrópoles": {"lang":"pt","country":"BR"},
+    "Poder360": {"lang":"pt","country":"BR"},
+    # Argentina (es/AR)
+    "Clarín": {"lang":"es","country":"AR"}, "Infobae": {"lang":"es","country":"AR"},
+    "Ámbito": {"lang":"es","country":"AR"}, "Perfil": {"lang":"es","country":"AR"},
+    "TN": {"lang":"es","country":"AR"},
+    # Colombia (es/CO)
+    "La República": {"lang":"es","country":"CO"},
+    # Peru (es/PE)
+    "Perú21": {"lang":"es","country":"PE"}, "Andina": {"lang":"es","country":"PE"},
+    # Australia (en/AU)
+    "The Age": {"lang":"en","country":"AU"}, "Guardian Australia": {"lang":"en","country":"AU"},
+    "Brisbane Times": {"lang":"en","country":"AU"}, "AFR": {"lang":"en","country":"AU"},
+    "Conversation AU": {"lang":"en","country":"AU"},
+    # New Zealand (en/NZ)
+    "The Spinoff": {"lang":"en","country":"NZ"}, "Newsroom": {"lang":"en","country":"NZ"},
+    # India (en/IN)
+    "Times of India": {"lang":"en","country":"IN"}, "Hindustan Times": {"lang":"en","country":"IN"},
+    "Economic Times": {"lang":"en","country":"IN"}, "News18": {"lang":"en","country":"IN"},
+    "India Today": {"lang":"en","country":"IN"}, "Livemint": {"lang":"en","country":"IN"},
+    # Japan (ja/en, JP)
+    "Mainichi": {"lang":"ja","country":"JP"}, "Japan Today": {"lang":"en","country":"JP"},
+    # South Korea (en/KR)
+    "Korea Times": {"lang":"en","country":"KR"},
+    # Singapore (en/SG)
+    "The Independent SG": {"lang":"en","country":"SG"},
+    # Indonesia (id/ID)
+    "CNN Indonesia": {"lang":"id","country":"ID"}, "Antara": {"lang":"id","country":"ID"},
+    # Philippines (en/PH)
+    "Philstar": {"lang":"en","country":"PH"}, "GMA News": {"lang":"en","country":"PH"},
+    # Vietnam (vi/en, VN)
+    "Thanh Nien": {"lang":"vi","country":"VN"}, "Dan Tri": {"lang":"vi","country":"VN"},
+    "VnExpress Intl": {"lang":"en","country":"VN"},
+    # Pakistan (en/PK)
+    "ARY News": {"lang":"en","country":"PK"},
+    # Israel (he/IL)
+    "Ynet": {"lang":"he","country":"IL"},
+    # Hong Kong (en/HK)
+    "HKFP": {"lang":"en","country":"HK"}, "RTHK": {"lang":"en","country":"HK"},
+    # Ireland (en/IE)
+    "Irish Independent": {"lang":"en","country":"IE"}, "The Journal": {"lang":"en","country":"IE"},
+    "Irish Mirror": {"lang":"en","country":"IE"},
 }
 
 
@@ -514,7 +784,17 @@ def fetch(url):
             lm, etag = resp.headers.get("Last-Modified"), resp.headers.get("ETag")
             if lm or etag:
                 _http_cache[url] = {k: v for k, v in (("last_modified", lm), ("etag", etag)) if v}
-            return resp.read().lstrip(b"\xef\xbb\xbf \t\r\n")
+            data = resp.read()
+            # Some servers gzip even though we don't send Accept-Encoding.
+            enc = (resp.headers.get("Content-Encoding") or "").lower()
+            if enc == "gzip" or data[:2] == b"\x1f\x8b":
+                data = gzip.decompress(data)
+            elif enc == "deflate":
+                try:
+                    data = zlib.decompress(data)
+                except zlib.error:
+                    data = zlib.decompress(data, -zlib.MAX_WBITS)
+            return data.lstrip(b"\xef\xbb\xbf \t\r\n")
     except urllib.error.HTTPError as e:
         if e.code == 304:
             raise NotModified(url)
@@ -1076,6 +1356,15 @@ SOURCE_COLORS = {
 }
 
 
+def color_for(source):
+    """Badge color: the brand color if listed, else a stable hashed hue so every
+    source gets a distinct color without hand-listing all of them (mirrors
+    colorFor() in script.js)."""
+    if source in SOURCE_COLORS:
+        return SOURCE_COLORS[source]
+    return f"hsl({djb2(source) % 360}, 65%, 45%)"
+
+
 def fmt_datetime(iso_str):
     """Format ISO datetime as Swiss local time YYYY-MM-DD HH:MM:SS (mirrors fmtDateTime in script.js)."""
     if not iso_str:
@@ -1159,7 +1448,7 @@ def article_id(article):
 
 
 def render_article_html(article):
-    color = SOURCE_COLORS.get(article["source"], "#888")
+    color = color_for(article["source"])
     url = escape(article["url"])
     return (
         f'      <li class="article" id="{escape(article_id(article))}"'

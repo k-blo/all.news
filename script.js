@@ -112,7 +112,14 @@ const LANG_NAMES = {
   nl: "Nederlands", pt: "Português", pl: "Polski", sv: "Svenska", no: "Norsk",
   da: "Dansk", fi: "Suomi", el: "Ελληνικά", cs: "Čeština", hu: "Magyar", ro: "Română",
   uk: "Українська", tr: "Türkçe", ja: "日本語", id: "Bahasa Indonesia", vi: "Tiếng Việt",
+  he: "עברית",
 };
+
+// Badge color: brand color if listed, else a stable hashed hue (mirrors
+// color_for() in crawler.py) so every source gets a distinct color.
+function colorFor(s) {
+  return SOURCE_COLORS[s] || `hsl(${djb2(s) % 360}, 65%, 45%)`;
+}
 
 function isExcluded(a) {
   return excluded.has(a.source.toLowerCase()) ||
@@ -156,7 +163,7 @@ function esc(s) {
 // per-node DOM construction; clicks are handled by delegation, so no per-row
 // listeners are needed.
 function articleHTML(a) {
-  const color = SOURCE_COLORS[a.source] || "#888";
+  const color = colorFor(a.source);
   const url = esc(a.url);
   return `<li class="article" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
     `<div class="meta-col">` +
