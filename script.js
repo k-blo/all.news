@@ -111,7 +111,7 @@ const LANG_NAMES = {
   nl: "Nederlands", pt: "Português", pl: "Polski", sv: "Svenska", no: "Norsk",
   da: "Dansk", fi: "Suomi", el: "Ελληνικά", cs: "Čeština", hu: "Magyar", ro: "Română",
   uk: "Українська", tr: "Türkçe", ja: "日本語", id: "Bahasa Indonesia", vi: "Tiếng Việt",
-  he: "עברית", ar: "العربية",
+  he: "עברית", ar: "العربية", zh: "中文",
 };
 
 // Badge color: brand color if listed, else a stable hashed hue (mirrors

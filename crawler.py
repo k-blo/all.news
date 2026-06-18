@@ -469,6 +469,21 @@ NEWS_SITEMAPS = [
     {"source": "Business Recorder", "url": "https://www.brecorder.com/feeds/sitemap", "max": 50},
     {"source": "Globes",            "url": "https://www.globes.co.il/data/webservices/google-maps.ashx", "max": 50},
     {"source": "Sankei",            "url": "https://www.sankei.com/feeds/google-sitemap/?outputType=xml&from=0", "max": 50},
+    {"source": "Stuff",             "url": "https://www.stuff.co.nz/sitemap/news/sitemap.xml", "max": 50},
+    {"source": "1News",             "url": "https://www.1news.co.nz/arc/outboundfeeds/news-sitemap/?outputType=xml", "max": 50},
+    {"source": "AsiaOne",           "url": "https://www.asiaone.com/googlenews.xml", "max": 50},
+    {"source": "Business Times",    "url": "https://www.businesstimes.com.sg/googlenews.xml", "max": 50},
+    {"source": "Kompas",            "url": "https://www.kompas.com/sitemap-news-tren.xml", "max": 50},
+    {"source": "Liputan6",          "url": "https://www.liputan6.com/news/sitemap.xml", "max": 50},
+    {"source": "The Standard",      "url": "https://www.thestandard.com.hk/sitemap.xml", "max": 50},
+    {"source": "HK01",              "url": "https://www.hk01.com/sitemap.xml", "max": 50},
+    {"source": "VietnamNet",        "url": "https://vietnamnet.vn/sitemap-news.xml", "max": 50},
+    {"source": "VietnamPlus",       "url": "https://www.vietnamplus.vn/sitemaps/google-news.xml", "max": 50},
+    {"source": "Zing",              "url": "https://znews.vn/sitemap/sitemap-news.xml", "max": 50},
+    {"source": "Hromadske",         "url": "https://hromadske.ua/sitemap/news.xml", "max": 50},
+    {"source": "Kyiv Independent",  "url": "https://kyivindependent.com/news-sitemap.xml", "max": 50},
+    {"source": "Liga.net",          "url": "https://www.liga.net/sitemap-main/sitemap-news.xml", "max": 50},
+    {"source": "Irish Examiner",    "url": "https://www.irishexaminer.com/news-sitemap.xml", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
 # wp-sitemap-posts-post-N. Titles from URL slug (last path segment).
@@ -776,6 +791,16 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Business Recorder": {"lang":"en","country":"PK"},
     "Globes": {"lang":"he","country":"IL"},
     "Sankei": {"lang":"ja","country":"JP"},
+    # Second news-sitemap wave
+    "Stuff": {"lang":"en","country":"NZ"}, "1News": {"lang":"en","country":"NZ"},
+    "AsiaOne": {"lang":"en","country":"SG"}, "Business Times": {"lang":"en","country":"SG"},
+    "Kompas": {"lang":"id","country":"ID"}, "Liputan6": {"lang":"id","country":"ID"},
+    "The Standard": {"lang":"en","country":"HK"}, "HK01": {"lang":"zh","country":"HK"},
+    "VietnamNet": {"lang":"vi","country":"VN"}, "VietnamPlus": {"lang":"vi","country":"VN"},
+    "Zing": {"lang":"vi","country":"VN"},
+    "Hromadske": {"lang":"uk","country":"UA"}, "Kyiv Independent": {"lang":"en","country":"UA"},
+    "Liga.net": {"lang":"uk","country":"UA"},
+    "Irish Examiner": {"lang":"en","country":"IE"},
 }
 
 
