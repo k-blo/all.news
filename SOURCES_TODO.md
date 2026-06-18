@@ -99,6 +99,17 @@ seen on the probe day.
 
 ---
 
+## Blocked / not crawlable (don't re-investigate)
+
+Legitimate sources we *can't* technically ingest — logged so we don't keep re-probing.
+
+| Source | Country | Why |
+|---|---|---|
+| Times of Israel | IL | RSS `/feed/` + `/rss-feed/` robots-disallowed; `sitemap_index.xml` is robots-allowed but the server **403s every non-residential client** (Cloudflare bot-mgmt / datacenter-IP block — a browser UA also 403s from our IPs). Also opted **out of Google News** (`Googlebot-News: Disallow: /`). Would need a residential/JS-capable fetch — not worth it for one source. |
+
+(Same datacenter-IP 403 pattern as CH Media, which we solve via the Swiss VPN —
+but ToI also fails with a browser UA, so it's likely a JS challenge, not just IP.)
+
 ## Open decisions
 
 1. **Relax the "skip party organs/blogs/MT" heuristic to full Google-News parity?**
