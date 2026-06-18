@@ -476,6 +476,17 @@ a { color: inherit; }
 /* Invisible scroll sentinel that triggers lazy-loading of more articles. */
 .scroll-sentinel { list-style: none; height: 1px; margin: 0; padding: 0; }
 
+/* Archive pagination */
+.pager { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 24px 2px; }
+.pager .pg {
+  min-width: 38px; padding: 8px 10px; text-align: center;
+  border: 1px solid var(--line); border-radius: 8px;
+  color: var(--fg); text-decoration: none; font-weight: 500;
+}
+.pager a.pg:hover { border-color: var(--hover); }
+.pager .pg-cur { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pager .pg-gap { color: var(--muted); padding: 0 2px; }
+
 /* ---------- Welcome modal (first-visit primary-country prompt) ---------- */
 .welcome-overlay {
   position: fixed;

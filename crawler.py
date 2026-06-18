@@ -1536,17 +1536,22 @@ AD_SLOT = '      <li class="ad-slot">Werbung</li>'
 # paint; script.js lazy-renders the rest from crawled.json on scroll. Archive
 # pages are not capped. Keep this >= a couple of screens of rows for SEO.
 SSR_LIMIT = 120
+# Archive days are split into static pages of this many articles, so a single
+# page never balloons regardless of how many sources we add (more sources just
+# mean more pages). Each page is fully server-rendered → crawlable for SEO.
+ARCHIVE_PAGE_SIZE = 500
 
 
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
-                        date_heading, older_dates=(), limit=None):
-    """Render a page. `limit` caps the server-rendered rows (used for index.html,
-    where script.js lazy-loads the rest on scroll); the count badge still shows
-    the full total. Archive pages pass no limit and render every article."""
+                        date_heading, older_dates=(), limit=None, count=None,
+                        pager="", head_links=""):
+    """Render a page. `limit` caps the server-rendered rows (index.html lazy-loads
+    the rest); `count` overrides the badge total (so a paginated archive page shows
+    the whole day's count); `pager`/`head_links` add archive pagination chrome."""
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
-    total = len(articles)
+    total = count if count is not None else len(articles)
     head = articles[:limit] if limit else articles
     rows = []
     for i, a in enumerate(head):
@@ -1558,12 +1563,72 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
             .replace("<!-- TITLE -->", escape(title))
             .replace("<!-- DESCRIPTION -->", escape(description))
             .replace("<!-- CANONICAL -->", escape(canonical))
+            .replace("<!-- HEAD_LINKS -->", head_links)
             .replace("<!-- COUNT -->", str(total))
             .replace("<!-- DATE_HEADING -->", escape(date_heading))
             .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates))
+            .replace("<!-- PAGER -->", pager)
             .replace("<!-- ARTICLES -->", items))
     with open(dest_path, "w", encoding="utf-8") as f:
         f.write(html)
+
+
+def archive_page_path(date, p):
+    """Filesystem path for archive day `date`, page `p` (page 1 keeps the bare name)."""
+    return os.path.join(ARCHIVE_DIR, f"{date}.html" if p == 1 else f"{date}-{p}.html")
+
+
+def archive_page_url(date, p):
+    return f"/archive/{date}.html" if p == 1 else f"/archive/{date}-{p}.html"
+
+
+def render_pager(date, p, pages):
+    """Numbered prev/next pager (windowed: first, last, current±2)."""
+    if pages <= 1:
+        return ""
+    parts = []
+    if p > 1:
+        parts.append(f'<a class="pg" href="{archive_page_url(date, p-1)}" rel="prev">‹</a>')
+    nums = sorted(set([1, pages] + list(range(max(1, p - 2), min(pages, p + 2) + 1))))
+    prev = 0
+    for n in nums:
+        if n - prev > 1:
+            parts.append('<span class="pg-gap">…</span>')
+        if n == p:
+            parts.append(f'<span class="pg pg-cur" aria-current="page">{n}</span>')
+        else:
+            parts.append(f'<a class="pg" href="{archive_page_url(date, n)}">{n}</a>')
+        prev = n
+    if p < pages:
+        parts.append(f'<a class="pg" href="{archive_page_url(date, p+1)}" rel="next">›</a>')
+    return '<nav class="pager" aria-label="Archive pages">' + "".join(parts) + "</nav>"
+
+
+def write_archive_day(date, articles):
+    """Write a day's archive as one or more paginated static pages. Returns the
+    page count. Newest-first; each page fully SSR'd and self-canonical."""
+    articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
+    total = len(articles)
+    pages = max(1, -(-total // ARCHIVE_PAGE_SIZE))  # ceil
+    day_en, day_de = fmt_day_en(date), fmt_day_heading(date)
+    for p in range(1, pages + 1):
+        sl = articles[(p - 1) * ARCHIVE_PAGE_SIZE: p * ARCHIVE_PAGE_SIZE]
+        url = archive_page_url(date, p)
+        head = []
+        if p > 1:
+            head.append(f'<link rel="prev" href="https://all.news{archive_page_url(date, p-1)}">')
+        if p < pages:
+            head.append(f'<link rel="next" href="https://all.news{archive_page_url(date, p+1)}">')
+        title = (f"News Archive for {day_en} – all.news" if p == 1
+                 else f"News Archive for {day_en} (page {p}) – all.news")
+        write_rendered_html(
+            sl, archive_page_path(date, p),
+            title=title,
+            description=f"All world news headlines collected on {day_en} by all.news.",
+            canonical=f"https://all.news{url}",
+            date_heading=day_de, older_dates=[], count=total,
+            pager=render_pager(date, p, pages), head_links="".join(head))
+    return pages
 
 
 def write_sitemap(dates):
@@ -1730,14 +1795,7 @@ def write_outputs(articles):
         older_dates=older,
         limit=SSR_LIMIT,  # index head only; script.js lazy-loads the rest
     )
-    write_rendered_html(
-        result, os.path.join(ARCHIVE_DIR, f"{today}.html"),
-        title=f"News Archive for {fmt_day_en(today)} – all.news",
-        description=f"All world news headlines collected on {fmt_day_en(today)} by all.news — links from hundreds of global sources, gathered in one place.",
-        canonical=f"https://all.news/archive/{today}.html",
-        date_heading=fmt_day_heading(today),
-        older_dates=[],
-    )
+    write_archive_day(today, result)  # paginated static pages
     write_sitemap(all_dates)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} total today ({today})",
           file=sys.stderr)

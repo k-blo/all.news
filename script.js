@@ -429,8 +429,15 @@ function applySsrFilter() {
   setCountBadge(visible);
 }
 
-function load(url) {
-  fetch(url)
+// Fetch the dataset (crawled.json on the home page, the day's archive JSON on an
+// archive page) once and build the filter panels. Memoized so it can be called
+// lazily — archive pages only load it when the user filters/searches, keeping a
+// plain archive view to just its static HTML (scales as days get bigger).
+let DATA_URL = "/crawled.json";
+let dataPromise = null;
+function loadData() {
+  if (dataPromise) return dataPromise;
+  dataPromise = fetch(DATA_URL)
     .then((r) => r.json())
     .then((data) => {
       current = data.articles;
@@ -438,19 +445,10 @@ function load(url) {
       buildFilters(current);
       buildCountryFilters(current);
       buildLangFilters(current);
-      // The home page server-renders only a small head (SSR_LIMIT); take over with
-      // the windowed renderer so the rest lazy-loads on scroll. Archive pages keep
-      // their full SSR markup and only re-render when a filter/search is active.
-      const filterActive = excluded.size || !countriesAll || !langsAll || query;
-      const onArchive = /\/archive\/\d{4}-\d{2}-\d{2}\.html$/.test(location.pathname);
-      if (filterActive || !onArchive) render(current, sortMode());
-      // First visit: now that sources are loaded, detect and offer the welcome.
-      if (firstVisit) {
-        firstVisit = false;
-        detectCountry().then((c) => showWelcome(c, detectLanguage()));
-      }
+      return current;
     })
-    .catch(() => {});
+    .catch(() => { dataPromise = null; }); // allow retry
+  return dataPromise;
 }
 
 // Languages we carry for a country, most-frequent first (derived from loaded data).
@@ -486,7 +484,9 @@ const brandToggle = document.getElementById("brandToggle");
 // Top-left "all.news" toggles the menu like the chevron next to it (the big
 // wordmark with the count is the home link instead).
 function toggleSettings() {
-  showView(settingsView && settingsView.hidden ? "settings" : "feed");
+  const opening = settingsView && settingsView.hidden;
+  showView(opening ? "settings" : "feed");
+  if (opening) loadData(); // ensure filter panels are populated (esp. on archive pages)
 }
 if (feedToggle) feedToggle.addEventListener("click", toggleSettings);
 if (brandToggle) brandToggle.addEventListener("click", toggleSettings);
@@ -678,34 +678,49 @@ if (dayParam) {
   // Redirect legacy ?day= URLs to static archive pages
   location.replace(`/archive/${dayParam}.html`);
 } else {
-  // archive/2026-06-07.html → 2026-06-07.json (sibling); else /crawled.json
-  const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})\.html$/);
-  const jsonUrl = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
+  // archive/2026-06-07.html (or -2, -3 …) → 2026-06-07.json (sibling); else /crawled.json
+  const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})(?:-\d+)?\.html$/);
+  DATA_URL = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
   const hasUrlFilter = excluded.size || !countriesAll || !langsAll || query;
-  if (hasUrlFilter) {
-    // A filtered/shared URL wins — pre-filter the SSR rows so there's no flash.
-    applySsrFilter();
-  } else if (lsGet(STORE_WELCOMED)) {
-    // Returning visitor: re-apply their remembered primary country + language
-    // (clean URL). Stored value: "all" | "" (none) | csv of codes.
-    const savedC = lsGet(STORE_COUNTRY);
-    const savedL = lsGet(STORE_LANG);
-    if (savedC !== null) {
-      includedCountries.clear();
-      countriesAll = savedC === "all";
-      if (!countriesAll) savedC.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((c) => includedCountries.add(c));
+
+  if (archiveMatch) {
+    // Archive: static paginated page. Fetch the day's JSON only on demand
+    // (opening filters / searching). A shared filtered URL is the exception.
+    if (hasUrlFilter) {
+      applySsrFilter();
+      loadData().then(() => { if (current.length) render(current, sortMode()); });
     }
-    if (savedL !== null) {
-      includedLangs.clear();
-      langsAll = savedL === "all";
-      if (!langsAll) savedL.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((l) => includedLangs.add(l));
+  } else {
+    // Home page
+    if (hasUrlFilter) {
+      applySsrFilter(); // pre-filter the SSR head so there's no flash
+    } else if (lsGet(STORE_WELCOMED)) {
+      // Returning visitor: re-apply remembered primary country + language (clean
+      // URL). Stored value: "all" | "" (none) | csv of codes.
+      const savedC = lsGet(STORE_COUNTRY);
+      const savedL = lsGet(STORE_LANG);
+      if (savedC !== null) {
+        includedCountries.clear();
+        countriesAll = savedC === "all";
+        if (!countriesAll) savedC.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((c) => includedCountries.add(c));
+      }
+      if (savedL !== null) {
+        includedLangs.clear();
+        langsAll = savedL === "all";
+        if (!langsAll) savedL.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((l) => includedLangs.add(l));
+      }
+      if (savedC !== null || savedL !== null) { autoDefault = true; applySsrFilter(); }
+    } else {
+      firstVisit = true; // welcome modal after data loads
     }
-    if (savedC !== null || savedL !== null) { autoDefault = true; applySsrFilter(); }
-  } else if (!archiveMatch) {
-    // First visit to the home page: show the welcome modal after load() has the data.
-    firstVisit = true;
+    loadData().then(() => {
+      if (current.length) render(current, sortMode()); // home always takes over (windowed)
+      if (firstVisit) {
+        firstVisit = false;
+        detectCountry().then((c) => showWelcome(c, detectLanguage()));
+      }
+    });
   }
-  load(jsonUrl);
 }
 
 const searchInput = document.getElementById("search");
@@ -714,7 +729,7 @@ if (searchInput) {
   searchInput.addEventListener("input", () => {
     query = searchInput.value.trim().toLowerCase();
     syncUrl();
-    render(current, sortMode());
+    loadData().then(() => render(current, sortMode())); // archive pages fetch on first search
   });
 }
 
