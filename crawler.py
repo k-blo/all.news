@@ -1600,14 +1600,20 @@ def load_http_cache():
         _http_cache = {}
 
 
-def run_map(group, out_path):
-    """Crawl one group and write a partial artifact (raw rows + the cache entries
-    this shard touched) for the reduce step to merge."""
+def run_map(group, out_path, shard=None, of=None):
+    """Crawl one group (optionally a 1-of-N shard of it) and write a partial
+    artifact (raw rows + the cache entries this shard touched) for reduce to merge.
+    Sharding is round-robin (jobs[shard::of]) so the heavier sitemap jobs, which
+    cluster at the end of the list, spread evenly across shards."""
     load_http_cache()
-    rows = run_jobs(jobs_for(group))
+    jobs = jobs_for(group)
+    if of and of > 1:
+        jobs = jobs[shard::of]
+    rows = run_jobs(jobs)
     cache_delta = {u: _http_cache[u] for u in _fetched_urls if u in _http_cache}
     write_json(out_path, {"rows": rows, "http_cache": cache_delta})
-    print(f"wrote {out_path}: {len(rows)} rows, {len(cache_delta)} cache entries ({group})",
+    tag = f"{group}{f' shard {shard}/{of}' if of and of > 1 else ''}"
+    print(f"wrote {out_path}: {len(rows)} rows, {len(cache_delta)} cache entries ({tag})",
           file=sys.stderr)
 
 
@@ -1702,13 +1708,16 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="all.news crawler")
     ap.add_argument("--group", choices=["vpn", "main"],
                     help="crawl only this group and write a partial artifact (map step)")
-    ap.add_argument("--out", help="partial artifact path (default: partial-<group>.json)")
+    ap.add_argument("--shard", type=int, default=0, help="0-based shard index within the group")
+    ap.add_argument("--of", type=int, default=1, help="total number of shards for the group")
+    ap.add_argument("--out", help="partial artifact path (default: partial-<group>[-<shard>].json)")
     ap.add_argument("--reduce", nargs="+", metavar="PARTIAL",
                     help="merge partial artifacts and write all outputs (reduce step)")
     args = ap.parse_args()
     if args.reduce:
         run_reduce(args.reduce)
     elif args.group:
-        run_map(args.group, args.out or f"partial-{args.group}.json")
+        suffix = f"-{args.shard}" if args.of > 1 else ""
+        run_map(args.group, args.out or f"partial-{args.group}{suffix}.json", args.shard, args.of)
     else:
         main()

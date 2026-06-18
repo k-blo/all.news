@@ -16,20 +16,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # ---- Map: non-VPN sources (plain feeds/sitemaps) ----
+  # ---- Map: non-VPN sources (plain feeds/sitemaps), split into 3 parallel shards ----
   crawl-main:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Crawl (main group)
-        run: python3 crawler.py --group main --out partial-main.json
+      - name: Crawl (main group, shard ${{ matrix.shard }}/3)
+        run: python3 crawler.py --group main --shard ${{ matrix.shard }} --of 3 --out partial-main-${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         with:
-          name: partial-main
-          path: partial-main.json
+          name: partial-main-${{ matrix.shard }}
+          path: partial-main-${{ matrix.shard }}.json
 
   # ---- Map: CH Media behind the Swiss VPN ----
   # CH Media papers 403 datacenter ASNs (Azure = GitHub runners). A Surfshark
