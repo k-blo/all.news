@@ -445,6 +445,7 @@ FEEDS = [
 USER_AGENT = "AllNewsBot/0.1 (+https://github.com/yourname/all.news; POC)"
 TIMEOUT = 15
 SUMMARY_MAX = 200  # keep snippets short — legal caution
+DAILY_PER_SOURCE = 200  # max articles kept per source per day (anti-spam cap)
 WELTWOCHE_SITEMAP_INDEX = "https://weltwoche.ch/sitemap_index.xml"
 WELTWOCHE_MAX = 50  # newest N stories from the latest weekly sitemap
 NEBELSPALTER_SITEMAP = "https://nebelspalter.ch/sitemap.xml"
@@ -1760,6 +1761,11 @@ def write_outputs(articles):
 
     seen = load_seen()
     seen_titles = {a["title"].lower() for a in existing_today}
+    # Per-source daily cap: stop a single high-churn source (e.g. Infobae) from
+    # dominating the day. Counts articles already kept today, then caps new ones.
+    src_count = {}
+    for a in existing_today:
+        src_count[a["source"]] = src_count.get(a["source"], 0) + 1
     new, batch = [], set()
     for a in articles:
         u = a["url"]
@@ -1770,10 +1776,13 @@ def write_outputs(articles):
         t = a["title"].lower()
         if t in seen_titles:
             continue
+        if src_count.get(a["source"], 0) >= DAILY_PER_SOURCE:
+            continue  # this source hit its daily cap; keep earliest, drop overflow
         # date = crawl time; lang/country label the article's origin
         new.append({**a, "published": now_iso, **origin_of(a["source"])})
         batch.add(u)
         seen_titles.add(t)
+        src_count[a["source"]] = src_count.get(a["source"], 0) + 1
 
     result = existing_today + new
     data = {"generated": now_iso, "date": today, "count": len(result), "articles": result}
