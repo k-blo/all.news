@@ -39,7 +39,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install rclone
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
       - name: Pull HTTP cache from R2
         run: mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
       - name: Crawl (main shard ${{ matrix.shard }}/3)
@@ -58,7 +58,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install rclone
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
       - name: Pull HTTP cache from R2
         run: mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
       - name: Connect VPN
@@ -92,7 +92,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install rclone
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
       - name: Pull state from R2
         run: |
           mkdir -p archive

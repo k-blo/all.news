@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install rclone
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
       - name: Backfill R2 from committed repo data
         run: |
           set -e
