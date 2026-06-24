@@ -319,8 +319,7 @@ a { color: inherit; }
   color: var(--fg);
 }
 .day-row .chev { color: var(--muted); }
-.day-row:hover { color: var(--fg); }
-.day-row:hover .chev { color: var(--fg); }
+/* day-row hover handled in the Hover states section (#3). */
 
 /* ---------- Footer ---------- */
 .site-footer {
@@ -542,4 +541,24 @@ a { color: inherit; }
   cursor: pointer;
 }
 .welcome-actions .change { color: var(--accent); }
+.welcome-actions .change:hover { color: var(--accent-hover); }
 .welcome-actions .continue { color: #111; font-weight: 500; }
+.welcome-actions .continue:hover { color: #000; }
+.welcome-modal .country:hover,
+.welcome-modal .lang:hover { color: var(--accent); }
+
+/* ---------- Hover states (#3) ----------
+   Brand convention (Colors.png): white text dims to "Font Hover" (--hover) on
+   hover; accent elements go to "Red Hover" (--accent-hover). Applied to every
+   clickable element so hovering always gives feedback. */
+.wordmark-home:hover { color: var(--hover); }
+.fs-head:hover { color: var(--hover); }
+.fs-archive:hover { color: var(--hover); }
+.fs-list .opt:hover { color: var(--hover); }
+.fs-list .opt[aria-pressed="false"]:hover { color: var(--muted); }
+.more-item > summary:hover { color: var(--hover); }
+.day-row:hover,
+.day-row:hover .chev { color: var(--hover); }
+.month-head:hover,
+.month-head:hover .chev { color: var(--hover); }
+.pager a.pg:hover { color: var(--hover); }
