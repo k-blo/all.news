@@ -19,7 +19,10 @@ env:
   RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
   RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
   RCLONE_CONFIG_R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
-  RCLONE_CONFIG_R2_ACL: private
+  RCLONE_CONFIG_R2_REGION: auto
+  # Object-scoped R2 tokens can't create buckets; without this rclone tries to
+  # verify/create the bucket on first write and gets AccessDenied.
+  RCLONE_CONFIG_R2_NO_CHECK_BUCKET: "true"
   R2_BUCKET: ${{ secrets.R2_BUCKET }}
 
 jobs:
@@ -111,8 +114,14 @@ jobs:
           fi
       - name: Upload outputs to R2
         run: |
-          rclone copy crawled.json "R2:$R2_BUCKET/"
-          rclone copy index.html  "R2:$R2_BUCKET/"
-          rclone copy sitemap.xml "R2:$R2_BUCKET/"
+          rclone copy crawled.json "R2:$R2_BUCKET/" -v
+          rclone copy index.html  "R2:$R2_BUCKET/" -v
+          rclone copy sitemap.xml "R2:$R2_BUCKET/" -v
           # today's archive pages + JSON + state files (copy = never deletes old days)
-          rclone copy archive "R2:$R2_BUCKET/archive"
+          rclone copy archive "R2:$R2_BUCKET/archive" -v
+      - name: Verify R2 contents
+        run: |
+          echo "Total objects in bucket: $(rclone ls "R2:$R2_BUCKET" | wc -l)"
+          echo "--- root files ---"; rclone lsl "R2:$R2_BUCKET" --max-depth 1
+          echo "--- today's archive objects ---"
+          rclone lsl "R2:$R2_BUCKET/archive" | grep "$(TZ=Europe/Zurich date +%Y-%m-%d)" | head
