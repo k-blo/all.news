@@ -54,16 +54,19 @@
   </svg>
   <div class="container">
     <header class="topbar">
-      <div class="brand">
-        <button type="button" id="brandToggle" class="brand-link" aria-expanded="false" aria-controls="settingsView">all.news</button>
-        <button id="feedToggle" class="icon-btn" aria-expanded="false" aria-controls="settingsView" aria-label="Feed-Einstellungen">
-          <span class="icon chev" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+      <!-- Logo links straight home (no longer a filter dropdown). -->
+      <a href="/" class="brand-link">all.news</a>
+      <!-- Account is future monetisation (#20) — leave room for a third nav item here. -->
+      <nav class="topnav">
+        <button id="filterToggle" class="nav-btn" aria-expanded="false" aria-controls="settingsView">
+          Filter
+          <span class="icon" aria-hidden="true"><svg width="18" height="18"><use href="#ico-filter"/></svg></span>
         </button>
-      </div>
-      <button id="moreToggle" class="more-btn" aria-expanded="false" aria-controls="moreView">
-        More
-        <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></span>
-      </button>
+        <button id="moreToggle" class="nav-btn" aria-expanded="false" aria-controls="moreView">
+          Menu
+          <span class="icon" aria-hidden="true"><svg width="18" height="18"><use href="#ico-burger"/></svg></span>
+        </button>
+      </nav>
     </header>
 
     <!-- ===== Feed view ===== -->

@@ -468,28 +468,26 @@ function langsForCountry(code) {
 const feedView = document.getElementById("feedView");
 const settingsView = document.getElementById("settingsView");
 const moreView = document.getElementById("moreView");
-const feedToggle = document.getElementById("feedToggle");
+const filterToggle = document.getElementById("filterToggle");
 const moreToggle = document.getElementById("moreToggle");
 
 function showView(name) {
   if (feedView) feedView.hidden = name !== "feed";
   if (settingsView) settingsView.hidden = name !== "settings";
   if (moreView) moreView.hidden = name !== "more";
-  if (feedToggle) feedToggle.setAttribute("aria-expanded", String(name === "settings"));
+  if (filterToggle) filterToggle.setAttribute("aria-expanded", String(name === "settings"));
   if (moreToggle) moreToggle.setAttribute("aria-expanded", String(name === "more"));
   window.scrollTo(0, 0);
 }
 
-const brandToggle = document.getElementById("brandToggle");
-// Top-left "all.news" toggles the menu like the chevron next to it (the big
-// wordmark with the count is the home link instead).
+// "Filter" nav opens the filter panel (the logo is now a plain home link). The
+// panel filters the home feed and — on archive day pages — that day's articles.
 function toggleSettings() {
   const opening = settingsView && settingsView.hidden;
   showView(opening ? "settings" : "feed");
   if (opening) loadData(); // ensure filter panels are populated (esp. on archive pages)
 }
-if (feedToggle) feedToggle.addEventListener("click", toggleSettings);
-if (brandToggle) brandToggle.addEventListener("click", toggleSettings);
+if (filterToggle) filterToggle.addEventListener("click", toggleSettings);
 if (moreToggle) {
   moreToggle.addEventListener("click", () => {
     showView(moreView && moreView.hidden ? "more" : "feed");
