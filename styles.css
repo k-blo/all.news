@@ -393,6 +393,15 @@ a { color: inherit; }
 .fs-list .opt.off, .fs-list li.off { color: var(--dim); }
 .fs-list .opt[aria-pressed="false"] { color: var(--dim); }
 
+/* Trailing ✓ behind selected countries/languages so it's obvious what's active (#8). */
+#countryFilters .opt[aria-pressed="true"]::after,
+#langFilters .opt[aria-pressed="true"]::after {
+  content: "✓";
+  margin-left: 0.5em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 /* More view: accordion rows */
 .more-list { border-top: 1px solid var(--line); }
 .more-item { border-bottom: 1px solid var(--line); }
