@@ -1524,8 +1524,8 @@ def render_article_html(article):
         '</div>'
         f'<a class="title" href="{url}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
         '<div class="row-actions">'
-        f'<a class="row-act open" href="{url}" target="_blank" rel="noopener"><span class="label">Open</span> {OPEN_SVG}</a>'
-        f'<button class="row-act share" type="button"><span class="label">Share</span> {LINK_SVG}</button>'
+        f'<a class="row-act open" href="{url}" target="_blank" rel="noopener"><span class="label">Öffnen</span> {OPEN_SVG}</a>'
+        f'<button class="row-act share" type="button"><span class="label">Artikel teilen</span> {LINK_SVG}</button>'
         '</div>'
         '</li>'
     )

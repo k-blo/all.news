@@ -178,8 +178,8 @@ function articleHTML(a) {
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a>` +
     `<div class="row-actions">` +
-    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Open</span> ${OPEN_SVG}</a>` +
-    `<button class="row-act share" type="button"><span class="label">Share</span> ${LINK_SVG}</button>` +
+    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Öffnen</span> ${OPEN_SVG}</a>` +
+    `<button class="row-act share" type="button"><span class="label">Artikel teilen</span> ${LINK_SVG}</button>` +
     `</div></li>`;
 }
 
@@ -750,10 +750,11 @@ function shareArticle(li, btn) {
   const url = `${location.origin}${location.pathname}#${li.id}`;
   const done = () => {
     const label = btn.querySelector(".label");
-    if (!label) return;
+    if (!label || btn.dataset.copied) return; // guard against rapid re-clicks
     const prev = label.textContent;
-    label.textContent = "Copied!";
-    setTimeout(() => { label.textContent = prev; }, 1500);
+    btn.dataset.copied = "1";
+    label.textContent = "Link kopiert ✓";
+    setTimeout(() => { label.textContent = prev; delete btn.dataset.copied; }, 1500);
   };
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(url).then(done, done);
