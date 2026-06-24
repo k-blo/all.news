@@ -63,6 +63,11 @@
         const root = document.getElementById("archive");
         const dates = (idx.dates || []).slice().sort().reverse(); // newest first
 
+        // Append the year to the month header only when the archive spans more
+        // than one year, so a single year stays clean (just "August") while two
+        // Augusts never collide.
+        const multiYear = new Set(dates.map((d) => d.split("-")[0])).size > 1;
+
         // Group dates by year-month, preserving newest-first order.
         const groups = [];
         const byKey = {};
@@ -70,7 +75,7 @@
           const [y, m] = d.split("-");
           const key = `${y}-${m}`;
           if (!byKey[key]) {
-            byKey[key] = { label: MONTHS[+m], days: [] };
+            byKey[key] = { label: multiYear ? `${MONTHS[+m]} ${y}` : MONTHS[+m], days: [] };
             groups.push(byKey[key]);
           }
           byKey[key].days.push(d);
