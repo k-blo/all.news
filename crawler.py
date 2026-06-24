@@ -15,6 +15,7 @@ import sys
 import urllib.request
 import urllib.error
 import zlib
+from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -1429,9 +1430,8 @@ DE_MONTHS = ["", "Jan.", "Feb.", "März", "Apr.", "Mai", "Juni",
              "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."]
 
 # Icons reference a shared <symbol> sprite (defined once in template.html) via
-# <use>, instead of inlining the full SVG on every row — see ICON_SPRITE. Mirrors
-# the EXT_SVG/OPEN_SVG/LINK_SVG constants in script.js.
-EXT_SVG = '<svg class="ext" width="12" height="12"><use href="#ico-arrow"/></svg>'
+# <use>, instead of inlining the full SVG on every row. Mirrors the
+# OPEN_SVG/LINK_SVG/HIDE_BTN constants in script.js.
 
 
 def fmt_time(iso_str):
@@ -1470,6 +1470,21 @@ def fmt_day_en(date_iso):
 # Action icons next to each row on hover (mirror OPEN_SVG / LINK_SVG in script.js).
 OPEN_SVG = '<svg width="14" height="14"><use href="#ico-arrow"/></svg>'
 LINK_SVG = '<svg width="14" height="14"><use href="#ico-link"/></svg>'
+# Eye toggle next to the time: hides this source from the feed (mirrors HIDE_BTN
+# in script.js). Replaces the old external-link arrow per #4.
+HIDE_BTN = ('<button class="hide-src" type="button" aria-label="Quelle ausblenden"'
+            ' title="Quelle ausblenden"><svg width="13" height="13"><use href="#ico-eye"/></svg></button>')
+
+
+def portal_home(url):
+    """Origin (scheme://host) of an article URL — the source portal's home (#4)."""
+    try:
+        parts = urlsplit(url)
+        if parts.scheme and parts.netloc:
+            return f"{parts.scheme}://{parts.netloc}"
+    except ValueError:
+        pass
+    return url
 
 _SLUG_TRANSLIT = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
 
@@ -1497,13 +1512,15 @@ def article_id(article):
 def render_article_html(article):
     color = color_for(article["source"])
     url = escape(article["url"])
+    home = escape(portal_home(article["url"]))
     return (
         f'      <li class="article" id="{escape(article_id(article))}"'
         f' data-lang="{escape(article.get("lang", DEFAULT_LANG))}"'
         f' data-country="{escape(article.get("country", DEFAULT_COUNTRY))}">'
         '<div class="meta-col">'
-        f'<span class="source" style="background:{color}">{escape(article["source"])}</span>'
-        f'<span class="time">{escape(fmt_time(article.get("published", "")))} {EXT_SVG}</span>'
+        f'<a class="source" href="{home}" target="_blank" rel="noopener"'
+        f' style="background:{color}">{escape(article["source"])}</a>'
+        f'<span class="time">{escape(fmt_time(article.get("published", "")))} {HIDE_BTN}</span>'
         '</div>'
         f'<a class="title" href="{url}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
         '<div class="row-actions">'

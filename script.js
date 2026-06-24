@@ -2,10 +2,16 @@
 
 const AD_EVERY = 25; // insert an ad slot after every N visible articles
 // Icons reference the shared <symbol> sprite in the page (defined in template.html)
-// via <use>, so rows stay tiny. Must match the crawler's EXT_SVG/OPEN_SVG/LINK_SVG.
-const EXT_SVG = '<svg class="ext" width="12" height="12"><use href="#ico-arrow"/></svg>';
+// via <use>, so rows stay tiny. Must match the crawler's OPEN_SVG/LINK_SVG/HIDE_BTN.
 const OPEN_SVG = '<svg width="14" height="14"><use href="#ico-arrow"/></svg>';
 const LINK_SVG = '<svg width="14" height="14"><use href="#ico-link"/></svg>';
+// Eye toggle next to the time: hides this source from the feed (#4).
+const HIDE_BTN = '<button class="hide-src" type="button" aria-label="Quelle ausblenden" title="Quelle ausblenden"><svg width="13" height="13"><use href="#ico-eye"/></svg></button>';
+
+// Origin (scheme://host) of an article URL — the source portal's home (#4).
+function portalHome(u) {
+  try { return new URL(u).origin; } catch (e) { return u; }
+}
 
 // Stable per-article anchor id (mirrors article_id() in crawler.py). Used for
 // "Artikel teilen" deep-links: https://all.news/#<id>
@@ -164,10 +170,11 @@ function esc(s) {
 function articleHTML(a) {
   const color = colorFor(a.source);
   const url = esc(a.url);
+  const home = esc(portalHome(a.url));
   return `<li class="article" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
     `<div class="meta-col">` +
-    `<span class="source" style="background:${color}">${esc(a.source)}</span>` +
-    `<span class="time">${esc(fmtTime(a.published))} ${EXT_SVG}</span>` +
+    `<a class="source" href="${home}" target="_blank" rel="noopener" style="background:${color}">${esc(a.source)}</a>` +
+    `<span class="time">${esc(fmtTime(a.published))} ${HIDE_BTN}</span>` +
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a>` +
     `<div class="row-actions">` +
@@ -773,8 +780,24 @@ document.addEventListener("click", (e) => {
     btn.blur();
     return;
   }
-  // Title link and "Open" navigate on their own; just drop focus so
-  // :focus-within doesn't leave the card stuck in its white "card" state.
+  // Eye next to the time hides that source from the feed (#4) — same exclude
+  // model as the Medias filter, persisted in the URL.
+  const hideBtn = e.target.closest(".hide-src");
+  if (hideBtn) {
+    const li = hideBtn.closest(".article");
+    const srcEl = li && li.querySelector(".source");
+    const src = srcEl ? srcEl.textContent.trim().toLowerCase() : "";
+    if (src) {
+      excluded.add(src);
+      syncUrl();
+      if (current.length) { buildFilters(current); render(current, sortMode()); }
+      else applySsrFilter();
+    }
+    hideBtn.blur();
+    return;
+  }
+  // Title link, "Open" and the source pill navigate on their own; just drop
+  // focus so :focus-within doesn't leave the card stuck in its white state.
   const link = e.target.closest(".article a");
   if (link) {
     link.blur();

@@ -266,7 +266,11 @@ a { color: inherit; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;        /* pill links to the source's portal home (#4) */
+  cursor: pointer;
+  transition: opacity 0.12s ease;
 }
+.source:hover { opacity: 0.82; }
 .time {
   display: inline-flex;
   align-items: center;
@@ -275,6 +279,20 @@ a { color: inherit; }
   font-size: 12.5px;
 }
 .time .ext { opacity: 0.7; flex: none; }
+/* Eye toggle next to the time: hides this source from the feed (#4). */
+.hide-src {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+.hide-src:hover { opacity: 1; color: var(--accent); }
 .title {
   display: block; /* fill the grid cell so the whole title area is one click target (#6) */
   color: var(--fg);
