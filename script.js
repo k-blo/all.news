@@ -494,14 +494,6 @@ if (moreToggle) {
   });
 }
 
-// "Change location" — re-run detection and show the welcome popup again.
-const changeLocationBtn = document.getElementById("changeLocation");
-if (changeLocationBtn) {
-  changeLocationBtn.addEventListener("click", () => {
-    detectCountry().then((c) => showWelcome(c, detectLanguage()));
-  });
-}
-
 // ---------- Feed-settings group headers ----------
 // On mobile the header expands/collapses the group (the list is hidden until
 // open). On desktop the list is always visible, so the header doubles as a

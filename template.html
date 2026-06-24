@@ -93,15 +93,10 @@
 
     <!-- ===== Feed settings view ===== -->
     <section id="settingsView" class="view" hidden>
+      <!-- Column order: Categories | Countries | Languages | Medias | Archive (#2).
+           Countries, Languages and Medias are wired to the article data model
+           (data-country / data-lang / source) and persisted in the URL. -->
       <div class="feed-settings">
-        <!-- Countries, Languages and Medias are all wired to the article data model
-             (data-country / data-lang / source) and persisted in the URL. -->
-        <!-- Archive link (replaces Categories for now) + location reset -->
-        <div class="fs-group">
-          <a class="fs-archive" href="/archive.html">Archive</a>
-          <button type="button" class="fs-archive" id="changeLocation">Change location</button>
-        </div>
-
         <!-- Categories: hidden for now — no category data model yet. Re-add later.
         <div class="fs-group">
           <button type="button" class="fs-head">Categories <span class="plus">+</span></button>
@@ -139,6 +134,10 @@
         <div class="fs-group">
           <button type="button" class="fs-head">Medias <span class="plus">+</span></button>
           <div class="fs-list" id="filters"></div>
+        </div>
+
+        <div class="fs-group">
+          <a class="fs-archive" href="/archive.html">Archive</a>
         </div>
       </div>
     </section>
