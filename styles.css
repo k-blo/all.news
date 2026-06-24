@@ -112,16 +112,22 @@ a { color: inherit; }
   padding: 56px 0 64px;
 }
 .wordmark {
+  position: relative;
   display: inline-flex;
   align-items: flex-start;
-  gap: 0.14em;
   margin: 0;
   font-size: clamp(56px, 13vw, 124px);
   font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 1;
 }
+/* The count badge is positioned out of flow as a top-right superscript so it no
+   longer offsets the wordmark — "all.news" stays optically centred (#1). */
 .count-badge {
+  position: absolute;
+  left: 100%;
+  top: 0.1em;
+  margin-left: 0.14em;
   background: var(--accent);
   color: #fff;
   font-size: 0.18em;
@@ -130,7 +136,7 @@ a { color: inherit; }
   padding: 0.45em 0.7em;
   border-radius: 999px;
   letter-spacing: 0;
-  margin-top: 0.35em;
+  white-space: nowrap;
 }
 
 /* ---------- Search ---------- */
