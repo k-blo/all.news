@@ -123,5 +123,5 @@ jobs:
         run: |
           echo "Total objects in bucket: $(rclone ls "R2:$R2_BUCKET" | wc -l)"
           echo "--- root files ---"; rclone lsl "R2:$R2_BUCKET" --max-depth 1
-          echo "--- today's archive objects ---"
-          rclone lsl "R2:$R2_BUCKET/archive" | grep "$(TZ=Europe/Zurich date +%Y-%m-%d)" | head
+          echo "--- today's archive objects (by filename) ---"
+          rclone lsf "R2:$R2_BUCKET/archive" | grep "^$(TZ=Europe/Zurich date +%F)" | head || true
