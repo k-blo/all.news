@@ -170,7 +170,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: 150px 1fr;
   gap: 24px;
-  align-items: start;
+  align-items: center; /* center single-line headlines against the meta column (#5) */
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
   scroll-margin-top: 80px;
