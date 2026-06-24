@@ -78,7 +78,9 @@ a { color: inherit; }
   color: var(--fg);
   background: none;
   border: 0;
-  padding: 0;
+  /* Bigger tap target without shifting the visual position (#6). */
+  padding: 8px 4px;
+  margin: -8px -4px;
   cursor: pointer;
   font-family: inherit;
   transition: color 0.12s ease;
@@ -99,7 +101,9 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 4px 0;
+  /* Enlarge the tap target (label + icon are one button, no dead gap) (#6). */
+  padding: 8px 4px;
+  margin: -8px -4px;
   transition: color 0.12s ease;
 }
 .topbar .nav-btn:hover { color: var(--hover); }
@@ -231,7 +235,8 @@ a { color: inherit; }
   gap: 6px;
   background: none;
   border: 0;
-  padding: 0;
+  /* Taller hit area for the action links; label + icon stay one target (#6). */
+  padding: 8px 2px;
   font: inherit;
   font-size: 15px;
   font-weight: 500;
@@ -271,6 +276,7 @@ a { color: inherit; }
 }
 .time .ext { opacity: 0.7; flex: none; }
 .title {
+  display: block; /* fill the grid cell so the whole title area is one click target (#6) */
   color: var(--fg);
   text-decoration: none;
   font-size: 18px;
