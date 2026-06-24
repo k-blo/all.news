@@ -1,0 +1,41 @@
+name: seed-r2 (one-time backfill)
+
+# Manual, one-time: upload the archive/data currently committed in the repo to R2,
+# so the existing back-catalogue is preserved before the crawl switches to R2.
+# Safe to re-run (rclone copy skips unchanged files). Can be deleted afterwards.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+env:
+  RCLONE_CONFIG_R2_TYPE: s3
+  RCLONE_CONFIG_R2_PROVIDER: Cloudflare
+  RCLONE_CONFIG_R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+  RCLONE_CONFIG_R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+  RCLONE_CONFIG_R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+  RCLONE_CONFIG_R2_ACL: private
+  R2_BUCKET: ${{ secrets.R2_BUCKET }}
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install rclone
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+      - name: Backfill R2 from committed repo data
+        run: |
+          set -e
+          echo "Seeding bucket: $R2_BUCKET"
+          rclone copy crawled.json "R2:$R2_BUCKET/"        --transfers 16 -v
+          rclone copy index.html   "R2:$R2_BUCKET/"        --transfers 16 -v
+          rclone copy sitemap.xml  "R2:$R2_BUCKET/"        --transfers 16 -v
+          # whole archive/ dir: all day HTML + JSON + state files (seen, http_cache, index)
+          rclone copy archive      "R2:$R2_BUCKET/archive" --transfers 16 -v
+      - name: Summary
+        run: |
+          echo "Objects now in R2:"
+          rclone ls "R2:$R2_BUCKET" | wc -l
+          echo "Backfill complete."
