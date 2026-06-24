@@ -1789,7 +1789,15 @@ def write_outputs(articles):
     write_json("crawled.json", data)                       # newest crawl
     write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"), data)  # this date's crawl
     write_json(SEEN_FILE, sorted(seen | batch))
-    all_dates = archive_dates()
+    # Date list = prior dates (from index.json, which the workflow pulls from R2)
+    # plus today. Derived from index.json rather than listing the archive dir, so
+    # the reduce step works without every day's files present locally.
+    try:
+        with open(INDEX_FILE, encoding="utf-8") as f:
+            prior_dates = json.load(f).get("dates", [])
+    except (FileNotFoundError, json.JSONDecodeError):
+        prior_dates = archive_dates()  # local fallback (full runs)
+    all_dates = sorted(set(prior_dates) | {today}, reverse=True)
     write_json(INDEX_FILE, {"dates": all_dates})
     write_json(HTTP_CACHE_FILE, _http_cache)
 
