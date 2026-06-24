@@ -402,9 +402,11 @@ a { color: inherit; }
   font-weight: 600;
 }
 
-/* More view: accordion rows */
-.more-list { border-top: 1px solid var(--line); }
+/* Menu view: accordion rows. No rule above the first / below the last item (#7);
+   only the dividers between items remain. */
+.more-list { }
 .more-item { border-bottom: 1px solid var(--line); }
+.more-item:last-child { border-bottom: 0; }
 .more-item > summary {
   display: flex;
   align-items: center;
