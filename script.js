@@ -6,7 +6,7 @@ const AD_EVERY = 25; // insert an ad slot after every N visible articles
 const OPEN_SVG = '<svg width="14" height="14"><use href="#ico-arrow"/></svg>';
 const LINK_SVG = '<svg width="14" height="14"><use href="#ico-link"/></svg>';
 // Eye toggle next to the time: hides this source from the feed (#4).
-const HIDE_BTN = '<button class="hide-src" type="button" aria-label="Quelle ausblenden" title="Quelle ausblenden"><svg width="13" height="13"><use href="#ico-eye"/></svg></button>';
+const HIDE_BTN = '<button class="hide-src" type="button" aria-label="Hide source" title="Hide source"><svg width="13" height="13"><use href="#ico-eye"/></svg></button>';
 
 // Origin (scheme://host) of an article URL — the source portal's home (#4).
 function portalHome(u) {
@@ -14,7 +14,7 @@ function portalHome(u) {
 }
 
 // Stable per-article anchor id (mirrors article_id() in crawler.py). Used for
-// "Artikel teilen" deep-links: https://all.news/#<id>
+// "Share" deep-links: https://all.news/#<id>
 function slugify(s) {
   return (s || "")
     .toLowerCase()
@@ -178,8 +178,8 @@ function articleHTML(a) {
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a>` +
     `<div class="row-actions">` +
-    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Öffnen</span> ${OPEN_SVG}</a>` +
-    `<button class="row-act share" type="button"><span class="label">Artikel teilen</span> ${LINK_SVG}</button>` +
+    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Open</span> ${OPEN_SVG}</a>` +
+    `<button class="row-act share" type="button"><span class="label">Share</span> ${LINK_SVG}</button>` +
     `</div></li>`;
 }
 
@@ -731,7 +731,7 @@ if (searchInput) {
 }
 
 // ---------- Article sharing & deep-link highlighting ----------
-// "Artikel teilen" copies a link to the article's anchor on this page; arriving
+// "Share" copies a link to the article's anchor on this page; arriving
 // with that #hash highlights the row and scrolls it to the top.
 function highlightFromHash() {
   const id = decodeURIComponent(location.hash.slice(1));
@@ -753,7 +753,7 @@ function shareArticle(li, btn) {
     if (!label || btn.dataset.copied) return; // guard against rapid re-clicks
     const prev = label.textContent;
     btn.dataset.copied = "1";
-    label.textContent = "Link kopiert ✓";
+    label.textContent = "Link copied ✓";
     setTimeout(() => { label.textContent = prev; delete btn.dataset.copied; }, 1500);
   };
   if (navigator.clipboard && navigator.clipboard.writeText) {
