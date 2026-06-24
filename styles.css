@@ -179,7 +179,11 @@ a { color: inherit; }
   border-bottom: 1px solid var(--line);
   scroll-margin-top: 80px;
   cursor: pointer;
+  /* Hover opens a strip of space above the row where Open/Share appear (#18). */
+  transition: padding-top 0.18s ease;
 }
+.article:hover,
+.article:focus-within { padding-top: 46px; }
 /* Hover / shared-link card (States Sharing): row turns into a white card */
 .article::before {
   content: "";
@@ -198,20 +202,16 @@ a { color: inherit; }
 .article.highlight { border-bottom-color: transparent; }
 .article:hover .title,
 .article.highlight .title { color: #000; }
-/* When the actions are showing (top-right), reserve room on the title so it
-   never runs under Open/Share — no fade needed (#18). */
-.article:hover .title,
-.article:focus-within .title { padding-right: 160px; }
 .article:hover .title:visited,
 .article.highlight .title:visited { color: var(--dim); }
 .article:hover .time,
 .article.highlight .time { color: var(--dim); }
 
-/* Row actions: Open + Share, revealed on hover / when highlighted. Anchored to
-   the top-right above the title (no gradient fade over the headline) (#18). */
+/* Row actions: Open + Share. They live in the strip that opens above the row on
+   hover and slide gently into place — no gradient fade over the headline (#18). */
 .row-actions {
   position: absolute;
-  top: 2px;
+  top: 12px;
   right: 0;
   left: auto;
   bottom: auto;
@@ -220,19 +220,18 @@ a { color: inherit; }
   justify-content: flex-end;
   gap: 22px;
   opacity: 0;
+  transform: translateY(4px);
   pointer-events: none;
-  transition: opacity 0.12s ease; /* fade out immediately on leave */
+  transition: opacity 0.18s ease, transform 0.18s ease; /* subtle fade + slide */
   z-index: 2;
 }
-/* Reveal Open / Share immediately on hover so the all.news share link is one
-   quick move away (#9) — no dwell delay. */
-.article:hover .row-actions {
+/* Reveal Open / Share immediately on hover (#9) — no dwell delay. */
+.article:hover .row-actions,
+.article:focus-within .row-actions {
   opacity: 1;
+  transform: none;
   pointer-events: auto;
-  transition: opacity 0.12s ease;
 }
-/* Keyboard focus reveals immediately. */
-.article:focus-within .row-actions { opacity: 1; pointer-events: auto; }
 .row-act {
   display: inline-flex;
   align-items: center;
@@ -487,6 +486,7 @@ a { color: inherit; }
 @media (hover: none) {
   .row-actions {
     opacity: 1;
+    transform: none;
     pointer-events: auto;
     top: 16px;
     bottom: auto;
