@@ -629,6 +629,27 @@ function persistLang() {
   lsSet(STORE_WELCOMED, "1");
 }
 
+// Re-apply the visitor's remembered primary country + language (clean URL).
+// Stored value: "all" | "" (none) | csv of codes. Used on a returning home-page
+// visit and on archive day pages, so the feed and the archive share defaults.
+// Returns true if any default was applied. Pre-filters the SSR rows immediately.
+function applySavedDefaults() {
+  const savedC = lsGet(STORE_COUNTRY);
+  const savedL = lsGet(STORE_LANG);
+  if (savedC !== null) {
+    includedCountries.clear();
+    countriesAll = savedC === "all";
+    if (!countriesAll) savedC.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((c) => includedCountries.add(c));
+  }
+  if (savedL !== null) {
+    includedLangs.clear();
+    langsAll = savedL === "all";
+    if (!langsAll) savedL.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((l) => includedLangs.add(l));
+  }
+  if (savedC !== null || savedL !== null) { autoDefault = true; applySsrFilter(); return true; }
+  return false;
+}
+
 // A browser language often has no sources in the detected country (e.g. an
 // English browser in Germany). Rather than show nothing, drop the language
 // constraint first, then the country, until the auto-applied default is non-empty.
@@ -764,10 +785,13 @@ if (dayParam) {
   const hasUrlFilter = excluded.size || !countriesAll || !langsAll || query;
 
   if (archiveMatch) {
-    // Archive: static paginated page. Fetch the day's JSON only on demand
-    // (opening filters / searching). A shared filtered URL is the exception.
+    // Archive day page: static paginated HTML. Apply an explicit URL filter or
+    // the visitor's remembered defaults, then re-render that day from its JSON.
+    // (The Filter menu is present via the template on every archive day page.)
     if (hasUrlFilter) {
       applySsrFilter();
+      loadData().then(() => { if (current.length) render(current, sortMode()); });
+    } else if (applySavedDefaults()) {
       loadData().then(() => { if (current.length) render(current, sortMode()); });
     }
   } else {
@@ -775,21 +799,7 @@ if (dayParam) {
     if (hasUrlFilter) {
       applySsrFilter(); // pre-filter the SSR head so there's no flash
     } else if (lsGet(STORE_WELCOMED)) {
-      // Returning visitor: re-apply remembered primary country + language (clean
-      // URL). Stored value: "all" | "" (none) | csv of codes.
-      const savedC = lsGet(STORE_COUNTRY);
-      const savedL = lsGet(STORE_LANG);
-      if (savedC !== null) {
-        includedCountries.clear();
-        countriesAll = savedC === "all";
-        if (!countriesAll) savedC.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((c) => includedCountries.add(c));
-      }
-      if (savedL !== null) {
-        includedLangs.clear();
-        langsAll = savedL === "all";
-        if (!langsAll) savedL.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((l) => includedLangs.add(l));
-      }
-      if (savedC !== null || savedL !== null) { autoDefault = true; applySsrFilter(); }
+      applySavedDefaults(); // returning visitor: re-apply remembered country/lang
     } else {
       firstVisit = true; // welcome modal after data loads
     }
