@@ -1532,14 +1532,21 @@ def render_article_html(article):
 
 
 def render_older_dates(dates):
-    """Collapsible-looking date rows that link to each day's static archive page."""
+    """The most recent days as date rows, then a link to the full archive."""
     chev = ('<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" '
             'stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>')
-    return "\n".join(
+    arrow = ('<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" '
+             'stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>')
+    rows = [
         f'      <a class="day-row" href="/archive/{d}.html">'
         f'<span>{fmt_day_heading(d)}</span>{chev}</a>'
         for d in dates
+    ]
+    rows.append(
+        '      <a class="day-row day-row-all" href="/archive.html">'
+        f'<span>Full archive</span>{arrow}</a>'
     )
+    return "\n".join(rows)
 
 
 def write_colors_js():
@@ -1819,7 +1826,8 @@ def write_outputs(articles):
     write_json(HTTP_CACHE_FILE, _http_cache)
 
     write_colors_js()
-    older = [d for d in all_dates if d != today]
+    # Bottom-of-feed nav shows the 5 most recent days, then a "Full archive" link.
+    older = [d for d in all_dates if d != today][:5]
     write_rendered_html(
         result, "index.html",
         title="World News From Every Source in One Place – all.news",
