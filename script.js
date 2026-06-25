@@ -417,15 +417,23 @@ function buildArchiveDays(dates) {
   const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 10);
   for (const d of past) {
     const a = document.createElement("a");
+    a.className = "past";
     a.dataset.base = `/archive/${d}.html`;
-    a.textContent = fmtDayEn(d);
+    a.target = "_blank";          // open the archive day in a new tab
+    a.rel = "noopener";
+    a.innerHTML = `${fmtDayEn(d)} <svg class="ext" width="12" height="12"><use href="#ico-arrow"/></svg>`;
     box.appendChild(a);
   }
+  const more = document.createElement("a");
+  more.className = "more";
+  more.href = "/archive.html";    // full archive index (no filter to carry)
+  more.textContent = "more…";
+  box.appendChild(more);
   updateArchiveDayLinks();
 }
 function updateArchiveDayLinks() {
   const q = filterQuery();
-  for (const a of document.querySelectorAll("#archiveDays a")) {
+  for (const a of document.querySelectorAll("#archiveDays a[data-base]")) {
     a.href = (a.dataset.base || "/") + q;
   }
 }

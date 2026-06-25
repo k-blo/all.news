@@ -410,19 +410,24 @@ a { color: inherit; }
   transition: color 0.12s ease;
 }
 .fs-all:hover { color: var(--fg); }
-/* Archive day list: "Today" + recent days, each linking to that day's page. */
+/* Archive day list: "Today" (active) + recent days (deselected colour, open in a
+   new tab) + a "more…" link to the full archive. */
 .fs-days a {
   display: block;
   font-size: 17px;
   font-weight: 500;
   line-height: 1.55;
-  color: var(--fg);
+  color: var(--dim);
   text-decoration: none;
   padding: 2px 0;
   transition: color 0.12s ease;
 }
-.fs-days a:hover { color: var(--hover); }
-.fs-days a.today { color: var(--fg); }
+.fs-days a:hover { color: var(--muted); }
+.fs-days a .ext { margin-left: 6px; vertical-align: -1px; opacity: 0.8; }
+.fs-days a.today {
+  color: var(--fg); /* Today is the active default */
+}
+.fs-days a.today:hover { color: var(--hover); }
 .fs-days a.today::after {
   content: "✓";
   margin-left: 0.5em;
