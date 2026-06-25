@@ -120,6 +120,30 @@ const LANG_NAMES = {
   he: "עברית", ar: "العربية", zh: "中文",
 };
 
+const EN_MONTHS = ["", "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+function fmtDayEn(iso) {
+  const [y, m, d] = (iso || "").split("-");
+  return EN_MONTHS[+m] ? `${+d} ${EN_MONTHS[+m]} ${y}` : iso;
+}
+// Today's date (YYYY-MM-DD) in Swiss local time — matches the crawler's "today".
+function todayISO() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Zurich", year: "numeric", month: "2-digit", day: "2-digit",
+  }).format(new Date());
+}
+// Current filter as a query string ("" when nothing is filtered), so archive
+// day links can carry the active country/language/source/search selection (#2).
+function filterQuery() {
+  const p = new URLSearchParams();
+  if (excluded.size) p.set("exclude", [...excluded].join(","));
+  if (!countriesAll) p.set("country", [...includedCountries].join(","));
+  if (!langsAll) p.set("lang", [...includedLangs].join(","));
+  if (query) p.set("q", query);
+  const s = p.toString();
+  return s ? "?" + s : "";
+}
+
 // Badge color: brand color if listed, else a stable hashed hue (mirrors
 // color_for() in crawler.py) so every source gets a distinct color.
 function colorFor(s) {
@@ -353,7 +377,57 @@ function afterFilterChange() {
   buildCountryFilters(current);
   buildLangFilters(current);
   buildFilters(current);
+  updateAllToggles();
+  updateArchiveDayLinks();
   render(current, sortMode());
+}
+
+// "Select all" / "Deselect all" button label reflects each group's state (#2).
+function updateAllToggles() {
+  const set = (group, allOn) => {
+    const btn = document.querySelector(`.fs-all[data-group="${group}"]`);
+    if (btn) btn.textContent = allOn ? "Deselect all" : "Select all";
+  };
+  set("country", countriesAll);
+  set("lang", langsAll);
+  set("media", excluded.size === 0); // no source excluded = all shown
+}
+
+// Archive section: "Today" (the home feed) + the last 10 archive days. Built
+// once from /archive/index.json; each past-day link carries the active filter.
+let archiveDatesPromise = null;
+function loadArchiveDates() {
+  if (archiveDatesPromise) return archiveDatesPromise;
+  archiveDatesPromise = fetch("/archive/index.json")
+    .then((r) => r.json())
+    .then((idx) => { buildArchiveDays(idx.dates || []); return idx.dates; })
+    .catch(() => { archiveDatesPromise = null; });
+  return archiveDatesPromise;
+}
+function buildArchiveDays(dates) {
+  const box = document.getElementById("archiveDays");
+  if (!box) return;
+  box.innerHTML = "";
+  const today = todayISO();
+  const a0 = document.createElement("a");
+  a0.className = "today";
+  a0.dataset.base = "/";
+  a0.textContent = "Today";
+  box.appendChild(a0);
+  const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 10);
+  for (const d of past) {
+    const a = document.createElement("a");
+    a.dataset.base = `/archive/${d}.html`;
+    a.textContent = fmtDayEn(d);
+    box.appendChild(a);
+  }
+  updateArchiveDayLinks();
+}
+function updateArchiveDayLinks() {
+  const q = filterQuery();
+  for (const a of document.querySelectorAll("#archiveDays a")) {
+    a.href = (a.dataset.base || "/") + q;
+  }
 }
 
 // Group-header select-all / deselect-all toggles (desktop).
@@ -452,6 +526,7 @@ function loadData() {
       buildFilters(current);
       buildCountryFilters(current);
       buildLangFilters(current);
+      updateAllToggles();
       return current;
     })
     .catch(() => { dataPromise = null; }); // allow retry
@@ -492,7 +567,10 @@ function showView(name) {
 function toggleSettings() {
   const opening = settingsView && settingsView.hidden;
   showView(opening ? "settings" : "feed");
-  if (opening) loadData(); // ensure filter panels are populated (esp. on archive pages)
+  if (opening) {
+    loadData();          // ensure filter panels are populated (esp. on archive pages)
+    loadArchiveDates();  // populate the Archive day list (Today + last 10 days)
+  }
 }
 if (filterToggle) filterToggle.addEventListener("click", toggleSettings);
 if (moreToggle) {
@@ -503,21 +581,25 @@ if (moreToggle) {
 
 // ---------- Feed-settings group headers ----------
 // On mobile the header expands/collapses the group (the list is hidden until
-// open). On desktop the list is always visible, so the header doubles as a
-// select-all / deselect-all toggle for that group.
+// open). On desktop the list is always visible, so the header is just a label —
+// select-all / deselect-all is the explicit ".fs-all" button (#2).
 const mobile = window.matchMedia("(max-width: 760px)");
 for (const head of document.querySelectorAll(".fs-head")) {
   head.addEventListener("click", (e) => {
-    const group = head.closest(".fs-group");
     if (mobile.matches) {
       e.preventDefault();
-      group.classList.toggle("open");
-      return;
+      head.closest(".fs-group").classList.toggle("open");
     }
-    const listId = (group.querySelector(".fs-list") || {}).id;
-    if (listId === "countryFilters") toggleAllCountries();
-    else if (listId === "langFilters") toggleAllLangs();
-    else if (listId === "filters") toggleAllMedia();
+  });
+}
+
+// "Select all" / "Deselect all" buttons under each group.
+for (const btn of document.querySelectorAll(".fs-all")) {
+  btn.addEventListener("click", () => {
+    const g = btn.dataset.group;
+    if (g === "country") toggleAllCountries();
+    else if (g === "lang") toggleAllLangs();
+    else if (g === "media") toggleAllMedia();
   });
 }
 
@@ -619,6 +701,7 @@ function setPrimaryLang(code) {
 function refreshFeed() {
   if (autoDefault) relaxIfEmpty();
   buildFilters(current); buildCountryFilters(current); buildLangFilters(current);
+  updateAllToggles(); updateArchiveDayLinks();
   if (current.length) render(current, sortMode());
   else applySsrFilter();
 }

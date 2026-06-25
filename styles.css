@@ -394,6 +394,41 @@ a { color: inherit; }
   text-align: left;
 }
 .fs-archive:hover { text-decoration: underline; }
+/* Select all / Deselect all toggle under each filter group header (#2). */
+.fs-all {
+  display: block;
+  background: none;
+  border: 0;
+  padding: 0 0 12px;
+  margin: -6px 0 0;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.12s ease;
+}
+.fs-all:hover { color: var(--fg); }
+/* Archive day list: "Today" + recent days, each linking to that day's page. */
+.fs-days a {
+  display: block;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--fg);
+  text-decoration: none;
+  padding: 2px 0;
+  transition: color 0.12s ease;
+}
+.fs-days a:hover { color: var(--hover); }
+.fs-days a.today { color: var(--fg); }
+.fs-days a.today::after {
+  content: "✓";
+  margin-left: 0.5em;
+  color: var(--fg);
+  font-weight: 600;
+}
 .fs-list {
   list-style: none;
   margin: 0;
@@ -472,6 +507,11 @@ a { color: inherit; }
   .fs-group.open .fs-head .plus { transform: rotate(45deg); }
   .fs-list { display: none; padding: 0 2px 18px; }
   .fs-group.open .fs-list { display: flex; }
+  /* Select all / Deselect all only shows once the group is expanded. */
+  .fs-all { display: none; padding: 0 2px 16px; }
+  .fs-group.open .fs-all { display: block; }
+  /* Archive day list (no accordion header) stays visible. */
+  .fs-days { display: flex !important; padding: 0 2px 18px; }
 }
 
 @media (max-width: 640px) {

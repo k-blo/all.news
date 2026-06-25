@@ -123,21 +123,27 @@
 
         <div class="fs-group">
           <button type="button" class="fs-head">Countries <span class="plus">+</span></button>
+          <button type="button" class="fs-all" data-group="country">Select all</button>
           <div class="fs-list" id="countryFilters"></div>
         </div>
 
         <div class="fs-group">
           <button type="button" class="fs-head">Languages <span class="plus">+</span></button>
+          <button type="button" class="fs-all" data-group="lang">Select all</button>
           <div class="fs-list" id="langFilters"></div>
         </div>
 
         <div class="fs-group">
           <button type="button" class="fs-head">Medias <span class="plus">+</span></button>
+          <button type="button" class="fs-all" data-group="media">Select all</button>
           <div class="fs-list" id="filters"></div>
         </div>
 
         <div class="fs-group">
           <a class="fs-archive" href="/archive.html">Archive</a>
+          <!-- "Today" (the home feed) + the last 10 archive days, populated by
+               script.js. Past-day links carry the active filter (#2). -->
+          <div class="fs-list fs-days" id="archiveDays"></div>
         </div>
       </div>
     </section>
