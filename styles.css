@@ -326,38 +326,44 @@ a { color: inherit; }
 }
 .hide-src:hover { opacity: 1; color: var(--accent); }
 
-/* Undo toast (e.g. "<source> hidden · Undo") (#4). */
-.toast {
+/* Confirm-hide popup (#4): white card on a dimmed backdrop. */
+.confirm-overlay {
   position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%) translateY(8px);
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  background: #fff;
-  color: #000;
-  padding: 12px 18px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  inset: 0;
   z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
 }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
-.toast-action {
+.confirm-modal {
+  width: 100%;
+  max-width: 340px;
+  background: #fff;
+  color: #111;
+  border-radius: 16px;
+  padding: 28px 28px 22px;
+}
+.confirm-modal h2 { font-size: 1.4rem; font-weight: 600; margin: 0 0 0.5em; }
+.confirm-modal p { font-size: 0.95rem; line-height: 1.5; margin: 0 0 1.8em; color: #333; }
+.confirm-modal .settings-link {
   background: none;
   border: 0;
   padding: 0;
   font: inherit;
-  font-weight: 600;
-  color: var(--accent);
+  color: #111;
+  text-decoration: underline;
   cursor: pointer;
 }
-.toast-action:hover { color: var(--accent-hover); }
+.confirm-modal .settings-link svg { vertical-align: -1px; }
+.confirm-actions { display: flex; align-items: center; justify-content: space-between; }
+.confirm-actions button { font: inherit; font-weight: 500; background: none; border: 0; padding: 0; cursor: pointer; }
+.confirm-actions .cancel { color: var(--accent); }
+.confirm-actions .cancel:hover { color: var(--accent-hover); }
+.confirm-actions .confirm { color: #111; }
+.confirm-actions .confirm:hover { color: #000; }
 .title {
   display: block; /* fill the grid cell so the whole title area is one click target (#6) */
   color: var(--fg);

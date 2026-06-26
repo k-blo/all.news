@@ -916,27 +916,33 @@ function setSourceHidden(name, hidden) {
   else applySsrFilter();
 }
 
-// Lightweight toast with an optional action (used for "X hidden · Undo", #4).
-let toastTimer = null;
-function showToast(message, actionLabel, onAction) {
-  let t = document.getElementById("toast");
-  if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; document.body.appendChild(t); }
-  t.textContent = message;
-  if (actionLabel) {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "toast-action";
-    b.textContent = actionLabel;
-    b.addEventListener("click", () => { onAction(); hideToast(); });
-    t.appendChild(b);
-  }
-  t.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(hideToast, 5000);
-}
-function hideToast() {
-  const t = document.getElementById("toast");
-  if (t) t.classList.remove("show");
+// Confirmation popup before hiding a source (#4): explains the action and points
+// to where it can be undone, so an accidental click never silently hides a source.
+function confirmHide(name) {
+  const overlay = document.createElement("div");
+  overlay.className = "confirm-overlay";
+  overlay.innerHTML =
+    '<div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">' +
+    '<h2 id="confirmTitle">Hide this provider?</h2>' +
+    '<p>You can always show it again in your feed ' +
+    '<button type="button" class="settings-link">settings <svg width="12" height="12"><use href="#ico-arrow"/></svg></button></p>' +
+    '<div class="confirm-actions">' +
+    '<button type="button" class="cancel">No, cancel ✕</button>' +
+    '<button type="button" class="confirm">Yes, hide ✓</button>' +
+    '</div></div>';
+  document.body.appendChild(overlay);
+  const close = () => { overlay.remove(); document.removeEventListener("keydown", onKey); };
+  const onKey = (ev) => { if (ev.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey);
+  overlay.addEventListener("click", (ev) => { if (ev.target === overlay) close(); });
+  overlay.querySelector(".cancel").addEventListener("click", close);
+  overlay.querySelector(".confirm").addEventListener("click", () => { setSourceHidden(name, true); close(); });
+  overlay.querySelector(".settings-link").addEventListener("click", () => {
+    close();
+    showView("settings");
+    loadData();
+    loadArchiveDates();
+  });
 }
 
 document.addEventListener("click", (e) => {
@@ -949,15 +955,15 @@ document.addEventListener("click", (e) => {
     btn.blur();
     return;
   }
-  // Eye-off next to the time hides that source from the feed (#4) — same exclude
-  // model as the Medias filter, persisted in the URL. An undo toast explains what
-  // happened and recovers an accidental click.
+  // Eye-off next to the time asks to hide that source from the feed (#4). A
+  // confirmation popup explains the action first, so an accidental click can't
+  // silently make a source disappear.
   const hideBtn = e.target.closest(".hide-src");
   if (hideBtn) {
     const li = hideBtn.closest(".article");
     const srcEl = li && li.querySelector(".source");
     const name = srcEl ? srcEl.textContent.trim() : "";
-    if (name) { setSourceHidden(name, true); showToast(`${name} hidden`, "Undo", () => setSourceHidden(name, false)); }
+    if (name) confirmHide(name);
     hideBtn.blur();
     return;
   }
