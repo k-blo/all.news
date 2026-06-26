@@ -1512,7 +1512,7 @@ LINK_SVG = '<svg width="18" height="18"><use href="#ico-link"/></svg>'
 # Eye toggle next to the time: hides this source from the feed (mirrors HIDE_BTN
 # in script.js). Replaces the old external-link arrow per #4.
 HIDE_BTN = ('<button class="hide-src" type="button" aria-label="Hide source"'
-            ' title="Hide source"><svg width="13" height="13"><use href="#ico-eye"/></svg></button>')
+            ' title="Hide source"><svg width="14" height="14"><use href="#ico-eye-off"/></svg></button>')
 
 
 def portal_home(url):

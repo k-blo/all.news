@@ -6,7 +6,7 @@ const AD_EVERY = 25; // insert an ad slot after every N visible articles
 const OPEN_SVG = '<svg width="18" height="18"><use href="#ico-arrow"/></svg>';
 const LINK_SVG = '<svg width="18" height="18"><use href="#ico-link"/></svg>';
 // Eye toggle next to the time: hides this source from the feed (#4).
-const HIDE_BTN = '<button class="hide-src" type="button" aria-label="Hide source" title="Hide source"><svg width="13" height="13"><use href="#ico-eye"/></svg></button>';
+const HIDE_BTN = '<button class="hide-src" type="button" aria-label="Hide source" title="Hide source"><svg width="14" height="14"><use href="#ico-eye-off"/></svg></button>';
 
 // Origin (scheme://host) of an article URL — the source portal's home (#4).
 function portalHome(u) {
@@ -882,6 +882,38 @@ function shareArticle(li, btn) {
   }
 }
 
+// Hide / unhide a source (reuses the Medias exclude model), then refresh panels.
+function setSourceHidden(name, hidden) {
+  const lc = name.toLowerCase();
+  if (hidden) excluded.add(lc); else excluded.delete(lc);
+  syncUrl();
+  if (current.length) { buildFilters(current); render(current, sortMode()); }
+  else applySsrFilter();
+}
+
+// Lightweight toast with an optional action (used for "X hidden · Undo", #4).
+let toastTimer = null;
+function showToast(message, actionLabel, onAction) {
+  let t = document.getElementById("toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; document.body.appendChild(t); }
+  t.textContent = message;
+  if (actionLabel) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "toast-action";
+    b.textContent = actionLabel;
+    b.addEventListener("click", () => { onAction(); hideToast(); });
+    t.appendChild(b);
+  }
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 5000);
+}
+function hideToast() {
+  const t = document.getElementById("toast");
+  if (t) t.classList.remove("show");
+}
+
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".row-act.share");
   if (btn) {
@@ -892,19 +924,15 @@ document.addEventListener("click", (e) => {
     btn.blur();
     return;
   }
-  // Eye next to the time hides that source from the feed (#4) — same exclude
-  // model as the Medias filter, persisted in the URL.
+  // Eye-off next to the time hides that source from the feed (#4) — same exclude
+  // model as the Medias filter, persisted in the URL. An undo toast explains what
+  // happened and recovers an accidental click.
   const hideBtn = e.target.closest(".hide-src");
   if (hideBtn) {
     const li = hideBtn.closest(".article");
     const srcEl = li && li.querySelector(".source");
-    const src = srcEl ? srcEl.textContent.trim().toLowerCase() : "";
-    if (src) {
-      excluded.add(src);
-      syncUrl();
-      if (current.length) { buildFilters(current); render(current, sortMode()); }
-      else applySsrFilter();
-    }
+    const name = srcEl ? srcEl.textContent.trim() : "";
+    if (name) { setSourceHidden(name, true); showToast(`${name} hidden`, "Undo", () => setSourceHidden(name, false)); }
     hideBtn.blur();
     return;
   }
