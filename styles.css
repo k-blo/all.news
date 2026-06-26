@@ -300,8 +300,10 @@ a { color: inherit; }
   display: block; /* fill the grid cell so the whole title area is one click target (#6) */
   color: var(--fg);
   text-decoration: none;
-  font-size: 17px;
-  line-height: 1.45;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0;
 }
 .title:hover { text-decoration: underline; }
 .title:visited { color: var(--dim); } /* Font Inactive — already-visited links */
