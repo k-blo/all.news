@@ -439,7 +439,7 @@ function buildArchiveDays(dates) {
     a.dataset.base = `/archive/${d}.html`;
     a.target = "_blank";          // open the archive day in a new tab
     a.rel = "noopener";
-    a.innerHTML = `${fmtDayEn(d)} <svg class="ext" width="12" height="12"><use href="#ico-arrow"/></svg>`;
+    a.textContent = fmtDayEn(d);
     box.appendChild(a);
   }
   updateArchiveDayLinks();

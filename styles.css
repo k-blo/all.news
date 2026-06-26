@@ -495,7 +495,6 @@ a { color: inherit; }
   transition: color 0.12s ease;
 }
 .fs-days a:hover { color: var(--muted); }
-.fs-days a .ext { margin-left: 6px; vertical-align: -1px; opacity: 0.8; }
 .fs-days a.today {
   color: var(--fg); /* today's date is the active default — uniform row spacing */
 }
