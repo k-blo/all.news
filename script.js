@@ -426,7 +426,7 @@ function buildArchiveDays(dates) {
   a0.dataset.base = "/";
   a0.textContent = "Today";
   box.appendChild(a0);
-  const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 10);
+  const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 30);
   for (const d of past) {
     const a = document.createElement("a");
     a.className = "past";
