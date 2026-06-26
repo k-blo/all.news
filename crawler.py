@@ -1507,8 +1507,8 @@ def fmt_day_en(date_iso):
 
 
 # Action icons next to each row on hover (mirror OPEN_SVG / LINK_SVG in script.js).
-OPEN_SVG = '<svg width="14" height="14"><use href="#ico-arrow"/></svg>'
-LINK_SVG = '<svg width="14" height="14"><use href="#ico-link"/></svg>'
+OPEN_SVG = '<svg width="18" height="18"><use href="#ico-arrow"/></svg>'
+LINK_SVG = '<svg width="18" height="18"><use href="#ico-link"/></svg>'
 # Eye toggle next to the time: hides this source from the feed (mirrors HIDE_BTN
 # in script.js). Replaces the old external-link arrow per #4.
 HIDE_BTN = ('<button class="hide-src" type="button" aria-label="Hide source"'
@@ -1564,8 +1564,8 @@ def render_article_html(article):
         '</div>'
         f'<a class="title" href="{url}" target="_blank" rel="noopener">{escape(article["title"])}</a>'
         '<div class="row-actions">'
-        f'<a class="row-act open" href="{url}" target="_blank" rel="noopener"><span class="label">Open</span> {OPEN_SVG}</a>'
-        f'<button class="row-act share" type="button"><span class="label">Share</span> {LINK_SVG}</button>'
+        f'<a class="row-act open" href="{url}" target="_blank" rel="noopener"><span class="label">Open article</span> {OPEN_SVG}</a>'
+        f'<button class="row-act share" type="button"><span class="label">Share article</span> {LINK_SVG}</button>'
         '</div>'
         '</li>'
     )

@@ -39,7 +39,7 @@
   --dim: #4d4d4d;         /* Font Inactive */
   --accent: #ff4433;      /* Branding / Error */
   --accent-hover: #e53d2e;/* Red Hover */
-  --link: #0a3fe0;        /* row action links (per States Sharing) */
+  --link: #0000ee;        /* row action links — brand blue (#21) */
   --col: 760px;
 }
 

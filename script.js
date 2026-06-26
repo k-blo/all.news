@@ -3,8 +3,8 @@
 const AD_EVERY = 25; // insert an ad slot after every N visible articles
 // Icons reference the shared <symbol> sprite in the page (defined in template.html)
 // via <use>, so rows stay tiny. Must match the crawler's OPEN_SVG/LINK_SVG/HIDE_BTN.
-const OPEN_SVG = '<svg width="14" height="14"><use href="#ico-arrow"/></svg>';
-const LINK_SVG = '<svg width="14" height="14"><use href="#ico-link"/></svg>';
+const OPEN_SVG = '<svg width="18" height="18"><use href="#ico-arrow"/></svg>';
+const LINK_SVG = '<svg width="18" height="18"><use href="#ico-link"/></svg>';
 // Eye toggle next to the time: hides this source from the feed (#4).
 const HIDE_BTN = '<button class="hide-src" type="button" aria-label="Hide source" title="Hide source"><svg width="13" height="13"><use href="#ico-eye"/></svg></button>';
 
@@ -214,8 +214,8 @@ function articleHTML(a) {
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a>` +
     `<div class="row-actions">` +
-    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Open</span> ${OPEN_SVG}</a>` +
-    `<button class="row-act share" type="button"><span class="label">Share</span> ${LINK_SVG}</button>` +
+    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Open article</span> ${OPEN_SVG}</a>` +
+    `<button class="row-act share" type="button"><span class="label">Share article</span> ${LINK_SVG}</button>` +
     `</div></li>`;
 }
 
