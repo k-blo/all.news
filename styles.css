@@ -625,7 +625,7 @@ a { color: inherit; }
    Brand convention (Colors.png): white text dims to "Font Hover" (--hover) on
    hover; accent elements go to "Red Hover" (--accent-hover). Applied to every
    clickable element so hovering always gives feedback. */
-.wordmark-home:hover { color: var(--hover); }
+/* #22: the big hero wordmark keeps its colour on hover (no dim). */
 .fs-head:hover { color: var(--hover); }
 .fs-archive:hover { color: var(--hover); }
 .fs-list .opt:hover { color: var(--hover); }
