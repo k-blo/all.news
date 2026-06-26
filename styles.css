@@ -491,9 +491,7 @@ a { color: inherit; }
 .fs-days a:hover { color: var(--muted); }
 .fs-days a .ext { margin-left: 6px; vertical-align: -1px; opacity: 0.8; }
 .fs-days a.today {
-  color: var(--fg); /* Today is the active default */
-  /* Same spacing as the Select all / Deselect all row so they align. */
-  padding: 48px 0 24px;
+  color: var(--fg); /* today's date is the active default — uniform row spacing */
 }
 .fs-days a.today:hover { color: var(--hover); }
 .fs-days a.today::after {
@@ -588,7 +586,6 @@ a { color: inherit; }
   /* Archive day list (no accordion header) stays visible. */
   .fs-days { display: flex !important; padding: 0 2px 18px; }
   .fs-archive { padding: 18px 2px 0; }
-  .fs-days a.today { padding: 32px 2px 16px; }
 }
 
 @media (max-width: 640px) {

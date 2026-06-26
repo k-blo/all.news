@@ -410,8 +410,9 @@ function updateAllToggles() {
   set("media", excluded.size === 0); // no source excluded = all shown
 }
 
-// Archive section: "Today" (the home feed) + the last 10 archive days. Built
-// once from /archive/index.json; each past-day link carries the active filter.
+// Archive section: today's date (the home feed, active) + up to 30 past archive
+// days, all listed uniformly. Built once from /archive/index.json; each past-day
+// link carries the active filter.
 let archiveDatesPromise = null;
 function loadArchiveDates() {
   if (archiveDatesPromise) return archiveDatesPromise;
@@ -429,7 +430,7 @@ function buildArchiveDays(dates) {
   const a0 = document.createElement("a");
   a0.className = "today";
   a0.dataset.base = "/";
-  a0.textContent = "Today";
+  a0.textContent = fmtDayEn(today); // today's date (the home feed), not the word "Today"
   box.appendChild(a0);
   const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 30);
   for (const d of past) {
