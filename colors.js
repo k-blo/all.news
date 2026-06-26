@@ -231,5 +231,14 @@ const SOURCE_COLORS = {
   "El Diario Vasco": "#1a5276",
   "Newtral": "#00b3a4",
   "Maldita": "#1ab34a",
-  "El Independiente": "#2b2b6b"
+  "El Independiente": "#2b2b6b",
+  "CGTN": "#c4161c",
+  "China Digital Times": "#d35400",
+  "TASS": "#0a4b9f",
+  "RT": "#3d8b37",
+  "RIA Novosti": "#1f5fa6",
+  "Meduza": "#e0533f",
+  "The Moscow Times": "#c8102e",
+  "Novaya Gazeta Europe": "#9b1c1c",
+  "Mediazona": "#cc2222"
 };

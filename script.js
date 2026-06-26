@@ -110,6 +110,7 @@ const COUNTRY_NAMES = {
   AU: "Australia", NZ: "New Zealand",
   IN: "India", JP: "Japan", KR: "South Korea", SG: "Singapore", ID: "Indonesia",
   PH: "Philippines", VN: "Vietnam", PK: "Pakistan", IL: "Israel", QA: "Qatar", HK: "Hong Kong",
+  CN: "China", RU: "Russia",
 };
 // ISO 639-1 -> display name (shown in the source's own language).
 const LANG_NAMES = {
@@ -117,7 +118,7 @@ const LANG_NAMES = {
   nl: "Nederlands", pt: "Português", pl: "Polski", sv: "Svenska", no: "Norsk",
   da: "Dansk", fi: "Suomi", el: "Ελληνικά", cs: "Čeština", hu: "Magyar", ro: "Română",
   uk: "Українська", tr: "Türkçe", ja: "日本語", id: "Bahasa Indonesia", vi: "Tiếng Việt",
-  he: "עברית", ar: "العربية", zh: "中文",
+  he: "עברית", ar: "العربية", zh: "中文", ru: "Русский",
 };
 
 const EN_MONTHS = ["", "January", "February", "March", "April", "May", "June",
@@ -698,6 +699,9 @@ const TZ_COUNTRY = {
   "Asia/Kolkata": "IN", "Asia/Tokyo": "JP", "Asia/Seoul": "KR", "Asia/Singapore": "SG",
   "Asia/Jakarta": "ID", "Asia/Manila": "PH", "Asia/Ho_Chi_Minh": "VN", "Asia/Karachi": "PK",
   "Asia/Jerusalem": "IL", "Asia/Qatar": "QA", "Asia/Hong_Kong": "HK",
+  "Asia/Shanghai": "CN", "Asia/Chongqing": "CN", "Asia/Urumqi": "CN",
+  "Europe/Moscow": "RU", "Europe/Samara": "RU", "Asia/Yekaterinburg": "RU",
+  "Asia/Novosibirsk": "RU", "Asia/Krasnoyarsk": "RU", "Asia/Vladivostok": "RU",
 };
 
 // Best-effort visitor country (ISO alpha-2): Cloudflare edge IP first, then

@@ -440,6 +440,24 @@ FEEDS = [
     {"source": "Al Jazeera",    "url": "https://www.aljazeera.com/xml/rss/all.xml"},
     # --- Hong Kong (HK, en) ---
     {"source": "SCMP",          "url": "https://www.scmp.com/rss/91/feed"},
+    # ===== China & Russia: state + independent/exile (see SOURCES_TODO.md) =====
+    # China state broadcaster (English). The other CN state outlets (Xinhua,
+    # People's Daily, China Daily, Global Times) ship broken/static RSS dates, so
+    # only CGTN is viable under the today-filter; see SOURCES_TODO.md.
+    {"source": "CGTN",                 "url": "https://www.cgtn.com/subscribe/rss/section/world.xml"},
+    # China independent, in exile.
+    {"source": "China Digital Times",  "url": "https://chinadigitaltimes.net/feed/"},
+    # Russia state agencies/broadcaster. RT carries an EU distribution ban (2022)
+    # that Switzerland did not adopt — included as a risk-based, Swiss-rooted call
+    # (SOURCES_TODO.md), since it stays findable and CH never banned it.
+    {"source": "TASS",                 "url": "https://tass.com/rss/v2.xml"},
+    {"source": "RT",                   "url": "https://www.rt.com/rss/"},
+    {"source": "RIA Novosti",          "url": "https://ria.ru/export/rss2/archive/index.xml"},
+    # Russia independent, operating in exile.
+    {"source": "Meduza",               "url": "https://meduza.io/rss/all"},
+    {"source": "The Moscow Times",     "url": "https://www.themoscowtimes.com/rss/news"},
+    {"source": "Novaya Gazeta Europe", "url": "https://novayagazeta.eu/feed/rss"},
+    {"source": "Mediazona",            "url": "https://zona.media/rss"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
@@ -783,6 +801,13 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     # Ireland (en/IE)
     "Irish Independent": {"lang":"en","country":"IE"}, "The Journal": {"lang":"en","country":"IE"},
     "Irish Mirror": {"lang":"en","country":"IE"},
+    # China (en, CN) — state + independent/exile
+    "CGTN": {"lang":"en","country":"CN"}, "China Digital Times": {"lang":"en","country":"CN"},
+    # Russia (en/ru, RU) — state + independent/exile
+    "TASS": {"lang":"en","country":"RU"}, "RT": {"lang":"en","country":"RU"},
+    "RIA Novosti": {"lang":"ru","country":"RU"}, "Meduza": {"lang":"ru","country":"RU"},
+    "The Moscow Times": {"lang":"en","country":"RU"},
+    "Novaya Gazeta Europe": {"lang":"ru","country":"RU"}, "Mediazona": {"lang":"ru","country":"RU"},
     # News-sitemap sources for RSS-poor markets
     "Excélsior": {"lang":"es","country":"MX"}, "Milenio": {"lang":"es","country":"MX"},
     "Al Jazeera Arabic": {"lang":"ar","country":"QA"},
@@ -1403,6 +1428,11 @@ SOURCE_COLORS = {
     "Mundo Deportivo": "#cf1f2e", "El Salto": "#d6001c", "Las Provincias": "#1a6bb3",
     "La Verdad": "#c8344a", "Ideal": "#0a6b4a", "Diario Sur": "#1a8cc4", "El Diario Vasco": "#1a5276",
     "Newtral": "#00b3a4", "Maldita": "#1ab34a", "El Independiente": "#2b2b6b",
+    # China & Russia
+    "CGTN": "#c4161c", "China Digital Times": "#d35400",
+    "TASS": "#0a4b9f", "RT": "#3d8b37", "RIA Novosti": "#1f5fa6",
+    "Meduza": "#e0533f", "The Moscow Times": "#c8102e",
+    "Novaya Gazeta Europe": "#9b1c1c", "Mediazona": "#cc2222",
 }
 
 

@@ -30,32 +30,33 @@ it (and thus include state media, party papers, etc.) is an open decision below.
 
 ---
 
-## China & Russia (deferred — decision needed)
+## China & Russia (added — state + independent/exile)
 
-Deferred because the prominent outlets are mostly **state / party organs**, the
-genuinely independent ones operate **in exile**, and RT/Sputnik are EU-banned.
-None are currently in `crawler.py`.
+Now in `crawler.py` under full Google-News parity (the interim "skip state/party
+organs" heuristic is relaxed). `ru` (Русский) added to `LANG_NAMES`, and `CN`/`RU`
+to `COUNTRY_NAMES` + `TZ_COUNTRY` (script.js). RT is included as a risk-based,
+Swiss-rooted call (EU's 2022 distribution ban was **not** adopted by CH).
 
-### China (CN — zh / en)
+### China (CN — en)
 | Source | Type | Status |
 |---|---|---|
-| **Caixin** (caixinglobal.com) | relatively independent business/investigative | **candidate** — probe |
+| **CGTN** | state broadcaster | ✅ added — `/subscribe/rss/section/world.xml`, fresh dates |
+| **China Digital Times** | independent, in exile (US) | ✅ added — `/feed/`, robots `*: Allow /` |
 | SCMP | Hong Kong (Alibaba-owned) | ✅ already included (under HK) |
-| The Paper / Sixth Tone (thepaper.cn) | state-backed, news-focused | candidate if relaxing |
-| Xinhua · People's Daily · Global Times · CGTN · China Daily | state / **CCP organ** | excluded under interim rule; add only as a deliberate "official line" inclusion |
+| Xinhua · People's Daily · China Daily · Global Times | state / CCP organ | ❌ **not usable** — English RSS ship static/broken dates (2012–2018) or a popularity feed (GT, newest ~8 days); no working news sitemap. People's Daily *zh* is also stale (newest 2025). Re-probe only if they fix dates. |
+| Caixin · Sixth Tone | independent / state-backed | no public RSS (404) / near-empty feed |
 
 ### Russia (RU — ru / en)
 | Source | Type | Status |
 |---|---|---|
-| **Meduza** (meduza.io) | independent, exiled (Riga); RU labels it "undesirable" | **candidate** — probe |
-| **The Moscow Times** (EN) | independent, exiled (Amsterdam) | **candidate** — probe |
-| Novaya Gazeta Europe | independent, exiled | candidate — probe |
-| Kommersant · RBC · Interfax | domestic, under pressure | candidate if relaxing |
-| TASS · RIA Novosti | state agency | excluded under interim rule |
-| RT · Sputnik | state | **EU distribution ban (2022); CH did *not* adopt it** — risk-based call, not an automatic no. Google complied in EU News/YouTube/Ads, but content stays findable via mirrors and outside the EU |
-
-> If Russian sources land, add language **`ru` (Русский)** to `LANG_NAMES`
-> (script.js). `zh` and `ar`/`he` already added.
+| **TASS** (EN) | state agency | ✅ added — `/rss/v2.xml` |
+| **RT** (EN) | state | ✅ added — `/rss/` (EU ban 2022; CH did *not* adopt — risk-based) |
+| **RIA Novosti** (ru) | state agency | ✅ added — `/export/rss2/archive/index.xml` |
+| **Meduza** (ru) | independent, exiled (Riga) | ✅ added — `/rss/all` |
+| **The Moscow Times** (EN) | independent, exiled (Amsterdam) | ✅ added — `/rss/news` |
+| **Novaya Gazeta Europe** (ru) | independent, exiled | ✅ added — `/feed/rss` |
+| **Mediazona** (ru) | independent, exiled | ✅ added — `zona.media/rss` |
+| Kommersant · RBC · Interfax | domestic, under pressure | candidate — not yet probed |
 
 ---
 
@@ -112,9 +113,10 @@ but ToI also fails with a browser UA, so it's likely a JS challenge, not just IP
 
 ## Open decisions
 
-1. **Relax the "skip party organs/blogs/MT" heuristic to full Google-News parity?**
-   This is the big one — it gates CN/RU state media, *Unsere Zeit* (DKP),
-   *Deutsche Stimme* (NPD), and the blog-format outlets.
+1. ~~Relax the "skip party organs/blogs/MT" heuristic to full Google-News parity?~~
+   **Decided: yes.** CN/RU state media (CGTN, TASS, RT, RIA) + independents are in.
+   The German party organs (*Unsere Zeit*, *Deutsche Stimme*) and blog-format
+   outlets are now eligible on the same basis — add when wanted.
 2. **Compact** — include despite the suspended ban? (legal caution for a DE/EU audience)
-3. **Independent CN/RU** (Caixin, Meduza, Moscow Times, Novaya Gazeta Europe) —
-   these are rule-compliant *today*; probe + add whenever we want, independent of #1.
+3. ~~Independent CN/RU~~ — **done** (Meduza, Moscow Times, Novaya Gazeta Europe,
+   Mediazona, China Digital Times). Caixin has no public RSS.
