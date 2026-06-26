@@ -168,7 +168,7 @@ a { color: inherit; }
   background: none;
   border: 0;
   padding: 4px;
-  color: var(--muted);
+  color: var(--fg); /* magnifier / clear icon are white */
   cursor: pointer;
   transition: color 0.12s ease;
 }
@@ -178,7 +178,7 @@ a { color: inherit; }
 .search-wrap:not(.has-query) .search-icon { pointer-events: none; }
 .search-wrap.has-query .ico-mag { display: none; }
 .search-wrap.has-query .ico-clear { display: inline-flex; }
-.search-wrap.has-query .search-icon:hover { color: var(--fg); }
+.search-wrap.has-query .search-icon:hover { color: var(--hover); }
 
 /* Empty search state */
 .no-results {
