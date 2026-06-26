@@ -244,6 +244,11 @@ function render(articles, mode) {
   if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
   list.innerHTML = "";
   shownCount = 0;
+  if (!visibleArticles.length && query) {
+    // No matches for the search term — say so instead of a blank list (#25).
+    list.innerHTML = `<li class="no-results">No results for “${esc(query)}”</li>`;
+    return;
+  }
   appendBatch();
   ensureHashVisible(); // render far enough to reveal a deep-linked article
   highlightFromHash();
@@ -832,12 +837,31 @@ if (dayParam) {
 }
 
 const searchInput = document.getElementById("search");
+const searchClear = document.getElementById("searchClear");
+// Toggle the magnifier ⇄ × icon based on whether there's a query.
+function syncSearchIcon() {
+  const wrap = searchInput && searchInput.closest(".search-wrap");
+  if (wrap) wrap.classList.toggle("has-query", !!searchInput.value);
+}
 if (searchInput) {
   searchInput.value = query;
+  syncSearchIcon();
   searchInput.addEventListener("input", () => {
     query = searchInput.value.trim().toLowerCase();
+    syncSearchIcon();
     syncUrl();
     loadData().then(() => render(current, sortMode())); // archive pages fetch on first search
+  });
+}
+if (searchClear) {
+  searchClear.addEventListener("click", () => {
+    if (!searchInput) return;
+    searchInput.value = "";
+    query = "";
+    syncSearchIcon();
+    syncUrl();
+    searchInput.focus();
+    loadData().then(() => render(current, sortMode()));
   });
 }
 

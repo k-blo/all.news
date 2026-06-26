@@ -144,7 +144,7 @@ a { color: inherit; }
 }
 
 /* ---------- Search ---------- */
-.search-wrap { padding: 0 0 18px; }
+.search-wrap { position: relative; padding: 0 0 18px; }
 #search {
   width: 100%;
   background: transparent;
@@ -153,11 +153,40 @@ a { color: inherit; }
   color: var(--fg);
   font: inherit;
   font-size: 15px;
-  padding: 8px 2px;
+  padding: 8px 30px 8px 2px; /* room for the magnifier / clear icon */
   outline: none;
 }
 #search::placeholder { color: var(--dim); }
 #search:focus { border-color: var(--muted); }
+/* Hide the browser's native search clear button — we draw our own (#25). */
+#search::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; display: none; }
+.search-icon {
+  position: absolute;
+  right: 0;
+  top: 8px;
+  display: inline-flex;
+  background: none;
+  border: 0;
+  padding: 4px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.12s ease;
+}
+.search-icon .ico-clear { display: none; }
+/* While empty the magnifier is just a hint (not clickable); with a query it
+   becomes a clickable ×. */
+.search-wrap:not(.has-query) .search-icon { pointer-events: none; }
+.search-wrap.has-query .ico-mag { display: none; }
+.search-wrap.has-query .ico-clear { display: inline-flex; }
+.search-wrap.has-query .search-icon:hover { color: var(--fg); }
+
+/* Empty search state */
+.no-results {
+  list-style: none;
+  padding: 24px 2px;
+  color: var(--muted);
+  font-size: 15px;
+}
 
 /* ---------- Day heading ---------- */
 .day-heading {
