@@ -17,6 +17,11 @@ Analytics is intentionally left as a placeholder (see the "Analytics placeholder
 in `template.html` and `archive.html`) — wire up all.news's own analytics there rather than
 reusing swissnews.org's tag.
 
+## Conventions
+
+- **Git commit messages are always a single line** — no body, no trailing
+  co-author block. One short summary line per commit.
+
 ## Commands
 
 ```bash
