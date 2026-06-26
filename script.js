@@ -436,11 +436,6 @@ function buildArchiveDays(dates) {
     a.innerHTML = `${fmtDayEn(d)} <svg class="ext" width="12" height="12"><use href="#ico-arrow"/></svg>`;
     box.appendChild(a);
   }
-  const more = document.createElement("a");
-  more.className = "more";
-  more.href = "/archive.html";    // full archive index (no filter to carry)
-  more.textContent = "more…";
-  box.appendChild(more);
   updateArchiveDayLinks();
 }
 function updateArchiveDayLinks() {

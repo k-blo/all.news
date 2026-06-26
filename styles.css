@@ -379,7 +379,7 @@ a { color: inherit; }
   font-weight: 600;
   text-align: left;
   padding: 0;
-  cursor: pointer;
+  cursor: default; /* #23: column headers are labels, not clickable on desktop */
 }
 .fs-head .plus { display: none; }
 .fs-archive {
@@ -391,11 +391,11 @@ a { color: inherit; }
   padding: 0;
   background: none;
   border: 0;
-  cursor: pointer;
+  cursor: default; /* #23: now a static label, not a link */
   font-family: inherit;
   text-align: left;
 }
-.fs-archive:hover { text-decoration: underline; }
+.fs-open-archive .ext { margin-left: 6px; vertical-align: -2px; }
 /* Select all / Deselect all toggle under each filter group header (#2). Same font
    size as the rest of the menu; the space above is twice the space below. */
 .fs-all {
@@ -405,6 +405,7 @@ a { color: inherit; }
   margin: 0;
   padding: 48px 0 24px;
   font: inherit;
+  text-decoration: none;
   font-size: 17px;
   font-weight: 500;
   color: var(--muted);
@@ -517,9 +518,11 @@ a { color: inherit; }
   .fs-group.open .fs-head .plus { transform: rotate(45deg); }
   .fs-list { display: none; padding: 0 2px 18px; }
   .fs-group.open .fs-list { display: flex; }
-  /* Select all / Deselect all only shows once the group is expanded. */
-  .fs-all { display: none; padding: 32px 2px 16px; }
-  .fs-group.open .fs-all { display: block; }
+  /* Select all / Deselect all (the toggle buttons) only show once the group is
+     expanded; the Archive "Open Archive" link stays visible. */
+  .fs-all { padding: 32px 2px 16px; }
+  .fs-all[data-group] { display: none; }
+  .fs-group.open .fs-all[data-group] { display: block; }
   /* Archive day list (no accordion header) stays visible. */
   .fs-days { display: flex !important; padding: 0 2px 18px; }
   .fs-archive { padding: 18px 2px 0; }
@@ -626,8 +629,7 @@ a { color: inherit; }
    hover; accent elements go to "Red Hover" (--accent-hover). Applied to every
    clickable element so hovering always gives feedback. */
 /* #22: the big hero wordmark keeps its colour on hover (no dim). */
-.fs-head:hover { color: var(--hover); }
-.fs-archive:hover { color: var(--hover); }
+/* #23: filter column headers (.fs-head/.fs-archive) are static labels — no hover. */
 .fs-list .opt:hover { color: var(--hover); }
 .fs-list .opt[aria-pressed="false"]:hover { color: var(--muted); }
 .more-item > summary:hover { color: var(--hover); }
