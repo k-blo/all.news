@@ -1244,8 +1244,8 @@ SOURCE_COLORS = {
     "Le Temps": "#1a3c5e",
     "Blick": "#e2001a",
     "20 Minuten": "#0055aa",
-    "Tages-Anzeiger": "#565656",
-    "NZZ": "#444444",
+    "Tages-Anzeiger": "#e6e6e6",
+    "NZZ": "#e6e6e6",
     "Weltwoche": "#7a0019",
     "Nebelspalter": "#282f5c",
     "Watson": "#ff0066",
@@ -1293,7 +1293,7 @@ SOURCE_COLORS = {
     "Schaffhauser Nachrichten": "#1a4f8b",
     "Schweizer Monat": "#8a6d3b",
     "Bote der Urschweiz": "#b8242a",
-    "Die Zeit": "#1c1c1c",
+    "Die Zeit": "#e6e6e6",
     "Tagesschau": "#0a3b75",
     "Süddeutsche": "#222a5c",
     "FAZ": "#2b2b2b",
@@ -1415,6 +1415,15 @@ def color_for(source):
     return f"hsl({djb2(source) % 360}, 65%, 45%)"
 
 
+def text_color(bg):
+    """Pill text colour: black on a light background, white on a dark one
+    (mirrors textColor() in script.js)."""
+    if not (bg.startswith("#") and len(bg) == 7):
+        return "#fff"  # hashed hsl() colours are always dark enough
+    r, g, b = int(bg[1:3], 16), int(bg[3:5], 16), int(bg[5:7], 16)
+    return "#000" if (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 else "#fff"
+
+
 def fmt_datetime(iso_str):
     """Format ISO datetime as Swiss local time YYYY-MM-DD HH:MM:SS (mirrors fmtDateTime in script.js)."""
     if not iso_str:
@@ -1511,6 +1520,7 @@ def article_id(article):
 
 def render_article_html(article):
     color = color_for(article["source"])
+    fg = text_color(color)
     url = escape(article["url"])
     home = escape(portal_home(article["url"]))
     return (
@@ -1519,7 +1529,7 @@ def render_article_html(article):
         f' data-country="{escape(article.get("country", DEFAULT_COUNTRY))}">'
         '<div class="meta-col">'
         f'<a class="source" href="{home}" target="_blank" rel="noopener"'
-        f' style="background:{color}">{escape(article["source"])}</a>'
+        f' style="background:{color};color:{fg}">{escape(article["source"])}</a>'
         f'<span class="time">{escape(fmt_time(article.get("published", "")))} {HIDE_BTN}</span>'
         '</div>'
         f'<a class="title" href="{url}" target="_blank" rel="noopener">{escape(article["title"])}</a>'

@@ -150,6 +150,16 @@ function colorFor(s) {
   return SOURCE_COLORS[s] || `hsl(${djb2(s) % 360}, 65%, 45%)`;
 }
 
+// Pill text colour: black on a light background, white on a dark one (mirrors
+// text_color() in crawler.py).
+function textColor(bg) {
+  const m = /^#([0-9a-f]{6})$/i.exec(bg || "");
+  if (!m) return "#fff";
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#000" : "#fff";
+}
+
 function isExcluded(a) {
   return excluded.has(a.source.toLowerCase()) ||
          !countryAllowed(a.country) ||
@@ -193,11 +203,12 @@ function esc(s) {
 // listeners are needed.
 function articleHTML(a) {
   const color = colorFor(a.source);
+  const fg = textColor(color);
   const url = esc(a.url);
   const home = esc(portalHome(a.url));
   return `<li class="article" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
     `<div class="meta-col">` +
-    `<a class="source" href="${home}" target="_blank" rel="noopener" style="background:${color}">${esc(a.source)}</a>` +
+    `<a class="source" href="${home}" target="_blank" rel="noopener" style="background:${color};color:${fg}">${esc(a.source)}</a>` +
     `<span class="time">${esc(fmtTime(a.published))} ${HIDE_BTN}</span>` +
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a>` +
