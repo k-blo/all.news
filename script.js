@@ -945,19 +945,21 @@ function confirmHide(name) {
   });
 }
 
-document.addEventListener("click", (e) => {
-  const btn = e.target.closest(".row-act.share");
-  if (btn) {
-    const li = btn.closest(".article");
-    if (li) shareArticle(li, btn);
-    // Don't keep focus on the button: :focus-within would otherwise hold the
-    // row's white "card" state open after the pointer leaves.
-    btn.blur();
-    return;
+// Touch devices have no hover, so a row stays a plain headline until tapped (#30).
+// The first tap "opens" the row (white card + Open/Share); a second tap on a link
+// then navigates. Only one row is open at a time.
+const TOUCH = window.matchMedia("(hover: none)").matches;
+function setActiveArticle(li) {
+  for (const el of document.querySelectorAll(".article.active")) {
+    if (el !== li) el.classList.remove("active");
   }
+  if (li) li.classList.add("active");
+}
+
+document.addEventListener("click", (e) => {
   // Eye-off next to the time asks to hide that source from the feed (#4). A
   // confirmation popup explains the action first, so an accidental click can't
-  // silently make a source disappear.
+  // silently make a source disappear. Works on every device.
   const hideBtn = e.target.closest(".hide-src");
   if (hideBtn) {
     const li = hideBtn.closest(".article");
@@ -965,6 +967,37 @@ document.addEventListener("click", (e) => {
     const name = srcEl ? srcEl.textContent.trim() : "";
     if (name) confirmHide(name);
     hideBtn.blur();
+    return;
+  }
+
+  // Touch: tap-to-open. The reveal tap suppresses link navigation and turns the
+  // row into the white card; once open, links and Share behave normally (#30).
+  if (TOUCH) {
+    const li = e.target.closest(".article");
+    if (li) {
+      if (!li.classList.contains("active")) {
+        e.preventDefault();        // don't follow the title / source link yet
+        setActiveArticle(li);
+        return;
+      }
+      const share = e.target.closest(".row-act.share");
+      if (share) { shareArticle(li, share); share.blur(); return; }
+      if (e.target.closest("a")) return; // open card: title / Open / source navigate
+      setActiveArticle(null);            // tap blank space → close the card again
+      return;
+    }
+    setActiveArticle(null);              // tap outside any row closes the open card
+    return;
+  }
+
+  // ---- Desktop (hover) ----
+  const btn = e.target.closest(".row-act.share");
+  if (btn) {
+    const li = btn.closest(".article");
+    if (li) shareArticle(li, btn);
+    // Don't keep focus on the button: :focus-within would otherwise hold the
+    // row's white "card" state open after the pointer leaves.
+    btn.blur();
     return;
   }
   // Title link, "Open" and the source pill navigate on their own; just drop

@@ -212,7 +212,8 @@ a { color: inherit; }
   transition: padding-top 0.18s ease;
 }
 .article:hover,
-.article:focus-within { padding-top: 46px; }
+.article:focus-within,
+.article.active { padding-top: 46px; }
 /* Hover / shared-link card (States Sharing): row turns into a white card */
 .article::before {
   content: "";
@@ -226,14 +227,19 @@ a { color: inherit; }
 }
 .article > * { position: relative; z-index: 1; }
 .article:hover::before,
+.article.active::before,
 .article.highlight::before { background: #fff; }
 .article:hover,
+.article.active,
 .article.highlight { border-bottom-color: transparent; }
 .article:hover .title,
+.article.active .title,
 .article.highlight .title { color: #000; }
 .article:hover .title:visited,
+.article.active .title:visited,
 .article.highlight .title:visited { color: var(--dim); }
 .article:hover .time,
+.article.active .time,
 .article.highlight .time { color: var(--dim); }
 
 /* Row actions: Open + Share. They live in the strip that opens above the row on
@@ -256,7 +262,8 @@ a { color: inherit; }
 }
 /* Reveal Open / Share immediately on hover (#9) — no dwell delay. */
 .article:hover .row-actions,
-.article:focus-within .row-actions {
+.article:focus-within .row-actions,
+.article.active .row-actions {
   opacity: 1;
   transform: none;
   pointer-events: auto;
@@ -601,21 +608,15 @@ a { color: inherit; }
   .site-footer { flex-direction: column; gap: 6px; }
 }
 
-/* Touch devices have no hover: expose "Share" as a persistent icon */
+/* Touch devices have no hover: a row reveals nothing until tapped. The first tap
+   turns it into the white card and slides Open/Share in (the .active state, set in
+   script.js); links don't navigate until the card is open (#30). */
 @media (hover: none) {
-  .row-actions {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-    top: 16px;
-    bottom: auto;
-    left: auto;
-    gap: 16px;
-    background: none;
-  }
-  .row-act { color: var(--muted); }
-  .row-act .label { display: none; }
-  .row-act.open { display: none; } /* the title link already opens the article */
+  .article { -webkit-tap-highlight-color: transparent; }
+  /* Keep the initial list pure headlines — the hide-source eye is an option that
+     appears with the others once the row is tapped open. */
+  .article .hide-src { opacity: 0; pointer-events: none; }
+  .article.active .hide-src { opacity: 0.6; pointer-events: auto; }
 }
 
 /* ---------- Archive page (month accordions) ---------- */
