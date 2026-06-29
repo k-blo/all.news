@@ -211,8 +211,6 @@ a { color: inherit; }
   /* Hover opens a strip of space above the row where Open/Share appear (#18). */
   transition: padding-top 0.18s ease;
 }
-.article:hover,
-.article:focus-within,
 .article.active { padding-top: 46px; }
 /* Hover / shared-link card (States Sharing): row turns into a white card */
 .article::before {
@@ -226,19 +224,14 @@ a { color: inherit; }
   transition: background 0.12s ease;
 }
 .article > * { position: relative; z-index: 1; }
-.article:hover::before,
 .article.active::before,
 .article.highlight::before { background: #fff; }
-.article:hover,
 .article.active,
 .article.highlight { border-bottom-color: transparent; }
-.article:hover .title,
 .article.active .title,
 .article.highlight .title { color: #000; }
-.article:hover .title:visited,
 .article.active .title:visited,
 .article.highlight .title:visited { color: var(--dim); }
-.article:hover .time,
 .article.active .time,
 .article.highlight .time { color: var(--dim); }
 
@@ -260,13 +253,31 @@ a { color: inherit; }
   transition: opacity 0.18s ease, transform 0.18s ease; /* subtle fade + slide */
   z-index: 2;
 }
-/* Reveal Open / Share immediately on hover (#9) — no dwell delay. */
-.article:hover .row-actions,
-.article:focus-within .row-actions,
+/* Reveal Open / Share immediately when the card opens (#9) — no dwell delay. */
 .article.active .row-actions {
   opacity: 1;
   transform: none;
   pointer-events: auto;
+}
+
+/* Pointer devices only: hovering a row opens its card. Touch devices have no
+   real hover (browsers emulate a sticky one on first tap, which caused a
+   two-stage reveal and left two rows looking selected), so there the card is
+   driven solely by the .active class set on tap in script.js (#30). */
+@media (hover: hover) {
+  .article:hover,
+  .article:focus-within { padding-top: 46px; }
+  .article:hover::before { background: #fff; }
+  .article:hover { border-bottom-color: transparent; }
+  .article:hover .title { color: #000; }
+  .article:hover .title:visited { color: var(--dim); }
+  .article:hover .time { color: var(--dim); }
+  .article:hover .row-actions,
+  .article:focus-within .row-actions {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
 }
 .row-act {
   display: inline-flex;
@@ -284,7 +295,7 @@ a { color: inherit; }
   white-space: nowrap;
   cursor: pointer;
 }
-.row-act:hover { text-decoration: underline; }
+.row-act:hover { text-decoration: none; }
 .row-act svg { flex: none; }
 .meta-col {
   display: flex;
@@ -380,7 +391,7 @@ a { color: inherit; }
   line-height: 1;
   letter-spacing: 0;
 }
-.title:hover { text-decoration: underline; }
+.title:hover { text-decoration: none; }
 .title:visited { color: var(--dim); } /* Font Inactive — already-visited links */
 
 /* Ad slot */

@@ -970,23 +970,22 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  // Touch: tap-to-open. The reveal tap suppresses link navigation and turns the
-  // row into the white card; once open, links and Share behave normally (#30).
+  // Touch: tap-to-open (#30). The first tap on a row selects it — white card,
+  // eye, Open/Share — and it becomes the only selected row (any other is
+  // de-selected). That tap never navigates. Tapping the same row again does
+  // nothing; only the explicit Open / Share / source pill act.
   if (TOUCH) {
     const li = e.target.closest(".article");
-    if (li) {
-      if (!li.classList.contains("active")) {
-        e.preventDefault();        // don't follow the title / source link yet
-        setActiveArticle(li);
-        return;
-      }
-      const share = e.target.closest(".row-act.share");
-      if (share) { shareArticle(li, share); share.blur(); return; }
-      if (e.target.closest("a")) return; // open card: title / Open / source navigate
-      setActiveArticle(null);            // tap blank space → close the card again
+    if (!li) return;                        // taps outside a row keep the selection
+    if (!li.classList.contains("active")) {
+      e.preventDefault();                   // first tap only selects, never navigates
+      setActiveArticle(li);                 // and de-selects whatever was open
       return;
     }
-    setActiveArticle(null);              // tap outside any row closes the open card
+    const share = e.target.closest(".row-act.share");
+    if (share) { shareArticle(li, share); share.blur(); return; }
+    if (e.target.closest(".row-act.open") || e.target.closest(".source")) return; // navigate
+    e.preventDefault();                     // re-tapping the open row: no change
     return;
   }
 
