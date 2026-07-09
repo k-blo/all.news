@@ -209,12 +209,12 @@ function articleHTML(a) {
   const home = esc(portalHome(a.url));
   return `<li class="article" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
     `<div class="meta-col">` +
-    `<a class="source" href="${home}" target="_blank" rel="noopener" style="background:${color};color:${fg}">${esc(a.source)}</a>` +
+    `<a class="source" href="${home}" target="_blank" rel="noopener nofollow ugc" style="background:${color};color:${fg}">${esc(a.source)}</a>` +
     `<span class="time">${esc(fmtTime(a.published))} ${HIDE_BTN}</span>` +
     `</div>` +
-    `<a class="title" href="${url}" target="_blank" rel="noopener">${esc(a.title)}</a>` +
+    `<a class="title" href="${url}" target="_blank" rel="noopener nofollow ugc">${esc(a.title)}</a>` +
     `<div class="row-actions">` +
-    `<a class="row-act open" href="${url}" target="_blank" rel="noopener"><span class="label">Open article</span> ${OPEN_SVG}</a>` +
+    `<a class="row-act open" href="${url}" target="_blank" rel="noopener nofollow ugc"><span class="label">Open article</span> ${OPEN_SVG}</a>` +
     `<button class="row-act share" type="button"><span class="label">Share article</span> ${LINK_SVG}</button>` +
     `</div></li>`;
 }
