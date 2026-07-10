@@ -880,6 +880,14 @@ def strip_html(text):
     return re.sub(r"<[^>]+>", "", text or "").strip()
 
 
+def clean_title(text):
+    """Normalize whitespace in a headline. Some feeds embed non-breaking spaces
+    (U+00A0) and zero-width characters that render as stray gaps or literal boxes;
+    fold them into ordinary spaces, drop zero-width ones, and collapse runs (#31)."""
+    t = (text or "").replace("\u00a0", " ").replace("\u200b", "").replace("\ufeff", "")
+    return re.sub(r"\s+", " ", t).strip()
+
+
 # Localized month names → English abbreviation, for RSS pubDates that aren't in
 # English (e.g. Italian "mer, 17 giu 2026", Spanish "mié, 17 jun 2026"). The
 # leading localized weekday is stripped before parsing.
@@ -1837,6 +1845,7 @@ def write_outputs(articles):
             continue
         if not is_today(a.get("published")):
             continue
+        a = {**a, "title": clean_title(a.get("title"))}  # strip nbsp/zero-width from headlines (#31)
         t = a["title"].lower()
         if t in seen_titles:
             continue

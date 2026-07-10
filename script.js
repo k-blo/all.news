@@ -449,6 +449,13 @@ function updateArchiveDayLinks() {
   for (const a of document.querySelectorAll("#archiveDays a[data-base]")) {
     a.href = (a.dataset.base || "/") + q;
   }
+  // The SSR "last few days" links at the bottom of the home feed carry no query,
+  // so a search/filter was lost when opening one. Re-point them at their own path
+  // plus the active filter (a.pathname strips any query we appended before, so
+  // this stays idempotent across repeated calls). (#40)
+  for (const a of document.querySelectorAll(".older-dates a.day-row:not(.day-row-all)")) {
+    a.href = a.pathname + q;
+  }
 }
 
 // Group-header select-all / deselect-all toggles (desktop).
@@ -820,6 +827,7 @@ if (dayParam) {
     }
   } else {
     // Home page
+    updateArchiveDayLinks(); // carry any active filter onto the footer day links (#40)
     if (hasUrlFilter) {
       applySsrFilter(); // pre-filter the SSR head so there's no flash
     } else if (lsGet(STORE_WELCOMED)) {
