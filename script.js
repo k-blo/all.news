@@ -851,6 +851,7 @@ if (searchInput) {
     query = searchInput.value.trim().toLowerCase();
     syncSearchIcon();
     syncUrl();
+    updateArchiveDayLinks(); // keep archive-day links carrying the active ?q= (#40)
     loadData().then(() => render(current, sortMode())); // archive pages fetch on first search
   });
 }
@@ -861,6 +862,7 @@ if (searchClear) {
     query = "";
     syncSearchIcon();
     syncUrl();
+    updateArchiveDayLinks(); // drop ?q= from archive-day links once search is cleared (#40)
     searchInput.focus();
     loadData().then(() => render(current, sortMode()));
   });

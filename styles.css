@@ -30,7 +30,7 @@
 
 /* ---------- Theme (Colors.png branding palette) ---------- */
 :root {
-  --bg: #1a1a1a;          /* Background Default */
+  --bg: #121212;          /* Background Default (#29) */
   --panel: #252525;       /* Background Highlight */
   --line: #333333;        /* Lines / Dividers */
   --fg: #ffffff;          /* Font Default */
@@ -481,7 +481,7 @@ a { color: inherit; }
   font-family: inherit;
   text-align: left;
 }
-.fs-open-archive .ext { margin-left: 6px; vertical-align: -2px; }
+.fs-open-archive .ext { margin-left: 5px; }
 /* Select all / Deselect all toggle under each filter group header (#2). Same font
    size as the rest of the menu; the space above is twice the space below. */
 .fs-all {
@@ -677,10 +677,18 @@ a { color: inherit; }
   align-items: center;
   justify-content: center;
   padding: 28px;
-  background: #fff;
+  background: rgba(0, 0, 0, 0.6); /* blurred site under a dark overlay, matching confirm popup (#39) */
+  backdrop-filter: blur(2px);
   color: #111;
 }
-.welcome-modal { width: 100%; max-width: 360px; }
+.welcome-modal {
+  width: 100%;
+  max-width: 360px;
+  background: #fff;
+  color: #111;
+  border-radius: 16px;
+  padding: 32px 28px 24px;
+}
 .welcome-modal h2 { font-size: 2.2rem; font-weight: 600; margin: 0 0 0.4em; }
 .welcome-modal p { font-size: 1.15rem; line-height: 1.5; margin: 0 0 2.4em; }
 .welcome-modal .country,

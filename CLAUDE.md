@@ -17,6 +17,13 @@ Analytics is intentionally left as a placeholder (see the "Analytics placeholder
 in `template.html` and `archive.html`) — wire up all.news's own analytics there rather than
 reusing swissnews.org's tag.
 
+## Issue tracker
+
+Issues do **not** live in this code repo. They are filed in a separate GitHub repo:
+**`k-blo/all.news.issues`** (browser: https://github.com/k-blo/all.news.issues/issues).
+The `.issues` is part of the repo name, not a path. Commit messages here reference those
+issue numbers (e.g. `#30`, `#25`). The code repo itself is `k-blo/all.news`.
+
 ## Conventions
 
 - **Git commit messages are always a single line** — no body, no trailing
