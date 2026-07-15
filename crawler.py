@@ -3217,7 +3217,12 @@ def write_outputs(articles):
         seen_titles.add(t)
         src_count[a["source"]] = src_count.get(a["source"], 0) + 1
 
-    result = existing_today + new
+    # Ship crawled.json already sorted newest-first (by crawl-stamped "published"),
+    # so the client's default date-sort runs over near-sorted input (near-linear)
+    # and the raw JSON order is sensible. The client still sorts, so ties it
+    # resolves (prio) are unaffected.
+    result = sorted(existing_today + new,
+                    key=lambda a: a.get("published", ""), reverse=True)
     data = {"generated": now_iso, "date": today, "count": len(result), "articles": result}
     write_json("crawled.json", data)                       # newest crawl
     write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"), data)  # this date's crawl

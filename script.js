@@ -78,6 +78,20 @@ function sortArticles(articles, mode) {
   return out;
 }
 
+// Sorting depends only on (current, mode) — never on which filters are active —
+// so toggling a source/country/language must not re-sort the whole list, only
+// re-filter it. Cache the sorted array per mode; invalidate when `current` is
+// replaced (a new dataset load). Callers only .filter() the result (which builds
+// a fresh array), so handing back the cached array is safe.
+let _sortCache = new Map();   // mode -> sorted array
+let _sortCacheFor = null;     // the `current` reference the cache was built from
+function sortedArticles(articles, mode) {
+  if (articles !== _sortCacheFor) { _sortCache.clear(); _sortCacheFor = articles; }
+  let out = _sortCache.get(mode);
+  if (!out) { out = sortArticles(articles, mode); _sortCache.set(mode, out); }
+  return out;
+}
+
 // Excluded sources (lowercased), persisted in the URL: ?exclude=blick,watson
 const excluded = new Set(
   (new URLSearchParams(location.search).get("exclude") || "")
@@ -238,7 +252,7 @@ let scrollObserver = null;
 function render(articles, mode) {
   const list = document.getElementById("list");
   if (!list) return;
-  visibleArticles = sortArticles(articles, mode)
+  visibleArticles = sortedArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
   setCountBadge(visibleArticles.length);
   if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
