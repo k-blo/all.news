@@ -120,6 +120,9 @@ jobs:
           # per-country shards + manifest (today's feed); sync so a country that
           # produced nothing today doesn't keep serving yesterday's stale shard.
           rclone sync data "R2:$R2_BUCKET/data" -v
+          # programmatic landing pages (/news/<country>/<lang>/) + the /news/ hub.
+          # sync is safe: the URL set is a stable matrix derived from the source config.
+          rclone sync news "R2:$R2_BUCKET/news" -v
           # today's archive pages + JSON + state files (copy = never deletes old days)
           rclone copy archive "R2:$R2_BUCKET/archive" -v
       - name: Verify R2 contents

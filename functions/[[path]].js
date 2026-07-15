@@ -20,7 +20,7 @@ function zurichToday() {
 // Map a request path to its R2 object key ("/" → index.html; no leading slash).
 function r2Key(pathname) {
   let p = decodeURIComponent(pathname);
-  if (p === "/") p = "/index.html";
+  if (p.endsWith("/")) p += "index.html"; // "/" or "/news/ch/de/" -> …/index.html
   return p.replace(/^\/+/, "");
 }
 
@@ -29,13 +29,16 @@ function servesFromR2(key) {
   return key === "index.html"
     || key === "crawled.json"
     || key === "sitemap.xml"
-    || key.startsWith("archive/");
+    || key.startsWith("archive/")
+    || key.startsWith("news/"); // programmatic landing pages + /news/ hub
 }
 
 // Live (today's) data gets a short TTL; finalized past days are immutable.
 function cacheControl(key) {
   if (key === "sitemap.xml") return "public, max-age=3600";
-  const live = key === "index.html" || key === "crawled.json" || key.includes(zurichToday());
+  const live = key === "index.html" || key === "crawled.json"
+    || key.startsWith("news/")   // landing pages track today's feed
+    || key.includes(zurichToday());
   return live ? "public, max-age=300" : "public, max-age=31536000, immutable";
 }
 
@@ -46,6 +49,11 @@ export async function onRequest(context) {
   }
 
   const url = new URL(request.url);
+  // Landing pages are directory URLs (…/news/ch/de/). Enforce the trailing slash so
+  // there's a single canonical form; the last segment carries no file extension.
+  if (/^\/news\/.+[^/]$/.test(url.pathname) && !url.pathname.slice(1).includes(".")) {
+    return Response.redirect(url.origin + url.pathname + "/" + url.search, 301);
+  }
   const key = r2Key(url.pathname);
   if (!servesFromR2(key)) return env.ASSETS.fetch(request); // static asset
 

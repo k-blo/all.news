@@ -12,6 +12,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 import urllib.request
 import urllib.error
 import zlib
@@ -2980,10 +2981,11 @@ ARCHIVE_PAGE_SIZE = 500
 
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
                         date_heading, older_dates=(), limit=None, count=None,
-                        pager="", head_links=""):
+                        pager="", head_links="", html_lang="de"):
     """Render a page. `limit` caps the server-rendered rows (index.html lazy-loads
     the rest); `count` overrides the badge total (so a paginated archive page shows
-    the whole day's count); `pager`/`head_links` add archive pagination chrome."""
+    the whole day's count); `pager`/`head_links` add archive pagination chrome;
+    `html_lang` sets <html lang> (per-language for landing pages)."""
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
@@ -2995,7 +2997,9 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
         if (i + 1) % AD_EVERY == 0 and i + 1 < len(head):
             rows.append(AD_SLOT)
     items = "\n".join(rows)
+    os.makedirs(os.path.dirname(dest_path) or ".", exist_ok=True)
     html = (tmpl
+            .replace("<!-- HTMLLANG -->", escape(html_lang))
             .replace("<!-- TITLE -->", escape(title))
             .replace("<!-- DESCRIPTION -->", escape(description))
             .replace("<!-- CANONICAL -->", escape(canonical))
@@ -3067,11 +3071,14 @@ def write_archive_day(date, articles):
     return pages
 
 
-def write_sitemap(dates):
+def write_sitemap(dates, landing_urls=()):
     urls = [
         '  <url><loc>https://all.news/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>',
+        '  <url><loc>https://all.news/news/</loc><changefreq>daily</changefreq><priority>0.6</priority></url>',
         '  <url><loc>https://all.news/archive.html</loc><changefreq>daily</changefreq><priority>0.5</priority></url>',
     ]
+    for u in landing_urls:
+        urls.append(f'  <url><loc>https://all.news{u}</loc><changefreq>hourly</changefreq><priority>0.6</priority></url>')
     for d in dates:
         urls.append(f'  <url><loc>https://all.news/archive/{d}.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>')
     with open("sitemap.xml", "w", encoding="utf-8") as f:
@@ -3079,6 +3086,194 @@ def write_sitemap(dates):
         f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
         f.write("\n".join(urls))
         f.write("\n</urlset>\n")
+
+
+# ---- Programmatic landing pages: /news/<country>/<lang>/ --------------------
+# One server-rendered page per (country, language) we carry. The SPA's filtered
+# views (?country=&lang=) render an empty <ul> to search-engine bots, so these
+# static pages give crawlers real headlines for each slice. They hydrate:
+# script.js recognises the /news/<country>/<lang>/ path, loads the country shard
+# and applies the filter, so the page is fully interactive for humans. A /news/
+# hub links every page (internal linking so the pages get discovered + crawled).
+# The (country, lang) matrix is derived from the source config (jobs_for), not
+# from a single day's feed, so the URL set is stable across runs.
+LANDING_DIR = "news"
+
+# ISO 3166-1 alpha-2 -> English name (mirrors COUNTRY_NAMES in script.js).
+COUNTRY_NAMES = {
+    "CH": "Switzerland", "DE": "Germany", "FR": "France",
+    "GB": "United Kingdom", "US": "United States", "IT": "Italy", "ES": "Spain",
+    "NL": "Netherlands", "BE": "Belgium", "AT": "Austria", "PT": "Portugal", "IE": "Ireland",
+    "PL": "Poland", "SE": "Sweden", "NO": "Norway", "DK": "Denmark", "FI": "Finland",
+    "GR": "Greece", "CZ": "Czechia", "HU": "Hungary", "RO": "Romania", "UA": "Ukraine", "TR": "Turkey",
+    "CA": "Canada", "MX": "Mexico", "BR": "Brazil", "AR": "Argentina", "CO": "Colombia", "PE": "Peru",
+    "CL": "Chile",
+    "AU": "Australia", "NZ": "New Zealand",
+    "IN": "India", "JP": "Japan", "KR": "South Korea", "SG": "Singapore", "ID": "Indonesia",
+    "PH": "Philippines", "VN": "Vietnam", "PK": "Pakistan", "IL": "Israel", "QA": "Qatar", "HK": "Hong Kong",
+    "CN": "China", "RU": "Russia",
+}
+# ISO 639-1 -> English name (mirrors LANG_EN_NAMES in script.js). Kept in English
+# (not the language's own name) so every slug is clean ASCII.
+LANG_EN_NAMES = {
+    "de": "German", "fr": "French", "en": "English", "it": "Italian", "es": "Spanish",
+    "nl": "Dutch", "pt": "Portuguese", "pl": "Polish", "sv": "Swedish", "no": "Norwegian",
+    "da": "Danish", "fi": "Finnish", "el": "Greek", "cs": "Czech", "hu": "Hungarian", "ro": "Romanian",
+    "uk": "Ukrainian", "tr": "Turkish", "ja": "Japanese", "id": "Indonesian", "vi": "Vietnamese",
+    "he": "Hebrew", "ar": "Arabic", "zh": "Chinese", "ru": "Russian",
+}
+
+
+def slugify(s):
+    """Lowercase ASCII slug: 'United Kingdom' -> 'united-kingdom'. Mirrors slugify() in script.js."""
+    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
+
+
+def country_slug(cc):
+    return slugify(COUNTRY_NAMES.get(cc.upper(), cc))
+
+
+def lang_slug(lang):
+    return slugify(LANG_EN_NAMES.get(lang.lower(), lang))
+
+
+def landing_url(cc, lang):
+    return f"/{LANDING_DIR}/{country_slug(cc)}/{lang_slug(lang)}/"
+
+
+def landing_path(cc, lang):
+    return os.path.join(LANDING_DIR, country_slug(cc), lang_slug(lang), "index.html")
+
+
+def known_country_lang_pairs():
+    """Every (country, lang) our sources can produce, derived from the source config
+    so the landing URL set is stable regardless of what any single day carries."""
+    pairs = set()
+    for name, _ in jobs_for(None):
+        o = origin_of(name)
+        pairs.add((o["country"].upper(), o["lang"].lower()))
+    return sorted(pairs)
+
+
+HUB_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content="{desc}">
+  <link rel="canonical" href="https://all.news/news/">
+  <meta property="og:title" content="{title}">
+  <meta property="og:description" content="{desc}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://all.news/news/">
+  <meta property="og:image" content="https://all.news/og-image.png">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/favicon-192.png">
+  <link rel="stylesheet" href="/styles.css?v=5">
+  <style>
+    .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
+    .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
+    .hub-card ul{{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.35rem .6rem}}
+    .hub-card a{{text-decoration:none}}
+    .hub-card a:hover{{text-decoration:underline}}
+    .hub-intro{{max-width:60ch}}
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N83C506R65"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', 'G-N83C506R65');
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <a href="/" class="brand-link">all.news</a>
+    </header>
+    <main class="view">
+      <div class="hero">
+        <h1 class="wordmark">Browse by country &amp; language</h1>
+      </div>
+      <p class="hub-intro">Read world news by country and language. Each page collects
+      today's headlines from that country's sources, updated hourly. Pick a country
+      and a language to start.</p>
+      <div class="hub-grid">
+{cards}
+      </div>
+    </main>
+    <footer class="site-footer">
+      <span>© Copyright 2026 all.news</span>
+      <span><a href="/">Home</a> · <a href="/archive.html">Archive</a></span>
+    </footer>
+  </div>
+</body>
+</html>
+"""
+
+
+def write_news_hub(langs_by_country):
+    """The /news/ hub: every country, linking each language landing page. Standalone
+    (no feed JS) so it never gets hijacked by the SPA's article renderer."""
+    countries = sorted(langs_by_country, key=lambda c: COUNTRY_NAMES.get(c, c))
+    cards = []
+    for cc in countries:
+        cname = COUNTRY_NAMES.get(cc, cc)
+        links = []
+        for lang in sorted(set(langs_by_country[cc]), key=lambda l: LANG_EN_NAMES.get(l, l)):
+            lname = LANG_EN_NAMES.get(lang, lang)
+            links.append(f'<li><a href="{landing_url(cc, lang)}">{escape(lname)}</a></li>')
+        cards.append(
+            f'        <section class="hub-card"><h2>{escape(cname)}</h2>'
+            f'<ul>{"".join(links)}</ul></section>')
+    title = "Browse News by Country and Language – all.news"
+    desc = ("Browse world news by country and language. all.news aggregates headlines "
+            "from hundreds of sources across every country we cover, updated hourly.")
+    html = HUB_TEMPLATE.format(title=escape(title), desc=escape(desc), cards="\n".join(cards))
+    os.makedirs(LANDING_DIR, exist_ok=True)
+    with open(os.path.join(LANDING_DIR, "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+
+
+def write_landing_pages(articles, today):
+    """One SSR page per (country, language) at /news/<country>/<lang>/, plus the
+    /news/ hub. Rendered from today's slice so bots get real headlines; the page
+    hydrates client-side (country shard + filter). Returns the list of landing URLs
+    for the sitemap."""
+    day_en = fmt_day_en(today)
+    pairs = known_country_lang_pairs()
+    langs_by_country = {}
+    for cc, lang in pairs:
+        langs_by_country.setdefault(cc, []).append(lang)
+    landing_urls = []
+    for cc, lang in pairs:
+        cname = COUNTRY_NAMES.get(cc, cc)
+        lname = LANG_EN_NAMES.get(lang, lang)
+        sl = [a for a in articles
+              if (a.get("country") or "").upper() == cc
+              and (a.get("lang") or "").lower() == lang]
+        url = landing_url(cc, lang)
+        landing_urls.append(url)
+        # hreflang alternates: sibling languages of the same country.
+        alts = "".join(
+            f'<link rel="alternate" hreflang="{l2}" href="https://all.news{landing_url(cc, l2)}">'
+            for l2 in sorted(set(langs_by_country[cc])))
+        title = f"{cname} News in {lname} – all.news"
+        desc = (f"Today's {lname}-language news headlines from {cname}. all.news "
+                f"aggregates {cname} sources and updates hourly — the latest {cname} "
+                f"headlines in {lname}, all in one place.")
+        write_rendered_html(
+            sl, landing_path(cc, lang),
+            title=title, description=desc,
+            canonical=f"https://all.news{url}",
+            date_heading=f"{cname} news in {lname} — {day_en}",
+            older_dates=[], limit=SSR_LIMIT, head_links=alts, html_lang=lang)
+    write_news_hub(langs_by_country)
+    return landing_urls
 
 
 # ---- Crawl jobs, grouped so the GitHub Actions matrix can run them in parallel.
@@ -3279,7 +3474,8 @@ def write_outputs(articles):
         limit=SSR_LIMIT,  # index head only; script.js lazy-loads the rest
     )
     write_archive_day(today, result)  # paginated static pages
-    write_sitemap(all_dates)
+    landing_urls = write_landing_pages(result, today)  # /news/<country>/<lang>/ + hub
+    write_sitemap(all_dates, landing_urls)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} total today ({today})",
           file=sys.stderr)
 

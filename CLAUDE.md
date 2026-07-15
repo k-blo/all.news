@@ -78,7 +78,21 @@ Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2
 
 **Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added to `crawled.json` if their `published` date is today (Swiss local time) and their URL has never been seen before.
 
-**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`).
+**Programmatic landing pages:** `write_landing_pages()` writes one server-rendered
+page per (country, language) we carry at `/news/<country>/<lang>/` (e.g.
+`/news/switzerland/french/`), plus a `/news/` hub (`write_news_hub()`) linking them
+all. The SPA's `?country=&lang=` filtered views render an empty `<ul>` to bots, so
+these static pages give crawlers real headlines for each slice. They *hydrate*:
+`script.js` recognises the `/news/<country>/<lang>/` path, resolves the slugs back to
+codes (`COUNTRY_BY_SLUG`/`LANG_BY_SLUG`), loads that country's shard and applies the
+filter — so the page is fully interactive. The (country, lang) matrix comes from the
+source config (`known_country_lang_pairs()` over `jobs_for(None)`), not a single day's
+feed, so the URL set is stable and `rclone sync`ed to R2. `COUNTRY_NAMES` +
+`LANG_EN_NAMES` (English names → slugs) are duplicated in `crawler.py` and `script.js`
+and must stay in sync. The `functions/[[path]].js` worker serves `/news/*` from R2 and
+301-redirects the no-trailing-slash form to the canonical slash form.
+
+**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`). If the source introduces a **new country or language**, add its English name to `COUNTRY_NAMES`/`LANG_EN_NAMES` in **both** `crawler.py` and `script.js` (and the display name to `COUNTRY_NAMES`/`LANG_NAMES` in `script.js`), or its landing page shows the raw code and won't hydrate.
 
 **Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.)
 

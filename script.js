@@ -121,6 +121,7 @@ const COUNTRY_NAMES = {
   PL: "Poland", SE: "Sweden", NO: "Norway", DK: "Denmark", FI: "Finland",
   GR: "Greece", CZ: "Czechia", HU: "Hungary", RO: "Romania", UA: "Ukraine", TR: "Turkey",
   CA: "Canada", MX: "Mexico", BR: "Brazil", AR: "Argentina", CO: "Colombia", PE: "Peru",
+  CL: "Chile",
   AU: "Australia", NZ: "New Zealand",
   IN: "India", JP: "Japan", KR: "South Korea", SG: "Singapore", ID: "Indonesia",
   PH: "Philippines", VN: "Vietnam", PK: "Pakistan", IL: "Israel", QA: "Qatar", HK: "Hong Kong",
@@ -134,6 +135,25 @@ const LANG_NAMES = {
   uk: "Українська", tr: "Türkçe", ja: "日本語", id: "Bahasa Indonesia", vi: "Tiếng Việt",
   he: "עברית", ar: "العربية", zh: "中文", ru: "Русский",
 };
+// ISO 639-1 -> English name (mirrors LANG_EN_NAMES in crawler.py). Used only to
+// resolve landing-page URL slugs (/news/<country>/<lang>/) back to codes.
+const LANG_EN_NAMES = {
+  de: "German", fr: "French", en: "English", it: "Italian", es: "Spanish",
+  nl: "Dutch", pt: "Portuguese", pl: "Polish", sv: "Swedish", no: "Norwegian",
+  da: "Danish", fi: "Finnish", el: "Greek", cs: "Czech", hu: "Hungarian", ro: "Romanian",
+  uk: "Ukrainian", tr: "Turkish", ja: "Japanese", id: "Indonesian", vi: "Vietnamese",
+  he: "Hebrew", ar: "Arabic", zh: "Chinese", ru: "Russian",
+};
+// Lowercase ASCII slug (mirrors slugify() in crawler.py), + reverse maps so a
+// landing URL like /news/united-kingdom/english/ resolves to { GB, en }.
+function slugify(s) {
+  return (s || "").normalize("NFKD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+const COUNTRY_BY_SLUG = {};
+for (const cc in COUNTRY_NAMES) COUNTRY_BY_SLUG[slugify(COUNTRY_NAMES[cc])] = cc;
+const LANG_BY_SLUG = {};
+for (const l in LANG_EN_NAMES) LANG_BY_SLUG[slugify(LANG_EN_NAMES[l])] = l;
 
 const EN_MONTHS = ["", "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
@@ -191,6 +211,7 @@ function matchesQuery(a) {
 }
 
 function syncUrl() {
+  if (isLanding) return; // landing pages keep their canonical /news/<c>/<l>/ URL
   const params = new URLSearchParams(location.search);
   if (excluded.size) params.set("exclude", [...excluded].join(","));
   else params.delete("exclude");
@@ -595,6 +616,10 @@ function applySsrFilter() {
 // Archive day pages keep their single-file model (that day's JSON), loaded lazily.
 let DATA_URL = "/crawled.json";  // archive pages point this at the day's JSON
 let isArchive = false;
+// Landing pages (/news/<country>/<lang>/) pre-set the country+lang filter from the
+// path and behave like a filtered home view. The path is the canonical state, so
+// syncUrl() leaves the clean URL alone (no ?country=&lang= appended).
+let isLanding = false;
 
 // `current` accumulates the articles loaded so far (union of fetched shards, or the
 // global set once "all" is loaded). Deselecting a country leaves its articles in
@@ -937,6 +962,11 @@ if (dayParam) {
 } else {
   // archive/2026-06-07.html (or -2, -3 …) → 2026-06-07.json (sibling); else /crawled.json
   const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})(?:-\d+)?\.html$/);
+  // Landing page: /news/<country>/<lang>/ → resolve the slugs back to codes.
+  const landingMatch = location.pathname.match(/^\/news\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/);
+  const landingCC = landingMatch ? COUNTRY_BY_SLUG[landingMatch[1]] : null;
+  const landingLang = landingMatch ? LANG_BY_SLUG[landingMatch[2]] : null;
+  isLanding = !!(landingCC && landingLang);
   DATA_URL = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
   isArchive = !!archiveMatch; // archive days keep the single-file model; home shards by country
   const hasUrlFilter = excluded.size || !countriesAll || !langsAll || query;
@@ -951,6 +981,14 @@ if (dayParam) {
     } else if (applySavedDefaults()) {
       loadData().then(() => { if (current.length) render(current, sortMode()); });
     }
+  } else if (isLanding) {
+    // Landing page: the path fixes the country + language. Behave like a filtered
+    // home view (shards by country), no welcome modal / saved defaults. The SSR
+    // slice is already the right articles, so there's no flash before hydration.
+    setPrimaryCountry(landingCC);
+    setPrimaryLang(landingLang);
+    updateArchiveDayLinks();
+    loadData().then(() => { if (current.length) render(current, sortMode()); });
   } else {
     // Home page
     updateArchiveDayLinks(); // carry any active filter onto the footer day links (#40)
