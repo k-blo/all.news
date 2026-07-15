@@ -15,6 +15,7 @@ cron-worker/.wrangler/
 /index.html
 /sitemap.xml
 /archive/
+/data/
 # CI crawl artifacts
 partial-*.json
 partials/

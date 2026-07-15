@@ -117,6 +117,9 @@ jobs:
           rclone copy crawled.json "R2:$R2_BUCKET/" -v
           rclone copy index.html  "R2:$R2_BUCKET/" -v
           rclone copy sitemap.xml "R2:$R2_BUCKET/" -v
+          # per-country shards + manifest (today's feed); sync so a country that
+          # produced nothing today doesn't keep serving yesterday's stale shard.
+          rclone sync data "R2:$R2_BUCKET/data" -v
           # today's archive pages + JSON + state files (copy = never deletes old days)
           rclone copy archive "R2:$R2_BUCKET/archive" -v
       - name: Verify R2 contents

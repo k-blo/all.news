@@ -67,6 +67,15 @@ All source definitions live at the top of the file. There are several crawler st
 - **`WP_SOURCES`** — WordPress core/Yoast sitemaps. `crawl_wp()` finds the highest-numbered `wp-sitemap-posts-post-N.xml` or `post-sitemap.xml` page (newest articles).
 - **One-off functions** — `crawl_weltwoche()`, `crawl_nebelspalter()`, `crawl_woz()`, `crawl_nau()`, `crawl_bilanz()`, `crawl_republik()`, `crawl_suedostschweiz()` for sites with unique sitemap formats.
 
+**Per-country shards:** `write_country_shards()` splits today's feed into
+`data/<cc>.json` (one file per country) plus `data/manifest.json` (every country +
+the languages it publishes). The site (`script.js`) fetches only the shards for the
+countries a visitor filters to, instead of the whole `crawled.json`, so the download
+scales with the selection. The manifest drives the country/language picker so it's
+complete before any shard loads. The "all countries" view still loads `crawled.json`.
+Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2 (not
+`copy`), since they only ever hold today's feed.
+
 **Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added to `crawled.json` if their `published` date is today (Swiss local time) and their URL has never been seen before.
 
 **Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`).

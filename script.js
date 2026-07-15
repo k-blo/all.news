@@ -353,14 +353,25 @@ function buildFilters(articles) {
   }
 }
 
+// Every country code we can show (uppercase), from the manifest when present
+// (complete without loading every shard), else derived from the loaded articles
+// (archive pages, or before the manifest arrives).
+function availableCountryCodes() {
+  const codes = manifest && manifest.countries
+    ? manifest.countries.map((c) => (c.code || "").toUpperCase())
+    : [...new Set(current.map((a) => (a.country || "").toUpperCase()))];
+  return codes.filter(Boolean)
+    .sort((a, b) => (COUNTRY_NAMES[a] || a).localeCompare(COUNTRY_NAMES[b] || b));
+}
+
 // "Countries" filter (INCLUDE model + countriesAll flag): pressed = country shown.
-// The group header does select-all / deselect-all (see wireHeaderToggle).
-function buildCountryFilters(articles) {
+// The group header does select-all / deselect-all (see wireHeaderToggle). Driven by
+// the manifest so every country is selectable before its shard is downloaded.
+function buildCountryFilters() {
   const box = document.getElementById("countryFilters");
   if (!box) return;
   box.innerHTML = "";
-  const codes = [...new Set(articles.map((a) => (a.country || "").toUpperCase()).filter(Boolean))]
-    .sort((a, b) => (COUNTRY_NAMES[a] || a).localeCompare(COUNTRY_NAMES[b] || b));
+  const codes = availableCountryCodes();
   const allLc = codes.map((c) => c.toLowerCase());
   for (const code of codes) {
     const lc = code.toLowerCase();
@@ -390,27 +401,50 @@ function buildCountryFilters(articles) {
   }
 }
 
+// Languages published by the given countries (lowercased codes). Uses the manifest
+// when present, so it's correct even for a just-selected country whose shard hasn't
+// downloaded yet; otherwise falls back to the loaded articles.
+function langsForCountries(codes) {
+  const avail = new Set();
+  if (manifest && manifest.countries) {
+    const want = new Set(codes);
+    for (const c of manifest.countries) {
+      if (want.has((c.code || "").toLowerCase()))
+        (c.langs || []).forEach((l) => avail.add((l || "").toLowerCase()));
+    }
+  } else {
+    for (const a of current) {
+      if (codes.includes((a.country || "").toLowerCase())) avail.add((a.lang || "").toLowerCase());
+    }
+  }
+  return avail;
+}
+
 // Drop selected languages not published by the currently-selected countries, so
 // switching countries never leaves a stale language pick that empties the feed.
 function pruneLangsToCountries() {
   if (langsAll || countriesAll) return;
-  const avail = new Set(current
-    .filter((a) => includedCountries.has((a.country || "").toLowerCase()))
-    .map((a) => (a.lang || "").toLowerCase()));
+  const avail = langsForCountries([...includedCountries]);
   for (const l of [...includedLangs]) if (!avail.has(l)) includedLangs.delete(l);
 }
 
 // Persist + rebuild all panels + re-render after any country/language change.
+// Selecting a new country may require its shard, so fetch it before rendering.
 function afterFilterChange() {
   syncUrl();
   persistCountry();
   persistLang();
-  buildCountryFilters(current);
-  buildLangFilters(current);
-  buildFilters(current);
+  buildCountryFilters();          // instant: from the manifest, no data needed
   updateAllToggles();
   updateArchiveDayLinks();
-  render(current, sortMode());
+  ensureCountryData().then(() => {
+    if (autoDefault) { relaxIfEmpty(); return ensureCountryData(); }
+    return current;
+  }).then(() => {
+    buildLangFilters(current);
+    buildFilters(current);
+    render(current, sortMode());
+  });
 }
 
 // "Select all" / "Deselect all" button label reflects each group's state (#2).
@@ -552,27 +586,100 @@ function applySsrFilter() {
   setCountBadge(visible);
 }
 
-// Fetch the dataset (crawled.json on the home page, the day's archive JSON on an
-// archive page) once and build the filter panels. Memoized so it can be called
-// lazily — archive pages only load it when the user filters/searches, keeping a
-// plain archive view to just its static HTML (scales as days get bigger).
-let DATA_URL = "/crawled.json";
-let dataPromise = null;
+// ---------- Data layer ----------
+// Home: the feed is split into per-country shards (/data/<cc>.json) so a filtered
+// visitor downloads only the countries they selected, not the whole world. A small
+// manifest (/data/manifest.json) lists every available country + its languages, so
+// the picker is complete before any shard loads. The "all countries" view still
+// needs everything, so it falls back to the single global /crawled.json.
+// Archive day pages keep their single-file model (that day's JSON), loaded lazily.
+let DATA_URL = "/crawled.json";  // archive pages point this at the day's JSON
+let isArchive = false;
+
+// `current` accumulates the articles loaded so far (union of fetched shards, or the
+// global set once "all" is loaded). Deselecting a country leaves its articles in
+// `current` — they're simply filtered out by countryAllowed — so re-selecting is free.
+let manifest = null;                 // { date, countries: [{code, count, langs}] }
+let manifestPromise = null;
+const shardLoaded = new Set();       // lowercased country codes whose shard is merged
+const _mergedUrls = new Set();       // urls already in `current` (cross-shard dedup)
+let globalLoaded = false;            // /crawled.json (the all-countries superset) merged
+let archivePromise = null;
+
+// De-dupe concurrent fetches of the same URL (e.g. rapid country toggles racing on
+// one shard). Cleared on settle; the shardLoaded/globalLoaded guards prevent any
+// re-fetch after that, so this only collapses in-flight overlap.
+const _inflight = new Map();
+function fetchJson(u) {
+  if (_inflight.has(u)) return _inflight.get(u);
+  const p = fetch(u).then((r) => r.json()).finally(() => _inflight.delete(u));
+  _inflight.set(u, p);
+  return p;
+}
+
+// Merge new articles into `current`, de-duped by URL. Reassigns `current` to a new
+// array (not push) so the sorted-array cache, keyed on the array reference, invalidates.
+function mergeArticles(arr) {
+  const add = [];
+  for (const a of arr || []) {
+    if (!a || _mergedUrls.has(a.url)) continue;
+    _mergedUrls.add(a.url);
+    add.push(a);
+  }
+  if (add.length) current = current.concat(add);
+}
+
+function ensureManifest() {
+  if (isArchive) return Promise.resolve(null);
+  if (manifestPromise) return manifestPromise;
+  manifestPromise = fetchJson("/data/manifest.json")
+    .then((m) => { manifest = m; return m; })
+    .catch(() => { manifestPromise = null; return null; }); // allow retry
+  return manifestPromise;
+}
+
+// Ensure `current` holds the articles the active country filter needs, fetching and
+// merging any missing shards (or the global file for the "all" view). Cheap to call
+// repeatedly: shards and the global file are only ever fetched once each.
+function ensureCountryData() {
+  if (isArchive) {
+    if (archivePromise) return archivePromise;
+    archivePromise = fetchJson(DATA_URL)
+      .then((d) => { mergeArticles(d.articles); return current; })
+      .catch(() => { archivePromise = null; return current; });
+    return archivePromise;
+  }
+  if (globalLoaded) return Promise.resolve(current); // superset already loaded
+  if (countriesAll) {
+    return fetchJson("/crawled.json")
+      .then((d) => { mergeArticles(d.articles); globalLoaded = true; return current; })
+      .catch(() => current);
+  }
+  const need = [...includedCountries].filter((c) => !shardLoaded.has(c));
+  if (!need.length) return Promise.resolve(current);
+  return Promise.all(need.map((c) =>
+    fetchJson(`/data/${c}.json`)
+      .then((d) => { shardLoaded.add(c); mergeArticles(d.articles); })
+      .catch(() => { shardLoaded.add(c); }) // missing shard = no articles for it
+  )).then(() => current);
+}
+
+// Ensure data for the current selection + (re)build the filter panels. Kept under
+// the old name for its many callers; resolves to `current`.
 function loadData() {
-  if (dataPromise) return dataPromise;
-  dataPromise = fetch(DATA_URL)
-    .then((r) => r.json())
-    .then((data) => {
-      current = data.articles;
-      if (autoDefault) relaxIfEmpty(); // never leave an auto-applied default empty
+  return ensureManifest()
+    .then(ensureCountryData)
+    .then(() => {
+      if (autoDefault) { relaxIfEmpty(); return ensureCountryData(); } // relax may widen the set
+      return current;
+    })
+    .then(() => {
       buildFilters(current);
-      buildCountryFilters(current);
+      buildCountryFilters();
       buildLangFilters(current);
       updateAllToggles();
       return current;
-    })
-    .catch(() => { dataPromise = null; }); // allow retry
-  return dataPromise;
+    });
 }
 
 // Languages we carry for a country, most-frequent first (derived from loaded data).
@@ -765,11 +872,15 @@ function setPrimaryLang(code) {
 }
 
 function refreshFeed() {
-  if (autoDefault) relaxIfEmpty();
-  buildFilters(current); buildCountryFilters(current); buildLangFilters(current);
-  updateAllToggles(); updateArchiveDayLinks();
-  if (current.length) render(current, sortMode());
-  else applySsrFilter();
+  buildCountryFilters(); updateAllToggles(); updateArchiveDayLinks();
+  ensureCountryData().then(() => {
+    if (autoDefault) { relaxIfEmpty(); return ensureCountryData(); }
+    return current;
+  }).then(() => {
+    buildFilters(current); buildLangFilters(current); updateAllToggles();
+    if (current.length) render(current, sortMode());
+    else applySsrFilter();
+  });
 }
 
 function showWelcome(code, langCode) {
@@ -827,6 +938,7 @@ if (dayParam) {
   // archive/2026-06-07.html (or -2, -3 …) → 2026-06-07.json (sibling); else /crawled.json
   const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})(?:-\d+)?\.html$/);
   DATA_URL = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
+  isArchive = !!archiveMatch; // archive days keep the single-file model; home shards by country
   const hasUrlFilter = excluded.size || !countriesAll || !langsAll || query;
 
   if (archiveMatch) {
@@ -866,6 +978,15 @@ function syncSearchIcon() {
   const wrap = searchInput && searchInput.closest(".search-wrap");
   if (wrap) wrap.classList.toggle("has-query", !!searchInput.value);
 }
+// Search doesn't change the country/language selection, so it only needs the data
+// for the active selection (already loaded on home; fetched here on archive pages'
+// first search) — no panel rebuild. Searches within the loaded feed, as before.
+function searchRerender() {
+  ensureCountryData().then(() => {
+    if (current.length) render(current, sortMode());
+    else applySsrFilter();
+  });
+}
 if (searchInput) {
   searchInput.value = query;
   syncSearchIcon();
@@ -874,7 +995,7 @@ if (searchInput) {
     syncSearchIcon();
     syncUrl();
     updateArchiveDayLinks(); // keep archive-day links carrying the active ?q= (#40)
-    loadData().then(() => render(current, sortMode())); // archive pages fetch on first search
+    searchRerender();
   });
 }
 if (searchClear) {
@@ -886,7 +1007,7 @@ if (searchClear) {
     syncUrl();
     updateArchiveDayLinks(); // drop ?q= from archive-day links once search is cleared (#40)
     searchInput.focus();
-    loadData().then(() => render(current, sortMode()));
+    searchRerender();
   });
 }
 

@@ -27,6 +27,9 @@ ARCHIVE_DIR = "archive"
 SEEN_FILE = os.path.join(ARCHIVE_DIR, "seen.json")
 INDEX_FILE = os.path.join(ARCHIVE_DIR, "index.json")
 HTTP_CACHE_FILE = os.path.join(ARCHIVE_DIR, "http_cache.json")
+# Per-country shards of today's feed (data/<cc>.json) + data/manifest.json, so the
+# site downloads only the countries a visitor filters to instead of the whole world.
+DATA_DIR = "data"
 
 # RSS-first: only sites that publish a feed (syndication intent). Title + link
 # always safe to aggregate; summary truncated. Edit/extend this list freely.
@@ -3174,6 +3177,29 @@ def run_reduce(partial_paths):
     write_outputs(rows)
 
 
+def write_country_shards(articles, now_iso, today):
+    """Split today's feed into per-country files (data/<cc>.json) plus a manifest
+    (data/manifest.json) that lists every country and the languages it publishes.
+    The client fetches only the shards for the countries a visitor filters to, so
+    the download scales with the selection instead of the whole world. The manifest
+    lets the site render the full country/language picker before any shard loads."""
+    os.makedirs(DATA_DIR, exist_ok=True)
+    by_country = {}
+    for a in articles:
+        cc = (a.get("country") or "").upper()
+        if cc:
+            by_country.setdefault(cc, []).append(a)
+    manifest = []
+    for cc, arts in sorted(by_country.items()):
+        write_json(os.path.join(DATA_DIR, f"{cc.lower()}.json"),
+                   {"generated": now_iso, "date": today, "country": cc,
+                    "count": len(arts), "articles": arts})
+        langs = sorted({(a.get("lang") or "").lower() for a in arts if a.get("lang")})
+        manifest.append({"code": cc, "count": len(arts), "langs": langs})
+    write_json(os.path.join(DATA_DIR, "manifest.json"),
+               {"generated": now_iso, "date": today, "countries": manifest})
+
+
 def write_outputs(articles):
     os.makedirs(ARCHIVE_DIR, exist_ok=True)
     # One crawl per day. Keep only articles whose SOURCE date is today AND whose
@@ -3224,8 +3250,9 @@ def write_outputs(articles):
     result = sorted(existing_today + new,
                     key=lambda a: a.get("published", ""), reverse=True)
     data = {"generated": now_iso, "date": today, "count": len(result), "articles": result}
-    write_json("crawled.json", data)                       # newest crawl
+    write_json("crawled.json", data)                       # newest crawl (all countries)
     write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"), data)  # this date's crawl
+    write_country_shards(result, now_iso, today)           # data/<cc>.json + manifest
     write_json(SEEN_FILE, sorted(seen | batch))
     # Date list = prior dates (from index.json, which the workflow pulls from R2)
     # plus today. Derived from index.json rather than listing the archive dir, so
