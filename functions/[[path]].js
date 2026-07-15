@@ -30,6 +30,7 @@ function servesFromR2(key) {
     || key === "crawled.json"
     || key === "sitemap.xml"
     || key.startsWith("archive/")
+    || key.startsWith("data/")  // per-country shards + manifest (today's feed)
     || key.startsWith("news/"); // programmatic landing pages + /news/ hub
 }
 
@@ -37,6 +38,7 @@ function servesFromR2(key) {
 function cacheControl(key) {
   if (key === "sitemap.xml") return "public, max-age=3600";
   const live = key === "index.html" || key === "crawled.json"
+    || key.startsWith("data/")   // shards + manifest track today's feed
     || key.startsWith("news/")   // landing pages track today's feed
     || key.includes(zurichToday());
   return live ? "public, max-age=300" : "public, max-age=31536000, immutable";
