@@ -3156,6 +3156,114 @@ def known_country_lang_pairs():
     return sorted(pairs)
 
 
+# ---- Landing-page localization ---------------------------------------------
+# Titles/descriptions/headings are written in the page's own language (a localized
+# <title> ranks far better in-country than an English one). The URL slugs stay
+# English/ASCII (see country_slug/lang_slug), so localizing the copy needs no URL
+# churn. Country names are given in the page language; the sentence templates use a
+# "{c}: …" lead so the country name always stays nominative (no per-language
+# declension). English falls back to COUNTRY_NAMES. Best-effort translations —
+# easy to refine per language.
+COUNTRY_I18N = {
+    "de": {"AT": "Österreich", "CH": "Schweiz", "DE": "Deutschland"},
+    "fr": {"BE": "Belgique", "CA": "Canada", "CH": "Suisse", "FR": "France"},
+    "es": {"AR": "Argentina", "CL": "Chile", "CO": "Colombia", "ES": "España", "MX": "México", "PE": "Perú"},
+    "pt": {"BR": "Brasil", "PT": "Portugal"},
+    "nl": {"BE": "België", "NL": "Nederland"},
+    "it": {"IT": "Italia"},
+    "el": {"GR": "Ελλάδα"},
+    "cs": {"CZ": "Česko"},
+    "da": {"DK": "Danmark"},
+    "fi": {"FI": "Suomi"},
+    "no": {"NO": "Norge"},
+    "sv": {"SE": "Sverige"},
+    "pl": {"PL": "Polska"},
+    "hu": {"HU": "Magyarország"},
+    "ro": {"RO": "România"},
+    "uk": {"UA": "Україна"},
+    "ru": {"RU": "Россия"},
+    "tr": {"TR": "Türkiye"},
+    "id": {"ID": "Indonesia"},
+    "vi": {"VN": "Việt Nam"},
+    "ja": {"JP": "日本"},
+    "zh": {"HK": "香港"},
+    "ar": {"QA": "قطر"},
+    "he": {"IL": "ישראל"},
+}
+# Per-language copy. "t" = title/heading phrase ({c} = localized country name),
+# "d" = meta description. Brand + date are appended by the caller.
+LANDING_STRINGS = {
+    "en": {"t": "{c} News",
+           "d": "{c}: today's top news headlines, updated hourly. all.news gathers the country's leading news sources in one place — every major story at a glance."},
+    "de": {"t": "{c}: Nachrichten",
+           "d": "{c}: aktuelle Nachrichten und Schlagzeilen, stündlich aktualisiert. all.news bündelt die führenden Nachrichtenquellen des Landes an einem Ort."},
+    "fr": {"t": "{c} : actualités",
+           "d": "{c} : l'actualité et les titres du jour, mis à jour chaque heure. all.news rassemble les principales sources d'information du pays en un seul endroit."},
+    "it": {"t": "{c}: notizie",
+           "d": "{c}: le notizie e i titoli di oggi, aggiornati ogni ora. all.news riunisce le principali fonti d'informazione del Paese in un unico posto."},
+    "es": {"t": "{c}: noticias",
+           "d": "{c}: las noticias y titulares de hoy, actualizados cada hora. all.news reúne las principales fuentes de información del país en un solo lugar."},
+    "pt": {"t": "{c}: notícias",
+           "d": "{c}: as notícias e manchetes de hoje, atualizadas a cada hora. all.news reúne as principais fontes de informação do país num só lugar."},
+    "nl": {"t": "{c}: nieuws",
+           "d": "{c}: het nieuws en de koppen van vandaag, elk uur bijgewerkt. all.news bundelt de belangrijkste nieuwsbronnen van het land op één plek."},
+    "pl": {"t": "{c}: wiadomości",
+           "d": "{c}: najważniejsze wiadomości i nagłówki dnia, aktualizowane co godzinę. all.news gromadzi czołowe źródła informacji z całego kraju w jednym miejscu."},
+    "sv": {"t": "{c}: nyheter",
+           "d": "{c}: dagens nyheter och rubriker, uppdateras varje timme. all.news samlar landets ledande nyhetskällor på ett ställe."},
+    "no": {"t": "{c}: nyheter",
+           "d": "{c}: dagens nyheter og overskrifter, oppdatert hver time. all.news samler landets ledende nyhetskilder på ett sted."},
+    "da": {"t": "{c}: nyheder",
+           "d": "{c}: dagens nyheder og overskrifter, opdateret hver time. all.news samler landets førende nyhedskilder ét sted."},
+    "fi": {"t": "{c}: uutiset",
+           "d": "{c}: päivän uutiset ja otsikot, päivittyy tunneittain. all.news kokoaa maan johtavat uutislähteet yhteen paikkaan."},
+    "el": {"t": "{c}: ειδήσεις",
+           "d": "{c}: οι ειδήσεις και οι τίτλοι της ημέρας, με ανανέωση κάθε ώρα. Το all.news συγκεντρώνει τις κορυφαίες πηγές ειδήσεων της χώρας σε ένα μέρος."},
+    "cs": {"t": "{c}: zprávy",
+           "d": "{c}: dnešní zprávy a titulky, aktualizováno každou hodinu. all.news shromažďuje přední zpravodajské zdroje země na jednom místě."},
+    "hu": {"t": "{c}: hírek",
+           "d": "{c}: a nap hírei és címlapsztorijai, óránként frissítve. Az all.news egy helyre gyűjti az ország vezető hírforrásait."},
+    "ro": {"t": "{c}: știri",
+           "d": "{c}: știrile și titlurile zilei, actualizate din oră în oră. all.news reunește principalele surse de știri din țară într-un singur loc."},
+    "uk": {"t": "{c}: новини",
+           "d": "{c}: головні новини та заголовки дня, оновлюється щогодини. all.news збирає провідні джерела новин країни в одному місці."},
+    "ru": {"t": "{c}: новости",
+           "d": "{c}: главные новости и заголовки дня, обновляется каждый час. all.news собирает ведущие источники новостей страны в одном месте."},
+    "tr": {"t": "{c}: haberler",
+           "d": "{c}: günün haberleri ve manşetleri, her saat güncellenir. all.news ülkenin önde gelen haber kaynaklarını tek bir yerde toplar."},
+    "id": {"t": "{c}: berita",
+           "d": "{c}: berita dan berita utama hari ini, diperbarui setiap jam. all.news mengumpulkan sumber berita terkemuka dari seluruh negeri dalam satu tempat."},
+    "vi": {"t": "{c}: tin tức",
+           "d": "{c}: tin tức và tiêu đề nổi bật hôm nay, cập nhật hằng giờ. all.news tập hợp các nguồn tin hàng đầu của quốc gia ở một nơi."},
+    "ja": {"t": "{c}のニュース",
+           "d": "{c}：今日の主要ニュースと見出しを毎時更新。all.news は国内の主要な報道機関のニュースを一つにまとめています。"},
+    "zh": {"t": "{c}新聞",
+           "d": "{c}：今日焦點新聞與頭條，每小時更新。all.news 匯集該地區主要新聞來源，一站掌握。"},
+    "ar": {"t": "{c}: أخبار",
+           "d": "{c}: أبرز أخبار وعناوين اليوم، تُحدَّث كل ساعة. يجمع all.news أهم مصادر الأخبار في البلد في مكان واحد."},
+    "he": {"t": "{c}: חדשות",
+           "d": "{c}: מבזקי החדשות והכותרות של היום, מתעדכן מדי שעה. all.news מרכז את מקורות החדשות המובילים במדינה במקום אחד."},
+}
+
+
+def country_name_i18n(cc, lang):
+    """Country name in the page's language, falling back to the English name."""
+    if lang == "en":
+        return COUNTRY_NAMES.get(cc, cc)
+    return COUNTRY_I18N.get(lang, {}).get(cc) or COUNTRY_NAMES.get(cc, cc)
+
+
+def landing_date(lang, today):
+    """Today's date formatted for the page's language (numeric, so no month-name
+    tables): '16 July 2026' (en), '2026年7月16日' (ja/zh), '16.07.2026' (else)."""
+    y, m, d = (int(x) for x in today.split("-"))
+    if lang == "en":
+        return fmt_day_en(today)
+    if lang in ("ja", "zh"):
+        return f"{y}年{m}月{d}日"
+    return f"{d:02d}.{m:02d}.{y}"
+
+
 HUB_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3244,15 +3352,15 @@ def write_landing_pages(articles, today):
     /news/ hub. Rendered from today's slice so bots get real headlines; the page
     hydrates client-side (country shard + filter). Returns the list of landing URLs
     for the sitemap."""
-    day_en = fmt_day_en(today)
     pairs = known_country_lang_pairs()
     langs_by_country = {}
     for cc, lang in pairs:
         langs_by_country.setdefault(cc, []).append(lang)
     landing_urls = []
     for cc, lang in pairs:
-        cname = COUNTRY_NAMES.get(cc, cc)
-        lname = LANG_EN_NAMES.get(lang, lang)
+        cname = country_name_i18n(cc, lang)      # country name in the page's language
+        strings = LANDING_STRINGS.get(lang, LANDING_STRINGS["en"])
+        phrase = strings["t"].format(c=cname)    # e.g. "日本のニュース", "Suisse : actualités"
         sl = [a for a in articles
               if (a.get("country") or "").upper() == cc
               and (a.get("lang") or "").lower() == lang]
@@ -3262,15 +3370,12 @@ def write_landing_pages(articles, today):
         alts = "".join(
             f'<link rel="alternate" hreflang="{l2}" href="https://all.news{landing_url(cc, l2)}">'
             for l2 in sorted(set(langs_by_country[cc])))
-        title = f"{cname} News in {lname} – all.news"
-        desc = (f"Today's {lname}-language news headlines from {cname}. all.news "
-                f"aggregates {cname} sources and updates hourly — the latest {cname} "
-                f"headlines in {lname}, all in one place.")
         write_rendered_html(
             sl, landing_path(cc, lang),
-            title=title, description=desc,
+            title=f"{phrase} – all.news",
+            description=strings["d"].format(c=cname),
             canonical=f"https://all.news{url}",
-            date_heading=f"{cname} news in {lname} — {day_en}",
+            date_heading=f"{phrase} · {landing_date(lang, today)}",
             older_dates=[], limit=SSR_LIMIT, head_links=alts, html_lang=lang)
     write_news_hub(langs_by_country)
     return landing_urls
