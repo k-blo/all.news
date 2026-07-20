@@ -24,6 +24,21 @@ Issues do **not** live in this code repo. They are filed in a separate GitHub re
 The `.issues` is part of the repo name, not a path. Commit messages here reference those
 issue numbers (e.g. `#30`, `#25`). The code repo itself is `k-blo/all.news`.
 
+**Access:** a `GITHUB_TOKEN` in `.env` (gitignored; see `.env.example`) exists solely to
+read those issues. It is **read-only** — use it to list and read issues, not to create,
+edit, close, or comment on them. Load it from the file rather than expecting it in the
+environment:
+
+```bash
+set -a; . ./.env; set +a
+curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+  "https://api.github.com/repos/k-blo/all.news.issues/issues?state=open&per_page=100"
+```
+
+Quote the URL — an unquoted `?` is a glob in zsh. A `401 Bad credentials` means the token
+expired or was revoked (a valid token merely lacking repo access returns 403/404 instead);
+regenerate it at https://github.com/settings/tokens?type=beta.
+
 ## Conventions
 
 - **Git commit messages are always a single line** — no body, no trailing

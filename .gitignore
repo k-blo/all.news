@@ -9,6 +9,11 @@ __pycache__/
 # Cloudflare Wrangler
 cron-worker/.wrangler/
 
+# Local secrets
+.env
+.env.*
+!.env.example
+
 # Crawl outputs — now stored in R2, not git (run `git rm -r --cached` at cutover).
 # Kept out of the repo so the hourly crawl no longer bloats history.
 /crawled.json
