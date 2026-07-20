@@ -547,6 +547,7 @@ FEEDS = [
     # --- BR ---
     {"source": "A Gazeta ES", "url": "https://www.agazeta.com.br/rss"},
     {"source": "A Tarde", "url": "https://www.atarde.com.br/rss"},
+    {"source": "Correio Braziliense", "url": "https://www.correiobraziliense.com.br/rss/noticia/brasil/rss.xml"},
     {"source": "Agência Brasil", "url": "https://agenciabrasil.ebc.com.br/rss/ultimasnoticias/feed.xml"},
     {"source": "BBC Brasil", "url": "https://www.bbc.com/portuguese/index.xml"},
     {"source": "CartaCapital", "url": "https://www.cartacapital.com.br/feed/"},
@@ -600,11 +601,15 @@ FEEDS = [
     {"source": "Vancouver Sun", "url": "https://vancouversun.com/feed/"},
     {"source": "Winnipeg Free Press", "url": "https://www.winnipegfreepress.com/rss/?path=/breakingnews"},
     # --- CL ---
+    {"source": "BioBioChile", "url": "https://feeds.feedburner.com/radiobiobio/NNeJ"},
     {"source": "CIPER", "url": "https://www.ciperchile.cl/feed/"},
     {"source": "Diario Financiero", "url": "https://www.df.cl/noticias/site/list/port/rss.xml"},
     {"source": "Ex-Ante", "url": "https://www.ex-ante.cl/feed/"},
     {"source": "Interferencia", "url": "https://interferencia.cl/rss.xml"},
+    {"source": "La Discusión", "url": "https://www.ladiscusion.cl/feed/"},
     {"source": "La Nación Chile", "url": "https://www.lanacion.cl/feed/"},
+    {"source": "La Tercera", "url": "https://www.latercera.com/arc/outboundfeeds/rss/?outputType=xml"},
+    {"source": "Publimetro Chile", "url": "https://www.publimetro.cl/arc/outboundfeeds/rss/?outputType=xml"},
     {"source": "Radio Universidad de Chile", "url": "https://radio.uchile.cl/feed/"},
     {"source": "The Clinic", "url": "https://www.theclinic.cl/feed/"},
     # --- CN ---
@@ -629,6 +634,7 @@ FEEDS = [
     {"source": "El Colombiano Nacional", "url": "https://www.elcolombiano.com/rss/colombia.xml"},
     {"source": "El Tiempo Mundo", "url": "https://www.eltiempo.com/rss/mundo.xml"},
     {"source": "El Tiempo Política", "url": "https://www.eltiempo.com/rss/politica.xml"},
+    {"source": "La Opinión", "url": "https://www.laopinion.com.co/rss.xml"},
     {"source": "La República CO", "url": "https://www.larepublica.co/rss/economia"},
     {"source": "La Silla Vacía", "url": "https://www.lasillavacia.com/feed/"},
     {"source": "Razón Pública", "url": "https://razonpublica.com/feed/"},
@@ -777,6 +783,7 @@ FEEDS = [
     # --- GB ---
     {"source": "BBC UK", "url": "https://feeds.bbci.co.uk/news/uk/rss.xml"},
     {"source": "Belfast Live", "url": "https://www.belfastlive.co.uk/?service=rss"},
+    {"source": "Birmingham Live", "url": "https://www.birminghammail.co.uk/news/?service=rss"},
     {"source": "Birmingham Mail", "url": "https://www.birminghammail.co.uk/?service=rss"},
     {"source": "Bristol Post", "url": "https://www.bristolpost.co.uk/?service=rss"},
     {"source": "Byline Times", "url": "https://bylinetimes.com/feed/"},
@@ -913,6 +920,11 @@ FEEDS = [
     {"source": "Walla", "url": "https://rss.walla.co.il/feed/1?type=main"},
     {"source": "Ynetnews", "url": "https://www.ynetnews.com/Integration/StoryRss3082.xml"},
     {"source": "Ynetnews World", "url": "https://www.ynetnews.com/Integration/StoryRss1854.xml"},
+    # IL, Hebrew-language
+    {"source": "Arutz Sheva HE", "url": "https://www.inn.co.il/Rss.aspx"},
+    {"source": "Davar", "url": "https://www.davar1.co.il/feed/"},
+    {"source": "Israel Hayom HE", "url": "https://www.israelhayom.co.il/rss.xml"},
+    {"source": "Shakuf", "url": "https://shakuf.co.il/feed"},
     # --- IN ---
     {"source": "DNA India", "url": "https://www.dnaindia.com/feeds/india.xml"},
     {"source": "Economic Times Markets", "url": "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms"},
@@ -978,6 +990,17 @@ FEEDS = [
     {"source": "The Japan Times", "url": "https://www.japantimes.co.jp/feed/"},
     {"source": "The Mainichi", "url": "https://mainichi.jp/rss/etc/english_latest.rss"},
     {"source": "Yahoo Japan News", "url": "https://news.yahoo.co.jp/rss/topics/top-picks.xml"},
+    # JP regional dailies + business weeklies (many share the /list/feed/rss CMS)
+    {"source": "Akita Sakigake", "url": "https://feeds.feedburner.com/akita_news"},
+    {"source": "Bunshun", "url": "https://bunshun.jp/list/feed/rss"},
+    {"source": "Chiba Nippo", "url": "https://www.chibanippo.co.jp/rss.xml"},
+    {"source": "Fukui Shimbun", "url": "https://www.fukuishimbun.co.jp/list/feed/rss"},
+    {"source": "Kumamoto Nichinichi", "url": "https://kumanichi.com/rss.xml"},
+    {"source": "Kyoto Shimbun", "url": "https://www.kyoto-np.co.jp/list/feed/rss"},
+    {"source": "Okinawa Times", "url": "https://www.okinawatimes.co.jp/list/feed/rss"},
+    {"source": "Saga Shimbun", "url": "https://www.saga-s.co.jp/list/feed/rss"},
+    {"source": "Shikoku Shimbun", "url": "http://rss.shikoku-np.co.jp/rss/national_main.aspx"},
+    {"source": "Toyo Keizai", "url": "https://toyokeizai.net/list/feed/rss"},
     # --- KR ---
     {"source": "KBS World", "url": "https://world.kbs.co.kr/rss/rss_news.htm?lang=e"},
     {"source": "Korea Pro", "url": "https://koreapro.org/feed/"},
@@ -985,15 +1008,52 @@ FEEDS = [
     {"source": "MK Business", "url": "https://www.mk.co.kr/rss/40300001/"},
     {"source": "NK News", "url": "https://www.nknews.org/feed/"},
     {"source": "The Korea Times Business", "url": "https://www.koreatimes.co.kr/www/rss/biz.xml"},
+    # --- KR, Korean-language (ko) — national dailies, wires and business press ---
+    {"source": "Chosun Ilbo", "url": "https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"},
+    {"source": "Donga Economy", "url": "https://rss.donga.com/economy.xml"},
+    {"source": "Donga Ilbo", "url": "https://rss.donga.com/total.xml"},
+    {"source": "Donga Politics", "url": "https://rss.donga.com/politics.xml"},
+    {"source": "ETNews", "url": "https://rss.etnews.com/Section901.xml"},
+    {"source": "ETNews IT", "url": "https://rss.etnews.com/Section902.xml"},
+    {"source": "Hankyung", "url": "https://www.hankyung.com/feed/all-news"},
+    {"source": "Hankyung Politics", "url": "https://www.hankyung.com/feed/politics"},
+    {"source": "Kyunghyang", "url": "https://www.khan.co.kr/rss/rssdata/total_news.xml"},
+    {"source": "Kyunghyang Economy", "url": "https://www.khan.co.kr/rss/rssdata/economy_news.xml"},
+    {"source": "Kyunghyang Politics", "url": "https://www.khan.co.kr/rss/rssdata/politic_news.xml"},
+    {"source": "Money Today", "url": "https://rss.mt.co.kr/mt_news.xml"},
+    {"source": "Newsis Economy", "url": "https://newsis.com/RSS/economy.xml"},
+    {"source": "Newsis Politics", "url": "https://newsis.com/RSS/politics.xml"},
+    {"source": "Newsis Society", "url": "https://newsis.com/RSS/society.xml"},
+    {"source": "Nocut News", "url": "https://rss.nocutnews.co.kr/nocutnews.xml"},
+    {"source": "OhmyNews", "url": "http://rss.ohmynews.com/rss/ohmynews.xml"},
+    {"source": "Pressian", "url": "https://www.pressian.com/api/v3/site/rss/news"},
+    {"source": "Segye Ilbo", "url": "https://www.segye.com/Articles/RSSList/segye_recent.xml"},
+    {"source": "Seoul Shinmun", "url": "https://www.seoul.co.kr/xml/rss/rss_politics.xml"},
+    {"source": "Sisa Journal", "url": "https://www.sisajournal.com/rss/allArticle.xml"},
+    {"source": "Yonhap Economy", "url": "https://www.yna.co.kr/rss/economy.xml"},
+    {"source": "Yonhap News", "url": "https://www.yna.co.kr/rss/news.xml"},
+    {"source": "Yonhap Politics", "url": "https://www.yna.co.kr/rss/politics.xml"},
+    # --- KR, Korean-language regional dailies (shared /rss/allArticle.xml CMS) ---
+    {"source": "Chungcheong Today", "url": "https://www.cctoday.co.kr/rss/allArticle.xml"},
+    {"source": "Incheon Ilbo", "url": "https://www.incheonilbo.com/rss/allArticle.xml"},
+    {"source": "Jeju Sori", "url": "https://www.jejusori.net/rss/allArticle.xml"},
+    {"source": "Jeonnam Ilbo", "url": "https://www.jnilbo.com/rss/allArticle.xml"},
+    {"source": "Kangwon Domin Ilbo", "url": "https://www.kado.net/rss/allArticle.xml"},
+    {"source": "Kyongbuk Ilbo", "url": "https://www.kyongbuk.co.kr/rss/allArticle.xml"},
+    {"source": "Ulsan Jeil Ilbo", "url": "https://www.ujeil.com/rss/allArticle.xml"},
     # --- MX ---
     {"source": "Contralínea", "url": "https://contralinea.com.mx/feed/"},
+    {"source": "Diario de Yucatán", "url": "https://www.yucatan.com.mx/feed"},
     {"source": "El Economista MX", "url": "https://www.eleconomista.com.mx/rss/ultimas-noticias"},
     {"source": "El Heraldo de México", "url": "https://heraldodemexico.com.mx/rss/feed.html"},
     {"source": "El Sol de México", "url": "https://www.elsoldemexico.com.mx/rss.xml"},
     {"source": "Expansión Economía", "url": "https://expansion.mx/rss/economia"},
     {"source": "Expansión MX", "url": "https://expansion.mx/rss"},
     {"source": "La Jornada Política", "url": "https://www.jornada.com.mx/rss/politica.xml"},
+    {"source": "La Voz de Michoacán", "url": "https://www.lavozdemichoacan.com.mx/feed/"},
+    {"source": "Periódico AM", "url": "https://www.am.com.mx/feed"},
     {"source": "Pie de Página", "url": "https://piedepagina.mx/feed/"},
+    {"source": "Vanguardia MX", "url": "https://vanguardia.com.mx/rss.xml"},
     {"source": "Reforma", "url": "https://www.reforma.com/rss/portada.xml"},
     {"source": "Zeta Tijuana", "url": "https://zetatijuana.com/feed/"},
     # --- NL ---
@@ -1042,7 +1102,9 @@ FEEDS = [
     {"source": "TV 2", "url": "https://www.tv2.no/rss/nyheter"},
     {"source": "VG Nyheter", "url": "https://www.vg.no/rss/feed/?categories=1068"},
     {"source": "VG Sport", "url": "https://www.vg.no/rss/feed/?categories=1069"},
+    {"source": "Dagsavisen", "url": "https://www.dagsavisen.no/rss"},
     # --- NZ ---
+    {"source": "Newsroom NZ", "url": "https://newsroom.co.nz/feed/"},
     {"source": "Kiwiblog", "url": "https://www.kiwiblog.co.nz/feed"},
     {"source": "NZ Herald", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml"},
     {"source": "NZ Herald Business", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/business/?outputType=xml"},
@@ -1059,6 +1121,9 @@ FEEDS = [
     {"source": "Andina Economía", "url": "https://andina.pe/agencia/rss.aspx?tipo=3"},
     {"source": "Andina Nacional", "url": "https://andina.pe/agencia/rss.aspx?tipo=1"},
     {"source": "Andina Regional", "url": "https://andina.pe/agencia/rss.aspx?tipo=2"},
+    {"source": "Diario Correo", "url": "https://diariocorreo.pe/arc/outboundfeeds/rss/?outputType=xml"},
+    {"source": "El Comercio Perú", "url": "https://elcomercio.pe/arc/outboundfeeds/rss/?outputType=xml"},
+    {"source": "Gestión", "url": "https://gestion.pe/arc/outboundfeeds/rss/?outputType=xml"},
     {"source": "IDL-Reporteros", "url": "https://www.idl-reporteros.pe/feed/"},
     {"source": "Wayka", "url": "https://wayka.pe/feed/"},
     # --- PH ---
@@ -1099,6 +1164,7 @@ FEEDS = [
     # --- PL ---
     {"source": "Bankier.pl", "url": "https://www.bankier.pl/rss/wiadomosci.xml"},
     {"source": "Defence24", "url": "https://www.defence24.pl/rss"},
+    {"source": "Gazeta Wyborcza", "url": "https://wyborcza.pl/pub/rss/najnowsze_wyborcza.xml"},
     {"source": "Do Rzeczy", "url": "https://dorzeczy.pl/rss"},
     {"source": "Dziennik Zachodni", "url": "https://dziennikzachodni.pl/rss"},
     {"source": "Fakt", "url": "https://www.fakt.pl/rss"},
@@ -1141,6 +1207,9 @@ FEEDS = [
     {"source": "Público PT", "url": "https://feeds.feedburner.com/PublicoRSS"},
     {"source": "RTP Mundo", "url": "https://www.rtp.pt/noticias/rss/mundo"},
     {"source": "Visão", "url": "https://visao.pt/feed/"},
+    {"source": "Diário de Notícias da Madeira", "url": "https://www.dnoticias.pt/rss.xml"},
+    # --- QA ---
+    {"source": "Doha News", "url": "https://dohanews.co/feed/"},
     # --- RO ---
     {"source": "Adevărul Internațional", "url": "https://adevarul.ro/international/rss"},
     {"source": "Aktual24", "url": "https://www.aktual24.ro/feed/"},
@@ -1370,6 +1439,24 @@ NEWS_SITEMAPS = [
     {"source": "Kyiv Independent",  "url": "https://kyivindependent.com/news-sitemap.xml", "max": 50},
     {"source": "Liga.net",          "url": "https://www.liga.net/sitemap-main/sitemap-news.xml", "max": 50},
     {"source": "Irish Examiner",    "url": "https://www.irishexaminer.com/news-sitemap.xml", "max": 50},
+    # --- Latin America: outlets with no usable RSS, but a real Google News sitemap ---
+    {"source": "El Mostrador",      "url": "https://www.elmostrador.cl/sitemap_news.xml", "max": 50},
+    {"source": "Cooperativa",       "url": "https://www.cooperativa.cl/noticias/sitemap_news.xml", "max": 50},
+    {"source": "Meganoticias",      "url": "https://www.meganoticias.cl/sitemaps/sitemap-news.xml", "max": 50},
+    {"source": "El Dínamo",         "url": "https://www.eldinamo.cl/_files/sitemaps/sitemap_news.xml", "max": 50},
+    {"source": "Diario Concepción", "url": "https://www.diarioconcepcion.cl/sitemap_news.xml", "max": 50},
+    {"source": "La República Perú",     "url": "https://larepublica.pe/sitemap/noticias.xml", "max": 50},
+    {"source": "La República Política", "url": "https://larepublica.pe/sitemap/politica.xml", "max": 50},
+    {"source": "La República Sociedad", "url": "https://larepublica.pe/sitemap/sociedad.xml", "max": 50},
+    {"source": "El Informador",     "url": "https://www.informador.mx/sitemaps/googlenews.xml", "max": 50},
+    # Arc XP "sitemap-news/latest" — the sitemap-news-index only points at this + yesterday.
+    {"source": "Crónica",           "url": "https://www.cronica.com.mx/arc/outboundfeeds/sitemap-news/latest/", "max": 50},
+    {"source": "El Heraldo CO",     "url": "https://www.elheraldo.co/arc/outboundfeeds/sitemap-news/latest/", "max": 50},
+    {"source": "El Universal Cartagena", "url": "https://www.eluniversal.com.co/arc/outboundfeeds/sitemap-news/latest/", "max": 50},
+    {"source": "Vanguardia CO",     "url": "https://www.vanguardia.com/arc/outboundfeeds/sitemap-news/latest/", "max": 50},
+    # Japan regional dailies without RSS
+    {"source": "Chunichi Shimbun", "url": "https://www.chunichi.co.jp/sitemap_news.xml", "max": 50},
+    {"source": "Chugoku Shimbun",  "url": "https://www.chugoku-np.co.jp/list/feed/rss4googlenews", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
 # wp-sitemap-posts-post-N. Titles from URL slug (last path segment).
@@ -1746,6 +1833,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "La DH Sports": {"lang":"fr","country":"BE"}, "Le Vif Belgique": {"lang":"fr","country":"BE"},
     "Trends": {"lang":"fr","country":"BE"}, "VRT NWS Politiek": {"lang":"nl","country":"BE"},
     # BR
+    "Correio Braziliense": {"lang":"pt","country":"BR"},
     "A Gazeta ES": {"lang":"pt","country":"BR"}, "A Tarde": {"lang":"pt","country":"BR"},
     "Agência Brasil": {"lang":"pt","country":"BR"}, "BBC Brasil": {"lang":"pt","country":"BR"},
     "CartaCapital": {"lang":"pt","country":"BR"}, "CNN Brasil": {"lang":"pt","country":"BR"},
@@ -1780,6 +1868,11 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Ex-Ante": {"lang":"es","country":"CL"}, "Interferencia": {"lang":"es","country":"CL"},
     "La Nación Chile": {"lang":"es","country":"CL"},
     "Radio Universidad de Chile": {"lang":"es","country":"CL"}, "The Clinic": {"lang":"es","country":"CL"},
+    "BioBioChile": {"lang":"es","country":"CL"}, "La Discusión": {"lang":"es","country":"CL"},
+    "La Tercera": {"lang":"es","country":"CL"}, "Publimetro Chile": {"lang":"es","country":"CL"},
+    "El Mostrador": {"lang":"es","country":"CL"}, "Cooperativa": {"lang":"es","country":"CL"},
+    "Meganoticias": {"lang":"es","country":"CL"}, "El Dínamo": {"lang":"es","country":"CL"},
+    "Diario Concepción": {"lang":"es","country":"CL"},
     # CN
     "Bitter Winter": {"lang":"en","country":"CN"}, "CGTN Business": {"lang":"en","country":"CN"},
     "CGTN China": {"lang":"en","country":"CN"}, "China Daily": {"lang":"en","country":"CN"},
@@ -1796,6 +1889,8 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "El Tiempo Política": {"lang":"es","country":"CO"}, "La República CO": {"lang":"es","country":"CO"},
     "La Silla Vacía": {"lang":"es","country":"CO"}, "Razón Pública": {"lang":"es","country":"CO"},
     "Semana Mundo": {"lang":"es","country":"CO"}, "Semana Nación": {"lang":"es","country":"CO"},
+    "La Opinión": {"lang":"es","country":"CO"}, "El Heraldo CO": {"lang":"es","country":"CO"},
+    "El Universal Cartagena": {"lang":"es","country":"CO"}, "Vanguardia CO": {"lang":"es","country":"CO"},
     # CZ
     "Aktuálně Domácí": {"lang":"cs","country":"CZ"}, "Aktuálně Zahraničí": {"lang":"cs","country":"CZ"},
     "Aktuálně.cz": {"lang":"cs","country":"CZ"}, "Blesk": {"lang":"cs","country":"CZ"},
@@ -1878,6 +1973,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Sciences et Avenir": {"lang":"fr","country":"FR"}, "Var-Matin": {"lang":"fr","country":"FR"},
     "Vosges Matin": {"lang":"fr","country":"FR"},
     # GB
+    "Birmingham Live": {"lang":"en","country":"GB"},
     "BBC UK": {"lang":"en","country":"GB"}, "Belfast Live": {"lang":"en","country":"GB"},
     "Birmingham Mail": {"lang":"en","country":"GB"}, "Bristol Post": {"lang":"en","country":"GB"},
     "Byline Times": {"lang":"en","country":"GB"}, "Cambridge News": {"lang":"en","country":"GB"},
@@ -1953,6 +2049,8 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "The Jerusalem Post News": {"lang":"en","country":"IL"}, "The Media Line": {"lang":"en","country":"IL"},
     "The Times of Israel": {"lang":"en","country":"IL"}, "Walla": {"lang":"he","country":"IL"},
     "Ynetnews": {"lang":"en","country":"IL"}, "Ynetnews World": {"lang":"en","country":"IL"},
+    "Arutz Sheva HE": {"lang":"he","country":"IL"}, "Davar": {"lang":"he","country":"IL"},
+    "Israel Hayom HE": {"lang":"he","country":"IL"}, "Shakuf": {"lang":"he","country":"IL"},
     # IN
     "DNA India": {"lang":"en","country":"IN"}, "Economic Times Markets": {"lang":"en","country":"IN"},
     "Free Press Journal": {"lang":"en","country":"IN"},
@@ -1991,16 +2089,42 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Jiji": {"lang":"ja","country":"JP"}, "NHK Politics": {"lang":"ja","country":"JP"},
     "SoraNews24": {"lang":"en","country":"JP"}, "The Japan Times": {"lang":"en","country":"JP"},
     "The Mainichi": {"lang":"en","country":"JP"}, "Yahoo Japan News": {"lang":"ja","country":"JP"},
+    "Akita Sakigake": {"lang":"ja","country":"JP"}, "Bunshun": {"lang":"ja","country":"JP"},
+    "Chiba Nippo": {"lang":"ja","country":"JP"}, "Fukui Shimbun": {"lang":"ja","country":"JP"},
+    "Kumamoto Nichinichi": {"lang":"ja","country":"JP"}, "Kyoto Shimbun": {"lang":"ja","country":"JP"},
+    "Okinawa Times": {"lang":"ja","country":"JP"}, "Saga Shimbun": {"lang":"ja","country":"JP"},
+    "Shikoku Shimbun": {"lang":"ja","country":"JP"}, "Toyo Keizai": {"lang":"ja","country":"JP"},
+    "Chunichi Shimbun": {"lang":"ja","country":"JP"}, "Chugoku Shimbun": {"lang":"ja","country":"JP"},
     # KR
     "KBS World": {"lang":"en","country":"KR"}, "Korea Pro": {"lang":"en","country":"KR"},
     "Maeil Business": {"lang":"en","country":"KR"}, "MK Business": {"lang":"en","country":"KR"},
     "NK News": {"lang":"en","country":"KR"}, "The Korea Times Business": {"lang":"en","country":"KR"},
+    # KR, Korean-language
+    "Chosun Ilbo": {"lang":"ko","country":"KR"}, "Donga Economy": {"lang":"ko","country":"KR"},
+    "Donga Ilbo": {"lang":"ko","country":"KR"}, "Donga Politics": {"lang":"ko","country":"KR"},
+    "ETNews": {"lang":"ko","country":"KR"}, "ETNews IT": {"lang":"ko","country":"KR"},
+    "Hankyung": {"lang":"ko","country":"KR"}, "Hankyung Politics": {"lang":"ko","country":"KR"},
+    "Kyunghyang": {"lang":"ko","country":"KR"}, "Kyunghyang Economy": {"lang":"ko","country":"KR"},
+    "Kyunghyang Politics": {"lang":"ko","country":"KR"}, "Money Today": {"lang":"ko","country":"KR"},
+    "Newsis Economy": {"lang":"ko","country":"KR"}, "Newsis Politics": {"lang":"ko","country":"KR"},
+    "Newsis Society": {"lang":"ko","country":"KR"}, "Nocut News": {"lang":"ko","country":"KR"},
+    "OhmyNews": {"lang":"ko","country":"KR"}, "Pressian": {"lang":"ko","country":"KR"},
+    "Segye Ilbo": {"lang":"ko","country":"KR"}, "Seoul Shinmun": {"lang":"ko","country":"KR"},
+    "Sisa Journal": {"lang":"ko","country":"KR"}, "Yonhap Economy": {"lang":"ko","country":"KR"},
+    "Yonhap News": {"lang":"ko","country":"KR"}, "Yonhap Politics": {"lang":"ko","country":"KR"},
+    "Chungcheong Today": {"lang":"ko","country":"KR"}, "Incheon Ilbo": {"lang":"ko","country":"KR"},
+    "Jeju Sori": {"lang":"ko","country":"KR"}, "Jeonnam Ilbo": {"lang":"ko","country":"KR"},
+    "Kangwon Domin Ilbo": {"lang":"ko","country":"KR"}, "Kyongbuk Ilbo": {"lang":"ko","country":"KR"},
+    "Ulsan Jeil Ilbo": {"lang":"ko","country":"KR"},
     # MX
     "Contralínea": {"lang":"es","country":"MX"}, "El Economista MX": {"lang":"es","country":"MX"},
     "El Heraldo de México": {"lang":"es","country":"MX"}, "El Sol de México": {"lang":"es","country":"MX"},
     "Expansión Economía": {"lang":"es","country":"MX"}, "Expansión MX": {"lang":"es","country":"MX"},
     "La Jornada Política": {"lang":"es","country":"MX"}, "Pie de Página": {"lang":"es","country":"MX"},
     "Reforma": {"lang":"es","country":"MX"}, "Zeta Tijuana": {"lang":"es","country":"MX"},
+    "Diario de Yucatán": {"lang":"es","country":"MX"}, "La Voz de Michoacán": {"lang":"es","country":"MX"},
+    "Periódico AM": {"lang":"es","country":"MX"}, "Vanguardia MX": {"lang":"es","country":"MX"},
+    "El Informador": {"lang":"es","country":"MX"}, "Crónica": {"lang":"es","country":"MX"},
     # NL
     "AD Binnenland": {"lang":"nl","country":"NL"}, "AD Politiek": {"lang":"nl","country":"NL"},
     "BN DeStem Regio": {"lang":"nl","country":"NL"}, "Brabant Dagblad Nieuws": {"lang":"nl","country":"NL"},
@@ -2022,6 +2146,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "NU.nl Economie": {"lang":"nl","country":"NL"}, "Trouw Groen": {"lang":"nl","country":"NL"},
     "Trouw Politiek": {"lang":"nl","country":"NL"}, "Tweakers": {"lang":"nl","country":"NL"},
     # NO
+    "Dagsavisen": {"lang":"no","country":"NO"},
     "Adresseavisen": {"lang":"no","country":"NO"}, "Aftenposten Nyheter": {"lang":"no","country":"NO"},
     "Fædrelandsvennen": {"lang":"no","country":"NO"}, "iTromsø": {"lang":"no","country":"NO"},
     "Morgenbladet": {"lang":"no","country":"NO"}, "NRK Norge": {"lang":"no","country":"NO"},
@@ -2029,6 +2154,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Sunnmørsposten": {"lang":"no","country":"NO"}, "TV 2": {"lang":"no","country":"NO"},
     "VG Nyheter": {"lang":"no","country":"NO"}, "VG Sport": {"lang":"no","country":"NO"},
     # NZ
+    "Newsroom NZ": {"lang":"en","country":"NZ"},
     "Kiwiblog": {"lang":"en","country":"NZ"}, "NZ Herald": {"lang":"en","country":"NZ"},
     "NZ Herald Business": {"lang":"en","country":"NZ"}, "Otago Daily Times": {"lang":"en","country":"NZ"},
     "RNZ Business": {"lang":"en","country":"NZ"}, "RNZ Political": {"lang":"en","country":"NZ"},
@@ -2039,6 +2165,12 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Andina Economía": {"lang":"es","country":"PE"}, "Andina Nacional": {"lang":"es","country":"PE"},
     "Andina Regional": {"lang":"es","country":"PE"}, "IDL-Reporteros": {"lang":"es","country":"PE"},
     "Wayka": {"lang":"es","country":"PE"},
+    "Diario Correo": {"lang":"es","country":"PE"}, "El Comercio Perú": {"lang":"es","country":"PE"},
+    "Gestión": {"lang":"es","country":"PE"}, "La República Perú": {"lang":"es","country":"PE"},
+    "La República Política": {"lang":"es","country":"PE"},
+    "La República Sociedad": {"lang":"es","country":"PE"},
+    # QA
+    "Doha News": {"lang":"en","country":"QA"},
     # PH
     "Bandera": {"lang":"en","country":"PH"}, "Business World": {"lang":"en","country":"PH"},
     "BusinessWorld Economy": {"lang":"en","country":"PH"}, "GMA Money": {"lang":"en","country":"PH"},
@@ -2061,6 +2193,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "The Express Tribune World": {"lang":"en","country":"PK"},
     "The News International Pakistan": {"lang":"en","country":"PK"},
     # PL
+    "Gazeta Wyborcza": {"lang":"pl","country":"PL"},
     "Bankier.pl": {"lang":"pl","country":"PL"}, "Defence24": {"lang":"pl","country":"PL"},
     "Do Rzeczy": {"lang":"pl","country":"PL"}, "Dziennik Zachodni": {"lang":"pl","country":"PL"},
     "Fakt": {"lang":"pl","country":"PL"}, "Gazeta Krakowska": {"lang":"pl","country":"PL"},
@@ -2078,6 +2211,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Wprost Wiadomości": {"lang":"pl","country":"PL"}, "Wprost Świat": {"lang":"pl","country":"PL"},
     "Wyborcza Kraj": {"lang":"pl","country":"PL"},
     # PT
+    "Diário de Notícias da Madeira": {"lang":"pt","country":"PT"},
     "Dinheiro Vivo": {"lang":"pt","country":"PT"}, "Fumaça": {"lang":"pt","country":"PT"},
     "Jornal Económico": {"lang":"pt","country":"PT"}, "Mensagem de Lisboa": {"lang":"pt","country":"PT"},
     "Notícias ao Minuto Mundo": {"lang":"pt","country":"PT"},
@@ -2805,6 +2939,45 @@ SOURCE_COLORS = {
     "TASS": "#0a4b9f", "RT": "#3d8b37", "RIA Novosti": "#1f5fa6",
     "Meduza": "#e0533f", "The Moscow Times": "#c8102e",
     "Novaya Gazeta Europe": "#9b1c1c", "Mediazona": "#cc2222",
+    # South Korea (Korean-language)
+    "Chosun Ilbo": "#1a4b8c", "Donga Ilbo": "#0d3b7a", "Donga Politics": "#265a99",
+    "Donga Economy": "#3f77b8", "ETNews": "#0a7bc4", "ETNews IT": "#2f97dd",
+    "Hankyung": "#1b4f9c", "Hankyung Politics": "#3a6cba", "Kyunghyang": "#1f7a4d",
+    "Kyunghyang Politics": "#2f9663", "Kyunghyang Economy": "#47b07c",
+    "Money Today": "#c8102e", "Newsis Politics": "#004a99", "Newsis Economy": "#1c68b3",
+    "Newsis Society": "#3f86cc", "Nocut News": "#e2401a", "OhmyNews": "#00a04a",
+    "Pressian": "#8c2f8c", "Segye Ilbo": "#0b5ea8", "Seoul Shinmun": "#14508c",
+    "Sisa Journal": "#7a2f5e", "Yonhap News": "#0a4d9e", "Yonhap Politics": "#2469bc",
+    "Yonhap Economy": "#4585d1",
+    "Chungcheong Today": "#2b7a6b", "Incheon Ilbo": "#1a6fa8", "Jeju Sori": "#e07b1a",
+    "Jeonnam Ilbo": "#1f8c5a", "Kangwon Domin Ilbo": "#2f6bb3", "Kyongbuk Ilbo": "#b8442a",
+    "Ulsan Jeil Ilbo": "#0f7a8c",
+    # Chile
+    "La Tercera": "#d6001c", "BioBioChile": "#0a7ac4", "La Discusión": "#1a5276",
+    "Publimetro Chile": "#e2541b", "El Mostrador": "#2b2b2b", "Cooperativa": "#004a99",
+    "Meganoticias": "#c8102e", "El Dínamo": "#e0a800", "Diario Concepción": "#1f6b4a",
+    # Peru
+    "El Comercio Perú": "#b8942a", "Gestión": "#0a5c7a", "Diario Correo": "#c41230",
+    "La República Perú": "#d6001c", "La República Política": "#e2402a",
+    "La República Sociedad": "#ea6a4a",
+    # Mexico (regional) & Qatar
+    "El Informador": "#1a4f8b", "Diario de Yucatán": "#0a6b4a", "La Voz de Michoacán": "#8c2f2f",
+    "Periódico AM": "#c8102e", "Vanguardia MX": "#1b5e9c", "Crónica": "#a8102e",
+    "Doha News": "#6b2f8c",
+    # Colombia (regional)
+    "La Opinión": "#0a5ca8", "El Heraldo CO": "#e2001a", "El Universal Cartagena": "#1a6b8c",
+    "Vanguardia CO": "#c41230",
+    # Japan (regional + business) and Israel (Hebrew)
+    "Toyo Keizai": "#1a4f8b", "Bunshun": "#8c2f2f", "Kyoto Shimbun": "#7a2f6b",
+    "Okinawa Times": "#0a8ca8", "Fukui Shimbun": "#2f6bb3", "Saga Shimbun": "#1f7a5a",
+    "Kumamoto Nichinichi": "#b8442a", "Akita Sakigake": "#1a5f9c", "Chiba Nippo": "#0f7a8c",
+    "Shikoku Shimbun": "#2b7a4a", "Chunichi Shimbun": "#0d4b8c", "Chugoku Shimbun": "#c8102e",
+    "Arutz Sheva HE": "#1a4b8c", "Davar": "#c8102e", "Israel Hayom HE": "#0a5ca8",
+    "Shakuf": "#2f8c6b",
+    # Assorted regional additions
+    "Dagsavisen": "#d6001c", "Newsroom NZ": "#1a6b8c",
+    "Diário de Notícias da Madeira": "#1f6b4a", "Correio Braziliense": "#0a4f9e",
+    "Birmingham Live": "#c41230", "Gazeta Wyborcza": "#b8242a",
 }
 
 
@@ -3120,7 +3293,7 @@ LANG_EN_NAMES = {
     "nl": "Dutch", "pt": "Portuguese", "pl": "Polish", "sv": "Swedish", "no": "Norwegian",
     "da": "Danish", "fi": "Finnish", "el": "Greek", "cs": "Czech", "hu": "Hungarian", "ro": "Romanian",
     "uk": "Ukrainian", "tr": "Turkish", "ja": "Japanese", "id": "Indonesian", "vi": "Vietnamese",
-    "he": "Hebrew", "ar": "Arabic", "zh": "Chinese", "ru": "Russian",
+    "he": "Hebrew", "ar": "Arabic", "zh": "Chinese", "ru": "Russian", "ko": "Korean",
 }
 
 
