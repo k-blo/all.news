@@ -109,6 +109,12 @@ a { color: inherit; }
 .topbar .nav-btn:hover { color: var(--hover); }
 .topbar .icon { display: inline-flex; transition: transform 0.15s ease; }
 .topbar button[aria-expanded="true"] .chev { transform: rotate(180deg); }
+/* Filter / Menu icons become a close-X while their panel is open, so the button
+   reads as the way back out (#46, #47). Driven off aria-expanded, which showView()
+   already maintains, so the state and the icon can't drift apart. */
+.topbar .nav-btn .ico-open { display: none; }
+.topbar .nav-btn[aria-expanded="true"] .ico-shut { display: none; }
+.topbar .nav-btn[aria-expanded="true"] .ico-open { display: inline-flex; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -548,6 +554,10 @@ a { color: inherit; }
 }
 .fs-list .opt.off, .fs-list li.off { color: var(--dim); }
 .fs-list .opt[aria-pressed="false"] { color: var(--dim); }
+/* Sole option in a group: selected and not deselectable (#51). Keeps the normal
+   selected colour + ✓ — it is active, not disabled-looking — but drops the
+   affordance so it doesn't invite a click that does nothing. */
+.fs-list .opt.locked { cursor: default; color: var(--fg); }
 
 /* Trailing ✓ behind selected countries, languages and medias so it's obvious
    what's active (#8). */
@@ -716,6 +726,7 @@ a { color: inherit; }
 /* #23: filter column headers (.fs-head/.fs-archive) are static labels — no hover. */
 .fs-list .opt:hover { color: var(--hover); }
 .fs-list .opt[aria-pressed="false"]:hover { color: var(--muted); }
+.fs-list .opt.locked:hover { color: var(--fg); }
 .more-item > summary:hover { color: var(--hover); }
 .day-row:hover,
 .day-row:hover .chev { color: var(--hover); }

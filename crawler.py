@@ -20,7 +20,7 @@ from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
-from html import escape
+from html import escape, unescape
 from zoneinfo import ZoneInfo
 
 ZURICH = ZoneInfo("Europe/Zurich")
@@ -2379,10 +2379,26 @@ def strip_html(text):
 
 
 def clean_title(text):
-    """Normalize whitespace in a headline. Some feeds embed non-breaking spaces
-    (U+00A0) and zero-width characters that render as stray gaps or literal boxes;
-    fold them into ordinary spaces, drop zero-width ones, and collapse runs (#31)."""
-    t = (text or "").replace("\u00a0", " ").replace("\u200b", "").replace("\ufeff", "")
+    """Normalize a headline for display (#31).
+
+    Feeds hand us titles in two broken shapes: HTML entities that were never
+    decoded (`&nbsp;`, `&#039;`, `&quot;`, `&agrave;`), and raw non-breaking /
+    zero-width characters. Decode entities first, so an entity-encoded `&nbsp;`
+    becomes U+00A0 and is then folded into an ordinary space by the same pass
+    that handles literal ones. Titles are HTML-escaped again at render time
+    (`escape()` in the page writers), so decoding here is display-only.
+
+    Some feeds double-escape (Vietnamnet ships `&amp;apos;`), so one pass leaves a
+    visible `&apos;`. Decode until stable, capped at two passes \u2014 enough for the
+    double-escaping seen in the wild, while a headline that genuinely contains the
+    literal text `&amp;` survives with at most one level stripped."""
+    t = text or ""
+    for _ in range(2):
+        decoded = unescape(t)
+        if decoded == t:
+            break
+        t = decoded
+    t = t.replace("\u00a0", " ").replace("\u200b", "").replace("\ufeff", "")
     return re.sub(r"\s+", " ", t).strip()
 
 
@@ -3109,8 +3125,12 @@ def render_article_html(article):
         '</div>'
         f'<a class="title" href="{url}" target="_blank" rel="noopener nofollow ugc">{escape(article["title"])}</a>'
         '<div class="row-actions">'
-        f'<a class="row-act open" href="{url}" target="_blank" rel="noopener nofollow ugc"><span class="label">Open article</span> {OPEN_SVG}</a>'
-        f'<button class="row-act share" type="button"><span class="label">Share article</span> {LINK_SVG}</button>'
+        # Visible labels repeat on every row; the accessible name carries the headline
+        # so a screen reader announces which article the action belongs to (#49).
+        f'<a class="row-act open" href="{url}" target="_blank" rel="noopener nofollow ugc"'
+        f' aria-label="Open article: {escape(article["title"])}"><span class="label">Open article</span> {OPEN_SVG}</a>'
+        f'<button class="row-act share" type="button"'
+        f' aria-label="Share article: {escape(article["title"])}"><span class="label">Share article</span> {LINK_SVG}</button>'
         '</div>'
         '</li>'
     )

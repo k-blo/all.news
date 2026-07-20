@@ -249,8 +249,10 @@ function articleHTML(a) {
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener nofollow ugc">${esc(a.title)}</a>` +
     `<div class="row-actions">` +
-    `<a class="row-act open" href="${url}" target="_blank" rel="noopener nofollow ugc"><span class="label">Open article</span> ${OPEN_SVG}</a>` +
-    `<button class="row-act share" type="button"><span class="label">Share article</span> ${LINK_SVG}</button>` +
+    // Visible labels stay identical on every row; the accessible name carries the
+    // headline so a screen reader announces which article the action belongs to (#49).
+    `<a class="row-act open" href="${url}" target="_blank" rel="noopener nofollow ugc" aria-label="Open article: ${esc(a.title)}"><span class="label">Open article</span> ${OPEN_SVG}</a>` +
+    `<button class="row-act share" type="button" aria-label="Share article: ${esc(a.title)}"><span class="label">Share article</span> ${LINK_SVG}</button>` +
     `</div></li>`;
 }
 
@@ -348,6 +350,23 @@ function passesCountryLang(a) {
   return countryAllowed(a.country) && langAllowed(a.lang);
 }
 
+// A filter group offering a single option has nothing to choose between: leaving it
+// deselectable only lets the visitor empty their own feed (common for the language
+// group in single-language countries). Such an option is forced on and locked (#51).
+// Returns true if the caller should skip wiring a click handler.
+function lockSoleOption(btn, count) {
+  if (count !== 1) return false;
+  btn.setAttribute("aria-pressed", "true");
+  // aria-disabled, not the `disabled` property: a disabled button drops out of the
+  // accessibility tree, so a screen reader would never announce the one language
+  // that is actually active. This keeps it focusable and announced, just inert —
+  // no click handler is wired, so activating it does nothing.
+  btn.setAttribute("aria-disabled", "true");
+  btn.classList.add("locked");
+  btn.title = "Only option available";
+  return true;
+}
+
 // "Medias" filter: clickable source toggles, persisted via ?exclude=. Only lists
 // sources whose articles pass the active country/language filter, so toggling a
 // country or language shows/hides its sources here too.
@@ -363,6 +382,12 @@ function buildFilters(articles) {
     btn.textContent = s;
     const on = () => !excluded.has(s.toLowerCase());
     btn.setAttribute("aria-pressed", String(on()));
+    if (lockSoleOption(btn, sources.length)) {
+      excluded.delete(s.toLowerCase());   // the only source must stay visible
+      syncUrl();
+      box.appendChild(btn);
+      continue;
+    }
     btn.addEventListener("click", () => {
       if (on()) excluded.add(s.toLowerCase());
       else excluded.delete(s.toLowerCase());
@@ -401,6 +426,13 @@ function buildCountryFilters() {
     btn.className = "opt";
     btn.textContent = COUNTRY_NAMES[code] || code;
     btn.setAttribute("aria-pressed", String(countryAllowed(lc)));
+    if (lockSoleOption(btn, codes.length)) {
+      countriesAll = true;                // the only country must stay selected
+      includedCountries.clear();
+      syncUrl();
+      box.appendChild(btn);
+      continue;
+    }
     btn.addEventListener("click", () => {
       if (countriesAll) {                 // materialize "all", then turn this one off
         allLc.forEach((c) => includedCountries.add(c));
@@ -564,6 +596,13 @@ function buildLangFilters(articles) {
     btn.className = "opt";
     btn.textContent = LANG_NAMES[code] || code;
     btn.setAttribute("aria-pressed", String(langAllowed(code)));
+    if (lockSoleOption(btn, codes.length)) {
+      langsAll = true;                    // the only language must stay selected
+      includedLangs.clear();
+      syncUrl();
+      box.appendChild(btn);
+      continue;
+    }
     btn.addEventListener("click", () => {
       if (langsAll) {                 // materialize "all available", then turn this off
         codes.forEach((c) => includedLangs.add(c));
@@ -1075,6 +1114,23 @@ function shareArticle(li, btn) {
     label.textContent = "Link copied ✓";
     setTimeout(() => { label.textContent = prev; delete btn.dataset.copied; }, 1500);
   };
+  // On touch devices hand off to the OS share sheet, which beats copying a link
+  // the visitor then has to paste somewhere (#49). Gated on a coarse pointer
+  // because desktop browsers also expose navigator.share, where the clipboard is
+  // the better behaviour. A cancelled sheet (AbortError) is not a failure, so it
+  // must not fall through to the clipboard or flash "Link copied".
+  const titleEl = li.querySelector(".title");
+  if (navigator.share && matchMedia("(pointer: coarse)").matches) {
+    navigator.share({ title: titleEl ? titleEl.textContent : document.title, url })
+      .catch((e) => { if (e && e.name !== "AbortError") copyToClipboard(url, done); });
+    return;
+  }
+  copyToClipboard(url, done);
+}
+
+// Copy `url`, calling `done` either way. Falls back to a hidden textarea +
+// execCommand on browsers without the async clipboard API.
+function copyToClipboard(url, done) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(url).then(done, done);
   } else {
