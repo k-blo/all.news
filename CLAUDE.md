@@ -96,7 +96,7 @@ Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2
 **Programmatic landing pages:** `write_landing_pages()` writes one server-rendered
 page per (country, language) we carry at `/news/<country>/<lang>/` (e.g.
 `/news/switzerland/french/`), plus a `/news/` hub (`write_news_hub()`) linking them
-all. The SPA's `?country=&lang=` filtered views render an empty `<ul>` to bots, so
+all. The SPA renders an empty `<ul>` to bots (the list is client-rendered), so
 these static pages give crawlers real headlines for each slice. They *hydrate*:
 `script.js` recognises the `/news/<country>/<lang>/` path, resolves the slugs back to
 codes (`COUNTRY_BY_SLUG`/`LANG_BY_SLUG`), loads that country's shard and applies the
@@ -114,6 +114,8 @@ and must stay in sync. The `functions/[[path]].js` worker serves `/news/*` from 
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
 Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.
+
+**Filter state lives in web storage, never the URL.** The durable filters — excluded sources, selected countries, selected languages — are persisted in **localStorage** under `allnews.*` keys (`STORE_EXCLUDE`/`STORE_COUNTRY`/`STORE_LANG`) and read back at module init by `script.js`; there are no `?exclude=`/`?country=`/`?lang=`/`?q=` params. Because localStorage is per-origin, the same filter automatically applies on the home feed, every archive day page and every open tab, so archive-day links are plain paths (`persistFilters()` writes the selection; landing pages are pinned by their path and skip it). **Search (`STORE_QUERY`) is deliberately session-only — it uses `sessionStorage`**, so it survives a reload but is forgotten between visits rather than greeting a returning visitor with a stale query. The only remaining query param is a legacy `?day=` → `/archive/<day>.html` redirect for old inbound links; the `#hash` still deep-links individual articles.
 
 `SOURCE_COLORS` is defined in `crawler.py` and generated into `colors.js` (loaded by `script.js`). It must have an entry for every source name used in `crawler.py` — missing entries fall back to `#888`.
 

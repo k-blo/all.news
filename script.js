@@ -92,24 +92,43 @@ function sortedArticles(articles, mode) {
   return out;
 }
 
-// Excluded sources (lowercased), persisted in the URL: ?exclude=blick,watson
-const excluded = new Set(
-  (new URLSearchParams(location.search).get("exclude") || "")
-    .split(",").map((s) => s.trim().toLowerCase()).filter(Boolean)
-);
+// ---------- Persistent filter state (localStorage, never the URL) ----------
+// The durable filters — excluded sources, countries, languages — live in
+// localStorage, keyed per-origin. Nothing is stored in the URL: a selection can be
+// large (dozens of sources / countries / languages) and would blow past URL length
+// limits, the clean URL stays shareable without leaking a visitor's personal
+// filter, and because localStorage is shared across the origin the same filter
+// applies on the home feed, every archive day page and every tab automatically.
+// Search is deliberately session-only (sessionStorage): it survives a reload but is
+// forgotten when the session ends, so a returning visitor never lands on a stale
+// query. (Article deep-links still use the #hash; archive days and landing pages
+// still use the path.)
+const STORE_COUNTRY = "allnews.country";   // "all" | "" (none) | csv of country codes
+const STORE_LANG = "allnews.lang";         // "all" | "" (none) | csv of language codes
+const STORE_EXCLUDE = "allnews.exclude";   // csv of excluded source names ("" = none)
+const STORE_QUERY = "allnews.query";       // free-text search string (sessionStorage)
+const STORE_WELCOMED = "allnews.welcomed"; // "1" once the welcome modal was dismissed
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
+function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* ignore */ } }
+const _csvToSet = (s) =>
+  new Set((s || "").split(",").map((x) => x.trim().toLowerCase()).filter(Boolean));
+
+// Excluded sources (lowercased). Empty set = every source shown.
+const excluded = _csvToSet(lsGet(STORE_EXCLUDE));
 // Country / language filters use an INCLUDE model with an explicit "all" flag:
 //   <flag> true                      → show all (group header "select all")
 //   <flag> false + non-empty set     → show only those
 //   <flag> false + empty set         → show none (group header "deselect all")
-// Persisted as ?country=ch,de / ?lang=de — param absent = all, empty = none.
+// Stored value: "all" (or absent) = all, "" = none, csv = only those.
 // The welcome modal seeds the country set with the visitor's primary country.
-const _params = new URLSearchParams(location.search);
-const _parseSet = (name) =>
-  new Set((_params.get(name) || "").split(",").map((s) => s.trim().toLowerCase()).filter(Boolean));
-const includedCountries = _parseSet("country");
-let countriesAll = _params.get("country") === null; // no param → all countries
-const includedLangs = _parseSet("lang");
-let langsAll = _params.get("lang") === null;         // no param → all languages
+const _savedCountry = lsGet(STORE_COUNTRY);
+const _savedLang = lsGet(STORE_LANG);
+const includedCountries = _csvToSet(_savedCountry === "all" ? "" : _savedCountry);
+let countriesAll = _savedCountry === null || _savedCountry === "all";
+const includedLangs = _csvToSet(_savedLang === "all" ? "" : _savedLang);
+let langsAll = _savedLang === null || _savedLang === "all";
 
 function countryAllowed(c) { return countriesAll || includedCountries.has((c || "").toLowerCase()); }
 function langAllowed(l) { return langsAll || includedLangs.has((l || "").toLowerCase()); }
@@ -167,18 +186,6 @@ function todayISO() {
     timeZone: "Europe/Zurich", year: "numeric", month: "2-digit", day: "2-digit",
   }).format(new Date());
 }
-// Current filter as a query string ("" when nothing is filtered), so archive
-// day links can carry the active country/language/source/search selection (#2).
-function filterQuery() {
-  const p = new URLSearchParams();
-  if (excluded.size) p.set("exclude", [...excluded].join(","));
-  if (!countriesAll) p.set("country", [...includedCountries].join(","));
-  if (!langsAll) p.set("lang", [...includedLangs].join(","));
-  if (query) p.set("q", query);
-  const s = p.toString();
-  return s ? "?" + s : "";
-}
-
 // Badge color: brand color if listed, else a stable hashed hue (mirrors
 // color_for() in crawler.py) so every source gets a distinct color.
 function colorFor(s) {
@@ -201,8 +208,8 @@ function isExcluded(a) {
          !langAllowed(a.lang);
 }
 
-// Free-text search over title + source, persisted in the URL: ?q=…
-let query = (new URLSearchParams(location.search).get("q") || "").trim().toLowerCase();
+// Free-text search over title + source, kept for the session only (sessionStorage).
+let query = (ssGet(STORE_QUERY) || "").trim().toLowerCase();
 
 function matchesQuery(a) {
   if (!query) return true;
@@ -210,20 +217,16 @@ function matchesQuery(a) {
          a.source.toLowerCase().includes(query);
 }
 
-function syncUrl() {
-  if (isLanding) return; // landing pages keep their canonical /news/<c>/<l>/ URL
-  const params = new URLSearchParams(location.search);
-  if (excluded.size) params.set("exclude", [...excluded].join(","));
-  else params.delete("exclude");
-  // flag true (all) → omit param; otherwise write the set (empty string = none).
-  if (countriesAll) params.delete("country");
-  else params.set("country", [...includedCountries].join(","));
-  if (langsAll) params.delete("lang");
-  else params.set("lang", [...includedLangs].join(","));
-  if (query) params.set("q", query);
-  else params.delete("q");
-  const qs = params.toString();
-  history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
+// Persist the whole filter selection to localStorage. Landing pages are pinned by
+// their /news/<country>/<lang>/ path, so filtering within one is transient and must
+// not overwrite the visitor's remembered home preferences.
+function persistFilters() {
+  if (isLanding) return;
+  lsSet(STORE_EXCLUDE, [...excluded].join(","));
+  lsSet(STORE_COUNTRY, countriesAll ? "all" : [...includedCountries].join(","));
+  lsSet(STORE_LANG, langsAll ? "all" : [...includedLangs].join(","));
+  ssSet(STORE_QUERY, query); // session-only
+  lsSet(STORE_WELCOMED, "1");
 }
 
 // HTML-escape for text and attribute values (mirrors escape() in crawler.py).
@@ -367,7 +370,7 @@ function lockSoleOption(btn, count) {
   return true;
 }
 
-// "Medias" filter: clickable source toggles, persisted via ?exclude=. Only lists
+// "Medias" filter: clickable source toggles, persisted in localStorage. Only lists
 // sources whose articles pass the active country/language filter, so toggling a
 // country or language shows/hides its sources here too.
 function buildFilters(articles) {
@@ -384,7 +387,7 @@ function buildFilters(articles) {
     btn.setAttribute("aria-pressed", String(on()));
     if (lockSoleOption(btn, sources.length)) {
       excluded.delete(s.toLowerCase());   // the only source must stay visible
-      syncUrl();
+      persistFilters();
       box.appendChild(btn);
       continue;
     }
@@ -392,7 +395,7 @@ function buildFilters(articles) {
       if (on()) excluded.add(s.toLowerCase());
       else excluded.delete(s.toLowerCase());
       btn.setAttribute("aria-pressed", String(on()));
-      syncUrl();
+      persistFilters();
       render(current, sortMode());
     });
     box.appendChild(btn);
@@ -429,7 +432,7 @@ function buildCountryFilters() {
     if (lockSoleOption(btn, codes.length)) {
       countriesAll = true;                // the only country must stay selected
       includedCountries.clear();
-      syncUrl();
+      persistFilters();
       box.appendChild(btn);
       continue;
     }
@@ -484,12 +487,9 @@ function pruneLangsToCountries() {
 // Persist + rebuild all panels + re-render after any country/language change.
 // Selecting a new country may require its shard, so fetch it before rendering.
 function afterFilterChange() {
-  syncUrl();
-  persistCountry();
-  persistLang();
+  persistFilters();
   buildCountryFilters();          // instant: from the manifest, no data needed
   updateAllToggles();
-  updateArchiveDayLinks();
   ensureCountryData().then(() => {
     if (autoDefault) { relaxIfEmpty(); return ensureCountryData(); }
     return current;
@@ -512,8 +512,9 @@ function updateAllToggles() {
 }
 
 // Archive section: today's date (the home feed, active) + up to 30 past archive
-// days, all listed uniformly. Built once from /archive/index.json; each past-day
-// link carries the active filter.
+// days, all listed uniformly. Built once from /archive/index.json. Links are plain
+// paths — the active filter lives in localStorage, which every archive day page
+// reads on load, so it carries across without being threaded through the URL.
 let archiveDatesPromise = null;
 function loadArchiveDates() {
   if (archiveDatesPromise) return archiveDatesPromise;
@@ -530,32 +531,18 @@ function buildArchiveDays(dates) {
   const today = todayISO();
   const a0 = document.createElement("a");
   a0.className = "today";
-  a0.dataset.base = "/";
+  a0.href = "/";
   a0.textContent = fmtDayEn(today); // today's date (the home feed), not the word "Today"
   box.appendChild(a0);
   const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 30);
   for (const d of past) {
     const a = document.createElement("a");
     a.className = "past";
-    a.dataset.base = `/archive/${d}.html`;
+    a.href = `/archive/${d}.html`;
     a.target = "_blank";          // open the archive day in a new tab
     a.rel = "noopener";
     a.textContent = fmtDayEn(d);
     box.appendChild(a);
-  }
-  updateArchiveDayLinks();
-}
-function updateArchiveDayLinks() {
-  const q = filterQuery();
-  for (const a of document.querySelectorAll("#archiveDays a[data-base]")) {
-    a.href = (a.dataset.base || "/") + q;
-  }
-  // The SSR "last few days" links at the bottom of the home feed carry no query,
-  // so a search/filter was lost when opening one. Re-point them at their own path
-  // plus the active filter (a.pathname strips any query we appended before, so
-  // this stays idempotent across repeated calls). (#40)
-  for (const a of document.querySelectorAll(".older-dates a.day-row:not(.day-row-all)")) {
-    a.href = a.pathname + q;
   }
 }
 
@@ -599,7 +586,7 @@ function buildLangFilters(articles) {
     if (lockSoleOption(btn, codes.length)) {
       langsAll = true;                    // the only language must stay selected
       includedLangs.clear();
-      syncUrl();
+      persistFilters();
       box.appendChild(btn);
       continue;
     }
@@ -657,7 +644,7 @@ let DATA_URL = "/crawled.json";  // archive pages point this at the day's JSON
 let isArchive = false;
 // Landing pages (/news/<country>/<lang>/) pre-set the country+lang filter from the
 // path and behave like a filtered home view. The path is the canonical state, so
-// syncUrl() leaves the clean URL alone (no ?country=&lang= appended).
+// persistFilters() is a no-op there and won't overwrite the visitor's home prefs.
 let isLanding = false;
 
 // `current` accumulates the articles loaded so far (union of fetched shards, or the
@@ -817,51 +804,13 @@ for (const btn of document.querySelectorAll(".fs-all")) {
 }
 
 // ---------- Welcome modal & primary country/language detection ----------
-const STORE_COUNTRY = "allnews.country";   // remembered primary country (csv), "" = all
-const STORE_LANG = "allnews.lang";         // remembered primary language (csv), "" = all
-const STORE_WELCOMED = "allnews.welcomed"; // "1" once the welcome modal was dismissed
-
 // True when the active country/language filter came from auto-detection or a
-// remembered preference (not from an explicit URL or user click). Such defaults
-// get relaxed rather than ever showing an empty feed.
+// remembered preference (not from an explicit user click). Such defaults get
+// relaxed rather than ever showing an empty feed.
 let autoDefault = false;
 // Set at boot for a first-time home-page visit; the welcome modal is shown once
 // crawled.json has loaded (so detected language can be validated against sources).
 let firstVisit = false;
-
-function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
-function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
-
-function persistCountry() {
-  lsSet(STORE_COUNTRY, countriesAll ? "all" : [...includedCountries].join(","));
-  lsSet(STORE_WELCOMED, "1");
-}
-
-function persistLang() {
-  lsSet(STORE_LANG, langsAll ? "all" : [...includedLangs].join(","));
-  lsSet(STORE_WELCOMED, "1");
-}
-
-// Re-apply the visitor's remembered primary country + language (clean URL).
-// Stored value: "all" | "" (none) | csv of codes. Used on a returning home-page
-// visit and on archive day pages, so the feed and the archive share defaults.
-// Returns true if any default was applied. Pre-filters the SSR rows immediately.
-function applySavedDefaults() {
-  const savedC = lsGet(STORE_COUNTRY);
-  const savedL = lsGet(STORE_LANG);
-  if (savedC !== null) {
-    includedCountries.clear();
-    countriesAll = savedC === "all";
-    if (!countriesAll) savedC.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((c) => includedCountries.add(c));
-  }
-  if (savedL !== null) {
-    includedLangs.clear();
-    langsAll = savedL === "all";
-    if (!langsAll) savedL.split(",").map((s) => s.trim().toLowerCase()).filter(Boolean).forEach((l) => includedLangs.add(l));
-  }
-  if (savedC !== null || savedL !== null) { autoDefault = true; applySsrFilter(); return true; }
-  return false;
-}
 
 // A browser language often has no sources in the detected country (e.g. an
 // English browser in Germany). Rather than show nothing, drop the language
@@ -870,9 +819,9 @@ function relaxIfEmpty() {
   if (!current.length) return;
   const visible = () => current.filter((a) => !isExcluded(a) && matchesQuery(a)).length;
   if (visible() > 0) return;
-  if (!langsAll) { langsAll = true; includedLangs.clear(); persistLang(); }
+  if (!langsAll) { langsAll = true; includedLangs.clear(); persistFilters(); }
   if (visible() > 0) return;
-  if (!countriesAll) { countriesAll = true; includedCountries.clear(); persistCountry(); }
+  if (!countriesAll) { countriesAll = true; includedCountries.clear(); persistFilters(); }
 }
 
 // Timezone → ISO country, a no-network fallback when /cdn-cgi/trace is blocked.
@@ -936,7 +885,7 @@ function setPrimaryLang(code) {
 }
 
 function refreshFeed() {
-  buildCountryFilters(); updateAllToggles(); updateArchiveDayLinks();
+  buildCountryFilters(); updateAllToggles();
   ensureCountryData().then(() => {
     if (autoDefault) { relaxIfEmpty(); return ensureCountryData(); }
     return current;
@@ -979,8 +928,7 @@ function showWelcome(code, langCode) {
     setPrimaryCountry(country);
     setPrimaryLang(lang);
     autoDefault = true; // relax the combo rather than show an empty feed
-    persistCountry();
-    persistLang();
+    persistFilters();
     close();
     refreshFeed();
   };
@@ -1008,16 +956,17 @@ if (dayParam) {
   isLanding = !!(landingCC && landingLang);
   DATA_URL = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
   isArchive = !!archiveMatch; // archive days keep the single-file model; home shards by country
-  const hasUrlFilter = excluded.size || !countriesAll || !langsAll || query;
+  // Filter state was already loaded from localStorage at module init; is anything
+  // actually narrowing the feed?
+  const hasFilter = excluded.size || !countriesAll || !langsAll || query;
 
   if (archiveMatch) {
-    // Archive day page: static paginated HTML. Apply an explicit URL filter or
-    // the visitor's remembered defaults, then re-render that day from its JSON.
-    // (The Filter menu is present via the template on every archive day page.)
-    if (hasUrlFilter) {
+    // Archive day page: static paginated HTML. The saved filter (loaded from
+    // localStorage) applies here too; pre-filter the SSR rows, then re-render that
+    // day from its JSON. (The Filter menu is present on every archive day page.)
+    if (hasFilter) {
+      autoDefault = true; // relax rather than show an empty day if a pick empties it
       applySsrFilter();
-      loadData().then(() => { if (current.length) render(current, sortMode()); });
-    } else if (applySavedDefaults()) {
       loadData().then(() => { if (current.length) render(current, sortMode()); });
     }
   } else if (isLanding) {
@@ -1026,17 +975,15 @@ if (dayParam) {
     // slice is already the right articles, so there's no flash before hydration.
     setPrimaryCountry(landingCC);
     setPrimaryLang(landingLang);
-    updateArchiveDayLinks();
     loadData().then(() => { if (current.length) render(current, sortMode()); });
   } else {
-    // Home page
-    updateArchiveDayLinks(); // carry any active filter onto the footer day links (#40)
-    if (hasUrlFilter) {
-      applySsrFilter(); // pre-filter the SSR head so there's no flash
-    } else if (lsGet(STORE_WELCOMED)) {
-      applySavedDefaults(); // returning visitor: re-apply remembered country/lang
+    // Home page. Filter state was restored from localStorage at init.
+    if (lsGet(STORE_WELCOMED)) {
+      // Returning visitor: their saved filter relaxes rather than ever emptying the
+      // feed. Pre-filter the SSR head so there's no flash before crawled.json loads.
+      if (hasFilter) { autoDefault = true; applySsrFilter(); }
     } else {
-      firstVisit = true; // welcome modal after data loads
+      firstVisit = true; // first visit: welcome modal after data loads
     }
     loadData().then(() => {
       if (current.length) render(current, sortMode()); // home always takes over (windowed)
@@ -1070,8 +1017,7 @@ if (searchInput) {
   searchInput.addEventListener("input", () => {
     query = searchInput.value.trim().toLowerCase();
     syncSearchIcon();
-    syncUrl();
-    updateArchiveDayLinks(); // keep archive-day links carrying the active ?q= (#40)
+    persistFilters();
     searchRerender();
   });
 }
@@ -1081,8 +1027,7 @@ if (searchClear) {
     searchInput.value = "";
     query = "";
     syncSearchIcon();
-    syncUrl();
-    updateArchiveDayLinks(); // drop ?q= from archive-day links once search is cleared (#40)
+    persistFilters();
     searchInput.focus();
     searchRerender();
   });
@@ -1150,7 +1095,7 @@ function copyToClipboard(url, done) {
 function setSourceHidden(name, hidden) {
   const lc = name.toLowerCase();
   if (hidden) excluded.add(lc); else excluded.delete(lc);
-  syncUrl();
+  persistFilters();
   if (current.length) { buildFilters(current); render(current, sortMode()); }
   else applySsrFilter();
 }

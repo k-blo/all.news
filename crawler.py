@@ -3282,8 +3282,8 @@ def write_sitemap(dates, landing_urls=()):
 
 
 # ---- Programmatic landing pages: /news/<country>/<lang>/ --------------------
-# One server-rendered page per (country, language) we carry. The SPA's filtered
-# views (?country=&lang=) render an empty <ul> to search-engine bots, so these
+# One server-rendered page per (country, language) we carry. The SPA renders an
+# empty <ul> to search-engine bots (the article list is client-rendered), so these
 # static pages give crawlers real headlines for each slice. They hydrate:
 # script.js recognises the /news/<country>/<lang>/ path, loads the country shard
 # and applies the filter, so the page is fully interactive for humans. A /news/
