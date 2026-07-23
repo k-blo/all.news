@@ -437,6 +437,7 @@ function buildCountryFilters() {
       continue;
     }
     btn.addEventListener("click", () => {
+      const wasNone = noCountriesSelected();
       if (countriesAll) {                 // materialize "all", then turn this one off
         allLc.forEach((c) => includedCountries.add(c));
         countriesAll = false;
@@ -446,6 +447,10 @@ function buildCountryFilters() {
       } else {
         includedCountries.add(lc);
       }
+      // First country picked after "deselect all": it's now the sole selection, and
+      // its languages + media are restored so the feed actually shows (they were
+      // cleared by the deselect-all cascade).
+      if (wasNone) selectAllLangsAndMedia();
       if (includedCountries.size === allLc.length) { // everything selected → "all"
         countriesAll = true;
         includedCountries.clear();
@@ -487,6 +492,10 @@ function pruneLangsToCountries() {
 // Persist + rebuild all panels + re-render after any country/language change.
 // Selecting a new country may require its shard, so fetch it before rendering.
 function afterFilterChange() {
+  // Any explicit filter click means "honor exactly what I chose" — even if it
+  // empties the feed. Clear the auto-default flag so relaxIfEmpty() stops widening
+  // the selection behind the user's back (which otherwise reverts a "deselect all").
+  autoDefault = false;
   persistFilters();
   buildCountryFilters();          // instant: from the manifest, no data needed
   updateAllToggles();
@@ -546,11 +555,36 @@ function buildArchiveDays(dates) {
   }
 }
 
+// True while every country is deselected (the explicit "none" state).
+function noCountriesSelected() { return !countriesAll && includedCountries.size === 0; }
+// Exclude every currently-loaded source (the "deselect all media" state).
+function excludeAllSources() {
+  for (const a of current) excluded.add((a.source || "").toLowerCase());
+}
+// Reset languages + media back to "all shown" — used when a country is (re)selected
+// from the fully-deselected state, so its feed appears in full instead of staying
+// empty behind the cascade-deselected languages/media.
+function selectAllLangsAndMedia() {
+  langsAll = true; includedLangs.clear();
+  excluded.clear();
+}
+
 // Group-header select-all / deselect-all toggles (desktop).
 function toggleAllCountries() {
+  const wasNone = noCountriesSelected();
   countriesAll = !countriesAll;           // all ⇄ none
   includedCountries.clear();
-  pruneLangsToCountries();
+  if (!countriesAll) {
+    // Deselecting every country empties the feed, so cascade: Languages and Media
+    // also read as fully deselected instead of leaving a stale selection. They're
+    // restored the moment a country is picked again (see below / the country click).
+    langsAll = false; includedLangs.clear();
+    excludeAllSources();
+  } else if (wasNone) {
+    selectAllLangsAndMedia();             // "select all" straight out of the none state
+  } else {
+    pruneLangsToCountries();
+  }
   afterFilterChange();
 }
 function toggleAllLangs() {
@@ -559,11 +593,8 @@ function toggleAllLangs() {
   afterFilterChange();
 }
 function toggleAllMedia() {
-  if (excluded.size === 0) {               // all shown → exclude every source
-    for (const a of current) excluded.add((a.source || "").toLowerCase());
-  } else {                                 // some/none shown → clear (show all)
-    excluded.clear();
-  }
+  if (excluded.size === 0) excludeAllSources(); // all shown → exclude every source
+  else excluded.clear();                        // some/none shown → clear (show all)
   afterFilterChange();
 }
 
@@ -815,6 +846,8 @@ let firstVisit = false;
 // A browser language often has no sources in the detected country (e.g. an
 // English browser in Germany). Rather than show nothing, drop the language
 // constraint first, then the country, until the auto-applied default is non-empty.
+// Only runs for auto-applied defaults (autoDefault) — an explicit user selection is
+// honoured exactly, empty or not (see afterFilterChange).
 function relaxIfEmpty() {
   if (!current.length) return;
   const visible = () => current.filter((a) => !isExcluded(a) && matchesQuery(a)).length;
