@@ -527,7 +527,10 @@ function updateAllToggles() {
 let archiveDatesPromise = null;
 function loadArchiveDates() {
   if (archiveDatesPromise) return archiveDatesPromise;
-  archiveDatesPromise = fetch("/archive/index.json")
+  // ?v=2 busts the copies handed out with a year-long `immutable` Cache-Control
+  // before that was fixed (functions/[[path]].js) — those browser and edge caches
+  // would otherwise keep serving a frozen date list for months.
+  archiveDatesPromise = fetch("/archive/index.json?v=2")
     .then((r) => r.json())
     .then((idx) => { buildArchiveDays(idx.dates || []); return idx.dates; })
     .catch(() => { archiveDatesPromise = null; });

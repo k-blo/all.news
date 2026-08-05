@@ -68,7 +68,9 @@
       return `${+day}. ${MONTHS[+m]} ${y}`;
     }
 
-    fetch("archive/index.json")
+    // Absolute path (this page is also served at /archive) and ?v=2 to bust the
+    // year-long `immutable` copies cached before that was fixed — see script.js.
+    fetch("/archive/index.json?v=2")
       .then((r) => r.json())
       .then((idx) => {
         const root = document.getElementById("archive");

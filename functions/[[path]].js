@@ -34,14 +34,17 @@ function servesFromR2(key) {
     || key.startsWith("news/"); // programmatic landing pages + /news/ hub
 }
 
-// Live (today's) data gets a short TTL; finalized past days are immutable.
+// A finalized past archive day never changes again, so it — and only it — is
+// immutable. Everything else gets a short TTL: the live feed, today's archive
+// files, and crucially `archive/index.json`, which gains a date every day. An
+// immutable index froze the visitor's archive list at whatever day they first
+// loaded it, so recent days silently went missing from the list even though
+// their pages existed.
 function cacheControl(key) {
   if (key === "sitemap.xml") return "public, max-age=3600";
-  const live = key === "index.html" || key === "crawled.json"
-    || key.startsWith("data/")   // shards + manifest track today's feed
-    || key.startsWith("news/")   // landing pages track today's feed
-    || key.includes(zurichToday());
-  return live ? "public, max-age=300" : "public, max-age=31536000, immutable";
+  const day = key.match(/^archive\/(\d{4}-\d{2}-\d{2})/); // archive/2026-08-02[-3].html|json
+  const frozen = day && day[1] < zurichToday();
+  return frozen ? "public, max-age=31536000, immutable" : "public, max-age=300";
 }
 
 export async function onRequest(context) {
