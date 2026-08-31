@@ -1470,6 +1470,7 @@ BILANZ_MAX = 30      # https://www.bilanz.ch/sitemap-articles-time-limited-YYYY-
 REPUBLIK_SITEMAP = "https://www.republik.ch/sitemap.xml"  # index of per-year sitemaps
 REPUBLIK_MAX = 50
 SUEDOSTSCHWEIZ_MAX = 50
+BAUERNZEITUNG_SITEMAP = "https://www.bauernzeitung.ch/sitemap/news.xml.gz"  # index of news-YYYY-MM.xml.gz
 BAUERNZEITUNG_MAX = 50
 ZEIT_MAX = 50  # https://www.zeit.de/gsitemaps/index.xml?date=YYYY-MM-01&unit=months&period=1
 # CH Media regional papers: /sitemap/YYYY/MM/sitemap.xml, URLs end in -ld.NNNNNNN
@@ -2704,23 +2705,25 @@ def crawl_woz():
 
 
 def crawl_bauernzeitung():
-    """TYPO3 sitemapindex of paged article sitemaps — newest articles are on the
-    highest page=N (ascending lastmod). Article URLs are /artikel/[category/]
-    slug-<id> (id may be prefixed -0); title from slug, trailing id stripped."""
-    index = ET.fromstring(fetch("https://www.bauernzeitung.ch/sitemap.xml"))
-    pages = []
+    """sitemapindex of gzipped monthly sitemaps (news-YYYY-MM.xml.gz) — newest
+    articles are in the highest YYYY-MM. Article URLs are /artikel/[category/]slug;
+    older ones still carry a trailing numeric id (optionally prefixed -0), which is
+    stripped for the title."""
+    index = ET.fromstring(fetch(BAUERNZEITUNG_SITEMAP))
+    months = []
     for loc in index.iter():
-        if local(loc) == "loc" and loc.text and "sitemap=articles" in loc.text:
-            m = re.search(r"[?&]page=(\d+)", loc.text)
+        if local(loc) == "loc" and loc.text:
+            m = re.search(r"/news-(\d{4})-(\d{2})\.xml", loc.text)
             if m:
-                pages.append((int(m.group(1)), loc.text))
-    if not pages:
-        raise ValueError("no paged article sitemap entries found")
-    newest = max(pages)[1]
+                months.append((m.group(1) + m.group(2), loc.text))
+    if not months:
+        raise ValueError("no monthly news sitemap entries found")
+    newest = max(months)[1]
     rows = sitemap_rows(fetch(newest), re.compile(r"/artikel/"))
     return crawl_sitemap_source(
         "Bauernzeitung", rows,
-        re.compile(r"/artikel/(?:[^/]+/)*([^/]+?)(?:-0)?-\d+$"), BAUERNZEITUNG_MAX)
+        re.compile(r"/artikel/(?:[^/]+/)*([^/]+?)(?:-0)?(?:-\d{5,})?/?$"),
+        BAUERNZEITUNG_MAX)
 
 
 def crawl_nau():
