@@ -14,7 +14,7 @@ function portalHome(u) {
 }
 
 // Stable per-article anchor id (mirrors article_id() in crawler.py). Used for
-// "Share" deep-links: https://all.news/#<id>
+// "Share" deep-links: https://www.all.news/#<id>
 function slugify(s) {
   return (s || "")
     .toLowerCase()

@@ -24,6 +24,11 @@ from html import escape, unescape
 from zoneinfo import ZoneInfo
 
 ZURICH = ZoneInfo("Europe/Zurich")
+# Canonical origin for every absolute URL we emit (canonical, og:url, hreflang,
+# sitemap). Must be the host that actually serves 200s: the apex 301s to www, and
+# a canonical/hreflang pointing at a redirect is a signal Google discards. Keep
+# this in sync with the absolute URLs hardcoded in template.html and archive.html.
+SITE_ORIGIN = "https://www.all.news"
 ARCHIVE_DIR = "archive"
 SEEN_FILE = os.path.join(ARCHIVE_DIR, "seen.json")
 INDEX_FILE = os.path.join(ARCHIVE_DIR, "index.json")
@@ -3151,7 +3156,9 @@ def render_older_dates(dates):
         for d in dates
     ]
     rows.append(
-        '      <a class="day-row day-row-all" href="/archive.html">'
+        # /archive, not /archive.html: Pages strips the extension and 308s, so the
+        # .html form costs every visitor and crawler an extra hop.
+        '      <a class="day-row day-row-all" href="/archive">'
         f'<span>Full archive</span>{arrow}</a>'
     )
     return "\n".join(rows)
@@ -3177,11 +3184,13 @@ ARCHIVE_PAGE_SIZE = 500
 
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
                         date_heading, older_dates=(), limit=None, count=None,
-                        pager="", head_links="", html_lang="de"):
+                        pager="", head_links="", html_lang="en"):
     """Render a page. `limit` caps the server-rendered rows (index.html lazy-loads
     the rest); `count` overrides the badge total (so a paginated archive page shows
     the whole day's count); `pager`/`head_links` add archive pagination chrome;
-    `html_lang` sets <html lang> (per-language for landing pages)."""
+    `html_lang` sets <html lang>; landing pages pass their own language, everything
+    else (home, archive index, archive days) is an English page listing many
+    languages, so the default is "en"."""
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
@@ -3252,31 +3261,52 @@ def write_archive_day(date, articles):
         url = archive_page_url(date, p)
         head = []
         if p > 1:
-            head.append(f'<link rel="prev" href="https://all.news{archive_page_url(date, p-1)}">')
+            head.append(f'<link rel="prev" href="{SITE_ORIGIN}{archive_page_url(date, p-1)}">')
         if p < pages:
-            head.append(f'<link rel="next" href="https://all.news{archive_page_url(date, p+1)}">')
+            head.append(f'<link rel="next" href="{SITE_ORIGIN}{archive_page_url(date, p+1)}">')
         title = (f"News Archive for {day_en} – all.news" if p == 1
                  else f"News Archive for {day_en} (page {p}) – all.news")
         write_rendered_html(
             sl, archive_page_path(date, p),
             title=title,
             description=f"All world news headlines collected on {day_en} by all.news.",
-            canonical=f"https://all.news{url}",
+            canonical=f"{SITE_ORIGIN}{url}",
             date_heading=day_de, older_dates=[], count=total,
             pager=render_pager(date, p, pages), head_links="".join(head))
     return pages
 
 
-def write_sitemap(dates, landing_urls=()):
+def write_sitemap(dates, landing_urls=(), page_counts=None, now_iso=None):
+    """Write sitemap.xml. `page_counts` maps a date to its number of archive pages
+    (from index.json) so days split across several pages list all of them, not just
+    page 1 — pages 2+ are otherwise reachable only through the pager. `lastmod` is
+    the crawl timestamp for the hourly pages and the day itself for settled archive
+    days; it is the one hint here Google actually acts on (changefreq/priority are
+    ignored), and it is what tells it this feed is worth recrawling."""
+    page_counts = page_counts or {}
+    now = datetime.now(ZURICH)
+    today = now.date().isoformat()
+    fresh = now_iso or now.isoformat(timespec="seconds")
+
+    def url(loc, lastmod, changefreq, priority):
+        return (f'  <url><loc>{SITE_ORIGIN}{loc}</loc><lastmod>{lastmod}</lastmod>'
+                f'<changefreq>{changefreq}</changefreq><priority>{priority}</priority></url>')
+
     urls = [
-        '  <url><loc>https://all.news/</loc><changefreq>hourly</changefreq><priority>1.0</priority></url>',
-        '  <url><loc>https://all.news/news/</loc><changefreq>daily</changefreq><priority>0.6</priority></url>',
-        '  <url><loc>https://all.news/archive.html</loc><changefreq>daily</changefreq><priority>0.5</priority></url>',
+        url("/", fresh, "hourly", "1.0"),
+        url("/news/", fresh, "daily", "0.6"),
+        # /archive.html is served at /archive (Pages strips the extension); list the
+        # URL that answers 200 so the sitemap doesn't hand Google a redirect.
+        url("/archive", fresh, "daily", "0.5"),
     ]
     for u in landing_urls:
-        urls.append(f'  <url><loc>https://all.news{u}</loc><changefreq>hourly</changefreq><priority>0.6</priority></url>')
+        urls.append(url(u, fresh, "hourly", "0.6"))
     for d in dates:
-        urls.append(f'  <url><loc>https://all.news/archive/{d}.html</loc><changefreq>never</changefreq><priority>0.3</priority></url>')
+        # Today's day page is still being appended to; past days are settled.
+        current = d == today
+        for p in range(1, page_counts.get(d, 1) + 1):
+            urls.append(url(archive_page_url(d, p), fresh if current else d,
+                            "hourly" if current else "never", "0.3"))
     with open("sitemap.xml", "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
@@ -3467,12 +3497,12 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content="{desc}">
-  <link rel="canonical" href="https://all.news/news/">
+  <link rel="canonical" href="{origin}/news/">
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://all.news/news/">
-  <meta property="og:image" content="https://all.news/og-image.png">
+  <meta property="og:url" content="{origin}/news/">
+  <meta property="og:image" content="{origin}/og-image.png">
   <meta name="robots" content="index, follow">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
@@ -3512,7 +3542,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
     </main>
     <footer class="site-footer">
       <span>© Copyright 2026 all.news</span>
-      <span><a href="/">Home</a> · <a href="/archive.html">Archive</a></span>
+      <span><a href="/">Home</a> · <a href="/archive">Archive</a></span>
     </footer>
   </div>
 </body>
@@ -3537,7 +3567,8 @@ def write_news_hub(langs_by_country):
     title = "Browse News by Country and Language – all.news"
     desc = ("Browse world news by country and language. all.news aggregates headlines "
             "from hundreds of sources across every country we cover, updated hourly.")
-    html = HUB_TEMPLATE.format(title=escape(title), desc=escape(desc), cards="\n".join(cards))
+    html = HUB_TEMPLATE.format(origin=SITE_ORIGIN, title=escape(title),
+                               desc=escape(desc), cards="\n".join(cards))
     os.makedirs(LANDING_DIR, exist_ok=True)
     with open(os.path.join(LANDING_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
@@ -3564,13 +3595,13 @@ def write_landing_pages(articles, today):
         landing_urls.append(url)
         # hreflang alternates: sibling languages of the same country.
         alts = "".join(
-            f'<link rel="alternate" hreflang="{l2}" href="https://all.news{landing_url(cc, l2)}">'
+            f'<link rel="alternate" hreflang="{l2}" href="{SITE_ORIGIN}{landing_url(cc, l2)}">'
             for l2 in sorted(set(langs_by_country[cc])))
         write_rendered_html(
             sl, landing_path(cc, lang),
             title=f"{phrase} – all.news",
             description=strings["d"].format(c=cname),
-            canonical=f"https://all.news{url}",
+            canonical=f"{SITE_ORIGIN}{url}",
             date_heading=f"{phrase} · {landing_date(lang, today)}",
             older_dates=[], limit=SSR_LIMIT, head_links=alts, html_lang=lang)
     write_news_hub(langs_by_country)
@@ -3753,13 +3784,16 @@ def write_outputs(articles):
     # Date list = prior dates (from index.json, which the workflow pulls from R2)
     # plus today. Derived from index.json rather than listing the archive dir, so
     # the reduce step works without every day's files present locally.
+    # `pages` rides along in the same file: past days' HTML isn't local here, so
+    # their page counts can only come from what an earlier run recorded. Consumers
+    # (archive.html, script.js, regen_archive.py) read `dates` and ignore it.
     try:
         with open(INDEX_FILE, encoding="utf-8") as f:
-            prior_dates = json.load(f).get("dates", [])
+            index = json.load(f)
+        prior_dates, prior_pages = index.get("dates", []), index.get("pages", {})
     except (FileNotFoundError, json.JSONDecodeError):
-        prior_dates = archive_dates()  # local fallback (full runs)
+        prior_dates, prior_pages = archive_dates(), {}  # local fallback (full runs)
     all_dates = sorted(set(prior_dates) | {today}, reverse=True)
-    write_json(INDEX_FILE, {"dates": all_dates})
     write_json(HTTP_CACHE_FILE, _http_cache)
 
     write_colors_js()
@@ -3769,14 +3803,17 @@ def write_outputs(articles):
         result, "index.html",
         title="World News From Every Source in One Place – all.news",
         description="Read world news from hundreds of sources on one page. all.news aggregates global headlines and updates hourly — filter by source, language and more.",
-        canonical="https://all.news/",
+        canonical=f"{SITE_ORIGIN}/",
         date_heading=fmt_day_heading(today),
         older_dates=older,
         limit=SSR_LIMIT,  # index head only; script.js lazy-loads the rest
     )
-    write_archive_day(today, result)  # paginated static pages
+    pages_today = write_archive_day(today, result)  # paginated static pages
+    page_counts = {d: n for d, n in {**prior_pages, today: pages_today}.items()
+                   if d in set(all_dates)}
+    write_json(INDEX_FILE, {"dates": all_dates, "pages": page_counts})
     landing_urls = write_landing_pages(result, today)  # /news/<country>/<lang>/ + hub
-    write_sitemap(all_dates, landing_urls)
+    write_sitemap(all_dates, landing_urls, page_counts, now_iso)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} total today ({today})",
           file=sys.stderr)
 

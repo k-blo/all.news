@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://all.news/sitemap.xml
+Sitemap: https://www.all.news/sitemap.xml

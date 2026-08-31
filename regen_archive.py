@@ -134,6 +134,23 @@ def regen_day(s3, date, out_dir, dry_run=False):
     return pages, len(orphans)
 
 
+def record_page_counts(s3, counts):
+    """Merge {date: page_count} into archive/index.json in R2.
+
+    The crawler can only ever learn today's page count — past days' HTML isn't
+    local during a crawl — so without this the sitemap lists just page 1 for every
+    day that predates the counting. This tool re-renders those days anyway, so it
+    is the one place that knows all of them. `dates` is left untouched; only
+    `pages` is written."""
+    idx = json.loads(s3.get_object(Bucket=BUCKET, Key="archive/index.json")["Body"].read())
+    pages = {**idx.get("pages", {}), **counts}
+    idx["pages"] = {d: n for d, n in pages.items() if d in set(idx.get("dates", []))}
+    s3.put_object(Bucket=BUCKET, Key="archive/index.json",
+                  Body=json.dumps(idx, indent=2).encode(),
+                  ContentType="application/json; charset=utf-8")
+    return len(idx["pages"])
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -156,15 +173,20 @@ def main():
     dates = [d for d in dates if d != today]
 
     total_pages = total_orphans = 0
+    counts = {}
     for i, d in enumerate(dates, 1):
         pages, orphans = regen_day(s3, d, args.out, args.dry_run)
         total_pages += pages
         total_orphans += orphans
+        counts[d] = pages
         print(f"[{i}/{len(dates)}] {d}: {pages} pages"
               + (f", {orphans} orphaned removed" if orphans else ""), flush=True)
     verb = "would write" if args.dry_run else "wrote"
     print(f"{verb} {total_pages} pages across {len(dates)} days"
           f" ({total_orphans} orphaned pages {'stale' if args.dry_run else 'deleted'})")
+    if not args.dry_run:
+        print(f"index.json: page counts recorded for {record_page_counts(s3, counts)} days"
+              " (the next crawl picks them up for the sitemap)")
 
 
 if __name__ == "__main__":

@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-**all.news** is a news aggregator served at `https://all.news/`. It currently covers
+**all.news** is a news aggregator served at `https://www.all.news/`. It currently covers
 Swiss sources only, but the project was forked from swissnews.org with the intent to
 expand its scope to more countries. all.news runs its own independent pipeline and
 analytics; the original swissnews.org project keeps running separately. When generalizing
 beyond Switzerland, the Swiss-specific framing still in the codebase will need revisiting:
-the German `lang="de"` and "Schweizer Nachrichten" taglines, the Swiss-flag logo
+the "Schweizer Nachrichten" taglines, the Swiss-flag logo
 (`favicon.svg` and the inline SVG in `template.html`/`archive.html`), and the
 single-timezone "today" check (`ZURICH`) in `crawler.py`.
 
@@ -91,13 +91,39 @@ complete before any shard loads. The "all countries" view still loads `crawled.j
 Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2 (not
 `copy`), since they only ever hold today's feed.
 
+**Canonical host — always `https://www.all.news`.** The apex 301-redirects to
+`www` (a Cloudflare-side rule we can't currently remove), so every absolute URL we
+emit must use `www`: a canonical or `hreflang` pointing at a redirect is a signal
+Google discards outright. `SITE_ORIGIN` in `crawler.py` is the single source for
+generated URLs; `template.html`, `archive.html`, `robots.txt` and `HUB_TEMPLATE`'s
+`{origin}` cover the rest. **Never hardcode the bare apex.**
+
+**`<html lang>`** defaults to `en` (`write_rendered_html`) — the home feed, archive
+index and archive day pages are English pages listing many languages. Only the
+`/news/<country>/<lang>/` landing pages override it, with their own language.
+
+**`/archive`, not `/archive.html`.** Cloudflare Pages strips `.html` from static
+assets and 308s, so the `.html` form costs a hop and makes the served page's
+canonical circular. Internal links, the canonical and the sitemap all use `/archive`.
+(Archive *day* pages keep `.html` — they come from R2 via `functions/[[path]].js`,
+which doesn't strip anything, and answer 200 directly.)
+
 **Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added to `crawled.json` if their `published` date is today (Swiss local time) and their URL has never been seen before.
+
+**Sitemap:** `write_sitemap()` emits `<lastmod>` on every URL (the crawl timestamp
+for the hourly pages, the day itself for settled archive days) — the only hint here
+Google acts on; `changefreq`/`priority` are ignored. Archive days split across
+several pages list *all* their pages, using the `pages` map in `archive/index.json`.
+A crawl can only ever learn *today's* page count (past days' HTML isn't local during
+the reduce step), so past days are seeded by `regen_archive.py`, which re-renders
+them and writes their counts back to `index.json`. `dates` is unchanged, and
+`archive.html` / `script.js` ignore `pages`.
 
 **Programmatic landing pages:** `write_landing_pages()` writes one server-rendered
 page per (country, language) we carry at `/news/<country>/<lang>/` (e.g.
 `/news/switzerland/french/`), plus a `/news/` hub (`write_news_hub()`) linking them
-all. The SPA renders an empty `<ul>` to bots (the list is client-rendered), so
-these static pages give crawlers real headlines for each slice. They *hydrate*:
+all. Each is server-rendered from that slice of today's feed, so crawlers get real
+headlines per country/language instead of one undifferentiated feed. They *hydrate*:
 `script.js` recognises the `/news/<country>/<lang>/` path, resolves the slugs back to
 codes (`COUNTRY_BY_SLUG`/`LANG_BY_SLUG`), loads that country's shard and applies the
 filter — so the page is fully interactive. The (country, lang) matrix comes from the
@@ -119,4 +145,7 @@ Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json
 
 `SOURCE_COLORS` is defined in `crawler.py` and generated into `colors.js` (loaded by `script.js`). It must have an entry for every source name used in `crawler.py` — missing entries fall back to `#888`.
 
-The article list is JS-rendered, so search engines see an empty `<ul>` without executing JS. Pre-rendering this server-side (or at crawl time) is a known open improvement.
+The article list is server-rendered at crawl time by `write_rendered_html()` — the home
+feed ships its newest `SSR_LIMIT` (120) rows in the HTML and `script.js` lazy-loads the
+rest, archive day pages and landing pages ship their full slice. Bots get real headlines
+without executing JS.
