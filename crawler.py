@@ -3235,10 +3235,25 @@ _fetched_urls: set = set()  # URLs fetched this run — used to emit the per-sha
 COMPAT_USER_AGENT = "Mozilla/5.0 (compatible; " + USER_AGENT.replace(" (", "; ", 1)
 
 
+def stale_validator(last_modified, days=7):
+    """True if a cached Last-Modified is over `days` old. Some servers keep a
+    months-old Last-Modified on fresh content and answer every conditional
+    request with 304, so such validators are not sent."""
+    try:
+        dt = parsedate_to_datetime(last_modified)
+    except (TypeError, ValueError):
+        return False
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return (datetime.now(timezone.utc) - dt).days > days
+
+
 def fetch(url, ua=None):
     _fetched_urls.add(url)
     headers = {"User-Agent": COMPAT_USER_AGENT if ua == "compat" else USER_AGENT}
     entry = _http_cache.get(url, {})
+    if stale_validator(entry.get("last_modified")):
+        entry = {}  # fetch unconditionally
     if entry.get("last_modified"):
         headers["If-Modified-Since"] = entry["last_modified"]
     if entry.get("etag"):
