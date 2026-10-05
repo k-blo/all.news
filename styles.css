@@ -454,7 +454,8 @@ a { color: inherit; }
 /* Feed settings: 4-column on desktop, accordions on mobile */
 .feed-settings {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* Archive column fits its longest date. */
+  grid-template-columns: repeat(3, minmax(0, 1fr)) max-content;
   gap: 24px;
 }
 .fs-group { min-width: 0; }
@@ -487,6 +488,7 @@ a { color: inherit; }
   font-family: inherit;
   text-align: left;
 }
+.fs-open-archive { white-space: nowrap; }
 .fs-open-archive .ext { margin-left: 5px; }
 /* Select all / Deselect all toggle under each filter group header (#2). Same font
    size as the rest of the menu; the space above is twice the space below. */
@@ -516,6 +518,8 @@ a { color: inherit; }
   color: var(--dim);
   text-decoration: none;
   padding: 2px 0;
+  /* Never split a date; the grid column widens. */
+  white-space: nowrap;
   transition: color 0.12s ease;
 }
 .fs-days a:hover { color: var(--muted); }
