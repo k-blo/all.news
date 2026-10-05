@@ -100,6 +100,11 @@ jobs:
           rclone copy "R2:$R2_BUCKET/archive/seen.json" archive/ || true
           rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
           rclone copy "R2:$R2_BUCKET/archive/index.json" archive/ || true
+          # topic sections: today's feed + seen-set (so reruns append, never re-add)
+          for s in space business tech gaming; do
+            rclone copy "R2:$R2_BUCKET/$s/feed.json" "$s/" || true
+            rclone copy "R2:$R2_BUCKET/archive/seen-$s.json" archive/ || true
+          done
       - uses: actions/download-artifact@v4
         with:
           path: partials
@@ -123,6 +128,10 @@ jobs:
           # programmatic landing pages (/news/<country>/<lang>/) + the /news/ hub.
           # sync is safe: the URL set is a stable matrix derived from the source config.
           rclone sync news "R2:$R2_BUCKET/news" -v
+          # topic sections: SSR page + today's feed (/space/, /space/feed.json …)
+          for s in space business tech gaming; do
+            rclone copy "$s" "R2:$R2_BUCKET/$s" -v
+          done
           # today's archive pages + JSON + state files (copy = never deletes old days)
           rclone copy archive "R2:$R2_BUCKET/archive" -v
       - name: Verify R2 contents

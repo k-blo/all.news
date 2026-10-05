@@ -70,6 +70,8 @@
     <symbol id="ico-close" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.00635 12.9937L5.19248 10.8075L8.00321 7.99679L13.0001 2.99992"/><path d="M3 3L5.18613 5.18613L7.99686 7.99686L12.9937 12.9937"/></symbol>
     <!-- User (account) -->
     <symbol id="ico-user" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 14.5C13 11.7386 10.7614 9.5 8 9.5C5.23858 9.5 3 11.7386 3 14.5"/><circle cx="8" cy="4.5" r="2.25"/></symbol>
+    <!-- Chevron right (menu rows) -->
+    <symbol id="ico-chev-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></symbol>
     <!-- Bookmark (save for later) -->
     <symbol id="ico-bookmark" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1.75H10C10.6904 1.75 11.25 2.30964 11.25 3V13.4297L8.47168 11.1855L8 10.8047L7.52832 11.1855L4.75 13.4297V3C4.75 2.30964 5.30964 1.75 6 1.75Z"/></symbol>
   </svg>
@@ -147,7 +149,7 @@
         </div>
         -->
 
-        <div class="fs-group">
+        <div class="fs-group" id="countryGroup">
           <button type="button" class="fs-head">Countries <span class="plus">+</span></button>
           <button type="button" class="fs-all" data-group="country">Select all</button>
           <div class="fs-list" id="countryFilters"></div>
@@ -165,7 +167,7 @@
           <div class="fs-list" id="filters"></div>
         </div>
 
-        <div class="fs-group">
+        <div class="fs-group" id="archiveGroup">
           <div class="fs-archive">Archive</div>
           <!-- Full-archive link sits where "Select all" sits in the other columns;
                the header itself is no longer a link (#23). -->
@@ -177,26 +179,19 @@
       </div>
     </section>
 
-    <!-- ===== More view ===== -->
+    <!-- ===== Menu view: sections ===== -->
+    <!-- script.js marks the current section (aria-current). -->
     <section id="moreView" class="view" hidden>
-      <div class="more-list">
-        <details class="more-item">
-          <summary>Help · FAQ <span class="plus">+</span></summary>
-          <div class="more-body">all.news aggregates headlines from news outlets and links straight to the original articles. Pick a date to browse that day's links; use the search field to filter by keyword or source.</div>
-        </details>
-        <details class="more-item">
-          <summary>Settings · Privacy <span class="plus">+</span></summary>
-          <div class="more-body">Source filters are stored in the page URL, not in cookies. all.news runs its own independent analytics — no third-party advertising trackers are loaded by default.</div>
-        </details>
-        <details class="more-item">
-          <summary>Terms · Conditions <span class="plus">+</span></summary>
-          <div class="more-body">Headlines and short excerpts remain the property of their respective publishers. all.news is not responsible for the content of external sites.</div>
-        </details>
-        <details class="more-item">
-          <summary>Mobile App <span class="plus">+</span></summary>
-          <div class="more-body">A mobile app is on the roadmap. For now, add all.news to your home screen for a full-screen experience.</div>
-        </details>
-      </div>
+      <nav class="section-nav" aria-label="Sections">
+        <a class="section-link" href="/" data-section="news"><span>News</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
+        <a class="section-link" href="/space/" data-section="space"><span>Space</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
+        <a class="section-link" href="/business/" data-section="business"><span>Business</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
+        <a class="section-link" href="/tech/" data-section="tech"><span>Tech</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
+        <a class="section-link" href="/gaming/" data-section="gaming"><span>Gaming</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
+      </nav>
+      <nav class="menu-secondary" aria-label="More">
+        <a href="/settings">Settings</a>
+      </nav>
     </section>
 
     <footer class="site-footer">
@@ -219,6 +214,6 @@
 
   <script src="/site.js"></script>
   <script src="/colors.js"></script>
-  <script src="/script.js?v=10"></script>
+  <script src="/script.js?v=11"></script>
 </body>
 </html>

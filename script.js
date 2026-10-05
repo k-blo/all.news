@@ -92,6 +92,12 @@ function sortedArticles(articles, mode) {
   return out;
 }
 
+// ---------- Topic sections ----------
+// /space/, /business/, /tech/, /gaming/: one feed each (/<section>/feed.json),
+// not split by country — only language + media filters. null = the news feed.
+const SECTIONS = ["space", "business", "tech", "gaming"];
+const SECTION = (location.pathname.match(new RegExp(`^/(${SECTIONS.join("|")})/?$`)) || [])[1] || null;
+
 // ---------- Persistent filter state (localStorage, never the URL) ----------
 // The durable filters — excluded sources, countries, languages — live in
 // localStorage, keyed per-origin. Nothing is stored in the URL: a selection can be
@@ -103,11 +109,14 @@ function sortedArticles(articles, mode) {
 // forgotten when the session ends, so a returning visitor never lands on a stale
 // query. (Article deep-links still use the #hash; archive days and landing pages
 // still use the path.)
-const STORE_COUNTRY = "allnews.country";   // "all" | "" (none) | csv of country codes
-const STORE_LANG = "allnews.lang";         // "all" | "" (none) | csv of language codes
-const STORE_EXCLUDE = "allnews.exclude";   // csv of excluded source names ("" = none)
-const STORE_QUERY = "allnews.query";       // free-text search string (sessionStorage)
-const STORE_WELCOMED = "allnews.welcomed"; // "1" once the welcome modal was dismissed
+// Each section keeps its own filters + search under "allnews.<section>.*";
+// the news feed keeps the original "allnews.*" keys.
+const STORE_PREFIX = SECTION ? `allnews.${SECTION}.` : "allnews.";
+const STORE_COUNTRY = STORE_PREFIX + "country"; // "all" | "" (none) | csv of country codes
+const STORE_LANG = STORE_PREFIX + "lang";       // "all" | "" (none) | csv of language codes
+const STORE_EXCLUDE = STORE_PREFIX + "exclude"; // csv of excluded source names ("" = none)
+const STORE_QUERY = STORE_PREFIX + "query";     // free-text search string (sessionStorage)
+const STORE_WELCOMED = "allnews.welcomed";      // "1" once the welcome modal was dismissed
 function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
 function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
@@ -126,7 +135,8 @@ const excluded = _csvToSet(lsGet(STORE_EXCLUDE));
 const _savedCountry = lsGet(STORE_COUNTRY);
 const _savedLang = lsGet(STORE_LANG);
 const includedCountries = _csvToSet(_savedCountry === "all" ? "" : _savedCountry);
-let countriesAll = _savedCountry === null || _savedCountry === "all";
+// Sections are never split by country.
+let countriesAll = !!SECTION || _savedCountry === null || _savedCountry === "all";
 const includedLangs = _csvToSet(_savedLang === "all" ? "" : _savedLang);
 let langsAll = _savedLang === null || _savedLang === "all";
 
@@ -223,9 +233,10 @@ function matchesQuery(a) {
 function persistFilters() {
   if (isLanding) return;
   lsSet(STORE_EXCLUDE, [...excluded].join(","));
-  lsSet(STORE_COUNTRY, countriesAll ? "all" : [...includedCountries].join(","));
   lsSet(STORE_LANG, langsAll ? "all" : [...includedLangs].join(","));
   ssSet(STORE_QUERY, query); // session-only
+  if (SECTION) return;       // no countries, no welcome modal
+  lsSet(STORE_COUNTRY, countriesAll ? "all" : [...includedCountries].join(","));
   lsSet(STORE_WELCOMED, "1");
 }
 
@@ -418,7 +429,7 @@ function availableCountryCodes() {
 // the manifest so every country is selectable before its shard is downloaded.
 function buildCountryFilters() {
   const box = document.getElementById("countryFilters");
-  if (!box) return;
+  if (!box || SECTION) return;
   box.innerHTML = "";
   const codes = availableCountryCodes();
   const allLc = codes.map((c) => c.toLowerCase());
@@ -526,6 +537,7 @@ function updateAllToggles() {
 // reads on load, so it carries across without being threaded through the URL.
 let archiveDatesPromise = null;
 function loadArchiveDates() {
+  if (SECTION) return Promise.resolve([]); // the archive covers news only
   if (archiveDatesPromise) return archiveDatesPromise;
   // ?v=2 busts the copies handed out with a year-long `immutable` Cache-Control
   // before that was fixed (functions/[[path]].js) — those browser and edge caches
@@ -673,9 +685,10 @@ function applySsrFilter() {
 // manifest (/data/manifest.json) lists every available country + its languages, so
 // the picker is complete before any shard loads. The "all countries" view still
 // needs everything, so it falls back to the single global /crawled.json.
-// Archive day pages keep their single-file model (that day's JSON), loaded lazily.
-let DATA_URL = "/crawled.json";  // archive pages point this at the day's JSON
-let isArchive = false;
+// Archive day pages and sections keep a single-file model (that day's JSON, or
+// /<section>/feed.json), loaded lazily.
+let DATA_URL = "/crawled.json";  // archive pages / sections point this at their JSON
+let singleFile = false;          // archive day or section: one JSON, no shards
 // Landing pages (/news/<country>/<lang>/) pre-set the country+lang filter from the
 // path and behave like a filtered home view. The path is the canonical state, so
 // persistFilters() is a no-op there and won't overwrite the visitor's home prefs.
@@ -689,7 +702,7 @@ let manifestPromise = null;
 const shardLoaded = new Set();       // lowercased country codes whose shard is merged
 const _mergedUrls = new Set();       // urls already in `current` (cross-shard dedup)
 let globalLoaded = false;            // /crawled.json (the all-countries superset) merged
-let archivePromise = null;
+let singlePromise = null;
 
 // De-dupe concurrent fetches of the same URL (e.g. rapid country toggles racing on
 // one shard). Cleared on settle; the shardLoaded/globalLoaded guards prevent any
@@ -715,7 +728,7 @@ function mergeArticles(arr) {
 }
 
 function ensureManifest() {
-  if (isArchive) return Promise.resolve(null);
+  if (singleFile) return Promise.resolve(null);
   if (manifestPromise) return manifestPromise;
   manifestPromise = fetchJson("/data/manifest.json")
     .then((m) => { manifest = m; return m; })
@@ -727,12 +740,12 @@ function ensureManifest() {
 // merging any missing shards (or the global file for the "all" view). Cheap to call
 // repeatedly: shards and the global file are only ever fetched once each.
 function ensureCountryData() {
-  if (isArchive) {
-    if (archivePromise) return archivePromise;
-    archivePromise = fetchJson(DATA_URL)
+  if (singleFile) {
+    if (singlePromise) return singlePromise;
+    singlePromise = fetchJson(DATA_URL)
       .then((d) => { mergeArticles(d.articles); return current; })
-      .catch(() => { archivePromise = null; return current; });
-    return archivePromise;
+      .catch(() => { singlePromise = null; return current; });
+    return singlePromise;
   }
   if (globalLoaded) return Promise.resolve(current); // superset already loaded
   if (countriesAll) {
@@ -786,6 +799,18 @@ const settingsView = document.getElementById("settingsView");
 const moreView = document.getElementById("moreView");
 const filterToggle = document.getElementById("filterToggle");
 const moreToggle = document.getElementById("moreToggle");
+
+// Menu: mark the current section (news covers home, archive, landing pages).
+for (const a of document.querySelectorAll(".section-link")) {
+  if (a.dataset.section === (SECTION || "news")) a.setAttribute("aria-current", "page");
+}
+// Sections have no country split and no archive: hide those filter groups.
+if (SECTION) {
+  for (const id of ["countryGroup", "archiveGroup"]) {
+    const el = document.getElementById(id);
+    if (el) el.hidden = true;
+  }
+}
 
 function showView(name) {
   if (feedView) feedView.hidden = name !== "feed";
@@ -908,6 +933,21 @@ function detectLanguage() {
   return null;
 }
 
+// Sections: on a first visit, show the browser's languages (relaxed to all
+// if the section has none of them).
+function seedSectionLangs() {
+  const codes = new Set();
+  for (const tag of navigator.languages || [navigator.language || ""]) {
+    const code = (tag || "").split("-")[0].toLowerCase();
+    if (code in LANG_NAMES) codes.add(code);
+  }
+  if (!codes.size) return;
+  langsAll = false;
+  includedLangs.clear();
+  codes.forEach((c) => includedLangs.add(c));
+  persistFilters();
+}
+
 // Apply a single primary country / language via the include model ("" = all).
 function setPrimaryCountry(code) {
   includedCountries.clear();
@@ -990,13 +1030,22 @@ if (dayParam) {
   const landingCC = landingMatch ? COUNTRY_BY_SLUG[landingMatch[1]] : null;
   const landingLang = landingMatch ? LANG_BY_SLUG[landingMatch[2]] : null;
   isLanding = !!(landingCC && landingLang);
-  DATA_URL = archiveMatch ? `${archiveMatch[1]}.json` : "/crawled.json";
-  isArchive = !!archiveMatch; // archive days keep the single-file model; home shards by country
+  DATA_URL = archiveMatch ? `${archiveMatch[1]}.json`
+    : SECTION ? `/${SECTION}/feed.json` : "/crawled.json";
+  // Archive days and sections keep the single-file model; home shards by country.
+  singleFile = !!archiveMatch || !!SECTION;
+  // A section's first visit starts from the browser's languages.
+  if (SECTION && lsGet(STORE_LANG) === null) seedSectionLangs();
   // Filter state was already loaded from localStorage at module init; is anything
   // actually narrowing the feed?
   const hasFilter = excluded.size || !countriesAll || !langsAll || query;
 
-  if (archiveMatch) {
+  if (SECTION) {
+    // Section page: one feed, language + media filters only. Saved (or seeded)
+    // filters relax rather than ever leaving the section empty.
+    if (hasFilter) { autoDefault = true; applySsrFilter(); }
+    loadData().then(() => { if (current.length) render(current, sortMode()); });
+  } else if (archiveMatch) {
     // Archive day page: static paginated HTML. The saved filter (loaded from
     // localStorage) applies here too; pre-filter the SSR rows, then re-render that
     // day from its JSON. (The Filter menu is present on every archive day page.)

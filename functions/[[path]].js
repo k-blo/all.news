@@ -24,6 +24,9 @@ function r2Key(pathname) {
   return p.replace(/^\/+/, "");
 }
 
+// Topic sections: /<section>/ (SSR page) + /<section>/feed.json, from R2.
+const SECTIONS = ["space", "business", "tech", "gaming"];
+
 // Which keys come from R2 (everything else is a static asset).
 function servesFromR2(key) {
   return key === "index.html"
@@ -31,7 +34,8 @@ function servesFromR2(key) {
     || key === "sitemap.xml"
     || key.startsWith("archive/")
     || key.startsWith("data/")  // per-country shards + manifest (today's feed)
-    || key.startsWith("news/"); // programmatic landing pages + /news/ hub
+    || key.startsWith("news/")  // programmatic landing pages + /news/ hub
+    || SECTIONS.some((s) => key.startsWith(`${s}/`));
 }
 
 // A past archive day's *content* is settled, but its *layout* isn't: regen_archive.py
@@ -60,6 +64,10 @@ export async function onRequest(context) {
   // Landing pages are directory URLs (…/news/ch/de/). Enforce the trailing slash so
   // there's a single canonical form; the last segment carries no file extension.
   if (/^\/news\/.+[^/]$/.test(url.pathname) && !url.pathname.slice(1).includes(".")) {
+    return Response.redirect(url.origin + url.pathname + "/" + url.search, 301);
+  }
+  // Same for sections: /space → /space/.
+  if (SECTIONS.includes(url.pathname.slice(1))) {
     return Response.redirect(url.origin + url.pathname + "/" + url.search, 301);
   }
   const key = r2Key(url.pathname);

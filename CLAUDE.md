@@ -133,6 +133,19 @@ feed, so the URL set is stable and `rclone sync`ed to R2. `COUNTRY_NAMES` +
 and must stay in sync. The `functions/[[path]].js` worker serves `/news/*` from R2 and
 301-redirects the no-trailing-slash form to the canonical slash form.
 
+**Topic sections** (`/space/`, `/business/`, `/tech/`, `/gaming/`): `SECTIONS` in
+`crawler.py`. Each is an independent daily feed of its sources, **not split by
+country** (visitors filter by language and outlet). `SECTION_SOURCES` lists
+section-only outlets (with inline `lang`/`country`, never in the news feed);
+`SECTION_CROSSLIST` adds existing news sources whose whole feed is on-topic.
+`sections_of()` maps a source to its feeds ("news" by default). `write_sections()`
+gives every section its own seen-set (`archive/seen-<key>.json`), so a URL can be
+in both news and a section; it writes `<key>/feed.json` (today), `<key>/index.html`
+(SSR) and `archive/<key>/<date>.json` (durable record — no section archive pages
+yet). The news feed, country shards and landing pages only take "news" sources.
+`functions/[[path]].js` serves the section dirs from R2; the section list is also
+in `script.js` (`SECTIONS`) and the workflow loops — keep all three in sync.
+
 **Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`). If the source introduces a **new country or language**, add its English name to `COUNTRY_NAMES`/`LANG_EN_NAMES` in **both** `crawler.py` and `script.js` (and the display name to `COUNTRY_NAMES`/`LANG_NAMES` in `script.js`), or its landing page shows the raw code and won't hydrate.
 
 **Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.)
@@ -140,6 +153,13 @@ and must stay in sync. The `functions/[[path]].js` worker serves `/news/*` from 
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
 Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.
+
+**Sections in the client:** `script.js` detects `/<section>/` (`SECTION`), loads
+`/<section>/feed.json` (single-file, like archive days), hides the Countries and
+Archive filter groups, and stores filters under `allnews.<section>.*`. A first visit
+seeds the language filter from the browser languages (relaxed to all if empty).
+
+**Menu** lists the sections (current one marked by `script.js`) plus Settings.
 
 **Settings** (`settings.html`, `/settings`): theme (dark default / light / system) in
 `allnews.theme`, layout (comfortable / compact) in `allnews.density`. Every page has a

@@ -22,6 +22,10 @@ cron-worker/.wrangler/
 /archive/
 /data/
 /news/
+/space/
+/business/
+/tech/
+/gaming/
 # CI crawl artifacts
 partial-*.json
 partials/
