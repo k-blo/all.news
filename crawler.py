@@ -4394,7 +4394,7 @@ def write_landing_pages(articles, today):
 
 
 # ---- Crawl jobs, grouped so the GitHub Actions matrix can run them in parallel.
-# "vpn"  = CH Media papers (403 datacenter ASNs → must run behind the Swiss VPN).
+# "vpn"  = CH Media papers + VPN_SOURCES (403 datacenter ASNs → must run behind the Swiss VPN).
 # "main" = everything else (plain feeds/sitemaps, no VPN needed).
 def feed_jobs():
     return [(f["source"], (lambda f: lambda: parse_feed(f["source"], fetch(f["url"], f.get("ua")), f.get("summary", True)))(f))
@@ -4436,12 +4436,23 @@ def ch_media_jobs():
             for s in CH_MEDIA_SOURCES]
 
 
+# Feeds that 403 (or return empty bodies to) Azure IPs but work from a
+# Swiss IP: crawled in the VPN job instead of the main one.
+VPN_SOURCES = {
+    "+972 Magazine", "CNBC Indonesia", "CNBC Indonesia News", "CNN Indonesia",
+    "CNN Indonesia Nasional", "Davar", "Espreso", "Kontan Nasional", "Liga.net",
+    "Pedestrian TV", "Razón Pública", "Seattle Times", "The Walrus",
+    "Ukrainska Pravda Economy",
+}
+
+
 def jobs_for(group):
+    every = feed_jobs() + main_sitemap_jobs() + section_jobs()
     if group == "vpn":
-        return ch_media_jobs()
+        return ch_media_jobs() + [j for j in every if j[0] in VPN_SOURCES]
     if group == "main":
-        return feed_jobs() + main_sitemap_jobs() + section_jobs()
-    return feed_jobs() + main_sitemap_jobs() + section_jobs() + ch_media_jobs()  # full run (local)
+        return [j for j in every if j[0] not in VPN_SOURCES]
+    return every + ch_media_jobs()  # full run (local)
 
 
 def run_jobs(jobs):
