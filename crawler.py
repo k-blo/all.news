@@ -21,6 +21,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from html import escape, unescape
+from html.entities import html5 as HTML5_ENTITIES
 from zoneinfo import ZoneInfo
 
 ZURICH = ZoneInfo("Europe/Zurich")
@@ -58,7 +59,6 @@ FEEDS = [
     {"source": "Inside IT",     "url": "https://www.inside-it.ch/rss.xml"},
     {"source": "NZZ",           "url": "https://www.nzz.ch/recent.rss", "summary": False},
     {"source": "Persönlich",    "url": "https://www.persoenlich.com/rss/news.xml"},
-    {"source": "Tachles",       "url": "https://www.tachles.ch/feed"},
     {"source": "Schaffhauser Nachrichten", "url": "https://www.shn.ch/rss.xml"},
     {"source": "Schweizer Monat","url": "https://schweizermonat.ch/feed/"},
     #{"source": "ETH Zürich",     "url": "https://www.ethz.ch/de/news-und-veranstaltungen/eth-news/news/_jcr_content.feed"},
@@ -440,7 +440,7 @@ FEEDS = [
     {"source": "Rappler",       "url": "https://www.rappler.com/feed/"},
     {"source": "Inquirer",      "url": "https://www.inquirer.net/fullfeed"},
     # --- Vietnam (VN, vi) ---
-    {"source": "VnExpress",     "url": "https://vnexpress.net/rss/tin-moi-nhat.rss"},
+    {"source": "VnExpress",     "url": "https://vnexpress.net/rss/tin-moi-nhat.rss", "ua": "compat"},
     # --- Pakistan (PK, en) ---
     {"source": "Dawn",          "url": "https://www.dawn.com/feed"},
     # --- Israel (IL, en) ---
@@ -1395,9 +1395,9 @@ FEEDS = [
     {"source": "Tien Phong Kinh te", "url": "https://tienphong.vn/rss/kinh-te-6.rss"},
     {"source": "Vietnamnet Thoi su", "url": "https://vietnamnet.vn/rss/thoi-su.rss"},
     {"source": "VietnamPlus VN", "url": "https://www.vietnamplus.vn/rss/tin-moi.rss"},
-    {"source": "VnExpress Kinh doanh", "url": "https://vnexpress.net/rss/kinh-doanh.rss"},
-    {"source": "VnExpress Thế giới", "url": "https://vnexpress.net/rss/the-gioi.rss"},
-    {"source": "VnExpress Thời sự", "url": "https://vnexpress.net/rss/thoi-su.rss"},
+    {"source": "VnExpress Kinh doanh", "url": "https://vnexpress.net/rss/kinh-doanh.rss", "ua": "compat"},
+    {"source": "VnExpress Thế giới", "url": "https://vnexpress.net/rss/the-gioi.rss", "ua": "compat"},
+    {"source": "VnExpress Thời sự", "url": "https://vnexpress.net/rss/thoi-su.rss", "ua": "compat"},
     # ===== Asia, Middle East & Pacific expansion (2026-10) =====
     # --- CN (zh) ---
     {"source": "BBC 中文", "url": "https://feeds.bbci.co.uk/zhongwen/simp/rss.xml"},
@@ -2992,9 +2992,13 @@ _http_cache: dict = {}
 _fetched_urls: set = set()  # URLs fetched this run — used to emit the per-shard cache delta
 
 
-def fetch(url):
+# Sites that 404 any UA not starting "Mozilla/5.0" (VnExpress).
+COMPAT_USER_AGENT = "Mozilla/5.0 (compatible; " + USER_AGENT.replace(" (", "; ", 1)
+
+
+def fetch(url, ua=None):
     _fetched_urls.add(url)
-    headers = {"User-Agent": USER_AGENT}
+    headers = {"User-Agent": COMPAT_USER_AGENT if ua == "compat" else USER_AGENT}
     entry = _http_cache.get(url, {})
     if entry.get("last_modified"):
         headers["If-Modified-Since"] = entry["last_modified"]
@@ -3145,8 +3149,30 @@ def local(el):
     return el.tag.split("}")[-1].lower()
 
 
+_ENTITY = re.compile(rb"&(#\d+;|#x[0-9A-Fa-f]+;|[A-Za-z][A-Za-z0-9]*;)?")
+_XML_ENTITIES = {b"amp;", b"lt;", b"gt;", b"quot;", b"apos;"}
+
+
+def _fix_entity(m):
+    ref = m.group(1)
+    if not ref:  # bare "&", e.g. "AT&T"
+        return b"&amp;"
+    if ref.startswith(b"#") or ref in _XML_ENTITIES:
+        return m.group(0)
+    ch = HTML5_ENTITIES.get(ref.decode())  # HTML-only, e.g. &nbsp;
+    return b"&#%d;" % ord(ch) if ch and len(ch) == 1 else b"&amp;" + ref
+
+
+def parse_xml(xml_bytes):
+    """Parse XML; retry once with broken entities repaired."""
+    try:
+        return ET.fromstring(xml_bytes)
+    except ET.ParseError:
+        return ET.fromstring(_ENTITY.sub(_fix_entity, xml_bytes))
+
+
 def parse_feed(source, xml_bytes, allow_summary=True):
-    root = ET.fromstring(xml_bytes)
+    root = parse_xml(xml_bytes)
     out = []
     # RSS <item> and Atom <entry>, namespace-insensitive
     items = [e for e in root.iter() if local(e) == "item"]
@@ -3356,10 +3382,36 @@ def crawl_woz():
                 pages.append((int(m.group(1)), loc.text))
     if not pages:
         raise ValueError("no sitemap pages found")
-    newest_url = max(pages)[1]
     article_re = re.compile(r"/\d+/[^/]+/([^/]+)/![A-Z0-9]+$")
-    rows = sitemap_rows(fetch(newest_url), article_re)
+    rows = drupal_newest_rows(pages, article_re)
     return crawl_sitemap_source("WOZ", rows, article_re, 50)
+
+
+def drupal_newest_rows(pages, match):
+    """Rows from the last two sitemap pages (new items straddle them)."""
+    rows = []
+    for _, url in sorted(pages)[-2:]:
+        try:
+            rows += sitemap_rows(fetch(url), match)
+        except NotModified:
+            pass  # unchanged page: handled on an earlier run
+    rows.sort(reverse=True)
+    return rows
+
+
+def crawl_tachles():
+    """Daily news only in the Drupal sitemap; /feed is the weekly issue."""
+    index = ET.fromstring(fetch("https://www.tachles.ch/sitemap.xml"))
+    pages = []
+    for loc in index.iter():
+        if local(loc) == "loc" and loc.text:
+            m = re.search(r"[?&]page=(\d+)", loc.text)
+            if m:
+                pages.append((int(m.group(1)), loc.text))
+    if not pages:
+        raise ValueError("no sitemap pages found")
+    news_re = re.compile(r"/artikel/news/([^/]+)$")
+    return crawl_sitemap_source("Tachles", drupal_newest_rows(pages, news_re), news_re, 50)
 
 
 def crawl_bauernzeitung():
@@ -4345,7 +4397,7 @@ def write_landing_pages(articles, today):
 # "vpn"  = CH Media papers (403 datacenter ASNs → must run behind the Swiss VPN).
 # "main" = everything else (plain feeds/sitemaps, no VPN needed).
 def feed_jobs():
-    return [(f["source"], (lambda f: lambda: parse_feed(f["source"], fetch(f["url"]), f.get("summary", True)))(f))
+    return [(f["source"], (lambda f: lambda: parse_feed(f["source"], fetch(f["url"], f.get("ua")), f.get("summary", True)))(f))
             for f in FEEDS]
 
 
@@ -4359,6 +4411,7 @@ def main_sitemap_jobs():
         # Nau disabled: mostly reposts copied from other outlets, little original content
         # ("Nau", crawl_nau),
         ("WOZ", crawl_woz),
+        ("Tachles", crawl_tachles),
         ("Bauernzeitung", crawl_bauernzeitung),
         ("Die Zeit", crawl_zeit),
     ]
