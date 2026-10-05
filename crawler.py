@@ -2459,6 +2459,11 @@ _MONTH_ALIASES = {
 }
 
 
+# RFC 822 offsets written "+07:00" or "GMT+7", which email.utils ignores
+# (reading the time as UTC); rewritten to "+0700".
+_RFC_TZ = re.compile(r"(\d{1,2}:\d{2}(?::\d{2})?)\s*(?:GMT|UTC)?\s*([+-])(\d{1,2})(?::?(\d{2}))?\s*$")
+
+
 def parse_date(s):
     """Parse RSS pubDate or ISO/sitemap lastmod into an aware datetime, or None."""
     if not s:
@@ -2468,6 +2473,7 @@ def parse_date(s):
         return datetime.fromisoformat(s.replace("Z", "+00:00"))
     except ValueError:
         pass
+    s = _RFC_TZ.sub(lambda m: f"{m.group(1)} {m.group(2)}{int(m.group(3)):02d}{m.group(4) or '00'}", s)
     try:
         return parsedate_to_datetime(s)
     except (TypeError, ValueError):
@@ -2486,9 +2492,14 @@ def is_today(s):
     dt = parse_date(s)
     if dt is None:
         return False
+    today = datetime.now(ZURICH).date()
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=timezone.utc)
-    return dt.astimezone(ZURICH).date() == datetime.now(ZURICH).date()
+    elif dt.time() == datetime.min.time():
+        # Date-only stamp (local midnight): use the source's own calendar day,
+        # or every outlet east of Zurich would always land on yesterday.
+        return dt.date() == today
+    return dt.astimezone(ZURICH).date() == today
 
 
 def load_seen(path=SEEN_FILE):
