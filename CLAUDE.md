@@ -108,7 +108,16 @@ canonical circular. Internal links, the canonical and the sitemap all use `/arch
 (Archive *day* pages keep `.html` — they come from R2 via `functions/[[path]].js`,
 which doesn't strip anything, and answer 200 directly.)
 
-**Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added to `crawled.json` if their `published` date is today (Swiss local time) and their URL has never been seen before.
+**Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added to `crawled.json` if their `published` date is today (Swiss local time) and their URL has never been seen before. A cached `Last-Modified` older than 7 days is not sent (`stale_validator()`): some servers keep a months-old one on fresh content and answer 304 forever. A date-only stamp (local midnight, e.g. `00:00+08:00`) counts on the source's own calendar day, else outlets east of Zurich always land on "yesterday".
+
+**Crawl groups:** `main` (3 sharded GitHub Actions jobs) runs everything except the
+`vpn` group, which runs behind a Swiss WireGuard VPN: CH Media papers plus
+`VPN_SOURCES` (feeds that 403 GitHub's datacenter IPs). A feed entry with
+`"ua": "compat"` is fetched with a `Mozilla/5.0 (compatible; …)` UA (VnExpress fakes
+404s otherwise). **Never change `USER_AGENT` globally** — any UA mentioning
+`www.all.news` or starting with `Mozilla/5.0` gets 403s from News18 and others.
+`run_jobs()` logs and skips any per-source exception, so one bad feed never aborts a
+shard.
 
 **Sitemap:** `write_sitemap()` emits `<lastmod>` on every URL (the crawl timestamp
 for the hourly pages, the day itself for settled archive days) — the only hint here
@@ -148,7 +157,7 @@ in `script.js` (`SECTIONS`) and the workflow loops — keep all three in sync.
 
 **Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`). If the source introduces a **new country or language**, add its English name to `COUNTRY_NAMES`/`LANG_EN_NAMES` in **both** `crawler.py` and `script.js` (and the display name to `COUNTRY_NAMES`/`LANG_NAMES` in `script.js`), or its landing page shows the raw code and won't hydrate.
 
-**Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.)
+**Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.) Judge robots.txt by RFC 9309 / Google semantics — longest match wins, `*` and `$` wildcards, a 4xx robots.txt means no rules. Python's `urllib.robotparser` gets this wrong (first match, no wildcards, 403 = disallow all), so don't rely on it. The rule is for *adding* sources: an existing source that still works stays even if its robots.txt has since tightened; only sources that stopped working are removed.
 
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
