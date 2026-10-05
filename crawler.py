@@ -5135,6 +5135,12 @@ VPN_SOURCES = {
     "CNN Indonesia Nasional", "Davar", "Espreso", "Kontan Nasional", "Liga.net",
     "Pedestrian TV", "Razón Pública", "Seattle Times", "The Walrus",
     "Ukrainska Pravda Economy",
+    # Added 2026-10; blocked or served block pages on the first Azure run.
+    "0404", "Behadrei Haredim", "BVZ", "CNBC Indonesia Market", "CNN Indonesia Tekno",
+    "El Rancagüino", "Forbes Russia", "Gagadget", "GamePro", "GameStar", "Gizmodo",
+    "Gizmodo Space", "Igromania", "Jansatta", "Loksatta", "Mekomit", "Mezha.media",
+    "NÖN", "Passione Astronomia", "Pilipino Mirror", "Sakshi", "Thairath Money",
+    "Twentyfour News", "VOV", "Zman Yisrael",
 }
 
 
