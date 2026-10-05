@@ -175,14 +175,12 @@ FEEDS = [
     {"source": "La Nazione",         "url": "https://www.lanazione.it/rss"},
     {"source": "AGI",                "url": "https://www.agi.it/cronaca/rss"},
     {"source": "Today",              "url": "https://www.today.it/rss"},
-    {"source": "Wired Italia",       "url": "https://www.wired.it/feed/rss"},
     {"source": "Il Mattino",         "url": "https://www.ilmattino.it/rss/home.xml"},
     {"source": "Il Messaggero",      "url": "https://www.ilmessaggero.it/rss/home.xml"},
     {"source": "Il Gazzettino",      "url": "https://www.ilgazzettino.it/rss/home.xml"},
     {"source": "Quotidiano.net",     "url": "https://www.quotidiano.net/rss"},
     {"source": "askanews",           "url": "https://www.askanews.it/feed/"},
     {"source": "Domani",             "url": "https://www.editorialedomani.it/rss"},
-    {"source": "Il Secolo XIX",      "url": "https://www.ilsecoloxix.it/rss"},
     # --- Spain (ES) ---
     {"source": "El Español",         "url": "https://www.elespanol.com/rss/"},
     {"source": "COPE",               "url": "https://www.cope.es/api/es/news/rss.xml"},
@@ -317,7 +315,6 @@ FEEDS = [
     # Colombia
     {"source": "La República","url": "https://www.larepublica.co/rss"},
     # Peru
-    {"source": "Perú21","url": "https://peru21.pe/arc/outboundfeeds/rss/"},
     {"source": "Andina","url": "https://andina.pe/agencia/rss.aspx"},
     # Australia
     {"source": "The Age","url": "https://www.theage.com.au/rss/feed.xml"},
@@ -434,7 +431,6 @@ FEEDS = [
     {"source": "Straits Times", "url": "https://www.straitstimes.com/news/singapore/rss.xml"},
     {"source": "CNA",           "url": "https://www.channelnewsasia.com/rssfeeds/8395986"},
     # --- Indonesia (ID, id) ---
-    {"source": "Tempo",         "url": "https://rss.tempo.co/nasional"},
     # --- Philippines (PH, en) ---
     {"source": "Rappler",       "url": "https://www.rappler.com/feed/"},
     {"source": "Inquirer",      "url": "https://www.inquirer.net/fullfeed"},
@@ -470,7 +466,6 @@ FEEDS = [
     # (added in bulk; each feed validated to fetch+parse with dated items). =====
     # --- AR ---
     {"source": "Cenital", "url": "https://www.cenital.com/feed/"},
-    {"source": "Chequeado", "url": "https://chequeado.com/feed/"},
     {"source": "Clarín Economía", "url": "https://www.clarin.com/rss/economia/"},
     {"source": "Clarín Mundo", "url": "https://www.clarin.com/rss/mundo/"},
     {"source": "Clarín Política", "url": "https://www.clarin.com/rss/politica/"},
@@ -522,7 +517,6 @@ FEEDS = [
     {"source": "SBS World News", "url": "https://www.sbs.com.au/news/topic/world/feed"},
     {"source": "SMH National", "url": "https://www.smh.com.au/rss/national.xml"},
     {"source": "The Age National", "url": "https://www.theage.com.au/rss/national.xml"},
-    {"source": "The Conversation AU Politics", "url": "https://theconversation.com/au/topics/australian-politics-1445/articles.atom"},
     {"source": "The Guardian AU Politics", "url": "https://www.theguardian.com/australia-news/australian-politics/rss"},
     {"source": "The Guardian AU World", "url": "https://www.theguardian.com/world/rss"},
     {"source": "The Mandarin", "url": "https://www.themandarin.com.au/feed/"},
@@ -581,7 +575,6 @@ FEEDS = [
     {"source": "The Intercept Brasil", "url": "https://www.intercept.com.br/feed/"},
     # --- CA ---
     {"source": "Calgary Herald", "url": "https://calgaryherald.com/feed/"},
-    {"source": "Canadaland", "url": "https://www.canadaland.com/feed/"},
     {"source": "Edmonton Journal", "url": "https://edmontonjournal.com/feed/"},
     {"source": "Financial Post News", "url": "https://financialpost.com/category/news/feed"},
     {"source": "Global News Money", "url": "https://globalnews.ca/money/feed/"},
@@ -617,16 +610,12 @@ FEEDS = [
     {"source": "The Clinic", "url": "https://www.theclinic.cl/feed/"},
     # --- CN ---
     {"source": "Bitter Winter", "url": "https://bitterwinter.org/feed/"},
-    {"source": "CGTN Business", "url": "https://www.cgtn.com/subscribe/rss/section/business.xml"},
     {"source": "CGTN China", "url": "https://www.cgtn.com/subscribe/rss/section/china.xml"},
-    {"source": "China Daily", "url": "https://www.chinadaily.com.cn/rss/china_rss.xml"},
-    {"source": "China Daily World", "url": "https://www.chinadaily.com.cn/rss/world_rss.xml"},
     {"source": "China Media Project", "url": "https://chinamediaproject.org/feed/"},
     {"source": "Ecns.cn", "url": "https://www.ecns.cn/rss/rss.xml"},
     {"source": "Pekingnology", "url": "https://www.pekingnology.com/feed"},
     {"source": "Radio Free Asia", "url": "https://www.rfa.org/english/rss2.xml"},
     {"source": "SCMP China", "url": "https://www.scmp.com/rss/4/feed"},
-    {"source": "SupChina / The China Project", "url": "https://thechinaproject.com/feed/"},
     {"source": "The Wire China", "url": "https://www.thewirechina.com/feed/"},
     {"source": "Trivium China", "url": "https://triviumchina.com/feed/"},
     {"source": "What's on Weibo", "url": "https://www.whatsonweibo.com/feed/"},
@@ -724,8 +713,6 @@ FEEDS = [
     {"source": "El País", "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada"},
     {"source": "El País España", "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/espana/portada"},
     {"source": "El País Internacional", "url": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada"},
-    {"source": "El Periódico de Catalunya", "url": "https://www.elperiodico.com/es/rss/politica/rss.xml"},
-    {"source": "El Periódico Internacional", "url": "https://www.elperiodico.com/es/rss/internacional/rss.xml"},
     {"source": "El Salto Diario Política", "url": "https://www.elsaltodiario.com/politica/feed"},
     {"source": "elDiario Economía", "url": "https://www.eldiario.es/rss/economia/"},
     {"source": "elDiario Política", "url": "https://www.eldiario.es/rss/politica/"},
@@ -835,7 +822,6 @@ FEEDS = [
     {"source": "ThePressProject", "url": "https://thepressproject.gr/feed/"},
     {"source": "To Vima Politiki", "url": "https://www.tovima.gr/category/politics/feed/"},
     # --- HK ---
-    {"source": "Harbour Times", "url": "https://harbourtimes.com/feed/"},
     {"source": "HKFP Politics", "url": "https://hongkongfp.com/category/hong-kong/feed/"},
     {"source": "HKFP World", "url": "https://hongkongfp.com/category/world/feed/"},
     {"source": "Hong Kong Business", "url": "https://hongkongbusiness.hk/rss.xml"},
@@ -860,12 +846,10 @@ FEEDS = [
     {"source": "Infostart", "url": "https://infostart.hu/24ora/rss/"},
     {"source": "Magyar Hang", "url": "https://hang.hu/rss"},
     {"source": "Magyar Nemzet", "url": "https://magyarnemzet.hu/feed"},
-    {"source": "Mandiner", "url": "https://mandiner.hu/rss"},
     {"source": "Média1", "url": "https://media1.hu/feed/"},
     {"source": "Népszava", "url": "https://nepszava.hu/feed"},
     {"source": "Portfolio Deviza", "url": "https://www.portfolio.hu/rss/deviza.xml"},
     {"source": "Portfolio Gazdaság", "url": "https://www.portfolio.hu/rss/gazdasag.xml"},
-    {"source": "Sportal", "url": "https://sportal.blog.hu/rss"},
     {"source": "Telex Belföld", "url": "https://telex.hu/rss/belfold"},
     {"source": "Telex Gazdaság", "url": "https://telex.hu/rss/gazdasag"},
     {"source": "Telex Külföld", "url": "https://telex.hu/rss/kulfold"},
@@ -886,7 +870,6 @@ FEEDS = [
     {"source": "Okezone", "url": "https://sindikasi.okezone.com/index.php/rss/0/RSS2.0"},
     {"source": "Republika", "url": "https://www.republika.co.id/rss"},
     {"source": "Sindonews", "url": "https://nasional.sindonews.com/rss"},
-    {"source": "Tempo Bisnis", "url": "https://rss.tempo.co/bisnis"},
     {"source": "Viva", "url": "https://www.viva.co.id/get/all"},
     # --- IE ---
     {"source": "Cork Beo", "url": "https://www.corkbeo.ie/?service=rss"},
@@ -915,7 +898,6 @@ FEEDS = [
     {"source": "Israel Hayom", "url": "https://www.israelhayom.com/feed/"},
     {"source": "Maariv", "url": "https://www.maariv.co.il/Rss/RssFeedsMivzakiaux"},
     {"source": "The Jerusalem Post Israel News", "url": "https://www.jpost.com/rss/rssfeedsisraelnews.aspx"},
-    {"source": "The Jerusalem Post News", "url": "https://www.jpost.com/rss/rssfeedsheadlines.aspx"},
     {"source": "The Media Line", "url": "https://themedialine.org/feed/"},
     {"source": "Walla", "url": "https://rss.walla.co.il/feed/1?type=main"},
     {"source": "Ynetnews", "url": "https://www.ynetnews.com/Integration/StoryRss3082.xml"},
@@ -935,9 +917,7 @@ FEEDS = [
     {"source": "India Today India", "url": "https://www.indiatoday.in/rss/1206577"},
     {"source": "India Today World", "url": "https://www.indiatoday.in/rss/1206514"},
     {"source": "Livemint Companies", "url": "https://www.livemint.com/rss/companies"},
-    {"source": "Livemint Markets", "url": "https://www.livemint.com/rss/market"},
     {"source": "Mint Politics", "url": "https://www.livemint.com/rss/politics"},
-    {"source": "Moneycontrol", "url": "https://www.moneycontrol.com/rss/latestnews.xml"},
     {"source": "NDTV India News", "url": "https://feeds.feedburner.com/ndtvnews-india-news"},
     {"source": "NDTV World News", "url": "https://feeds.feedburner.com/ndtvnews-world-news"},
     {"source": "News18 World", "url": "https://www.news18.com/rss/world.xml"},
@@ -1066,7 +1046,6 @@ FEEDS = [
     {"source": "De Gelderlander Binnenland", "url": "https://www.gelderlander.nl/binnenland/rss.xml"},
     {"source": "De Gooi- en Eemlander", "url": "https://www.gooieneemlander.nl/rss"},
     {"source": "De Stentor Nieuws", "url": "https://www.destentor.nl/binnenland/rss.xml"},
-    {"source": "De Stentor Regio", "url": "https://www.destentor.nl/regio/rss.xml"},
     {"source": "De Telegraaf Nieuws", "url": "https://www.telegraaf.nl/nieuws/rss"},
     {"source": "De Volkskrant Nieuws", "url": "https://www.volkskrant.nl/nieuws/rss.xml"},
     {"source": "De Volkskrant Politiek", "url": "https://www.volkskrant.nl/politiek/rss.xml"},
@@ -1083,8 +1062,6 @@ FEEDS = [
     {"source": "Nederlands Dagblad Nieuws", "url": "https://www.nd.nl/nieuws/rss"},
     {"source": "Noordhollands Dagblad", "url": "https://www.noordhollandsdagblad.nl/rss"},
     {"source": "NOS Politiek", "url": "https://feeds.nos.nl/nosnieuwspolitiek"},
-    {"source": "NRC Binnenland", "url": "https://www.nrc.nl/rss/binnenland/"},
-    {"source": "Nrc Economie", "url": "https://www.nrc.nl/rss/economie/"},
     {"source": "NU.nl Economie", "url": "https://www.nu.nl/rss/Economie"},
     {"source": "Trouw Groen", "url": "https://www.trouw.nl/duurzaamheid-economie/rss.xml"},
     {"source": "Trouw Politiek", "url": "https://www.trouw.nl/politiek/rss.xml"},
@@ -1101,7 +1078,6 @@ FEEDS = [
     {"source": "Sunnmørsposten", "url": "https://www.smp.no/rss"},
     {"source": "TV 2", "url": "https://www.tv2.no/rss/nyheter"},
     {"source": "VG Nyheter", "url": "https://www.vg.no/rss/feed/?categories=1068"},
-    {"source": "VG Sport", "url": "https://www.vg.no/rss/feed/?categories=1069"},
     {"source": "Dagsavisen", "url": "https://www.dagsavisen.no/rss"},
     # --- NZ ---
     {"source": "Newsroom NZ", "url": "https://newsroom.co.nz/feed/"},
@@ -1127,13 +1103,11 @@ FEEDS = [
     {"source": "IDL-Reporteros", "url": "https://www.idl-reporteros.pe/feed/"},
     {"source": "Wayka", "url": "https://wayka.pe/feed/"},
     # --- PH ---
-    {"source": "Bandera", "url": "https://bandera.inquirer.net/feed"},
     {"source": "Business World", "url": "https://www.bworldonline.com/feed/"},
     {"source": "BusinessWorld Economy", "url": "https://www.bworldonline.com/economy/feed/"},
     {"source": "GMA Money", "url": "https://data.gmanetwork.com/gno/rss/money/feed.xml"},
     {"source": "GMA News Nation", "url": "https://data.gmanetwork.com/gno/rss/news/nation/feed.xml"},
     {"source": "GMA News World", "url": "https://data.gmanetwork.com/gno/rss/news/world/feed.xml"},
-    {"source": "Inquirer Global", "url": "https://globalnation.inquirer.net/feed"},
     {"source": "Inquirer Nation", "url": "https://newsinfo.inquirer.net/feed"},
     {"source": "Interaksyon", "url": "https://interaksyon.philstar.com/feed/"},
     {"source": "Manila Times News", "url": "https://www.manilatimes.net/news/feed"},
@@ -1142,7 +1116,6 @@ FEEDS = [
     {"source": "Philstar Nation", "url": "https://www.philstar.com/rss/nation"},
     {"source": "Philstar World", "url": "https://www.philstar.com/rss/world"},
     {"source": "Rappler Business", "url": "https://www.rappler.com/business/feed/"},
-    {"source": "Rappler Nation", "url": "https://www.rappler.com/nation/feed/"},
     {"source": "Rappler World", "url": "https://www.rappler.com/world/feed/"},
     # --- PK ---
     {"source": "ARY News Pakistan", "url": "https://arynews.tv/category/pakistan/feed/"},
@@ -1151,7 +1124,6 @@ FEEDS = [
     {"source": "Dawn Business", "url": "https://www.dawn.com/feeds/business"},
     {"source": "Dawn Pakistan", "url": "https://www.dawn.com/feeds/home"},
     {"source": "Dawn World", "url": "https://www.dawn.com/feeds/world"},
-    {"source": "Geo News Pakistan", "url": "https://www.geo.tv/rss/1/53"},
     {"source": "Minute Mirror", "url": "https://minutemirror.com.pk/feed/"},
     {"source": "Pakistan Observer", "url": "https://pakobserver.net/feed/"},
     {"source": "The Current", "url": "https://thecurrent.pk/feed/"},
@@ -1159,7 +1131,6 @@ FEEDS = [
     {"source": "The Express Tribune Business", "url": "https://tribune.com.pk/feed/business"},
     {"source": "The Express Tribune Pakistan", "url": "https://tribune.com.pk/feed/pakistan"},
     {"source": "The Express Tribune World", "url": "https://tribune.com.pk/feed/world"},
-    {"source": "The News International Pakistan", "url": "https://www.thenews.com.pk/rss/1/1"},
     # --- PL ---
     {"source": "Bankier.pl", "url": "https://www.bankier.pl/rss/wiadomosci.xml"},
     {"source": "Defence24", "url": "https://www.defence24.pl/rss"},
@@ -1294,8 +1265,6 @@ FEEDS = [
     {"source": "The Straits Times Asia", "url": "https://www.straitstimes.com/news/asia/rss.xml"},
     {"source": "The Straits Times World", "url": "https://www.straitstimes.com/news/world/rss.xml"},
     {"source": "Vulcan Post", "url": "https://vulcanpost.com/feed/"},
-    {"source": "Yahoo SG World", "url": "https://sg.news.yahoo.com/rss/world"},
-    {"source": "Yahoo Singapore Feed", "url": "https://sg.news.yahoo.com/rss/singapore"},
     # --- TR ---
     {"source": "Anadolu Agency", "url": "https://www.aa.com.tr/tr/rss/default?cat=guncel"},
     {"source": "BBC Türkçe", "url": "https://feeds.bbci.co.uk/turkce/rss.xml"},
@@ -1379,12 +1348,9 @@ FEEDS = [
     {"source": "Cong An Nhan Dan", "url": "https://cand.com.vn/rss/home.rss"},
     {"source": "Dan Tri Kinh doanh", "url": "https://dantri.com.vn/rss/kinh-doanh.rss"},
     {"source": "Dan Tri Su Kien", "url": "https://dantri.com.vn/rss/su-kien.rss"},
-    {"source": "Nguoi Lao Dong", "url": "https://nld.com.vn/rss/home.rss"},
-    {"source": "Nguoi Lao Dong Thoi su", "url": "https://nld.com.vn/rss/thoi-su.rss"},
     {"source": "Thanh Nien Chinh Tri", "url": "https://thanhnien.vn/rss/chinh-tri.rss"},
     {"source": "Thanh Nien Thoi su", "url": "https://thanhnien.vn/rss/thoi-su.rss"},
     {"source": "Tien Phong", "url": "https://tienphong.vn/rss/home.rss"},
-    {"source": "Tien Phong Kinh te", "url": "https://tienphong.vn/rss/kinh-te-6.rss"},
     {"source": "Vietnamnet Thoi su", "url": "https://vietnamnet.vn/rss/thoi-su.rss"},
     {"source": "VietnamPlus VN", "url": "https://www.vietnamplus.vn/rss/tin-moi.rss"},
     {"source": "VnExpress Kinh doanh", "url": "https://vnexpress.net/rss/kinh-doanh.rss", "ua": "compat"},
@@ -1656,7 +1622,6 @@ REPUBLIK_MAX = 50
 SUEDOSTSCHWEIZ_MAX = 50
 BAUERNZEITUNG_SITEMAP = "https://www.bauernzeitung.ch/sitemap/news.xml.gz"  # index of news-YYYY-MM.xml.gz
 BAUERNZEITUNG_MAX = 50
-ZEIT_MAX = 50  # https://www.zeit.de/gsitemaps/index.xml?date=YYYY-MM-01&unit=months&period=1
 # CH Media regional papers: /sitemap/YYYY/MM/sitemap.xml, URLs end in -ld.NNNNNNN
 CH_MEDIA_SOURCES = [
     {"source": "Luzerner Zeitung",   "base": "https://www.luzernerzeitung.ch",   "max": 50},
@@ -1961,7 +1926,6 @@ DEFAULT_LANG = "de"
 DEFAULT_COUNTRY = "CH"
 SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     # German-language outlets based in Germany (lang defaults to "de").
-    "Die Zeit":     {"country": "DE"},
     "Tagesschau":   {"country": "DE"},
     "Süddeutsche":  {"country": "DE"},
     "FAZ":          {"country": "DE"},
@@ -2022,7 +1986,6 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "NHK": {"lang":"ja","country":"JP"},
     "Yonhap": {"lang":"en","country":"KR"},
     "Straits Times": {"lang":"en","country":"SG"}, "CNA": {"lang":"en","country":"SG"},
-    "Tempo": {"lang":"id","country":"ID"},
     "Rappler": {"lang":"en","country":"PH"}, "Inquirer": {"lang":"en","country":"PH"},
     "VnExpress": {"lang":"vi","country":"VN"},
     "Dawn": {"lang":"en","country":"PK"},
@@ -2092,11 +2055,10 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "TGcom24": {"lang":"it","country":"IT"}, "Open": {"lang":"it","country":"IT"},
     "Il Giorno": {"lang":"it","country":"IT"}, "Il Resto del Carlino": {"lang":"it","country":"IT"},
     "La Nazione": {"lang":"it","country":"IT"}, "AGI": {"lang":"it","country":"IT"},
-    "Today": {"lang":"it","country":"IT"}, "Wired Italia": {"lang":"it","country":"IT"},
+    "Today": {"lang":"it","country":"IT"},
     "Il Mattino": {"lang":"it","country":"IT"}, "Il Messaggero": {"lang":"it","country":"IT"},
     "Il Gazzettino": {"lang":"it","country":"IT"}, "Quotidiano.net": {"lang":"it","country":"IT"},
     "askanews": {"lang":"it","country":"IT"}, "Domani": {"lang":"it","country":"IT"},
-    "Il Secolo XIX": {"lang":"it","country":"IT"},
     # Spain
     "El Español": {"lang":"es","country":"ES"}, "COPE": {"lang":"es","country":"ES"},
     "Europa Press": {"lang":"es","country":"ES"}, "Marca": {"lang":"es","country":"ES"},
@@ -2181,7 +2143,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     # Colombia (es/CO)
     "La República": {"lang":"es","country":"CO"},
     # Peru (es/PE)
-    "Perú21": {"lang":"es","country":"PE"}, "Andina": {"lang":"es","country":"PE"},
+    "Andina": {"lang":"es","country":"PE"},
     # Australia (en/AU)
     "The Age": {"lang":"en","country":"AU"}, "Guardian Australia": {"lang":"en","country":"AU"},
     "Brisbane Times": {"lang":"en","country":"AU"}, "AFR": {"lang":"en","country":"AU"},
@@ -2243,7 +2205,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Irish Examiner": {"lang":"en","country":"IE"},
     # ===== Origins for the regional/national expansion (see FEEDS block). =====
     # AR
-    "Cenital": {"lang":"es","country":"AR"}, "Chequeado": {"lang":"es","country":"AR"},
+    "Cenital": {"lang":"es","country":"AR"},
     "Clarín Economía": {"lang":"es","country":"AR"}, "Clarín Mundo": {"lang":"es","country":"AR"},
     "Clarín Política": {"lang":"es","country":"AR"}, "Clarín Sociedad": {"lang":"es","country":"AR"},
     "Diario Uno": {"lang":"es","country":"AR"}, "El Cohete a la Luna": {"lang":"es","country":"AR"},
@@ -2276,7 +2238,6 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Perth Now": {"lang":"en","country":"AU"}, "SBS News": {"lang":"en","country":"AU"},
     "SBS World News": {"lang":"en","country":"AU"}, "SMH National": {"lang":"en","country":"AU"},
     "The Age National": {"lang":"en","country":"AU"},
-    "The Conversation AU Politics": {"lang":"en","country":"AU"},
     "The Guardian AU Politics": {"lang":"en","country":"AU"},
     "The Guardian AU World": {"lang":"en","country":"AU"}, "The Mandarin": {"lang":"en","country":"AU"},
     "The West Australian": {"lang":"en","country":"AU"}, "WAtoday": {"lang":"en","country":"AU"},
@@ -2310,7 +2271,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "O Globo Economia": {"lang":"pt","country":"BR"}, "O Globo Política": {"lang":"pt","country":"BR"},
     "Terra Brasil": {"lang":"pt","country":"BR"}, "The Intercept Brasil": {"lang":"pt","country":"BR"},
     # CA
-    "Calgary Herald": {"lang":"en","country":"CA"}, "Canadaland": {"lang":"en","country":"CA"},
+    "Calgary Herald": {"lang":"en","country":"CA"},
     "Edmonton Journal": {"lang":"en","country":"CA"}, "Financial Post News": {"lang":"en","country":"CA"},
     "Global News Money": {"lang":"en","country":"CA"}, "Global News Politics": {"lang":"en","country":"CA"},
     "iPolitics": {"lang":"en","country":"CA"}, "Journal de Montréal": {"lang":"en","country":"CA"},
@@ -2334,12 +2295,12 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Meganoticias": {"lang":"es","country":"CL"}, "El Dínamo": {"lang":"es","country":"CL"},
     "Diario Concepción": {"lang":"es","country":"CL"},
     # CN
-    "Bitter Winter": {"lang":"en","country":"CN"}, "CGTN Business": {"lang":"en","country":"CN"},
-    "CGTN China": {"lang":"en","country":"CN"}, "China Daily": {"lang":"en","country":"CN"},
-    "China Daily World": {"lang":"en","country":"CN"}, "China Media Project": {"lang":"en","country":"CN"},
+    "Bitter Winter": {"lang":"en","country":"CN"},
+    "CGTN China": {"lang":"en","country":"CN"},
+    "China Media Project": {"lang":"en","country":"CN"},
     "Ecns.cn": {"lang":"en","country":"CN"}, "Global Times": {"lang":"en","country":"CN"},
     "Pekingnology": {"lang":"en","country":"CN"}, "Radio Free Asia": {"lang":"en","country":"CN"},
-    "SCMP China": {"lang":"en","country":"CN"}, "SupChina / The China Project": {"lang":"en","country":"CN"},
+    "SCMP China": {"lang":"en","country":"CN"},
     "The Wire China": {"lang":"en","country":"CN"}, "Trivium China": {"lang":"en","country":"CN"},
     "What's on Weibo": {"lang":"en","country":"CN"},
     # CO
@@ -2397,8 +2358,6 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "El Mundo Internacional": {"lang":"es","country":"ES"},
     "El Norte de Castilla": {"lang":"es","country":"ES"}, "El País": {"lang":"es","country":"ES"},
     "El País España": {"lang":"es","country":"ES"}, "El País Internacional": {"lang":"es","country":"ES"},
-    "El Periódico de Catalunya": {"lang":"es","country":"ES"},
-    "El Periódico Internacional": {"lang":"es","country":"ES"},
     "El Salto Diario Política": {"lang":"es","country":"ES"},
     "elDiario Economía": {"lang":"es","country":"ES"}, "elDiario Política": {"lang":"es","country":"ES"},
     "Heraldo": {"lang":"es","country":"ES"}, "Hoy Extremadura": {"lang":"es","country":"ES"},
@@ -2461,7 +2420,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Star.gr": {"lang":"el","country":"GR"}, "ThePressProject": {"lang":"el","country":"GR"},
     "To Vima Politiki": {"lang":"el","country":"GR"},
     # HK
-    "Harbour Times": {"lang":"en","country":"HK"}, "HKFP Politics": {"lang":"en","country":"HK"},
+    "HKFP Politics": {"lang":"en","country":"HK"},
     "HKFP World": {"lang":"en","country":"HK"}, "Hong Kong Business": {"lang":"en","country":"HK"},
     "Ming Pao": {"lang":"en","country":"HK"}, "Oriental Daily": {"lang":"en","country":"HK"},
     "RTHK Greater China": {"lang":"en","country":"HK"}, "SCMP Asia": {"lang":"en","country":"HK"},
@@ -2474,10 +2433,10 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "HVG Világ": {"lang":"hu","country":"HU"}, "Index Belföld": {"lang":"hu","country":"HU"},
     "Index Gazdaság": {"lang":"hu","country":"HU"}, "Index Külföld": {"lang":"hu","country":"HU"},
     "Infostart": {"lang":"hu","country":"HU"}, "Magyar Hang": {"lang":"hu","country":"HU"},
-    "Magyar Nemzet": {"lang":"hu","country":"HU"}, "Mandiner": {"lang":"hu","country":"HU"},
+    "Magyar Nemzet": {"lang":"hu","country":"HU"},
     "Média1": {"lang":"hu","country":"HU"}, "Népszava": {"lang":"hu","country":"HU"},
     "Portfolio Deviza": {"lang":"hu","country":"HU"}, "Portfolio Gazdaság": {"lang":"hu","country":"HU"},
-    "Sportal": {"lang":"hu","country":"HU"}, "Telex Belföld": {"lang":"hu","country":"HU"},
+    "Telex Belföld": {"lang":"hu","country":"HU"},
     "Telex Gazdaság": {"lang":"hu","country":"HU"}, "Telex Külföld": {"lang":"hu","country":"HU"},
     "VG.hu": {"lang":"hu","country":"HU"}, "Válasz Online": {"lang":"hu","country":"HU"},
     "Átlátszó": {"lang":"hu","country":"HU"},
@@ -2489,7 +2448,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Kontan Nasional": {"lang":"id","country":"ID"}, "Liputan6 News": {"lang":"id","country":"ID"},
     "Media Indonesia": {"lang":"id","country":"ID"}, "Okezone": {"lang":"id","country":"ID"},
     "Republika": {"lang":"id","country":"ID"}, "Sindonews": {"lang":"id","country":"ID"},
-    "Tempo Bisnis": {"lang":"id","country":"ID"}, "Viva": {"lang":"id","country":"ID"},
+    "Viva": {"lang":"id","country":"ID"},
     # IE
     "Cork Beo": {"lang":"en","country":"IE"}, "Dublin Live": {"lang":"en","country":"IE"},
     "Extra.ie": {"lang":"en","country":"IE"}, "Gript": {"lang":"en","country":"IE"},
@@ -2506,7 +2465,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "+972 Magazine": {"lang":"en","country":"IL"}, "Al-Monitor": {"lang":"en","country":"IL"},
     "Arutz Sheva": {"lang":"en","country":"IL"}, "Israel Hayom": {"lang":"en","country":"IL"},
     "Maariv": {"lang":"he","country":"IL"}, "The Jerusalem Post Israel News": {"lang":"en","country":"IL"},
-    "The Jerusalem Post News": {"lang":"en","country":"IL"}, "The Media Line": {"lang":"en","country":"IL"},
+    "The Media Line": {"lang":"en","country":"IL"},
     "The Times of Israel": {"lang":"en","country":"IL"}, "Walla": {"lang":"he","country":"IL"},
     "Ynetnews": {"lang":"en","country":"IL"}, "Ynetnews World": {"lang":"en","country":"IL"},
     "Arutz Sheva HE": {"lang":"he","country":"IL"}, "Davar": {"lang":"he","country":"IL"},
@@ -2517,8 +2476,8 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Hindustan Times Business": {"lang":"en","country":"IN"},
     "Hindustan Times World": {"lang":"en","country":"IN"}, "India Today Feed": {"lang":"en","country":"IN"},
     "India Today India": {"lang":"en","country":"IN"}, "India Today World": {"lang":"en","country":"IN"},
-    "Livemint Companies": {"lang":"en","country":"IN"}, "Livemint Markets": {"lang":"en","country":"IN"},
-    "Mint Politics": {"lang":"en","country":"IN"}, "Moneycontrol": {"lang":"en","country":"IN"},
+    "Livemint Companies": {"lang":"en","country":"IN"},
+    "Mint Politics": {"lang":"en","country":"IN"},
     "NDTV India News": {"lang":"en","country":"IN"}, "NDTV World News": {"lang":"en","country":"IN"},
     "News18 World": {"lang":"en","country":"IN"}, "Telangana Today": {"lang":"en","country":"IN"},
     "The Economic Times Politics": {"lang":"en","country":"IN"},
@@ -2592,7 +2551,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Dagblad van het Noorden": {"lang":"nl","country":"NL"},
     "De Gelderlander Binnenland": {"lang":"nl","country":"NL"},
     "De Gooi- en Eemlander": {"lang":"nl","country":"NL"}, "De Stentor Nieuws": {"lang":"nl","country":"NL"},
-    "De Stentor Regio": {"lang":"nl","country":"NL"}, "De Telegraaf Nieuws": {"lang":"nl","country":"NL"},
+    "De Telegraaf Nieuws": {"lang":"nl","country":"NL"},
     "De Volkskrant Nieuws": {"lang":"nl","country":"NL"},
     "De Volkskrant Politiek": {"lang":"nl","country":"NL"},
     "Eindhovens Dagblad Regio": {"lang":"nl","country":"NL"}, "EW Magazine": {"lang":"nl","country":"NL"},
@@ -2602,7 +2561,6 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Leidsch Dagblad": {"lang":"nl","country":"NL"}, "Metro NL": {"lang":"nl","country":"NL"},
     "Nederlands Dagblad Nieuws": {"lang":"nl","country":"NL"},
     "Noordhollands Dagblad": {"lang":"nl","country":"NL"}, "NOS Politiek": {"lang":"nl","country":"NL"},
-    "NRC Binnenland": {"lang":"nl","country":"NL"}, "Nrc Economie": {"lang":"nl","country":"NL"},
     "NU.nl Economie": {"lang":"nl","country":"NL"}, "Trouw Groen": {"lang":"nl","country":"NL"},
     "Trouw Politiek": {"lang":"nl","country":"NL"}, "Tweakers": {"lang":"nl","country":"NL"},
     # NO
@@ -2612,7 +2570,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Morgenbladet": {"lang":"no","country":"NO"}, "NRK Norge": {"lang":"no","country":"NO"},
     "NRK Urix": {"lang":"no","country":"NO"}, "Stavanger Aftenblad": {"lang":"no","country":"NO"},
     "Sunnmørsposten": {"lang":"no","country":"NO"}, "TV 2": {"lang":"no","country":"NO"},
-    "VG Nyheter": {"lang":"no","country":"NO"}, "VG Sport": {"lang":"no","country":"NO"},
+    "VG Nyheter": {"lang":"no","country":"NO"},
     # NZ
     "Newsroom NZ": {"lang":"en","country":"NZ"},
     "Kiwiblog": {"lang":"en","country":"NZ"}, "NZ Herald": {"lang":"en","country":"NZ"},
@@ -2632,26 +2590,25 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     # QA
     "Doha News": {"lang":"en","country":"QA"},
     # PH
-    "Bandera": {"lang":"en","country":"PH"}, "Business World": {"lang":"en","country":"PH"},
+    "Business World": {"lang":"en","country":"PH"},
     "BusinessWorld Economy": {"lang":"en","country":"PH"}, "GMA Money": {"lang":"en","country":"PH"},
     "GMA News Nation": {"lang":"en","country":"PH"}, "GMA News World": {"lang":"en","country":"PH"},
-    "Inquirer Global": {"lang":"en","country":"PH"}, "Inquirer Nation": {"lang":"en","country":"PH"},
+    "Inquirer Nation": {"lang":"en","country":"PH"},
     "Interaksyon": {"lang":"en","country":"PH"}, "Manila Times News": {"lang":"en","country":"PH"},
     "PhilNews": {"lang":"en","country":"PH"}, "PhilStar Business": {"lang":"en","country":"PH"},
     "Philstar Nation": {"lang":"en","country":"PH"}, "Philstar World": {"lang":"en","country":"PH"},
-    "Rappler Business": {"lang":"en","country":"PH"}, "Rappler Nation": {"lang":"en","country":"PH"},
+    "Rappler Business": {"lang":"en","country":"PH"},
     "Rappler World": {"lang":"en","country":"PH"},
     # PK
     "ARY News Pakistan": {"lang":"en","country":"PK"}, "Bol News": {"lang":"en","country":"PK"},
     "Business Recorder Pakistan": {"lang":"en","country":"PK"}, "Daily Times": {"lang":"en","country":"PK"},
     "Dawn Business": {"lang":"en","country":"PK"}, "Dawn Pakistan": {"lang":"en","country":"PK"},
-    "Dawn World": {"lang":"en","country":"PK"}, "Geo News Pakistan": {"lang":"en","country":"PK"},
+    "Dawn World": {"lang":"en","country":"PK"},
     "Minute Mirror": {"lang":"en","country":"PK"}, "Pakistan Observer": {"lang":"en","country":"PK"},
     "The Current": {"lang":"en","country":"PK"}, "The Express Tribune": {"lang":"en","country":"PK"},
     "The Express Tribune Business": {"lang":"en","country":"PK"},
     "The Express Tribune Pakistan": {"lang":"en","country":"PK"},
     "The Express Tribune World": {"lang":"en","country":"PK"},
-    "The News International Pakistan": {"lang":"en","country":"PK"},
     # PL
     "Gazeta Wyborcza": {"lang":"pl","country":"PL"},
     "Bankier.pl": {"lang":"pl","country":"PL"}, "Defence24": {"lang":"pl","country":"PL"},
@@ -2732,8 +2689,7 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "The Business Times World": {"lang":"en","country":"SG"},
     "The Straits Times Asia": {"lang":"en","country":"SG"},
     "The Straits Times World": {"lang":"en","country":"SG"}, "Vulcan Post": {"lang":"en","country":"SG"},
-    "Yahoo SG World": {"lang":"en","country":"SG"}, "Yahoo Singapore": {"lang":"en","country":"SG"},
-    "Yahoo Singapore Feed": {"lang":"en","country":"SG"},
+    "Yahoo Singapore": {"lang":"en","country":"SG"},
     # TR
     "Anadolu Agency": {"lang":"tr","country":"TR"}, "BBC Türkçe": {"lang":"tr","country":"TR"},
     "CNN Türk": {"lang":"tr","country":"TR"}, "CNN Türk Dünya": {"lang":"tr","country":"TR"},
@@ -2780,9 +2736,8 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     # VN
     "Bao Giao Thong": {"lang":"vi","country":"VN"}, "Cong An Nhan Dan": {"lang":"vi","country":"VN"},
     "Dan Tri Kinh doanh": {"lang":"vi","country":"VN"}, "Dan Tri Su Kien": {"lang":"vi","country":"VN"},
-    "Nguoi Lao Dong": {"lang":"vi","country":"VN"}, "Nguoi Lao Dong Thoi su": {"lang":"vi","country":"VN"},
     "Thanh Nien Chinh Tri": {"lang":"vi","country":"VN"}, "Thanh Nien Thoi su": {"lang":"vi","country":"VN"},
-    "Tien Phong": {"lang":"vi","country":"VN"}, "Tien Phong Kinh te": {"lang":"vi","country":"VN"},
+    "Tien Phong": {"lang":"vi","country":"VN"},
     "Vietnamnet Thoi su": {"lang":"vi","country":"VN"}, "VietnamPlus VN": {"lang":"vi","country":"VN"},
     "VnExpress Kinh doanh": {"lang":"vi","country":"VN"}, "VnExpress Thế giới": {"lang":"vi","country":"VN"},
     "VnExpress Thời sự": {"lang":"vi","country":"VN"},
@@ -3350,18 +3305,6 @@ def crawl_suedostschweiz():
         "Südostschweiz", rows, re.compile(r"/([^/]+)-\d+$"), SUEDOSTSCHWEIZ_MAX)
 
 
-def crawl_zeit():
-    """Die Zeit (Germany) — monthly Google sitemap at /gsitemaps/index.xml?
-    date=YYYY-MM-01&unit=months&period=1. urlset has <loc>+<lastmod> but no
-    news:title, so the title comes from the URL's last path segment. Article
-    URLs are /section/YYYY-MM/slug or /section/YYYY-MM/DD/slug."""
-    ym = datetime.now(timezone.utc).strftime("%Y-%m")
-    url = f"https://www.zeit.de/gsitemaps/index.xml?date={ym}-01&unit=months&period=1"
-    rows = sitemap_rows(fetch(url), re.compile(r"/\d{4}-\d{2}/.*[^/]$"))
-    return crawl_sitemap_source(
-        "Die Zeit", rows, re.compile(r"/([^/?]+)/?$"), ZEIT_MAX)
-
-
 def crawl_ch_media(source, base, limit):
     """CH Media regional papers — monthly sitemap /sitemap/YYYY/MM/sitemap.xml.
     URLs end in -ld.NNNNNNN; strip that suffix for the title slug."""
@@ -3555,7 +3498,6 @@ SOURCE_COLORS = {
     "Schaffhauser Nachrichten": "#1a4f8b",
     "Schweizer Monat": "#8a6d3b",
     "Bote der Urschweiz": "#b8242a",
-    "Die Zeit": "#e6e6e6",
     "Tagesschau": "#0a3b75",
     "Süddeutsche": "#222a5c",
     "FAZ": "#2b2b2b",
@@ -3634,7 +3576,6 @@ SOURCE_COLORS = {
     "NHK": "#0a5fa0",
     "Yonhap": "#0a47a0",
     "Straits Times": "#102a54", "CNA": "#e01a2b",
-    "Tempo": "#c41e1e",
     "Rappler": "#ee7203", "Inquirer": "#14559e",
     "VnExpress": "#8f1d22",
     "Dawn": "#c8202a",
@@ -3657,9 +3598,9 @@ SOURCE_COLORS = {
     "NY Post": "#cf1f2e", "The Daily Beast": "#e2001a", "Wired": "#2b2b2b", "ProPublica": "#d9382b",
     "Rai News": "#0a64a0", "Adnkronos": "#c8102e", "TGcom24": "#e2001a", "Open": "#1f1f1f",
     "Il Giorno": "#b01217", "Il Resto del Carlino": "#15406b", "La Nazione": "#1a6b3a",
-    "AGI": "#0a4f9e", "Today": "#e2541b", "Wired Italia": "#2b2b2b", "Il Mattino": "#c20012",
+    "AGI": "#0a4f9e", "Today": "#e2541b", "Il Mattino": "#c20012",
     "Il Messaggero": "#0a3a6b", "Il Gazzettino": "#1a5276", "Quotidiano.net": "#2e6da4",
-    "askanews": "#b8242a", "Domani": "#cf1f2e", "Il Secolo XIX": "#1a4f8b",
+    "askanews": "#b8242a", "Domani": "#cf1f2e",
     "El Español": "#c8102e", "COPE": "#003a8c", "Europa Press": "#0a6bb3", "Marca": "#e2001a",
     "Expansión": "#d6a400", "La Vanguardia": "#2b2b2b", "El Correo": "#b8242a", "infoLibre": "#1a6b9e",
     "Mundo Deportivo": "#cf1f2e", "El Salto": "#d6001c", "Las Provincias": "#1a6bb3",
@@ -4415,7 +4356,6 @@ def main_sitemap_jobs():
         ("WOZ", crawl_woz),
         ("Tachles", crawl_tachles),
         ("Bauernzeitung", crawl_bauernzeitung),
-        ("Die Zeit", crawl_zeit),
     ]
     jobs += [(n["source"], (lambda n: lambda: crawl_news_sitemap(n["source"], n["url"], n["max"]))(n))
              for n in NEWS_SITEMAPS]
