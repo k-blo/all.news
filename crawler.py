@@ -109,7 +109,7 @@ FEEDS = [
     # --- Italy (IT, it) ---
     {"source": "la Repubblica", "url": "https://www.repubblica.it/rss/homepage/rss2.0.xml"},
     {"source": "ANSA",          "url": "https://www.ansa.it/sito/ansait_rss.xml"},
-    {"source": "Il Giornale",   "url": "https://www.ilgiornale.it/feed.xml"},
+    {"source": "Il Giornale",   "url": "https://www.ilgiornale.it/arc/outboundfeeds/rss/?outputType=xml"},
     {"source": "Il Sole 24 Ore","url": "https://www.ilsole24ore.com/rss/italia.xml"},
     # --- Spain (ES, es) ---
     {"source": "El Mundo",      "url": "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml"},
@@ -130,7 +130,6 @@ FEEDS = [
     {"source": "MDR",                "url": "https://www.mdr.de/nachrichten/index-rss.xml"},
     {"source": "Berliner Zeitung",   "url": "https://www.berliner-zeitung.de/feed.xml"},
     {"source": "t-online",           "url": "https://www.t-online.de/nachrichten/feed.rss"},
-    {"source": "Stuttgarter Zeitung","url": "https://www.stuttgarter-zeitung.de/news.rss.feed"},
     # --- France (FR) ---
     {"source": "Courrier International","url": "https://www.courrierinternational.com/feed/all/rss.xml"},
     {"source": "La Dépêche",         "url": "https://www.ladepeche.fr/rss.xml"},
@@ -188,7 +187,7 @@ FEEDS = [
     {"source": "El Español",         "url": "https://www.elespanol.com/rss/"},
     {"source": "COPE",               "url": "https://www.cope.es/api/es/news/rss.xml"},
     {"source": "Europa Press",       "url": "https://www.europapress.es/rss/rss.aspx"},
-    {"source": "Marca",              "url": "https://e00-marca.uecdn.es/rss/portada.xml"},
+    {"source": "Marca",              "url": "https://www.marca.com/rss/portada.xml"},
     {"source": "Expansión",          "url": "https://e00-expansion.uecdn.es/rss/portada.xml"},
     {"source": "La Vanguardia",      "url": "https://www.lavanguardia.com/rss/home.xml"},
     {"source": "El Correo",          "url": "https://www.elcorreo.com/rss/2.0/portada"},
@@ -285,7 +284,7 @@ FEEDS = [
     {"source": "Qubit","url": "https://qubit.hu/feed"},
     # Romania
     {"source": "Adevărul","url": "https://adevarul.ro/rss"},
-    {"source": "Libertatea","url": "https://www.libertatea.ro/rss"},
+    {"source": "Libertatea","url": "https://www.libertatea.ro/feed"},
     {"source": "Gândul","url": "https://www.gandul.ro/rss"},
     {"source": "ProTV Știrile","url": "https://stirileprotv.ro/rss"},
     {"source": "G4Media","url": "https://www.g4media.ro/feed"},
@@ -327,7 +326,7 @@ FEEDS = [
     {"source": "AFR","url": "https://www.afr.com/rss/feed.xml"},
     {"source": "Conversation AU","url": "https://theconversation.com/au/articles.atom"},
     # New Zealand
-    {"source": "The Spinoff","url": "https://thespinoff.co.nz/feed"},
+    {"source": "The Spinoff","url": "https://thespinoff.co.nz/api/rss"},
     {"source": "Newsroom","url": "https://www.newsroom.co.nz/feed"},
     # India
     {"source": "Times of India","url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms"},
@@ -486,7 +485,7 @@ FEEDS = [
     {"source": "La Nación Política", "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/category/politica/"},
     {"source": "Letra P", "url": "https://www.letrap.com.ar/rss/pages/home.xml"},
     {"source": "Minuto Uno", "url": "https://www.minutouno.com/rss/pages/home.xml"},
-    {"source": "Tiempo Argentino", "url": "https://www.tiempoar.com.ar/feed/"},
+    {"source": "Tiempo Argentino", "url": "https://www.tiempoar.com.ar/politica/feed/"},
     {"source": "Ámbito Economía", "url": "https://www.ambito.com/rss/economia.xml"},
     {"source": "Ámbito Finanzas", "url": "https://www.ambito.com/rss/finanzas.xml"},
     {"source": "Ámbito Política", "url": "https://www.ambito.com/rss/politica.xml"},
@@ -520,7 +519,7 @@ FEEDS = [
     {"source": "Pedestrian TV", "url": "https://www.pedestrian.tv/feed/"},
     {"source": "Perth Now", "url": "https://www.perthnow.com.au/rss"},
     {"source": "SBS News", "url": "https://www.sbs.com.au/news/topic/latest/feed"},
-    {"source": "SBS World News", "url": "https://www.sbs.com.au/news/feed"},
+    {"source": "SBS World News", "url": "https://www.sbs.com.au/news/topic/world/feed"},
     {"source": "SMH National", "url": "https://www.smh.com.au/rss/national.xml"},
     {"source": "The Age National", "url": "https://www.theage.com.au/rss/national.xml"},
     {"source": "The Conversation AU Politics", "url": "https://theconversation.com/au/topics/australian-politics-1445/articles.atom"},
@@ -533,17 +532,17 @@ FEEDS = [
     {"source": "Bruzz", "url": "https://www.bruzz.be/rss.xml"},
     {"source": "De Morgen", "url": "https://www.demorgen.be/rss.xml"},
     {"source": "De Morgen Politiek", "url": "https://www.demorgen.be/politiek/rss.xml"},
-    {"source": "De Tijd", "url": "https://www.tijd.be/rss/top_stories.xml"},
+    {"source": "De Tijd", "url": "https://www.tijd.be/rss/nieuws.xml"},
     {"source": "De Tijd Ondernemen", "url": "https://www.tijd.be/rss/ondernemen.xml"},
-    {"source": "De Tijd Politiek", "url": "https://www.tijd.be/rss/politiek_economie.xml"},
+    {"source": "De Tijd Politiek", "url": "https://www.tijd.be/rss/politiek.xml"},
     {"source": "Gazet van Antwerpen", "url": "https://www.gva.be/rss"},
     {"source": "Het Belang van Limburg", "url": "https://www.hbvl.be/rss"},
     {"source": "Het Laatste Nieuws Binnenland", "url": "https://www.hln.be/binnenland/rss.xml"},
     {"source": "HLN Buitenland", "url": "https://www.hln.be/buitenland/rss.xml"},
     {"source": "Knack", "url": "https://www.knack.be/feed/"},
     {"source": "Knack Nieuws", "url": "https://www.knack.be/nieuws/feed/"},
-    {"source": "L'Echo", "url": "https://www.lecho.be/rss/top_stories.xml"},
-    {"source": "L'Echo Politique", "url": "https://www.lecho.be/rss/politique_economie.xml"},
+    {"source": "L'Echo", "url": "https://www.lecho.be/rss/actualite.xml"},
+    {"source": "L'Echo Politique", "url": "https://www.lecho.be/rss/politique.xml"},
     {"source": "La DH", "url": "https://www.dhnet.be/arc/outboundfeeds/rss/?outputType=xml"},
     {"source": "La DH Sports", "url": "https://www.dhnet.be/arc/outboundfeeds/rss/category/sports/?outputType=xml"},
     {"source": "Le Vif Belgique", "url": "https://www.levif.be/belgique/feed/"},
@@ -559,7 +558,6 @@ FEEDS = [
     {"source": "CNN Brasil", "url": "https://www.cnnbrasil.com.br/feed/"},
     {"source": "Congresso em Foco", "url": "https://www.congressoemfoco.com.br/feed/"},
     {"source": "Crusoé", "url": "https://crusoe.com.br/feed/"},
-    {"source": "Estadão", "url": "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/ultimas/?outputType=xml"},
     {"source": "Estadão Economia", "url": "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/economia/?outputType=xml"},
     {"source": "Estadão Política", "url": "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/politica/?outputType=xml"},
     {"source": "Exame", "url": "https://exame.com/feed/"},
@@ -625,7 +623,6 @@ FEEDS = [
     {"source": "China Daily World", "url": "https://www.chinadaily.com.cn/rss/world_rss.xml"},
     {"source": "China Media Project", "url": "https://chinamediaproject.org/feed/"},
     {"source": "Ecns.cn", "url": "https://www.ecns.cn/rss/rss.xml"},
-    {"source": "Global Times", "url": "https://www.globaltimes.cn/rss/outbrain.xml"},
     {"source": "Pekingnology", "url": "https://www.pekingnology.com/feed"},
     {"source": "Radio Free Asia", "url": "https://www.rfa.org/english/rss2.xml"},
     {"source": "SCMP China", "url": "https://www.scmp.com/rss/4/feed"},
@@ -663,9 +660,9 @@ FEEDS = [
     {"source": "Info.cz", "url": "https://www.info.cz/rss"},
     {"source": "Lidovky", "url": "https://servis.lidovky.cz/rss.aspx?c=ln_domov"},
     {"source": "Reflex", "url": "https://www.reflex.cz/rss"},
-    {"source": "ČT24 Domácí", "url": "https://ct24.ceskatelevize.cz/rss/tema/domaci-960"},
-    {"source": "ČT24 Ekonomika", "url": "https://ct24.ceskatelevize.cz/rss/tema/ekonomika-961"},
-    {"source": "ČT24 Svět", "url": "https://ct24.ceskatelevize.cz/rss/tema/svet-959"},
+    {"source": "ČT24 Domácí", "url": "https://ct24.ceskatelevize.cz/rss/rubrika/domaci-5"},
+    {"source": "ČT24 Ekonomika", "url": "https://ct24.ceskatelevize.cz/rss/rubrika/ekonomika-17"},
+    {"source": "ČT24 Svět", "url": "https://ct24.ceskatelevize.cz/rss/rubrika/svet-16"},
     # --- DE ---
     {"source": "Berliner Morgenpost", "url": "https://www.morgenpost.de/rss"},
     {"source": "Braunschweiger Zeitung", "url": "https://www.braunschweiger-zeitung.de/rss"},
@@ -783,7 +780,7 @@ FEEDS = [
     {"source": "Reporterre", "url": "https://reporterre.net/spip.php?page=backend"},
     {"source": "RMC", "url": "https://rmc.bfmtv.com/rss/actualites/"},
     {"source": "Sciences et Avenir", "url": "https://www.sciencesetavenir.fr/rss.xml"},
-    {"source": "Var-Matin", "url": "https://www.varmatin.com/rss"},
+    {"source": "Var-Matin", "url": "https://www.nicematin.com/var/rss"},
     {"source": "Vosges Matin", "url": "https://www.vosgesmatin.fr/rss"},
     # --- GB ---
     {"source": "BBC UK", "url": "https://feeds.bbci.co.uk/news/uk/rss.xml"},
@@ -809,7 +806,7 @@ FEEDS = [
     {"source": "Morning Star", "url": "https://morningstaronline.co.uk/rss.xml"},
     {"source": "MyLondon", "url": "https://www.mylondon.news/?service=rss"},
     {"source": "Nottingham Post", "url": "https://www.nottinghampost.com/?service=rss"},
-    {"source": "openDemocracy", "url": "https://www.opendemocracy.net/en/rss/"},
+    {"source": "openDemocracy", "url": "https://www.opendemocracy.net/rss/"},
     {"source": "Oxford Mail", "url": "https://www.oxfordmail.co.uk/news/rss/"},
     {"source": "Reading Chronicle", "url": "https://www.readingchronicle.co.uk/news/rss/"},
     {"source": "Sky News UK", "url": "https://feeds.skynews.com/feeds/rss/uk.xml"},
@@ -843,7 +840,6 @@ FEEDS = [
     {"source": "HKFP World", "url": "https://hongkongfp.com/category/world/feed/"},
     {"source": "Hong Kong Business", "url": "https://hongkongbusiness.hk/rss.xml"},
     {"source": "Ming Pao", "url": "https://news.mingpao.com/rss/pns/s00001.xml"},
-    {"source": "Oriental Daily", "url": "https://orientaldaily.on.cc/rss/news.xml"},
     {"source": "RTHK Greater China", "url": "https://rthk.hk/rthk/news/rss/e_expressnews_egreaterchina.xml"},
     {"source": "SCMP Asia", "url": "https://www.scmp.com/rss/3/feed"},
     {"source": "SCMP Business", "url": "https://www.scmp.com/rss/92/feed"},
@@ -921,7 +917,6 @@ FEEDS = [
     {"source": "The Jerusalem Post Israel News", "url": "https://www.jpost.com/rss/rssfeedsisraelnews.aspx"},
     {"source": "The Jerusalem Post News", "url": "https://www.jpost.com/rss/rssfeedsheadlines.aspx"},
     {"source": "The Media Line", "url": "https://themedialine.org/feed/"},
-    {"source": "The Times of Israel", "url": "https://www.timesofisrael.com/feed/"},
     {"source": "Walla", "url": "https://rss.walla.co.il/feed/1?type=main"},
     {"source": "Ynetnews", "url": "https://www.ynetnews.com/Integration/StoryRss3082.xml"},
     {"source": "Ynetnews World", "url": "https://www.ynetnews.com/Integration/StoryRss1854.xml"},
@@ -959,10 +954,10 @@ FEEDS = [
     {"source": "Bari Today", "url": "https://www.baritoday.it/rss"},
     {"source": "Bologna Today", "url": "https://www.bolognatoday.it/rss"},
     {"source": "Corriere Cronache", "url": "https://www.corriere.it/dynamic-feed/rss/section/Cronache.xml"},
-    {"source": "Corriere della Sera", "url": "https://www.corriere.it/rss/homepage.xml"},
+    {"source": "Corriere della Sera", "url": "https://xml2.corriereobjects.it/feed-hp/homepage-restyle-2025.xml"},
     {"source": "Corriere Economia", "url": "https://www.corriere.it/dynamic-feed/rss/section/Economia.xml"},
     {"source": "Formiche", "url": "https://formiche.net/feed/"},
-    {"source": "Gazzetta dello Sport", "url": "https://www.gazzetta.it/rss/home.xml"},
+    {"source": "Gazzetta dello Sport", "url": "https://www.gazzetta.it/dynamic-feed/rss/section/last.xml"},
     {"source": "Genova Today", "url": "https://www.genovatoday.it/rss"},
     {"source": "Il Fatto Quotidiano", "url": "https://www.ilfattoquotidiano.it/feed/"},
     {"source": "Il Manifesto", "url": "https://ilmanifesto.it/feed"},
@@ -1073,7 +1068,7 @@ FEEDS = [
     {"source": "De Stentor Nieuws", "url": "https://www.destentor.nl/binnenland/rss.xml"},
     {"source": "De Stentor Regio", "url": "https://www.destentor.nl/regio/rss.xml"},
     {"source": "De Telegraaf Nieuws", "url": "https://www.telegraaf.nl/nieuws/rss"},
-    {"source": "De Volkskrant Nieuws", "url": "https://www.volkskrant.nl/nieuws-achtergrond/rss.xml"},
+    {"source": "De Volkskrant Nieuws", "url": "https://www.volkskrant.nl/nieuws/rss.xml"},
     {"source": "De Volkskrant Politiek", "url": "https://www.volkskrant.nl/politiek/rss.xml"},
     {"source": "Eindhovens Dagblad Regio", "url": "https://www.ed.nl/eindhoven/rss.xml"},
     {"source": "EW Magazine", "url": "https://www.ewmagazine.nl/feed/"},
@@ -1091,7 +1086,7 @@ FEEDS = [
     {"source": "NRC Binnenland", "url": "https://www.nrc.nl/rss/binnenland/"},
     {"source": "Nrc Economie", "url": "https://www.nrc.nl/rss/economie/"},
     {"source": "NU.nl Economie", "url": "https://www.nu.nl/rss/Economie"},
-    {"source": "Trouw Groen", "url": "https://www.trouw.nl/groen/rss.xml"},
+    {"source": "Trouw Groen", "url": "https://www.trouw.nl/duurzaamheid-economie/rss.xml"},
     {"source": "Trouw Politiek", "url": "https://www.trouw.nl/politiek/rss.xml"},
     {"source": "Tweakers", "url": "https://tweakers.net/feeds/nieuws.xml"},
     # --- NO ---
@@ -1113,7 +1108,7 @@ FEEDS = [
     {"source": "Kiwiblog", "url": "https://www.kiwiblog.co.nz/feed"},
     {"source": "NZ Herald", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml"},
     {"source": "NZ Herald Business", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/business/?outputType=xml"},
-    {"source": "Otago Daily Times", "url": "https://www.odt.co.nz/rss.xml"},
+    {"source": "Otago Daily Times", "url": "https://www.odt.co.nz/sitemaps/odt/rss"},
     {"source": "RNZ Business", "url": "https://www.rnz.co.nz/rss/business.xml"},
     {"source": "RNZ Political", "url": "https://www.rnz.co.nz/rss/political.xml"},
     {"source": "RNZ Te Ao Māori", "url": "https://www.rnz.co.nz/rss/te-manu-korihi.xml"},
@@ -1151,7 +1146,6 @@ FEEDS = [
     {"source": "Rappler World", "url": "https://www.rappler.com/world/feed/"},
     # --- PK ---
     {"source": "ARY News Pakistan", "url": "https://arynews.tv/category/pakistan/feed/"},
-    {"source": "Bol News", "url": "https://www.bolnews.com/feed/"},
     {"source": "Business Recorder Pakistan", "url": "https://www.brecorder.com/feeds/latest-news"},
     {"source": "Daily Times", "url": "https://dailytimes.com.pk/feed/"},
     {"source": "Dawn Business", "url": "https://www.dawn.com/feeds/business"},
@@ -1301,7 +1295,6 @@ FEEDS = [
     {"source": "The Straits Times World", "url": "https://www.straitstimes.com/news/world/rss.xml"},
     {"source": "Vulcan Post", "url": "https://vulcanpost.com/feed/"},
     {"source": "Yahoo SG World", "url": "https://sg.news.yahoo.com/rss/world"},
-    {"source": "Yahoo Singapore", "url": "https://sg.news.yahoo.com/rss/"},
     {"source": "Yahoo Singapore Feed", "url": "https://sg.news.yahoo.com/rss/singapore"},
     # --- TR ---
     {"source": "Anadolu Agency", "url": "https://www.aa.com.tr/tr/rss/default?cat=guncel"},
@@ -1336,7 +1329,7 @@ FEEDS = [
     {"source": "Sabah Gündem", "url": "https://www.sabah.com.tr/rss/gundem.xml"},
     {"source": "Star Gazete", "url": "https://www.star.com.tr/rss/rss.asp"},
     {"source": "Türkiye Gazetesi", "url": "https://www.turkiyegazetesi.com.tr/rss"},
-    {"source": "Yeni Şafak", "url": "https://www.yenisafak.com/rss?xml=anasayfa"},
+    {"source": "Yeni Şafak", "url": "https://www.yenisafak.com/rss"},
     {"source": "Yeni Şafak Gündem", "url": "https://www.yenisafak.com/rss?xml=gundem"},
     {"source": "Yeniçağ", "url": "https://www.yenicaggazetesi.com.tr/rss"},
     # --- UA ---
@@ -1380,7 +1373,6 @@ FEEDS = [
     {"source": "The Nation", "url": "https://www.thenation.com/feed/?post_type=article"},
     {"source": "The New Yorker", "url": "https://www.newyorker.com/feed/news"},
     {"source": "The Oregonian", "url": "https://www.oregonlive.com/arc/outboundfeeds/rss/"},
-    {"source": "The Texas Tribune", "url": "https://www.texastribune.org/feeds/main/"},
     {"source": "The Verge US", "url": "https://www.theverge.com/rss/full.xml"},
     # --- VN ---
     {"source": "Bao Giao Thong", "url": "https://www.baogiaothong.vn/rss/home.rss"},
@@ -1506,6 +1498,9 @@ FEEDS = [
     # --- VN (en, vi) ---
     {"source": "Tuoi Tre News", "url": "https://tuoitrenews.vn/rss"},
     {"source": "BBC Tieng Viet", "url": "https://feeds.bbci.co.uk/vietnamese/rss.xml"},
+    # --- Moved here from sitemaps (2026-10) ---
+    {"source": "Diario Concepción", "url": "https://www.diarioconcepcion.cl/rss.xml"},
+    {"source": "Vorwärts", "url": "https://www.vorwaerts.ch/feed/"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
@@ -1557,7 +1552,6 @@ NEWS_SITEMAPS = [
     {"source": "Cooperativa",       "url": "https://www.cooperativa.cl/noticias/sitemap_news.xml", "max": 50},
     {"source": "Meganoticias",      "url": "https://www.meganoticias.cl/sitemaps/sitemap-news.xml", "max": 50},
     {"source": "El Dínamo",         "url": "https://www.eldinamo.cl/_files/sitemaps/sitemap_news.xml", "max": 50},
-    {"source": "Diario Concepción", "url": "https://www.diarioconcepcion.cl/sitemap_news.xml", "max": 50},
     {"source": "La República Perú",     "url": "https://larepublica.pe/sitemap/noticias.xml", "max": 50},
     {"source": "La República Política", "url": "https://larepublica.pe/sitemap/politica.xml", "max": 50},
     {"source": "La República Sociedad", "url": "https://larepublica.pe/sitemap/sociedad.xml", "max": 50},
@@ -1639,6 +1633,15 @@ NEWS_SITEMAPS = [
     {"source": "VnEconomy", "url": "https://vneconomy.vn/sitemap/google-news.xml", "max": 50},  # VN
     {"source": "VOV", "url": "https://vov.vn/sitemaps/newsindex.xml", "max": 50},  # VN
     {"source": "VTC News", "url": "https://vtcnews.vn/news-sitemap.xml", "max": 50},  # VN
+    # --- RSS gone or frozen; news sitemap instead (2026-10) ---
+    {"source": "Bol News", "url": "https://www.bolnews.com/news-sitemap.xml", "max": 50},
+    {"source": "Estadão", "url": "https://www.estadao.com.br/arc/outboundfeeds/news-sitemap/?outputType=xml", "max": 50},
+    {"source": "Global Times", "url": "https://www.globaltimes.cn/sitemap.xml", "max": 50},
+    {"source": "Oriental Daily", "url": "https://orientaldaily.on.cc/sitemap.xml", "max": 50},
+    {"source": "Stuttgarter Zeitung", "url": "https://www.stuttgarter-zeitung.de/sitemap-news.xml", "max": 50},
+    {"source": "The Texas Tribune", "url": "https://www.texastribune.org/news-sitemap.xml", "max": 50},
+    {"source": "The Times of Israel", "url": "https://www.timesofisrael.com/news-sitemap.xml", "max": 50},
+    {"source": "Yahoo Singapore", "url": "https://sg.news.yahoo.com/news-sitemap.xml", "max": 50},
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
 # wp-sitemap-posts-post-N. Titles from URL slug (last path segment).
@@ -1646,7 +1649,6 @@ WP_SOURCES = [
     {"source": "Inside Paradeplatz", "index": "https://insideparadeplatz.ch/wp-sitemap.xml", "max": 50},
     {"source": "Infosperber",        "index": "https://www.infosperber.ch/wp-sitemap.xml",   "max": 50},
     {"source": "Rathuus",            "index": "https://rathuus.ch/sitemap.xml",              "max": 50},
-    {"source": "Vorwärts",           "index": "https://www.vorwaerts.ch/wp-sitemap.xml",      "max": 50},
 ]
 BILANZ_MAX = 30      # https://www.bilanz.ch/sitemap-articles-time-limited-YYYY-MM.xml
 REPUBLIK_SITEMAP = "https://www.republik.ch/sitemap.xml"  # index of per-year sitemaps
