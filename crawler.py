@@ -4147,8 +4147,8 @@ def run_jobs(jobs):
             print(f"  ok   {name}: {len(r)} rows", file=sys.stderr)
         except NotModified:
             print(f"  skip {name}: not modified", file=sys.stderr)
-        except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError, OSError, ValueError) as e:
-            print(f"  fail {name}: {e}", file=sys.stderr)
+        except Exception as e:  # one bad feed (IncompleteRead, zlib…) must not abort the shard
+            print(f"  fail {name}: {type(e).__name__}: {e}", file=sys.stderr)
     return rows
 
 
