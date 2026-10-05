@@ -650,7 +650,6 @@ a { color: inherit; }
 .prose a { color: var(--fg); }
 .prose a:hover { color: var(--hover); }
 .prose .updated { color: var(--muted); font-size: 14px; margin: 0 0 32px; }
-.prose .todo { background: var(--accent); color: #fff; padding: 0 4px; border-radius: 4px; }
 .prose table { width: 100%; border-collapse: collapse; margin: 12px 0 8px; font-size: 14px; }
 .prose th, .prose td { text-align: left; vertical-align: top; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); }
 .prose th { color: var(--fg); font-weight: 600; }
