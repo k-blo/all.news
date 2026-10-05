@@ -1093,7 +1093,7 @@ FEEDS = [
     {"source": "NU.nl Economie", "url": "https://www.nu.nl/rss/Economie"},
     {"source": "Trouw Groen", "url": "https://www.trouw.nl/groen/rss.xml"},
     {"source": "Trouw Politiek", "url": "https://www.trouw.nl/politiek/rss.xml"},
-    {"source": "Tweakers", "url": "https://feeds.feedburner.com/tweakers/mixed"},
+    {"source": "Tweakers", "url": "https://tweakers.net/feeds/nieuws.xml"},
     # --- NO ---
     {"source": "Adresseavisen", "url": "https://www.adressa.no/rss"},
     {"source": "Aftenposten Nyheter", "url": "https://www.aftenposten.no/rss/"},
