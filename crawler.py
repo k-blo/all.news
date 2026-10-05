@@ -1398,6 +1398,114 @@ FEEDS = [
     {"source": "VnExpress Kinh doanh", "url": "https://vnexpress.net/rss/kinh-doanh.rss"},
     {"source": "VnExpress Thế giới", "url": "https://vnexpress.net/rss/the-gioi.rss"},
     {"source": "VnExpress Thời sự", "url": "https://vnexpress.net/rss/thoi-su.rss"},
+    # ===== Asia, Middle East & Pacific expansion (2026-10) =====
+    # --- CN (zh) ---
+    {"source": "BBC 中文", "url": "https://feeds.bbci.co.uk/zhongwen/simp/rss.xml"},
+    {"source": "Chinanews", "url": "https://www.chinanews.com.cn/rss/scroll-news.xml"},
+    {"source": "DW 中文", "url": "https://rss.dw.com/rdf/rss-chi-all"},
+    {"source": "Initium Media", "url": "https://theinitium.com/rss/"},
+    {"source": "IT之家", "url": "https://www.ithome.com/rss/"},
+    {"source": "RFA 中文", "url": "https://www.rfa.org/arc/outboundfeeds/mandarin/rss/?outputType=xml"},
+    {"source": "RFI 中文", "url": "https://www.rfi.fr/cn/rss"},
+    {"source": "VOA 中文", "url": "https://www.voachinese.com/api/zm_yql-vomx-tpeybti"},
+    # --- HK (zh) ---
+    {"source": "Bastille Post", "url": "https://www.bastillepost.com/hongkong/feed"},
+    {"source": "i-Cable", "url": "https://www.i-cable.com/feed/"},
+    {"source": "RTHK 中文", "url": "https://rthk.hk/rthk/news/rss/c_expressnews_clocal.xml"},
+    {"source": "Sing Tao", "url": "https://www.stheadline.com/rss"},
+    {"source": "The Collective HK", "url": "https://thecollectivehk.com/feed/"},
+    {"source": "Yahoo Hong Kong", "url": "https://hk.news.yahoo.com/rss/hong-kong"},
+    # --- ID (en, id) ---
+    {"source": "Antara English", "url": "https://en.antaranews.com/rss/news.xml"},
+    {"source": "BBC Indonesia", "url": "https://feeds.bbci.co.uk/indonesia/rss.xml"},
+    {"source": "Detik News", "url": "https://news.detik.com/rss"},
+    {"source": "Kumparan", "url": "https://lapi.kumparan.com/v2.0/rss/"},
+    # --- IL (ar, he) ---
+    {"source": "Sonara", "url": "https://sonara.net/feed/"},
+    {"source": "Behadrei Haredim", "url": "https://www.bhol.co.il/rss"},
+    {"source": "Mekomit", "url": "https://www.mekomit.co.il/feed/"},
+    {"source": "Srugim", "url": "https://www.srugim.co.il/feed"},
+    {"source": "Zman Yisrael", "url": "https://www.zman.co.il/feed/"},
+    # --- IN (bn, gu, hi, kn, ml, mr, pa, ta, te, ur) ---
+    {"source": "ABP Ananda", "url": "https://bengali.abplive.com/home/feed"},
+    {"source": "Sangbad Pratidin", "url": "https://www.sangbadpratidin.in/feed/"},
+    {"source": "ABP Asmita", "url": "https://gujarati.abplive.com/home/feed"},
+    {"source": "BBC Gujarati", "url": "https://feeds.bbci.co.uk/gujarati/rss.xml"},
+    {"source": "TV9 Gujarati", "url": "https://tv9gujarati.com/feed"},
+    {"source": "Aaj Tak", "url": "https://www.aajtak.in/rssfeeds/?id=home"},
+    {"source": "ABP News", "url": "https://www.abplive.com/home/feed"},
+    {"source": "Amar Ujala", "url": "https://www.amarujala.com/rss/breaking-news.xml"},
+    {"source": "BBC Hindi", "url": "https://feeds.bbci.co.uk/hindi/rss.xml"},
+    {"source": "Dainik Bhaskar", "url": "https://www.bhaskar.com/rss-v1--category-1061.xml"},
+    {"source": "India TV Hindi", "url": "https://www.indiatv.in/rssnews/topstory.xml"},
+    {"source": "NDTV Hindi", "url": "https://feeds.feedburner.com/ndtvkhabar-latest"},
+    {"source": "News18 Hindi", "url": "https://hindi.news18.com/rss/khabar/nation/nation.xml"},
+    {"source": "Prabhat Khabar", "url": "https://www.prabhatkhabar.com/feed"},
+    {"source": "The Wire Hindi", "url": "https://thewirehindi.com/feed/"},
+    {"source": "Zee News Hindi", "url": "https://zeenews.india.com/hindi/india.xml"},
+    {"source": "Asianet Suvarna News", "url": "https://kannada.asianetnews.com/rss"},
+    {"source": "Prajavani", "url": "https://www.prajavani.net/stories.rss"},
+    {"source": "TV9 Kannada", "url": "https://tv9kannada.com/feed"},
+    {"source": "Asianet News", "url": "https://www.asianetnews.com/rss"},
+    {"source": "Mathrubhumi", "url": "https://www.mathrubhumi.com/rss/news"},
+    {"source": "Twentyfour News", "url": "https://www.twentyfournews.com/feed"},
+    {"source": "ABP Majha", "url": "https://marathi.abplive.com/home/feed"},
+    {"source": "BBC Marathi", "url": "https://feeds.bbci.co.uk/marathi/rss.xml"},
+    {"source": "eSakal", "url": "https://www.esakal.com/stories.rss"},
+    {"source": "TV9 Marathi", "url": "https://www.tv9marathi.com/feed"},
+    {"source": "ABP Sanjha", "url": "https://punjabi.abplive.com/home/feed"},
+    {"source": "BBC Punjabi", "url": "https://feeds.bbci.co.uk/punjabi/rss.xml"},
+    {"source": "ABP Nadu", "url": "https://tamil.abplive.com/home/feed"},
+    {"source": "BBC Tamil", "url": "https://feeds.bbci.co.uk/tamil/rss.xml"},
+    {"source": "Dinamani", "url": "https://www.dinamani.com/stories.rss"},
+    {"source": "ABP Desam", "url": "https://telugu.abplive.com/home/feed"},
+    {"source": "BBC Telugu", "url": "https://feeds.bbci.co.uk/telugu/rss.xml"},
+    {"source": "Oneindia Telugu", "url": "https://telugu.oneindia.com/rss/telugu-news-fb.xml"},
+    {"source": "Sakshi", "url": "https://www.sakshi.com/rss.xml"},
+    {"source": "TV9 Telugu", "url": "https://tv9telugu.com/feed"},
+    {"source": "Qaumi Awaz", "url": "https://www.qaumiawaz.com/stories.rss"},
+    {"source": "Siasat Urdu", "url": "https://urdu.siasat.com/feed/"},
+    # --- NZ (en) ---
+    {"source": "Asia Pacific Report", "url": "https://asiapacificreport.nz/feed/"},
+    {"source": "Farmers Weekly NZ", "url": "https://www.farmersweekly.co.nz/feed/"},
+    {"source": "Newstalk ZB", "url": "https://www.newstalkzb.co.nz/news/rss"},
+    {"source": "Te Ao Māori News", "url": "https://www.teaonews.co.nz/arc/outboundfeeds/rss/?outputType=xml"},
+    {"source": "Waatea News", "url": "https://waateanews.com/feed/"},
+    # --- PH (tl) ---
+    {"source": "Hataw", "url": "https://hatawtabloid.com/feed/"},
+    {"source": "Pilipino Mirror", "url": "https://mirror.pilipinomirror.com/feed/"},
+    {"source": "Pinoy Weekly", "url": "https://pinoyweekly.org/feed/"},
+    {"source": "Remate", "url": "https://remate.ph/sitemap.rss"},
+    {"source": "Saksi Ngayon", "url": "https://saksingayon.com/feed/"},
+    # --- PK (ur) ---
+    {"source": "Aaj News", "url": "https://www.aaj.tv/feeds/latest-news"},
+    {"source": "ARY Urdu", "url": "https://urdu.arynews.tv/feed/"},
+    {"source": "BBC Urdu", "url": "https://feeds.bbci.co.uk/urdu/rss.xml"},
+    {"source": "Bol News Urdu", "url": "https://www.bolnews.com/urdu/feed/"},
+    {"source": "Daily Pakistan", "url": "https://dailypakistan.com.pk/rss/latest"},
+    {"source": "DW Urdu", "url": "https://rss.dw.com/rdf/rss-urd-all"},
+    {"source": "Express Urdu", "url": "https://www.express.pk/feed/"},
+    {"source": "Independent Urdu", "url": "https://www.independenturdu.com/rss.xml"},
+    {"source": "Jang", "url": "https://jang.com.pk/rss/1/1"},
+    {"source": "Jang World", "url": "https://jang.com.pk/rss/1/2"},
+    # --- QA (ar, en) ---
+    {"source": "Al Arab Qatar", "url": "https://alarab.qa/rss/latestNews"},
+    {"source": "Al Sharq", "url": "https://al-sharq.com/rss/latestNews"},
+    {"source": "Lusail News", "url": "https://lusailnews.net/rss/latestNews"},
+    {"source": "QNA", "url": "https://qna.org.qa/ar-QA/Pages/RSS-Feeds/General"},
+    {"source": "QNA Qatar", "url": "https://qna.org.qa/ar-QA/Pages/RSS-Feeds/Qatar"},
+    {"source": "QNA English", "url": "https://qna.org.qa/en/Pages/RSS-Feeds/General"},
+    {"source": "QNA English Qatar", "url": "https://qna.org.qa/en/Pages/RSS-Feeds/Qatar"},
+    {"source": "The Peninsula", "url": "https://thepeninsulaqatar.com/rss/latestNews"},
+    # --- SG (en, ms, ta, zh) ---
+    {"source": "e27", "url": "https://e27.co/feed/"},
+    {"source": "Fintech News SG", "url": "https://fintechnews.sg/feed/"},
+    {"source": "Singapore Business Review", "url": "https://sbr.com.sg/rss.xml"},
+    {"source": "Berita Mediacorp", "url": "https://berita.mediacorp.sg/api/v1/rss-outbound-feed?_format=xml"},
+    {"source": "Seithi", "url": "https://seithi.mediacorp.sg/api/v1/rss-outbound-feed?_format=xml"},
+    # --- VN (en, vi) ---
+    {"source": "Tuoi Tre News", "url": "https://tuoitrenews.vn/rss"},
+    {"source": "BBC Tieng Viet", "url": "https://feeds.bbci.co.uk/vietnamese/rss.xml"},
 ]
 
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
@@ -1462,6 +1570,75 @@ NEWS_SITEMAPS = [
     # Japan regional dailies without RSS
     {"source": "Chunichi Shimbun", "url": "https://www.chunichi.co.jp/sitemap_news.xml", "max": 50},
     {"source": "Chugoku Shimbun",  "url": "https://www.chugoku-np.co.jp/list/feed/rss4googlenews", "max": 50},
+    # --- Asia, Middle East & Pacific expansion (2026-10) ---
+    {"source": "am730", "url": "https://www.am730.com.hk/sitemap.xml", "max": 50},  # HK
+    {"source": "Commercial Radio HK", "url": "https://www.881903.com/sitemap-google-news.xml", "max": 50},  # HK
+    {"source": "TVB News", "url": "https://news.tvb.com/sitemap.xml", "max": 50},  # HK
+    {"source": "Jakarta Post", "url": "https://www.thejakartapost.com/sitemap_news.xml", "max": 50},  # ID
+    {"source": "Bloomberg Technoz", "url": "https://www.bloombergtechnoz.com/sitemap-news.xml", "max": 50},  # ID
+    {"source": "IDN Times", "url": "https://www.idntimes.com/news/sitemap-news.xml", "max": 50},  # ID
+    {"source": "iNews.id", "url": "https://www.inews.id/news/sitemap.xml", "max": 50},  # ID
+    {"source": "Jawa Pos", "url": "https://www.jawapos.com/sitemap-news.xml", "max": 50},  # ID
+    {"source": "Merdeka", "url": "https://www.merdeka.com/peristiwa/sitemap.xml", "max": 50},  # ID
+    {"source": "Metro TV News", "url": "https://www.metrotvnews.com/sitemap/sitemap-news.xml", "max": 50},  # ID
+    {"source": "Pikiran Rakyat", "url": "https://www.pikiran-rakyat.com/news/sitemap_news.xml", "max": 50},  # ID
+    {"source": "Suara", "url": "https://www.suara.com/news/sitemap-news.xml", "max": 50},  # ID
+    {"source": "VOI", "url": "https://voi.id/sitemap_news.xml", "max": 50},  # ID
+    {"source": "Al-Ittihad", "url": "https://alittihad44.com/gnews.xml", "max": 50},  # IL
+    {"source": "Arab48", "url": "https://www.arab48.com/news_sitemap.xml", "max": 50},  # IL
+    {"source": "i24NEWS Arabic", "url": "https://www.i24news.tv/ar/sitemapGoogleNews.xml", "max": 50},  # IL
+    {"source": "Kul al-Arab", "url": "https://kul-alarab.com/sitemap-news.xml", "max": 50},  # IL
+    {"source": "0404", "url": "https://0404.co.il/news-sitemap.xml", "max": 50},  # IL
+    {"source": "i24NEWS Hebrew", "url": "https://www.i24news.tv/he/sitemapGoogleNews.xml", "max": 50},  # IL
+    {"source": "Kikar HaShabbat", "url": "https://www.kikar.co.il/news-sitemap.xml", "max": 50},  # IL
+    {"source": "N12", "url": "https://www.mako.co.il/SiteMap/mako_news/1.xml.gz", "max": 50},  # IL
+    {"source": "Eisamay", "url": "https://eisamay.com/news_sitemap.xml", "max": 50},  # IN
+    {"source": "News18 Bangla", "url": "https://bengali.news18.com/commonfeeds/v1/ben/sitemap/google-news.xml", "max": 50},  # IN
+    {"source": "Divya Bhaskar", "url": "https://www.divyabhaskar.co.in/sitemaps-v1--sitemap-google-news-1.xml", "max": 50},  # IN
+    {"source": "Gujarat Samachar", "url": "https://www.gujaratsamachar.com/news-sitemap.xml", "max": 50},  # IN
+    {"source": "News18 Gujarati", "url": "https://gujarati.news18.com/commonfeeds/v1/guj/sitemap/google-news.xml", "max": 50},  # IN
+    {"source": "Dainik Jagran", "url": "https://www.jagran.com/news-sitemap.xml", "max": 50},  # IN
+    {"source": "Jansatta", "url": "https://www.jansatta.com/news-sitemap.xml", "max": 50},  # IN
+    {"source": "Live Hindustan", "url": "https://www.livehindustan.com/news-sitemap.xml", "max": 50},  # IN
+    {"source": "Navbharat Times", "url": "https://navbharattimes.indiatimes.com/staticsitemap/nbt/news/sitemap-48hours.xml", "max": 50},  # IN
+    {"source": "Patrika", "url": "https://www.patrika.com/google-news-sitemap-v1.xml", "max": 50},  # IN
+    {"source": "Kannada Prabha", "url": "https://www.kannadaprabha.in/news/sitemap.xml", "max": 50},  # IN
+    {"source": "News18 Kannada", "url": "https://kannada.news18.com/commonfeeds/v1/kan/sitemap/google-news.xml", "max": 50},  # IN
+    {"source": "Madhyamam", "url": "https://www.madhyamam.com/news-sitemap-daily.xml", "max": 50},  # IN
+    {"source": "Loksatta", "url": "https://www.loksatta.com/news-sitemap.xml", "max": 50},  # IN
+    {"source": "Maharashtra Times", "url": "https://maharashtratimes.com/staticsitemap/mt/news/sitemap-48hours.xml", "max": 50},  # IN
+    {"source": "Jagbani", "url": "https://jagbani.punjabkesari.in/newssitemap.xml", "max": 50},  # IN
+    {"source": "News18 Punjab", "url": "https://punjab.news18.com/commonfeeds/v1/pan/sitemap/google-news.xml", "max": 50},  # IN
+    {"source": "Hindu Tamil Thisai", "url": "https://www.hindutamil.in/news_sitemap.xml", "max": 50},  # IN
+    {"source": "News18 Tamil", "url": "https://tamil.news18.com/commonfeeds/v1/tam/sitemap/google-news.xml", "max": 50},  # IN
+    {"source": "ETV Bharat Urdu", "url": "https://www.etvbharat.com/ur/national/googlenewssitemap.xml", "max": 50},  # IN
+    {"source": "News18 Urdu", "url": "https://urdu.news18.com/commonfeeds/v1/urd/sitemap/google-news.xml", "max": 50},  # IN
+    {"source": "Bay of Plenty Times", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=bay-of-plenty-times", "max": 50},  # NZ
+    {"source": "Gisborne Herald", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=gisborne-herald", "max": 50},  # NZ
+    {"source": "Hawke's Bay Today", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=hawkes-bay-today", "max": 50},  # NZ
+    {"source": "Northern Advocate", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=northern-advocate", "max": 50},  # NZ
+    {"source": "Rotorua Daily Post", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=rotorua-daily-post", "max": 50},  # NZ
+    {"source": "Whanganui Chronicle", "url": "https://www.nzherald.co.nz/arc/outboundfeeds/sitemap-news/?outputType=xml&_website=whanganui-chronicle", "max": 50},  # NZ
+    {"source": "Abante", "url": "https://www.abante.com.ph/news-sitemap.xml", "max": 50},  # PH
+    {"source": "Abante Tonite", "url": "https://tonite.abante.com.ph/news-sitemap.xml", "max": 50},  # PH
+    {"source": "Radyo Pilipinas", "url": "https://radyopilipinas.ph/news-sitemap.xml", "max": 50},  # PH
+    {"source": "Nawa-i-Waqt", "url": "https://www.nawaiwaqt.com.pk/sitemap_news_google.xml", "max": 50},  # PK
+    {"source": "Al Watan Qatar", "url": "https://www.al-watan.com/sitemaps/newsSitemap.xml", "max": 50},  # QA
+    {"source": "Qatar Tribune", "url": "https://www.qatar-tribune.com/sitemaps/newsSitemap.xml", "max": 50},  # QA
+    {"source": "Stomp", "url": "https://www.stomp.sg/googlenews.xml", "max": 50},  # SG
+    {"source": "Berita Harian SG", "url": "https://www.beritaharian.sg/googlenews.xml", "max": 50},  # SG
+    {"source": "Tamil Murasu", "url": "https://www.tamilmurasu.com.sg/googlenews.xml", "max": 50},  # SG
+    {"source": "8world", "url": "https://www.8world.com/google-news-sitemap/171", "max": 50},  # SG
+    {"source": "Lianhe Zaobao", "url": "https://www.zaobao.com.sg/googlenews.xml", "max": 50},  # SG
+    {"source": "SGGP News", "url": "https://en.sggp.org.vn/sitemaps/google-news.xml", "max": 50},  # VN
+    {"source": "Vietnam News", "url": "https://vietnamnews.vn/sitemap_news.xml", "max": 50},  # VN
+    {"source": "VietnamPlus English", "url": "https://en.vietnamplus.vn/sitemaps/google-news.xml", "max": 50},  # VN
+    {"source": "CafeF", "url": "https://cafef.vn/google-news-sitemap.xml", "max": 50},  # VN
+    {"source": "Nhan Dan", "url": "https://nhandan.vn/sitemaps/google-news.xml", "max": 50},  # VN
+    {"source": "Saigon Giai Phong", "url": "https://www.sggp.org.vn/sitemaps/google-news.xml", "max": 50},  # VN
+    {"source": "VnEconomy", "url": "https://vneconomy.vn/sitemap/google-news.xml", "max": 50},  # VN
+    {"source": "VOV", "url": "https://vov.vn/sitemaps/newsindex.xml", "max": 50},  # VN
+    {"source": "VTC News", "url": "https://vtcnews.vn/news-sitemap.xml", "max": 50},  # VN
 ]
 # WordPress-core sitemap sources: (source, index_url, max). Newest = highest
 # wp-sitemap-posts-post-N. Titles from URL slug (last path segment).
@@ -2352,6 +2529,182 @@ SOURCE_ORIGIN: dict = {  # source name -> {"lang": ..., "country": ...}
     "Vietnamnet Thoi su": {"lang":"vi","country":"VN"}, "VietnamPlus VN": {"lang":"vi","country":"VN"},
     "VnExpress Kinh doanh": {"lang":"vi","country":"VN"}, "VnExpress Thế giới": {"lang":"vi","country":"VN"},
     "VnExpress Thời sự": {"lang":"vi","country":"VN"},
+    # ===== Asia, Middle East & Pacific expansion (2026-10) =====
+    # CN
+    "BBC 中文": {"lang":"zh","country":"CN"},
+    "Chinanews": {"lang":"zh","country":"CN"},
+    "DW 中文": {"lang":"zh","country":"CN"},
+    "Initium Media": {"lang":"zh","country":"CN"},
+    "IT之家": {"lang":"zh","country":"CN"},
+    "RFA 中文": {"lang":"zh","country":"CN"},
+    "RFI 中文": {"lang":"zh","country":"CN"},
+    "VOA 中文": {"lang":"zh","country":"CN"},
+    # HK
+    "am730": {"lang":"zh","country":"HK"},
+    "Bastille Post": {"lang":"zh","country":"HK"},
+    "Commercial Radio HK": {"lang":"zh","country":"HK"},
+    "i-Cable": {"lang":"zh","country":"HK"},
+    "RTHK 中文": {"lang":"zh","country":"HK"},
+    "Sing Tao": {"lang":"zh","country":"HK"},
+    "The Collective HK": {"lang":"zh","country":"HK"},
+    "TVB News": {"lang":"zh","country":"HK"},
+    "Yahoo Hong Kong": {"lang":"zh","country":"HK"},
+    # ID
+    "Antara English": {"lang":"en","country":"ID"},
+    "Jakarta Post": {"lang":"en","country":"ID"},
+    "BBC Indonesia": {"lang":"id","country":"ID"},
+    "Bloomberg Technoz": {"lang":"id","country":"ID"},
+    "Detik News": {"lang":"id","country":"ID"},
+    "IDN Times": {"lang":"id","country":"ID"},
+    "iNews.id": {"lang":"id","country":"ID"},
+    "Jawa Pos": {"lang":"id","country":"ID"},
+    "Kumparan": {"lang":"id","country":"ID"},
+    "Merdeka": {"lang":"id","country":"ID"},
+    "Metro TV News": {"lang":"id","country":"ID"},
+    "Pikiran Rakyat": {"lang":"id","country":"ID"},
+    "Suara": {"lang":"id","country":"ID"},
+    "VOI": {"lang":"id","country":"ID"},
+    # IL
+    "Al-Ittihad": {"lang":"ar","country":"IL"},
+    "Arab48": {"lang":"ar","country":"IL"},
+    "i24NEWS Arabic": {"lang":"ar","country":"IL"},
+    "Kul al-Arab": {"lang":"ar","country":"IL"},
+    "Sonara": {"lang":"ar","country":"IL"},
+    "0404": {"lang":"he","country":"IL"},
+    "Behadrei Haredim": {"lang":"he","country":"IL"},
+    "i24NEWS Hebrew": {"lang":"he","country":"IL"},
+    "Kikar HaShabbat": {"lang":"he","country":"IL"},
+    "Mekomit": {"lang":"he","country":"IL"},
+    "N12": {"lang":"he","country":"IL"},
+    "Srugim": {"lang":"he","country":"IL"},
+    "Zman Yisrael": {"lang":"he","country":"IL"},
+    # IN
+    "ABP Ananda": {"lang":"bn","country":"IN"},
+    "Eisamay": {"lang":"bn","country":"IN"},
+    "News18 Bangla": {"lang":"bn","country":"IN"},
+    "Sangbad Pratidin": {"lang":"bn","country":"IN"},
+    "ABP Asmita": {"lang":"gu","country":"IN"},
+    "BBC Gujarati": {"lang":"gu","country":"IN"},
+    "Divya Bhaskar": {"lang":"gu","country":"IN"},
+    "Gujarat Samachar": {"lang":"gu","country":"IN"},
+    "News18 Gujarati": {"lang":"gu","country":"IN"},
+    "TV9 Gujarati": {"lang":"gu","country":"IN"},
+    "Aaj Tak": {"lang":"hi","country":"IN"},
+    "ABP News": {"lang":"hi","country":"IN"},
+    "Amar Ujala": {"lang":"hi","country":"IN"},
+    "BBC Hindi": {"lang":"hi","country":"IN"},
+    "Dainik Bhaskar": {"lang":"hi","country":"IN"},
+    "Dainik Jagran": {"lang":"hi","country":"IN"},
+    "India TV Hindi": {"lang":"hi","country":"IN"},
+    "Jansatta": {"lang":"hi","country":"IN"},
+    "Live Hindustan": {"lang":"hi","country":"IN"},
+    "Navbharat Times": {"lang":"hi","country":"IN"},
+    "NDTV Hindi": {"lang":"hi","country":"IN"},
+    "News18 Hindi": {"lang":"hi","country":"IN"},
+    "Patrika": {"lang":"hi","country":"IN"},
+    "Prabhat Khabar": {"lang":"hi","country":"IN"},
+    "The Wire Hindi": {"lang":"hi","country":"IN"},
+    "Zee News Hindi": {"lang":"hi","country":"IN"},
+    "Asianet Suvarna News": {"lang":"kn","country":"IN"},
+    "Kannada Prabha": {"lang":"kn","country":"IN"},
+    "News18 Kannada": {"lang":"kn","country":"IN"},
+    "Prajavani": {"lang":"kn","country":"IN"},
+    "TV9 Kannada": {"lang":"kn","country":"IN"},
+    "Asianet News": {"lang":"ml","country":"IN"},
+    "Madhyamam": {"lang":"ml","country":"IN"},
+    "Mathrubhumi": {"lang":"ml","country":"IN"},
+    "Twentyfour News": {"lang":"ml","country":"IN"},
+    "ABP Majha": {"lang":"mr","country":"IN"},
+    "BBC Marathi": {"lang":"mr","country":"IN"},
+    "eSakal": {"lang":"mr","country":"IN"},
+    "Loksatta": {"lang":"mr","country":"IN"},
+    "Maharashtra Times": {"lang":"mr","country":"IN"},
+    "TV9 Marathi": {"lang":"mr","country":"IN"},
+    "ABP Sanjha": {"lang":"pa","country":"IN"},
+    "BBC Punjabi": {"lang":"pa","country":"IN"},
+    "Jagbani": {"lang":"pa","country":"IN"},
+    "News18 Punjab": {"lang":"pa","country":"IN"},
+    "ABP Nadu": {"lang":"ta","country":"IN"},
+    "BBC Tamil": {"lang":"ta","country":"IN"},
+    "Dinamani": {"lang":"ta","country":"IN"},
+    "Hindu Tamil Thisai": {"lang":"ta","country":"IN"},
+    "News18 Tamil": {"lang":"ta","country":"IN"},
+    "ABP Desam": {"lang":"te","country":"IN"},
+    "BBC Telugu": {"lang":"te","country":"IN"},
+    "Oneindia Telugu": {"lang":"te","country":"IN"},
+    "Sakshi": {"lang":"te","country":"IN"},
+    "TV9 Telugu": {"lang":"te","country":"IN"},
+    "ETV Bharat Urdu": {"lang":"ur","country":"IN"},
+    "News18 Urdu": {"lang":"ur","country":"IN"},
+    "Qaumi Awaz": {"lang":"ur","country":"IN"},
+    "Siasat Urdu": {"lang":"ur","country":"IN"},
+    # NZ
+    "Asia Pacific Report": {"lang":"en","country":"NZ"},
+    "Bay of Plenty Times": {"lang":"en","country":"NZ"},
+    "Farmers Weekly NZ": {"lang":"en","country":"NZ"},
+    "Gisborne Herald": {"lang":"en","country":"NZ"},
+    "Hawke's Bay Today": {"lang":"en","country":"NZ"},
+    "Newstalk ZB": {"lang":"en","country":"NZ"},
+    "Northern Advocate": {"lang":"en","country":"NZ"},
+    "Rotorua Daily Post": {"lang":"en","country":"NZ"},
+    "Te Ao Māori News": {"lang":"en","country":"NZ"},
+    "Waatea News": {"lang":"en","country":"NZ"},
+    "Whanganui Chronicle": {"lang":"en","country":"NZ"},
+    # PH
+    "Abante": {"lang":"tl","country":"PH"},
+    "Abante Tonite": {"lang":"tl","country":"PH"},
+    "Hataw": {"lang":"tl","country":"PH"},
+    "Pilipino Mirror": {"lang":"tl","country":"PH"},
+    "Pinoy Weekly": {"lang":"tl","country":"PH"},
+    "Radyo Pilipinas": {"lang":"tl","country":"PH"},
+    "Remate": {"lang":"tl","country":"PH"},
+    "Saksi Ngayon": {"lang":"tl","country":"PH"},
+    # PK
+    "Aaj News": {"lang":"ur","country":"PK"},
+    "ARY Urdu": {"lang":"ur","country":"PK"},
+    "BBC Urdu": {"lang":"ur","country":"PK"},
+    "Bol News Urdu": {"lang":"ur","country":"PK"},
+    "Daily Pakistan": {"lang":"ur","country":"PK"},
+    "DW Urdu": {"lang":"ur","country":"PK"},
+    "Express Urdu": {"lang":"ur","country":"PK"},
+    "Independent Urdu": {"lang":"ur","country":"PK"},
+    "Jang": {"lang":"ur","country":"PK"},
+    "Jang World": {"lang":"ur","country":"PK"},
+    "Nawa-i-Waqt": {"lang":"ur","country":"PK"},
+    # QA
+    "Al Arab Qatar": {"lang":"ar","country":"QA"},
+    "Al Sharq": {"lang":"ar","country":"QA"},
+    "Al Watan Qatar": {"lang":"ar","country":"QA"},
+    "Lusail News": {"lang":"ar","country":"QA"},
+    "QNA": {"lang":"ar","country":"QA"},
+    "QNA Qatar": {"lang":"ar","country":"QA"},
+    "Qatar Tribune": {"lang":"en","country":"QA"},
+    "QNA English": {"lang":"en","country":"QA"},
+    "QNA English Qatar": {"lang":"en","country":"QA"},
+    "The Peninsula": {"lang":"en","country":"QA"},
+    # SG
+    "e27": {"lang":"en","country":"SG"},
+    "Fintech News SG": {"lang":"en","country":"SG"},
+    "Singapore Business Review": {"lang":"en","country":"SG"},
+    "Stomp": {"lang":"en","country":"SG"},
+    "Berita Harian SG": {"lang":"ms","country":"SG"},
+    "Berita Mediacorp": {"lang":"ms","country":"SG"},
+    "Seithi": {"lang":"ta","country":"SG"},
+    "Tamil Murasu": {"lang":"ta","country":"SG"},
+    "8world": {"lang":"zh","country":"SG"},
+    "Lianhe Zaobao": {"lang":"zh","country":"SG"},
+    # VN
+    "SGGP News": {"lang":"en","country":"VN"},
+    "Tuoi Tre News": {"lang":"en","country":"VN"},
+    "Vietnam News": {"lang":"en","country":"VN"},
+    "VietnamPlus English": {"lang":"en","country":"VN"},
+    "BBC Tieng Viet": {"lang":"vi","country":"VN"},
+    "CafeF": {"lang":"vi","country":"VN"},
+    "Nhan Dan": {"lang":"vi","country":"VN"},
+    "Saigon Giai Phong": {"lang":"vi","country":"VN"},
+    "VnEconomy": {"lang":"vi","country":"VN"},
+    "VOV": {"lang":"vi","country":"VN"},
+    "VTC News": {"lang":"vi","country":"VN"},
 }
 
 
@@ -3402,6 +3755,9 @@ LANG_EN_NAMES = {
     "da": "Danish", "fi": "Finnish", "el": "Greek", "cs": "Czech", "hu": "Hungarian", "ro": "Romanian",
     "uk": "Ukrainian", "tr": "Turkish", "ja": "Japanese", "id": "Indonesian", "vi": "Vietnamese",
     "he": "Hebrew", "ar": "Arabic", "zh": "Chinese", "ru": "Russian", "ko": "Korean",
+    "hi": "Hindi", "bn": "Bengali", "ta": "Tamil", "te": "Telugu", "mr": "Marathi",
+    "ml": "Malayalam", "kn": "Kannada", "gu": "Gujarati", "pa": "Punjabi", "ur": "Urdu",
+    "ms": "Malay", "tl": "Filipino", "th": "Thai",
 }
 
 
@@ -3469,8 +3825,20 @@ COUNTRY_I18N = {
     "id": {"ID": "Indonesia"},
     "vi": {"VN": "Việt Nam"},
     "ja": {"JP": "日本"},
-    "zh": {"HK": "香港"},
-    "ar": {"QA": "قطر"},
+    "zh": {"CN": "中国", "HK": "香港", "SG": "新加坡"},
+    "ar": {"IL": "إسرائيل", "QA": "قطر"},
+    "hi": {"IN": "भारत"},
+    "bn": {"IN": "ভারত"},
+    "ta": {"IN": "இந்தியா", "SG": "சிங்கப்பூர்"},
+    "te": {"IN": "భారతదేశం"},
+    "mr": {"IN": "भारत"},
+    "ml": {"IN": "ഇന്ത്യ"},
+    "kn": {"IN": "ಭಾರತ"},
+    "gu": {"IN": "ભારત"},
+    "pa": {"IN": "ਭਾਰਤ"},
+    "ur": {"IN": "بھارت", "PK": "پاکستان"},
+    "ms": {"SG": "Singapura"},
+    "tl": {"PH": "Pilipinas"},
     "he": {"IL": "ישראל"},
 }
 # Per-language copy. "t" = title/heading phrase ({c} = localized country name),
@@ -3522,6 +3890,35 @@ LANDING_STRINGS = {
            "d": "{c}：今日の主要ニュースと見出しを毎時更新。all.news は国内の主要な報道機関のニュースを一つにまとめています。"},
     "zh": {"t": "{c}新聞",
            "d": "{c}：今日焦點新聞與頭條，每小時更新。all.news 匯集該地區主要新聞來源，一站掌握。"},
+    # Simplified Chinese for mainland China and Singapore (keyed "<lang>-<CC>").
+    "zh-CN": {"t": "{c}新闻",
+              "d": "{c}：今日焦点新闻与头条，每小时更新。all.news 汇集该地区主要新闻来源，一站掌握。"},
+    "zh-SG": {"t": "{c}新闻",
+              "d": "{c}：今日焦点新闻与头条，每小时更新。all.news 汇集该地区主要新闻来源，一站掌握。"},
+    "hi": {"t": "{c}: समाचार",
+           "d": "{c}: आज की प्रमुख खबरें और सुर्खियाँ, हर घंटे अपडेट। all.news देश के प्रमुख समाचार स्रोतों को एक ही जगह पर लाता है।"},
+    "bn": {"t": "{c}: সংবাদ",
+           "d": "{c}: আজকের প্রধান খবর ও শিরোনাম, প্রতি ঘণ্টায় হালনাগাদ। all.news দেশের শীর্ষস্থানীয় সংবাদ উৎসগুলোকে এক জায়গায় নিয়ে আসে।"},
+    "ta": {"t": "{c}: செய்திகள்",
+           "d": "{c}: இன்றைய முக்கிய செய்திகள் மற்றும் தலைப்புகள், ஒவ்வொரு மணி நேரமும் புதுப்பிக்கப்படுகின்றன. all.news நாட்டின் முன்னணி செய்தி மூலங்களை ஒரே இடத்தில் தொகுக்கிறது."},
+    "te": {"t": "{c}: వార్తలు",
+           "d": "{c}: నేటి ముఖ్య వార్తలు మరియు శీర్షికలు, ప్రతి గంటకు నవీకరించబడతాయి. all.news దేశంలోని ప్రముఖ వార్తా మూలాలను ఒకే చోట అందిస్తుంది."},
+    "mr": {"t": "{c}: बातम्या",
+           "d": "{c}: आजच्या प्रमुख बातम्या आणि मथळे, दर तासाला अद्ययावत. all.news देशातील आघाडीचे वृत्तस्रोत एकाच ठिकाणी आणते."},
+    "ml": {"t": "{c}: വാർത്തകൾ",
+           "d": "{c}: ഇന്നത്തെ പ്രധാന വാർത്തകളും തലക്കെട്ടുകളും, ഓരോ മണിക്കൂറിലും പുതുക്കുന്നു. രാജ്യത്തെ മുൻനിര വാർത്താ സ്രോതസ്സുകളെ all.news ഒരിടത്ത് എത്തിക്കുന്നു."},
+    "kn": {"t": "{c}: ಸುದ್ದಿ",
+           "d": "{c}: ಇಂದಿನ ಪ್ರಮುಖ ಸುದ್ದಿಗಳು ಮತ್ತು ಶೀರ್ಷಿಕೆಗಳು, ಪ್ರತಿ ಗಂಟೆಗೆ ನವೀಕರಿಸಲಾಗುತ್ತದೆ. all.news ದೇಶದ ಪ್ರಮುಖ ಸುದ್ದಿ ಮೂಲಗಳನ್ನು ಒಂದೇ ಕಡೆ ಸಂಗ್ರಹಿಸುತ್ತದೆ."},
+    "gu": {"t": "{c}: સમાચાર",
+           "d": "{c}: આજના મુખ્ય સમાચાર અને હેડલાઇન્સ, દર કલાકે અપડેટ. all.news દેશના અગ્રણી સમાચાર સ્રોતોને એક જ જગ્યાએ લાવે છે."},
+    "pa": {"t": "{c}: ਖ਼ਬਰਾਂ",
+           "d": "{c}: ਅੱਜ ਦੀਆਂ ਮੁੱਖ ਖ਼ਬਰਾਂ ਅਤੇ ਸੁਰਖੀਆਂ, ਹਰ ਘੰਟੇ ਅੱਪਡੇਟ। all.news ਦੇਸ਼ ਦੇ ਪ੍ਰਮੁੱਖ ਖ਼ਬਰ ਸਰੋਤਾਂ ਨੂੰ ਇੱਕ ਥਾਂ ਇਕੱਠਾ ਕਰਦਾ ਹੈ।"},
+    "ur": {"t": "{c}: خبریں",
+           "d": "{c}: آج کی اہم خبریں اور سرخیاں، ہر گھنٹے اپ ڈیٹ۔ all.news ملک کے نمایاں خبر رساں ذرائع کو ایک جگہ جمع کرتا ہے۔"},
+    "ms": {"t": "{c}: berita",
+           "d": "{c}: berita dan tajuk utama hari ini, dikemas kini setiap jam. all.news menghimpunkan sumber berita terkemuka negara di satu tempat."},
+    "tl": {"t": "{c}: balita",
+           "d": "{c}: ang mga pangunahing balita at headline ngayon, ina-update bawat oras. Tinitipon ng all.news ang nangungunang mga pinagkukunan ng balita ng bansa sa iisang lugar."},
     "ar": {"t": "{c}: أخبار",
            "d": "{c}: أبرز أخبار وعناوين اليوم، تُحدَّث كل ساعة. يجمع all.news أهم مصادر الأخبار في البلد في مكان واحد."},
     "he": {"t": "{c}: חדשות",
@@ -3666,7 +4063,8 @@ def write_landing_pages(articles, today):
     landing_urls = []
     for cc, lang in pairs:
         cname = country_name_i18n(cc, lang)      # country name in the page's language
-        strings = LANDING_STRINGS.get(lang, LANDING_STRINGS["en"])
+        strings = (LANDING_STRINGS.get(f"{lang}-{cc}") or LANDING_STRINGS.get(lang)
+                   or LANDING_STRINGS["en"])
         phrase = strings["t"].format(c=cname)    # e.g. "日本のニュース", "Suisse : actualités"
         sl = [a for a in articles
               if (a.get("country") or "").upper() == cc
