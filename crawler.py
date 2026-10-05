@@ -3267,8 +3267,10 @@ def fetch(url, ua=None):
             data = resp.read()
             # Some servers gzip even though we don't send Accept-Encoding.
             enc = (resp.headers.get("Content-Encoding") or "").lower()
-            if enc == "gzip" or data[:2] == b"\x1f\x8b":
+            if data[:2] == b"\x1f\x8b":
                 data = gzip.decompress(data)
+            elif enc == "gzip":
+                pass  # labelled gzip but sent plain (e.g. sggp.org.vn)
             elif enc == "deflate":
                 try:
                     data = zlib.decompress(data)
