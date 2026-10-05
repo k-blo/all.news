@@ -923,25 +923,30 @@ async function detectCountry() {
   return region && /^[A-Za-z]{2}$/.test(region) ? region.toUpperCase() : null;
 }
 
+// Browser language subtags that we file under another code.
+const LANG_ALIASES = { nb: "no", nn: "no", fil: "tl" };
+// The browser's preferred languages we carry, as our codes, best first.
+function browserLangs() {
+  const out = [];
+  for (const tag of navigator.languages || [navigator.language || ""]) {
+    let code = (tag || "").split("-")[0].toLowerCase();
+    code = LANG_ALIASES[code] || code;
+    if (code in LANG_NAMES && !out.includes(code)) out.push(code);
+  }
+  return out;
+}
+
 // Best-effort preferred language (ISO 639-1) from the browser, limited to the
 // languages we actually carry. null if none match.
 function detectLanguage() {
-  for (const tag of navigator.languages || [navigator.language || ""]) {
-    const code = (tag || "").split("-")[0].toLowerCase();
-    if (code in LANG_NAMES) return code;
-  }
-  return null;
+  return browserLangs()[0] || null;
 }
 
 // Sections: on a first visit, show the browser's languages (relaxed to all
 // if the section has none of them).
 function seedSectionLangs() {
-  const codes = new Set();
-  for (const tag of navigator.languages || [navigator.language || ""]) {
-    const code = (tag || "").split("-")[0].toLowerCase();
-    if (code in LANG_NAMES) codes.add(code);
-  }
-  if (!codes.size) return;
+  const codes = browserLangs();
+  if (!codes.length) return;
   langsAll = false;
   includedLangs.clear();
   codes.forEach((c) => includedLangs.add(c));
