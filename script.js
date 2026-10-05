@@ -168,6 +168,7 @@ const LANG_NAMES = {
   ms: "Bahasa Melayu", tl: "Filipino", th: "ไทย", ca: "Català",
   bg: "Български", et: "Eesti", fa: "فارسی", hr: "Hrvatski", lt: "Lietuvių",
   lv: "Latviešu", sk: "Slovenčina", sr: "Srpski",
+  eu: "Euskara", gl: "Galego", ga: "Gaeilge", cy: "Cymraeg", gd: "Gàidhlig",
 };
 // ISO 639-1 -> English name (mirrors LANG_EN_NAMES in crawler.py). Used only to
 // resolve landing-page URL slugs (/news/<country>/<lang>/) back to codes.
@@ -182,6 +183,7 @@ const LANG_EN_NAMES = {
   ms: "Malay", tl: "Filipino", th: "Thai", ca: "Catalan",
   bg: "Bulgarian", et: "Estonian", fa: "Persian", hr: "Croatian", lt: "Lithuanian",
   lv: "Latvian", sk: "Slovak", sr: "Serbian",
+  eu: "Basque", gl: "Galician", ga: "Irish", cy: "Welsh", gd: "Scottish Gaelic",
 };
 // Lowercase ASCII slug (mirrors slugify() in crawler.py), + reverse maps so a
 // landing URL like /news/united-kingdom/english/ resolves to { GB, en }.
