@@ -141,6 +141,20 @@ and must stay in sync. The `functions/[[path]].js` worker serves `/news/*` from 
 
 Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.
 
+**Settings** (`settings.html`, `/settings`): theme (dark default / light / system) in
+`allnews.theme`, layout (comfortable / compact) in `allnews.density`. Every page has a
+tiny inline `<head>` script that sets `data-theme` / `data-density` on `<html>`
+before first paint; `styles.css` holds the light palette (`:root[data-theme="light"]`)
+and the compact overrides. Keep that inline script identical in `template.html`,
+`archive.html`, `HUB_TEMPLATE` and the static pages.
+
+**Legal pages** (`about`, `privacy`, `cookies`, `terms`, `imprint` — static `.html`,
+served without the extension): linked from every footer. The privacy/cookie text
+covers Google Analytics + AdSense as AdSense requires. Every page sets Google
+Consent Mode defaults (denied in EEA/UK/CH until the CMP grants consent); the CMP
+itself is Google's, configured in AdSense → Privacy & messaging. `site.js` makes
+the footer "Cookie settings" link reopen it (falls back to `/cookies#manage`).
+
 **Filter state lives in web storage, never the URL.** The durable filters — excluded sources, selected countries, selected languages — are persisted in **localStorage** under `allnews.*` keys (`STORE_EXCLUDE`/`STORE_COUNTRY`/`STORE_LANG`) and read back at module init by `script.js`; there are no `?exclude=`/`?country=`/`?lang=`/`?q=` params. Because localStorage is per-origin, the same filter automatically applies on the home feed, every archive day page and every open tab, so archive-day links are plain paths (`persistFilters()` writes the selection; landing pages are pinned by their path and skip it). **Search (`STORE_QUERY`) is deliberately session-only — it uses `sessionStorage`**, so it survives a reload but is forgotten between visits rather than greeting a returning visitor with a stale query. The only remaining query param is a legacy `?day=` → `/archive/<day>.html` redirect for old inbound links; the `#hash` still deep-links individual articles.
 
 `SOURCE_COLORS` is defined in `crawler.py` and generated into `colors.js` (loaded by `script.js`). It must have an entry for every source name used in `crawler.py` — missing entries fall back to `#888`.

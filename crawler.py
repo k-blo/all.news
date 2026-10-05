@@ -3504,10 +3504,12 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <meta property="og:url" content="{origin}/news/">
   <meta property="og:image" content="{origin}/og-image.png">
   <meta name="robots" content="index, follow">
+  <!-- Apply saved theme before first paint. -->
+  <script>try{{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}}catch(e){{}}</script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="/styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <style>
     .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
     .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
@@ -3520,9 +3522,18 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){{dataLayer.push(arguments);}}
+    // Deny storage in EEA/UK/CH until the CMP grants consent.
+    gtag('consent', 'default', {{
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
+      region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH'],
+      wait_for_update: 500
+    }});
     gtag('js', new Date());
     gtag('config', 'G-N83C506R65');
   </script>
+  <!-- Google AdSense (also loads the consent message) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3630076197785405"
+     crossorigin="anonymous"></script>
 </head>
 <body>
   <div class="container">
@@ -3541,10 +3552,22 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       </div>
     </main>
     <footer class="site-footer">
-      <span>© Copyright 2026 all.news</span>
-      <span><a href="/">Home</a> · <a href="/archive">Archive</a></span>
+      <nav class="footer-links" aria-label="Legal">
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/cookies">Cookies</a>
+        <a href="/terms">Terms</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/settings">Settings</a>
+        <a href="/cookies#manage" class="cookie-settings">Cookie settings</a>
+      </nav>
+      <div class="footer-meta">
+        <span>© Copyright 2026 all.news</span>
+        <span><a href="/">Home</a> · <a href="/archive">Archive</a></span>
+      </div>
     </footer>
   </div>
+  <script src="/site.js"></script>
 </body>
 </html>
 """
