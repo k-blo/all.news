@@ -25,7 +25,10 @@ function r2Key(pathname) {
 }
 
 // Topic sections: /<section>/ (SSR page) + /<section>/feed.json, from R2.
-const SECTIONS = ["space", "business", "tech", "gaming", "yachting", "logistics", "luxury"];
+const SECTIONS = [
+  "space", "business", "tech", "gaming", "yachting", "logistics", "luxury",
+  "aviation", "auto", "energy", "cyber", "biotech", "watches", "rail", "ai", "science",
+];
 
 // Which keys come from R2 (everything else is a static asset).
 function servesFromR2(key) {

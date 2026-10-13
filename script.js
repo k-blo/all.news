@@ -95,7 +95,10 @@ function sortedArticles(articles, mode) {
 // ---------- Topic sections ----------
 // /space/, /business/, /tech/, /gaming/ …: one feed each (/<section>/feed.json),
 // not split by country — only language + media filters. null = the news feed.
-const SECTIONS = ["space", "business", "tech", "gaming", "yachting", "logistics", "luxury"];
+const SECTIONS = [
+  "space", "business", "tech", "gaming", "yachting", "logistics", "luxury",
+  "aviation", "auto", "energy", "cyber", "biotech", "watches", "rail", "ai", "science",
+];
 const SECTION = (location.pathname.match(new RegExp(`^/(${SECTIONS.join("|")})/?$`)) || [])[1] || null;
 
 // ---------- Persistent filter state (localStorage, never the URL) ----------

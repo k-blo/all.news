@@ -143,7 +143,8 @@ and must stay in sync. The `functions/[[path]].js` worker serves `/news/*` from 
 301-redirects the no-trailing-slash form to the canonical slash form.
 
 **Topic sections** (`/space/`, `/business/`, `/tech/`, `/gaming/`,
-`/yachting/`, `/logistics/`, `/luxury/`): `SECTIONS` in
+`/yachting/`, `/logistics/`, `/luxury/`, `/aviation/`, `/auto/`, `/energy/`,
+`/cyber/`, `/biotech/`, `/watches/`, `/rail/`, `/ai/`, `/science/`): `SECTIONS` in
 `crawler.py`. Each is an independent daily feed of its sources, **not split by
 country** (visitors filter by language and outlet). `SECTION_SOURCES` lists
 section-only outlets (with inline `lang`/`country`, never in the news feed);
