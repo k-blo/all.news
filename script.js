@@ -93,9 +93,9 @@ function sortedArticles(articles, mode) {
 }
 
 // ---------- Topic sections ----------
-// /space/, /business/, /tech/, /gaming/: one feed each (/<section>/feed.json),
+// /space/, /business/, /tech/, /gaming/ …: one feed each (/<section>/feed.json),
 // not split by country — only language + media filters. null = the news feed.
-const SECTIONS = ["space", "business", "tech", "gaming"];
+const SECTIONS = ["space", "business", "tech", "gaming", "yachting", "logistics", "luxury"];
 const SECTION = (location.pathname.match(new RegExp(`^/(${SECTIONS.join("|")})/?$`)) || [])[1] || null;
 
 // ---------- Persistent filter state (localStorage, never the URL) ----------
@@ -167,7 +167,7 @@ const LANG_NAMES = {
   ml: "മലയാളം", kn: "ಕನ್ನಡ", gu: "ગુજરાતી", pa: "ਪੰਜਾਬੀ", ur: "اردو",
   ms: "Bahasa Melayu", tl: "Filipino", th: "ไทย", ca: "Català",
   bg: "Български", et: "Eesti", fa: "فارسی", hr: "Hrvatski", lt: "Lietuvių",
-  lv: "Latviešu", sk: "Slovenčina", sr: "Srpski",
+  lv: "Latviešu", sk: "Slovenčina", sr: "Srpski", sl: "Slovenščina",
   eu: "Euskara", gl: "Galego", ga: "Gaeilge", cy: "Cymraeg", gd: "Gàidhlig",
 };
 // ISO 639-1 -> English name (mirrors LANG_EN_NAMES in crawler.py). Used only to
@@ -182,7 +182,7 @@ const LANG_EN_NAMES = {
   ml: "Malayalam", kn: "Kannada", gu: "Gujarati", pa: "Punjabi", ur: "Urdu",
   ms: "Malay", tl: "Filipino", th: "Thai", ca: "Catalan",
   bg: "Bulgarian", et: "Estonian", fa: "Persian", hr: "Croatian", lt: "Lithuanian",
-  lv: "Latvian", sk: "Slovak", sr: "Serbian",
+  lv: "Latvian", sk: "Slovak", sr: "Serbian", sl: "Slovenian",
   eu: "Basque", gl: "Galician", ga: "Irish", cy: "Welsh", gd: "Scottish Gaelic",
 };
 // Lowercase ASCII slug (mirrors slugify() in crawler.py), + reverse maps so a

@@ -26,6 +26,9 @@ cron-worker/.wrangler/
 /business/
 /tech/
 /gaming/
+/yachting/
+/logistics/
+/luxury/
 # CI crawl artifacts
 partial-*.json
 partials/
