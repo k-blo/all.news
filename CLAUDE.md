@@ -82,14 +82,14 @@ All source definitions live at the top of the file. There are several crawler st
 - **`WP_SOURCES`** — WordPress core/Yoast sitemaps. `crawl_wp()` finds the highest-numbered `wp-sitemap-posts-post-N.xml` or `post-sitemap.xml` page (newest articles).
 - **One-off functions** — `crawl_weltwoche()`, `crawl_nebelspalter()`, `crawl_woz()`, `crawl_nau()`, `crawl_bilanz()`, `crawl_republik()`, `crawl_suedostschweiz()` for sites with unique sitemap formats.
 
-**Per-country shards:** `write_country_shards()` splits today's feed into
+**Per-country shards:** `write_country_shards()` splits the live feed into
 `data/<cc>.json` (one file per country) plus `data/manifest.json` (every country +
 the languages it publishes). The site (`script.js`) fetches only the shards for the
 countries a visitor filters to, instead of the whole `crawled.json`, so the download
 scales with the selection. The manifest drives the country/language picker so it's
 complete before any shard loads. The "all countries" view still loads `crawled.json`.
 Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2 (not
-`copy`), since they only ever hold today's feed.
+`copy`), since they only ever hold the live feed.
 
 **Canonical host — always `https://www.all.news`.** The apex 301-redirects to
 `www` (a Cloudflare-side rule we can't currently remove), so every absolute URL we
@@ -108,7 +108,7 @@ canonical circular. Internal links, the canonical and the sitemap all use `/arch
 (Archive *day* pages keep `.html` — they come from R2 via `functions/[[path]].js`,
 which doesn't strip anything, and answer 200 directly.)
 
-**Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added to `crawled.json` if their `published` date is today (Swiss local time) and their URL has never been seen before. A cached `Last-Modified` older than 7 days is not sent (`stale_validator()`): some servers keep a months-old one on fresh content and answer 304 forever. A date-only stamp (local midnight, e.g. `00:00+08:00`) counts on the source's own calendar day, else outlets east of Zurich always land on "yesterday".
+**Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added if their `published` date is today (Swiss local time) and their URL has never been seen before. **Live feeds are a rolling 24 hours** (#43): `crawled.json`, the shards, `index.html`, landing pages and section feeds carry over every article crawled in the last 24 hours (`load_window()`/`window_start()`), so they never empty at midnight; their rows show relative times ("3 h ago", `fmt_ago()`/`fmtAgo()`, #48). Archive days stay Zurich calendar days: `archive/<date>.json` is the window's slice crawled that day (`crawl_day()`). A cached `Last-Modified` older than 7 days is not sent (`stale_validator()`): some servers keep a months-old one on fresh content and answer 304 forever. A date-only stamp (local midnight, e.g. `00:00+08:00`) counts on the source's own calendar day, else outlets east of Zurich always land on "yesterday".
 
 **Crawl groups:** `main` (3 sharded GitHub Actions jobs) runs everything except the
 `vpn` group, which runs behind a Swiss WireGuard VPN: CH Media papers plus
@@ -121,17 +121,14 @@ shard.
 
 **Sitemap:** `write_sitemap()` emits `<lastmod>` on every URL (the crawl timestamp
 for the hourly pages, the day itself for settled archive days) — the only hint here
-Google acts on; `changefreq`/`priority` are ignored. Archive days split across
-several pages list *all* their pages, using the `pages` map in `archive/index.json`.
-A crawl can only ever learn *today's* page count (past days' HTML isn't local during
-the reduce step), so past days are seeded by `regen_archive.py`, which re-renders
-them and writes their counts back to `index.json`. `dates` is unchanged, and
-`archive.html` / `script.js` ignore `pages`.
+Google acts on; `changefreq`/`priority` are ignored. Archive days list **page 1
+only**: Search Console showed the deeper pages as "crawled – currently not indexed",
+so listing them just spent crawl budget. They stay reachable through the pager.
 
 **Programmatic landing pages:** `write_landing_pages()` writes one server-rendered
 page per (country, language) we carry at `/news/<country>/<lang>/` (e.g.
 `/news/switzerland/french/`), plus a `/news/` hub (`write_news_hub()`) linking them
-all. Each is server-rendered from that slice of today's feed, so crawlers get real
+all. Each is server-rendered from that slice of the live feed, so crawlers get real
 headlines per country/language instead of one undifferentiated feed. They *hydrate*:
 `script.js` recognises the `/news/<country>/<lang>/` path, resolves the slugs back to
 codes (`COUNTRY_BY_SLUG`/`LANG_BY_SLUG`), loads that country's shard and applies the
@@ -151,7 +148,7 @@ section-only outlets (with inline `lang`/`country`, never in the news feed);
 `SECTION_CROSSLIST` adds existing news sources whose whole feed is on-topic.
 `sections_of()` maps a source to its feeds ("news" by default). `write_sections()`
 gives every section its own seen-set (`archive/seen-<key>.json`), so a URL can be
-in both news and a section; it writes `<key>/feed.json` (today), `<key>/index.html`
+in both news and a section; it writes `<key>/feed.json` (last 24 hours), `<key>/index.html`
 (SSR) and `archive/<key>/<date>.json` (durable record — no section archive pages
 yet). The news feed, country shards and landing pages only take "news" sources.
 `functions/[[path]].js` serves the section dirs from R2; the section list is also

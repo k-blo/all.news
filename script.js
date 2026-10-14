@@ -45,6 +45,36 @@ function fmtTime(s) {
   });
 }
 
+// Archive day page: /archive/2026-06-07.html (or -2, -3 …).
+const ARCHIVE_DAY_RE = /\/archive\/(\d{4}-\d{2}-\d{2})(?:-\d+)?\.html$/;
+// Live feeds show "3 h ago" (#48).
+const RELATIVE_TIMES = !ARCHIVE_DAY_RE.test(location.pathname);
+
+// Mirrors fmt_ago in crawler.py.
+function fmtAgo(s) {
+  const d = new Date(s);
+  if (!s || isNaN(d)) return "";
+  const mins = Math.floor((Date.now() - d.getTime()) / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins} min ago`;
+  if (mins < 24 * 60) return `${Math.floor(mins / 60)} h ago`;
+  return `${Math.floor(mins / (24 * 60))} d ago`;
+}
+
+// Keep "N min ago" labels current.
+function refreshTimes() {
+  for (const t of document.querySelectorAll("#list time[datetime]")) {
+    t.textContent = fmtAgo(t.dateTime);
+  }
+}
+if (RELATIVE_TIMES) {
+  refreshTimes(); // SSR labels date from crawl time
+  setInterval(refreshTimes, 60000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) refreshTimes();
+  });
+}
+
 function ts(a) {
   const d = new Date(a.published);
   return isNaN(d) ? 0 : d.getTime();
@@ -274,7 +304,7 @@ function articleHTML(a) {
   return `<li class="article" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
     `<div class="meta-col">` +
     `<a class="source" href="${home}" target="_blank" rel="noopener nofollow ugc" style="background:${color};color:${fg}">${esc(a.source)}</a>` +
-    `<span class="time">${esc(fmtTime(a.published))} ${HIDE_BTN}</span>` +
+    `<span class="time"><time datetime="${esc(a.published)}">${esc(RELATIVE_TIMES ? fmtAgo(a.published) : fmtTime(a.published))}</time> ${HIDE_BTN}</span>` +
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener nofollow ugc">${esc(a.title)}</a>` +
     `<div class="row-actions">` +
@@ -546,8 +576,8 @@ function updateAllToggles() {
   set("media", excluded.size === 0); // no source excluded = all shown
 }
 
-// Archive section: today's date (the home feed, active) + up to 30 past archive
-// days, all listed uniformly. Built once from /archive/index.json. Links are plain
+// Archive section: the home feed (last 24 hours, active) + up to 30 past archive
+// days. Built once from /archive/index.json. Links are plain
 // paths — the active filter lives in localStorage, which every archive day page
 // reads on load, so it carries across without being threaded through the URL.
 let archiveDatesPromise = null;
@@ -571,7 +601,7 @@ function buildArchiveDays(dates) {
   const a0 = document.createElement("a");
   a0.className = "today";
   a0.href = "/";
-  a0.textContent = fmtDayEn(today); // today's date (the home feed), not the word "Today"
+  a0.textContent = "Last 24 hours"; // the home feed
   box.appendChild(a0);
   const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 30);
   for (const d of past) {
@@ -1044,7 +1074,7 @@ if (dayParam) {
   location.replace(`/archive/${dayParam}.html`);
 } else {
   // archive/2026-06-07.html (or -2, -3 …) → 2026-06-07.json (sibling); else /crawled.json
-  const archiveMatch = location.pathname.match(/\/archive\/(\d{4}-\d{2}-\d{2})(?:-\d+)?\.html$/);
+  const archiveMatch = location.pathname.match(ARCHIVE_DAY_RE);
   // Landing page: /news/<country>/<lang>/ → resolve the slugs back to codes.
   const landingMatch = location.pathname.match(/^\/news\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/);
   const landingCC = landingMatch ? COUNTRY_BY_SLUG[landingMatch[1]] : null;
