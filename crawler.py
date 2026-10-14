@@ -5425,6 +5425,65 @@ def write_sitemap(dates, landing_urls=(), now_iso=None, section_urls=()):
         f.write("\n</urlset>\n")
 
 
+# IndexNow: Bing, Yandex, Naver, Seznam, Yep.
+INDEXNOW_KEY = "f76a74626807ca2987fab930cb69e9b4"  # public: /<key>.txt
+INDEXNOW_STATE = os.path.join(ARCHIVE_DIR, "indexnow.json")  # url -> last ping
+INDEXNOW_EVERY = timedelta(hours=6)  # hourly pages: ping 4x a day
+
+
+def indexnow_due(lastmod, last, now):
+    """Does a sitemap URL need a ping?"""
+    if last is None:
+        return True  # never pinged
+    if not lastmod:
+        return False  # static page: once
+    if len(lastmod) == 10:
+        # Past day: once more, when settled.
+        return last.astimezone(ZURICH).date().isoformat() <= lastmod
+    return now - last >= INDEXNOW_EVERY
+
+
+def ping_indexnow():
+    """Ping IndexNow with changed sitemap URLs."""
+    # Runs after the R2 upload.
+    now = datetime.now(timezone.utc)
+    try:
+        with open(INDEXNOW_STATE, encoding="utf-8") as f:
+            state = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        state = {}
+    ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+    listed, due = set(), []
+    for el in ET.parse("sitemap.xml").getroot():
+        loc, lastmod = el.findtext(ns + "loc"), el.findtext(ns + "lastmod")
+        listed.add(loc)
+        last = datetime.fromisoformat(state[loc]) if loc in state else None
+        if indexnow_due(lastmod, last, now):
+            due.append(loc)
+    due = due[:10000]  # IndexNow's per-request cap
+    if not due:
+        print("indexnow: nothing to ping", file=sys.stderr)
+        return
+    body = json.dumps({"host": urlsplit(SITE_ORIGIN).netloc, "key": INDEXNOW_KEY,
+                       "keyLocation": f"{SITE_ORIGIN}/{INDEXNOW_KEY}.txt",
+                       "urlList": due}).encode()
+    req = urllib.request.Request(
+        "https://api.indexnow.org/indexnow", data=body,
+        headers={"Content-Type": "application/json; charset=utf-8", "User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            status = resp.status  # 200 ok, 202 key check pending
+    except OSError as e:  # incl. HTTPError, timeouts
+        # Unchanged state: retry next run.
+        print(f"indexnow: failed for {len(due)} URLs: {e}", file=sys.stderr)
+        return
+    stamp = now.isoformat()
+    state = {u: t for u, t in state.items() if u in listed}
+    state.update({u: stamp for u in due})
+    write_json(INDEXNOW_STATE, state)
+    print(f"indexnow: HTTP {status}, pinged {len(due)} URLs", file=sys.stderr)
+
+
 # ---- Programmatic landing pages: /news/<country>/<lang>/ --------------------
 # One server-rendered page per (country, language) we carry. The SPA renders an
 # empty <ul> to search-engine bots (the article list is client-rendered), so these
@@ -6158,8 +6217,12 @@ if __name__ == "__main__":
     ap.add_argument("--out", help="partial artifact path (default: partial-<group>[-<shard>].json)")
     ap.add_argument("--reduce", nargs="+", metavar="PARTIAL",
                     help="merge partial artifacts and write all outputs (reduce step)")
+    ap.add_argument("--indexnow", action="store_true",
+                    help="ping IndexNow with changed sitemap URLs (after upload)")
     args = ap.parse_args()
-    if args.reduce:
+    if args.indexnow:
+        ping_indexnow()
+    elif args.reduce:
         run_reduce(args.reduce)
     elif args.group:
         suffix = f"-{args.shard}" if args.of > 1 else ""

@@ -125,6 +125,14 @@ Google acts on; `changefreq`/`priority` are ignored. Archive days list **page 1
 only**: Search Console showed the deeper pages as "crawled – currently not indexed",
 so listing them just spent crawl budget. They stay reachable through the pager.
 
+**IndexNow:** after the R2 upload the workflow runs `crawler.py --indexnow`
+(`ping_indexnow()`), which pings `api.indexnow.org` (shared with Bing, Yandex, Naver,
+Seznam, Yep) with the sitemap URLs that changed: new URLs at once, hourly pages at
+most every 6 hours (`INDEXNOW_EVERY`; the protocol asks not to resubmit a URL many
+times a day), past archive days once more after they end, static pages once. State
+is `archive/indexnow.json` in R2. The key is public by design: `INDEXNOW_KEY` must
+match the `<key>.txt` file in the repo root.
+
 **Programmatic landing pages:** `write_landing_pages()` writes one server-rendered
 page per (country, language) we carry at `/news/<country>/<lang>/` (e.g.
 `/news/switzerland/french/`), plus a `/news/` hub (`write_news_hub()`) linking them

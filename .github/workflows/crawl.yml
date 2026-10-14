@@ -100,6 +100,7 @@ jobs:
           rclone copy "R2:$R2_BUCKET/archive/seen.json" archive/ || true
           rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
           rclone copy "R2:$R2_BUCKET/archive/index.json" archive/ || true
+          rclone copy "R2:$R2_BUCKET/archive/indexnow.json" archive/ || true
           # topic sections: today's feed + seen-set (so reruns append, never re-add)
           for s in space business tech gaming yachting logistics luxury aviation auto energy cyber biotech watches rail ai science; do
             rclone copy "R2:$R2_BUCKET/$s/feed.json" "$s/" || true
@@ -134,6 +135,13 @@ jobs:
           done
           # today's archive pages + JSON + state files (copy = never deletes old days)
           rclone copy archive "R2:$R2_BUCKET/archive" -v
+      - name: Ping IndexNow
+        # After the upload, so engines fetch fresh pages.
+        run: |
+          if ls partials/*.json >/dev/null 2>&1; then
+            python3 crawler.py --indexnow || true
+            rclone copy archive/indexnow.json "R2:$R2_BUCKET/archive/" -v || true
+          fi
       - name: Verify R2 contents
         run: |
           echo "Total objects in bucket: $(rclone ls "R2:$R2_BUCKET" | wc -l)"
