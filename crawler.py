@@ -5282,21 +5282,28 @@ ARCHIVE_SSR_LIMIT = 500  # archive day page; rest scrolls in
 
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
                         date_heading, older_dates=(), limit=None, head_links="",
-                        html_lang="en", archive_link=True, relative_to=None):
+                        html_lang="en", archive_link=True, relative_to=None,
+                        lang_nav="", robots="index, follow"):
     """Render a page. `limit` caps the server-rendered rows (script.js loads the
     rest); the badge counts them all. `head_links` adds <head> links (hreflang);
     `html_lang` sets <html lang>; landing pages pass their own language, everything
     else (home, archive index, archive days) is an English page listing many
     languages, so the default is "en". `archive_link=False` drops the bottom
     date/archive nav (sections have no archive pages). `relative_to` (the crawl
-    time) shows row times as "3 h ago"."""
+    time) shows row times as "3 h ago" and heads each older day, as script.js
+    does. `lang_nav` links a section's language pages; `robots` sets the
+    robots meta (thin pages: noindex)."""
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
     total = len(articles)
     head = articles[:limit] if limit else articles
     rows = []
+    prev = relative_to.astimezone(ZURICH).date().isoformat() if relative_to else None
     for i, a in enumerate(head):
+        if prev and crawl_day(a) != prev:
+            prev = crawl_day(a)  # day change: header, like dayHeaderAt()
+            rows.append(f'      <li class="day-sep"><h2 class="day-heading">{fmt_day_en(prev)}</h2></li>')
         rows.append(render_article_html(a, relative_to))
         if (i + 1) % AD_EVERY == 0 and i + 1 < len(head):
             rows.append(AD_SLOT)
@@ -5304,12 +5311,14 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
     os.makedirs(os.path.dirname(dest_path) or ".", exist_ok=True)
     html = (tmpl
             .replace("<!-- HTMLLANG -->", escape(html_lang))
+            .replace("<!-- ROBOTS -->", robots)
             .replace("<!-- TITLE -->", escape(title))
             .replace("<!-- DESCRIPTION -->", escape(description))
             .replace("<!-- CANONICAL -->", escape(canonical))
             .replace("<!-- HEAD_LINKS -->", head_links)
             .replace("<!-- COUNT -->", str(total))
             .replace("<!-- DATE_HEADING -->", escape(date_heading))
+            .replace("<!-- LANG_NAV -->", lang_nav)
             .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates) if archive_link else "")
             .replace("<!-- ARTICLES -->", items))
     with open(dest_path, "w", encoding="utf-8") as f:
@@ -5479,6 +5488,20 @@ LANG_EN_NAMES = {
     "bg": "Bulgarian", "et": "Estonian", "fa": "Persian", "hr": "Croatian", "lt": "Lithuanian",
     "lv": "Latvian", "sk": "Slovak", "sr": "Serbian", "sl": "Slovenian",
     "eu": "Basque", "gl": "Galician", "ga": "Irish", "cy": "Welsh", "gd": "Scottish Gaelic",
+}
+# ISO 639-1 -> name in the language itself (mirrors LANG_NAMES in script.js).
+LANG_NAMES = {
+    "de": "Deutsch", "fr": "Français", "en": "English", "it": "Italiano", "es": "Español",
+    "nl": "Nederlands", "pt": "Português", "pl": "Polski", "sv": "Svenska", "no": "Norsk",
+    "da": "Dansk", "fi": "Suomi", "el": "Ελληνικά", "cs": "Čeština", "hu": "Magyar", "ro": "Română",
+    "uk": "Українська", "tr": "Türkçe", "ja": "日本語", "id": "Bahasa Indonesia", "vi": "Tiếng Việt",
+    "he": "עברית", "ar": "العربية", "zh": "中文", "ru": "Русский", "ko": "한국어",
+    "hi": "हिन्दी", "bn": "বাংলা", "ta": "தமிழ்", "te": "తెలుగు", "mr": "मराठी",
+    "ml": "മലയാളം", "kn": "ಕನ್ನಡ", "gu": "ગુજરાતી", "pa": "ਪੰਜਾਬੀ", "ur": "اردو",
+    "ms": "Bahasa Melayu", "tl": "Filipino", "th": "ไทย", "ca": "Català",
+    "bg": "Български", "et": "Eesti", "fa": "فارسی", "hr": "Hrvatski", "lt": "Lietuvių",
+    "lv": "Latviešu", "sk": "Slovenčina", "sr": "Srpski", "sl": "Slovenščina",
+    "eu": "Euskara", "gl": "Galego", "ga": "Gaeilge", "cy": "Cymraeg", "gd": "Gàidhlig",
 }
 
 
@@ -5706,7 +5729,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="/styles.css?v=7">
+  <link rel="stylesheet" href="/styles.css?v=8">
   <style>
     .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
     .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
@@ -6055,6 +6078,321 @@ def select_new(articles, window, seen, now_iso, today):
     return new, batch
 
 
+# ---- Section language pages: /<section>/<lang>/ ----------------------------
+# One SSR page per section and language with SECTION_LANG_MIN+ outlets, titled
+# in that language (a localized <title> ranks far better than an English one).
+# /<section>/ is their hreflang x-default. Thin pages backfill older rows from
+# SECTION_LANG_STATE, so a slow day never leaves a page near-empty; a page
+# still under LANG_MIN_ROWS is noindexed until it fills up.
+SECTION_LANG_MIN = 3   # outlets a language page needs
+LANG_FILL = 30         # backfill thin pages to this many rows
+LANG_FILL_DAYS = 14    # oldest backfilled row
+LANG_MIN_ROWS = 10     # fewer: noindex, not in the sitemap
+SECTION_LANG_STATE = os.path.join(ARCHIVE_DIR, "section-langs.json")  # "<key>/<lang>" -> rows
+SLIM_KEYS = ("source", "title", "url", "published", "lang", "country")
+
+# Topic phrase per language: title, heading, description.
+SECTION_PHRASES = {
+    "en": {"space": "Space News", "business": "Business News", "tech": "Tech News",
+           "gaming": "Gaming News", "yachting": "Yachting News", "logistics": "Logistics News",
+           "luxury": "Luxury News", "aviation": "Aviation News", "auto": "Car News",
+           "energy": "Energy News", "cyber": "Cybersecurity News", "biotech": "Biotech News",
+           "watches": "Watch News", "rail": "Rail News", "ai": "AI News", "science": "Science News"},
+    "de": {"space": "Raumfahrt-News", "business": "Wirtschaftsnachrichten", "tech": "Tech-News",
+           "gaming": "Gaming-News", "yachting": "Yacht-News", "logistics": "Logistik-News",
+           "luxury": "Luxus-News", "aviation": "Luftfahrt-News", "auto": "Auto-News",
+           "energy": "Energie-News", "cyber": "Cybersecurity-News", "biotech": "Biotech-News",
+           "watches": "Uhren-News", "rail": "Bahn-News", "ai": "KI-News",
+           "science": "Wissenschaftsnachrichten"},
+    "fr": {"space": "Actualités spatiales", "business": "Actualités économiques",
+           "tech": "Actualités tech", "gaming": "Actualités jeux vidéo",
+           "yachting": "Actualités nautisme", "logistics": "Actualités logistique",
+           "luxury": "Actualités luxe", "aviation": "Actualités aéronautiques",
+           "auto": "Actualités automobiles", "energy": "Actualités énergie",
+           "cyber": "Actualités cybersécurité", "biotech": "Actualités biotech",
+           "watches": "Actualités horlogerie", "rail": "Actualités ferroviaires",
+           "ai": "Actualités IA", "science": "Actualités scientifiques"},
+    "es": {"space": "Noticias del espacio", "business": "Noticias de economía",
+           "tech": "Noticias de tecnología", "gaming": "Noticias de videojuegos",
+           "yachting": "Noticias náuticas", "logistics": "Noticias de logística",
+           "luxury": "Noticias de lujo", "aviation": "Noticias de aviación",
+           "auto": "Noticias del motor", "energy": "Noticias de energía",
+           "cyber": "Noticias de ciberseguridad", "biotech": "Noticias de biotecnología",
+           "watches": "Noticias de relojes", "rail": "Noticias ferroviarias",
+           "ai": "Noticias de inteligencia artificial", "science": "Noticias de ciencia"},
+    "it": {"space": "Notizie dallo spazio", "business": "Notizie di economia",
+           "tech": "Notizie di tecnologia", "gaming": "Notizie sui videogiochi",
+           "yachting": "Notizie di nautica", "logistics": "Notizie di logistica",
+           "luxury": "Notizie sul lusso", "aviation": "Notizie di aviazione",
+           "auto": "Notizie auto", "energy": "Notizie sull'energia",
+           "cyber": "Notizie di cybersecurity", "biotech": "Notizie di biotecnologie",
+           "watches": "Notizie di orologeria", "rail": "Notizie ferroviarie",
+           "ai": "Notizie sull'intelligenza artificiale", "science": "Notizie di scienza"},
+    "pt": {"space": "Notícias do espaço", "business": "Notícias de economia",
+           "tech": "Notícias de tecnologia", "gaming": "Notícias de games",
+           "yachting": "Notícias náuticas", "logistics": "Notícias de logística",
+           "luxury": "Notícias de luxo", "aviation": "Notícias de aviação",
+           "auto": "Notícias automotivas", "energy": "Notícias de energia",
+           "cyber": "Notícias de cibersegurança", "biotech": "Notícias de biotecnologia",
+           "watches": "Notícias de relógios", "rail": "Notícias ferroviárias",
+           "ai": "Notícias de inteligência artificial", "science": "Notícias de ciência"},
+    "nl": {"space": "Ruimtevaartnieuws", "business": "Economisch nieuws", "tech": "Technieuws",
+           "gaming": "Gamenieuws", "yachting": "Watersportnieuws", "logistics": "Logistiek nieuws",
+           "luxury": "Nieuws over luxe", "aviation": "Luchtvaartnieuws", "auto": "Autonieuws",
+           "energy": "Energienieuws", "cyber": "Cybersecuritynieuws", "biotech": "Biotechnieuws",
+           "watches": "Horlogenieuws", "rail": "Spoornieuws", "ai": "AI-nieuws",
+           "science": "Wetenschapsnieuws"},
+    "pl": {"space": "Wiadomości o kosmosie", "business": "Wiadomości gospodarcze",
+           "tech": "Wiadomości technologiczne", "gaming": "Wiadomości o grach",
+           "yachting": "Wiadomości żeglarskie", "logistics": "Wiadomości logistyczne",
+           "luxury": "Wiadomości ze świata luksusu", "aviation": "Wiadomości lotnicze",
+           "auto": "Wiadomości motoryzacyjne", "energy": "Wiadomości energetyczne",
+           "cyber": "Wiadomości o cyberbezpieczeństwie", "biotech": "Wiadomości biotechnologiczne",
+           "watches": "Wiadomości o zegarkach", "rail": "Wiadomości kolejowe",
+           "ai": "Wiadomości o sztucznej inteligencji", "science": "Wiadomości naukowe"},
+    "cs": {"space": "Zprávy z vesmíru", "business": "Ekonomické zprávy",
+           "tech": "Technologické zprávy", "gaming": "Herní zprávy",
+           "yachting": "Jachtařské zprávy", "logistics": "Zprávy z logistiky",
+           "luxury": "Zprávy ze světa luxusu", "aviation": "Letecké zprávy",
+           "auto": "Zprávy ze světa aut", "energy": "Zprávy z energetiky",
+           "cyber": "Zprávy o kybernetické bezpečnosti", "biotech": "Zprávy z biotechnologií",
+           "watches": "Zprávy ze světa hodinek", "rail": "Železniční zprávy",
+           "ai": "Zprávy o umělé inteligenci", "science": "Vědecké zprávy"},
+    "da": {"space": "Rumfartsnyheder", "business": "Erhvervsnyheder", "tech": "Tech-nyheder",
+           "gaming": "Gamingnyheder", "yachting": "Sejlsportsnyheder", "logistics": "Logistiknyheder",
+           "luxury": "Luksusnyheder", "aviation": "Luftfartsnyheder", "auto": "Bilnyheder",
+           "energy": "Energinyheder", "cyber": "Nyheder om cybersikkerhed",
+           "biotech": "Biotech-nyheder", "watches": "Urnyheder", "rail": "Jernbanenyheder",
+           "ai": "AI-nyheder", "science": "Videnskabsnyheder"},
+    "sv": {"space": "Rymdnyheter", "business": "Ekonominyheter", "tech": "Tekniknyheter",
+           "gaming": "Spelnyheter", "yachting": "Seglingsnyheter", "logistics": "Logistiknyheter",
+           "luxury": "Lyxnyheter", "aviation": "Flygnyheter", "auto": "Bilnyheter",
+           "energy": "Energinyheter", "cyber": "Nyheter om cybersäkerhet",
+           "biotech": "Bioteknyheter", "watches": "Klocknyheter", "rail": "Järnvägsnyheter",
+           "ai": "AI-nyheter", "science": "Vetenskapsnyheter"},
+    "no": {"space": "Romfartsnyheter", "business": "Næringslivsnyheter",
+           "tech": "Teknologinyheter", "gaming": "Spillnyheter", "yachting": "Seilingsnyheter",
+           "logistics": "Logistikknyheter", "luxury": "Luksusnyheter",
+           "aviation": "Luftfartsnyheter", "auto": "Bilnyheter", "energy": "Energinyheter",
+           "cyber": "Nyheter om cybersikkerhet", "biotech": "Bioteknologinyheter",
+           "watches": "Klokkenyheter", "rail": "Jernbanenyheter", "ai": "KI-nyheter",
+           "science": "Forskningsnyheter"},
+    "fi": {"space": "Avaruusuutiset", "business": "Talousuutiset", "tech": "Teknologiauutiset",
+           "gaming": "Peliuutiset", "yachting": "Purjehdusuutiset",
+           "logistics": "Logistiikkauutiset", "luxury": "Luksusuutiset",
+           "aviation": "Ilmailu-uutiset", "auto": "Autouutiset", "energy": "Energiauutiset",
+           "cyber": "Kyberturvallisuusuutiset", "biotech": "Biotekniikkauutiset",
+           "watches": "Kellouutiset", "rail": "Rautatieuutiset", "ai": "Tekoälyuutiset",
+           "science": "Tiedeuutiset"},
+    "el": {"space": "Ειδήσεις για το διάστημα", "business": "Οικονομικές ειδήσεις",
+           "tech": "Ειδήσεις τεχνολογίας", "gaming": "Ειδήσεις για το gaming",
+           "yachting": "Ειδήσεις για σκάφη αναψυχής",
+           "logistics": "Ειδήσεις εφοδιαστικής αλυσίδας", "luxury": "Ειδήσεις πολυτέλειας",
+           "aviation": "Αεροπορικές ειδήσεις", "auto": "Ειδήσεις αυτοκινήτου",
+           "energy": "Ειδήσεις ενέργειας", "cyber": "Ειδήσεις κυβερνοασφάλειας",
+           "biotech": "Ειδήσεις βιοτεχνολογίας", "watches": "Ειδήσεις ωρολογοποιίας",
+           "rail": "Σιδηροδρομικές ειδήσεις", "ai": "Ειδήσεις τεχνητής νοημοσύνης",
+           "science": "Επιστημονικές ειδήσεις"},
+    "hu": {"space": "Űrkutatási hírek", "business": "Gazdasági hírek",
+           "tech": "Technológiai hírek", "gaming": "Játékhírek", "yachting": "Vitorlás hírek",
+           "logistics": "Logisztikai hírek", "luxury": "Luxus hírek",
+           "aviation": "Repülési hírek", "auto": "Autós hírek", "energy": "Energetikai hírek",
+           "cyber": "Kiberbiztonsági hírek", "biotech": "Biotechnológiai hírek",
+           "watches": "Karóra hírek", "rail": "Vasúti hírek",
+           "ai": "Mesterséges intelligencia hírek", "science": "Tudományos hírek"},
+    "ro": {"space": "Știri despre spațiu", "business": "Știri economice", "tech": "Știri tech",
+           "gaming": "Știri despre jocuri", "yachting": "Știri nautice",
+           "logistics": "Știri din logistică", "luxury": "Știri despre lux",
+           "aviation": "Știri din aviație", "auto": "Știri auto", "energy": "Știri din energie",
+           "cyber": "Știri despre securitate cibernetică", "biotech": "Știri din biotehnologie",
+           "watches": "Știri despre ceasuri", "rail": "Știri feroviare",
+           "ai": "Știri despre inteligența artificială", "science": "Știri din știință"},
+    "ru": {"space": "Новости космоса", "business": "Экономические новости",
+           "tech": "Новости технологий", "gaming": "Игровые новости",
+           "yachting": "Новости яхтинга", "logistics": "Новости логистики",
+           "luxury": "Новости индустрии роскоши", "aviation": "Новости авиации",
+           "auto": "Автоновости", "energy": "Новости энергетики",
+           "cyber": "Новости кибербезопасности", "biotech": "Новости биотехнологий",
+           "watches": "Новости часовой индустрии", "rail": "Железнодорожные новости",
+           "ai": "Новости ИИ", "science": "Новости науки"},
+    "uk": {"space": "Новини космосу", "business": "Економічні новини",
+           "tech": "Новини технологій", "gaming": "Ігрові новини",
+           "yachting": "Новини яхтингу", "logistics": "Новини логістики",
+           "luxury": "Новини індустрії розкоші", "aviation": "Новини авіації",
+           "auto": "Автоновини", "energy": "Новини енергетики",
+           "cyber": "Новини кібербезпеки", "biotech": "Новини біотехнологій",
+           "watches": "Новини годинникової індустрії", "rail": "Залізничні новини",
+           "ai": "Новини ШІ", "science": "Новини науки"},
+    "tr": {"space": "Uzay haberleri", "business": "Ekonomi haberleri",
+           "tech": "Teknoloji haberleri", "gaming": "Oyun haberleri",
+           "yachting": "Yatçılık haberleri", "logistics": "Lojistik haberleri",
+           "luxury": "Lüks dünyası haberleri", "aviation": "Havacılık haberleri",
+           "auto": "Otomobil haberleri", "energy": "Enerji haberleri",
+           "cyber": "Siber güvenlik haberleri", "biotech": "Biyoteknoloji haberleri",
+           "watches": "Saat haberleri", "rail": "Demiryolu haberleri",
+           "ai": "Yapay zeka haberleri", "science": "Bilim haberleri"},
+    "id": {"space": "Berita antariksa", "business": "Berita ekonomi", "tech": "Berita teknologi",
+           "gaming": "Berita game", "yachting": "Berita pelayaran", "logistics": "Berita logistik",
+           "luxury": "Berita barang mewah", "aviation": "Berita penerbangan",
+           "auto": "Berita otomotif", "energy": "Berita energi", "cyber": "Berita keamanan siber",
+           "biotech": "Berita bioteknologi", "watches": "Berita jam tangan",
+           "rail": "Berita kereta api", "ai": "Berita AI", "science": "Berita sains"},
+    "vi": {"space": "Tin tức vũ trụ", "business": "Tin tức kinh tế", "tech": "Tin tức công nghệ",
+           "gaming": "Tin tức game", "yachting": "Tin tức du thuyền",
+           "logistics": "Tin tức logistics", "luxury": "Tin tức hàng xa xỉ",
+           "aviation": "Tin tức hàng không", "auto": "Tin tức ô tô",
+           "energy": "Tin tức năng lượng", "cyber": "Tin tức an ninh mạng",
+           "biotech": "Tin tức công nghệ sinh học", "watches": "Tin tức đồng hồ",
+           "rail": "Tin tức đường sắt", "ai": "Tin tức trí tuệ nhân tạo",
+           "science": "Tin tức khoa học"},
+    "th": {"space": "ข่าวอวกาศ", "business": "ข่าวเศรษฐกิจ", "tech": "ข่าวเทคโนโลยี",
+           "gaming": "ข่าวเกม", "yachting": "ข่าวเรือยอชต์", "logistics": "ข่าวโลจิสติกส์",
+           "luxury": "ข่าวสินค้าหรู", "aviation": "ข่าวการบิน", "auto": "ข่าวรถยนต์",
+           "energy": "ข่าวพลังงาน", "cyber": "ข่าวความปลอดภัยไซเบอร์",
+           "biotech": "ข่าวเทคโนโลยีชีวภาพ", "watches": "ข่าวนาฬิกา", "rail": "ข่าวรถไฟ",
+           "ai": "ข่าว AI", "science": "ข่าววิทยาศาสตร์"},
+    "ja": {"space": "宇宙ニュース", "business": "経済ニュース", "tech": "テクノロジーニュース",
+           "gaming": "ゲームニュース", "yachting": "ヨットニュース", "logistics": "物流ニュース",
+           "luxury": "ラグジュアリーニュース", "aviation": "航空ニュース", "auto": "自動車ニュース",
+           "energy": "エネルギーニュース", "cyber": "サイバーセキュリティニュース",
+           "biotech": "バイオ・製薬ニュース", "watches": "時計ニュース", "rail": "鉄道ニュース",
+           "ai": "AIニュース", "science": "科学ニュース"},
+    "ko": {"space": "우주 뉴스", "business": "경제 뉴스", "tech": "테크 뉴스",
+           "gaming": "게임 뉴스", "yachting": "요트 뉴스", "logistics": "물류 뉴스",
+           "luxury": "럭셔리 뉴스", "aviation": "항공 뉴스", "auto": "자동차 뉴스",
+           "energy": "에너지 뉴스", "cyber": "사이버보안 뉴스", "biotech": "바이오 뉴스",
+           "watches": "시계 뉴스", "rail": "철도 뉴스", "ai": "AI 뉴스", "science": "과학 뉴스"},
+    # Traditional, like LANDING_STRINGS["zh"]: Google reaches TW/HK.
+    "zh": {"space": "太空新聞", "business": "財經新聞", "tech": "科技新聞", "gaming": "遊戲新聞",
+           "yachting": "遊艇新聞", "logistics": "物流新聞", "luxury": "精品新聞",
+           "aviation": "航空新聞", "auto": "汽車新聞", "energy": "能源新聞", "cyber": "資安新聞",
+           "biotech": "生技新聞", "watches": "腕錶新聞", "rail": "鐵路新聞", "ai": "AI新聞",
+           "science": "科學新聞"},
+}
+# Per-language copy around the phrase {s}. "t" = title, "d" = meta description.
+SECTION_LANG_STRINGS = {
+    "en": {"t": "{s}: Latest Headlines in English",
+           "d": "{s} in English from leading outlets, updated hourly."},
+    "de": {"t": "{s}: aktuelle Schlagzeilen", "d": "{s} führender Medien, stündlich aktualisiert."},
+    "fr": {"t": "{s} : les derniers titres", "d": "{s} des grands médias, mises à jour chaque heure."},
+    "es": {"t": "{s}: últimos titulares", "d": "{s} de los principales medios, actualizadas cada hora."},
+    "it": {"t": "{s}: ultimi titoli", "d": "{s} dalle principali testate, aggiornate ogni ora."},
+    "pt": {"t": "{s}: últimas manchetes", "d": "{s} dos principais sites e jornais, atualizadas a cada hora."},
+    "nl": {"t": "{s}: de laatste koppen", "d": "{s} van toonaangevende media, elk uur bijgewerkt."},
+    "pl": {"t": "{s}: najnowsze nagłówki", "d": "{s} z wiodących mediów, aktualizowane co godzinę."},
+    "cs": {"t": "{s}: nejnovější titulky", "d": "{s} z předních médií, aktualizované každou hodinu."},
+    "da": {"t": "{s}: seneste overskrifter", "d": "{s} fra førende medier, opdateret hver time."},
+    "sv": {"t": "{s}: senaste rubrikerna", "d": "{s} från ledande medier, uppdateras varje timme."},
+    "no": {"t": "{s}: siste overskrifter", "d": "{s} fra ledende medier, oppdatert hver time."},
+    "fi": {"t": "{s}: tuoreimmat otsikot", "d": "{s} johtavista medioista, päivittyy tunneittain."},
+    "el": {"t": "{s}: οι τελευταίοι τίτλοι", "d": "{s} από κορυφαία μέσα, με ανανέωση κάθε ώρα."},
+    "hu": {"t": "{s}: a legfrissebb címek", "d": "{s} vezető médiumoktól, óránként frissítve."},
+    "ro": {"t": "{s}: ultimele titluri", "d": "{s} din presa de top, actualizate în fiecare oră."},
+    "ru": {"t": "{s}: последние заголовки", "d": "{s} из ведущих СМИ, обновление каждый час."},
+    "uk": {"t": "{s}: останні заголовки", "d": "{s} з провідних ЗМІ, оновлення щогодини."},
+    "tr": {"t": "{s}: son başlıklar", "d": "{s} önde gelen yayınlardan, her saat güncellenir."},
+    "id": {"t": "{s} terbaru hari ini", "d": "{s} dari media terkemuka, diperbarui setiap jam."},
+    "vi": {"t": "{s} mới nhất", "d": "{s} từ các báo hàng đầu, cập nhật hằng giờ."},
+    "th": {"t": "{s}ล่าสุด", "d": "{s}จากสื่อชั้นนำ อัปเดตทุกชั่วโมง"},
+    "ja": {"t": "最新の{s}", "d": "主要メディアの{s}を毎時更新。"},
+    "ko": {"t": "최신 {s}", "d": "주요 언론의 {s}, 매시간 업데이트."},
+    "zh": {"t": "最新{s}", "d": "匯集主要媒體的{s}，每小時更新。"},
+}
+
+
+def section_lang_map():
+    """Section -> languages with a page."""
+    # From the source config, so URLs stay stable.
+    outlets = {}
+    for name, _ in jobs_for(None):
+        lang = origin_of(name)["lang"].lower()
+        for key in sections_of(name) - {"news"}:
+            outlets.setdefault((key, lang), set()).add(name)
+    out = {}
+    for (key, lang), names in sorted(outlets.items()):
+        if len(names) >= SECTION_LANG_MIN:
+            out.setdefault(key, []).append(lang)
+    return out
+
+
+def section_lang_url(key, lang):
+    return f"/{key}/{lang_slug(lang)}/"
+
+
+def lang_order(lang):
+    """Sort key: Latin names A-Z, then others."""
+    name = LANG_NAMES.get(lang, lang)
+    folded = slugify(name)
+    return (0, folded) if folded else (1, name)
+
+
+def section_alternates(key, langs):
+    """hreflang links: each language, /<key>/ as x-default."""
+    if not langs:
+        return ""
+    links = [f'<link rel="alternate" hreflang="{l}" href="{SITE_ORIGIN}{section_lang_url(key, l)}">'
+             for l in langs]
+    links.append(f'<link rel="alternate" hreflang="x-default" href="{SITE_ORIGIN}/{key}/">')
+    return "\n  ".join(links)
+
+
+def section_lang_nav(key, langs, current=None):
+    """Links to a section's language pages."""
+    if not langs:
+        return ""
+    items = [("All languages", f"/{key}/", current is None)]
+    items += [(LANG_NAMES.get(l, l), section_lang_url(key, l), l == current)
+              for l in sorted(langs, key=lang_order)]
+    links = []
+    for text, url, here in items:
+        mark = ' aria-current="page"' if here else ""
+        links.append(f'<a href="{url}"{mark}>{escape(text)}</a>')
+    return f'      <nav class="lang-nav" aria-label="Languages">{"".join(links)}</nav>'
+
+
+def section_lang_copy(key, lang):
+    """Localized (heading, title, description)."""
+    phrase = SECTION_PHRASES.get(lang, {}).get(key)
+    copy = SECTION_LANG_STRINGS.get(lang)
+    if not (phrase and copy):  # untranslated: English
+        phrase = f"{SECTION_PHRASES['en'][key]} in {LANG_EN_NAMES.get(lang, lang)}"
+        copy = {"t": "{s}: Latest Headlines", "d": "{s} from leading outlets, updated hourly."}
+    return phrase, f"{copy['t'].format(s=phrase)} – all.news", copy["d"].format(s=phrase)
+
+
+def fill_thin(rows, kept, now):
+    """Rows plus older ones if thin; new state."""
+    cutoff = now - timedelta(days=LANG_FILL_DAYS)
+    urls = {a["url"] for a in rows}
+    older = [a for a in kept if a["url"] not in urls and crawl_time(a) >= cutoff]
+    merged = sorted(rows + older, key=lambda a: a.get("published", ""), reverse=True)
+    state = [{k: a[k] for k in SLIM_KEYS if k in a} for a in merged[:LANG_FILL]]
+    return merged[:max(LANG_FILL, len(rows))], state
+
+
+def write_section_langs(key, result, langs, kept, now):
+    """A section's language pages.
+    Returns (indexed langs, state)."""
+    pages, state = {}, {}
+    for lang in langs:
+        rows = [a for a in result if (a.get("lang") or "").lower() == lang]
+        pages[lang], state[f"{key}/{lang}"] = fill_thin(rows, kept.get(f"{key}/{lang}", []), now)
+    indexed = [l for l in langs if len(pages[l]) >= LANG_MIN_ROWS]
+    alts = section_alternates(key, indexed)
+    for lang in langs:
+        heading, title, desc = section_lang_copy(key, lang)
+        url = section_lang_url(key, lang)
+        listed = lang in indexed
+        write_rendered_html(
+            pages[lang], os.path.join(key, lang_slug(lang), "index.html"),
+            title=title, description=desc, canonical=f"{SITE_ORIGIN}{url}",
+            date_heading=heading, limit=SSR_LIMIT, head_links=alts if listed else "",
+            html_lang=lang, archive_link=False, relative_to=now,
+            lang_nav=section_lang_nav(key, langs, lang),
+            robots="index, follow" if listed else "noindex, follow")
+    return indexed, state
+
+
 def section_feed_path(key):
     return os.path.join(key, "feed.json")
 
@@ -6066,9 +6404,17 @@ def section_seen_path(key):
 def write_sections(rows, now, today, since):
     """Each topic section from the rows of its sources: the live feed
     (<key>/feed.json, last 24 hours), the day's record (archive/<key>/<date>.json),
-    its own seen-set and its SSR page (<key>/index.html). Returns the page URLs."""
+    its own seen-set, its SSR page (<key>/index.html) and its language pages
+    (<key>/<lang>/index.html). Returns the page URLs."""
     now_iso = now.isoformat()
     urls = []
+    page_langs = section_lang_map()
+    try:
+        with open(SECTION_LANG_STATE, encoding="utf-8") as f:
+            kept = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        kept = {}
+    state = {}
     for key, meta in SECTIONS.items():
         existing = load_window(section_feed_path(key), since)
         seen = load_seen(section_seen_path(key))
@@ -6086,6 +6432,9 @@ def write_sections(rows, now, today, since):
                     "count": len(day), "articles": day})
         write_json(section_seen_path(key), sorted(seen | batch))
         name = meta["name"]
+        langs = page_langs.get(key, [])
+        indexed, lang_state = write_section_langs(key, result, langs, kept, now)
+        state.update(lang_state)
         write_rendered_html(
             result, os.path.join(key, "index.html"),
             title=f"{name} News From Every Source in One Place – all.news",
@@ -6093,10 +6442,13 @@ def write_sections(rows, now, today, since):
                          "on one page and updated around the clock. Filter by language and source."),
             canonical=f"{SITE_ORIGIN}/{key}/",
             date_heading=f"{name} · {LIVE_HEADING}",
-            limit=SSR_LIMIT, archive_link=False, relative_to=now)
+            limit=SSR_LIMIT, archive_link=False, relative_to=now,
+            head_links=section_alternates(key, indexed), lang_nav=section_lang_nav(key, langs))
         urls.append(f"/{key}/")
-        print(f"wrote {key}: +{len(new)} new, {len(result)} in the last 24 hours",
-              file=sys.stderr)
+        urls += [section_lang_url(key, l) for l in indexed]
+        print(f"wrote {key}: +{len(new)} new, {len(result)} in the last 24 hours, "
+              f"{len(indexed)}/{len(langs)} language pages indexed", file=sys.stderr)
+    write_json(SECTION_LANG_STATE, state)
     return urls
 
 

@@ -175,7 +175,21 @@ yet). The news feed, country shards and landing pages only take "news" sources.
 `functions/[[path]].js` serves the section dirs from R2; the section list is also
 in `script.js` (`SECTIONS`) and the workflow loops — keep all three in sync.
 
-**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`). If the source introduces a **new country or language**, add its English name to `COUNTRY_NAMES`/`LANG_EN_NAMES` in **both** `crawler.py` and `script.js` (and the display name to `COUNTRY_NAMES`/`LANG_NAMES` in `script.js`), or its landing page shows the raw code and won't hydrate.
+**Section language pages** (`/<section>/<lang>/`, e.g. `/ai/german/`): one SSR page
+per section and language with `SECTION_LANG_MIN` (3)+ outlets in the source config
+(`section_lang_map()`), so the URL set is stable. Titled in the page's language
+(`SECTION_PHRASES` × `SECTION_LANG_STRINGS`; a language missing there falls back to
+English copy). Each section's pages form an hreflang cluster with `/<section>/` as
+x-default, and a row of language links (`section_lang_nav()`, native names from
+`LANG_NAMES`, mirrored from `script.js`) sits under the heading of the section page
+and every language page. Thin pages backfill to `LANG_FILL` rows from the last
+`LANG_FILL_DAYS` days (state `archive/section-langs.json`, pulled from R2 each run);
+a page still under `LANG_MIN_ROWS` is `noindex` and left out of the sitemap and the
+hreflang cluster until it fills up. `script.js` resolves the slug (`SECTION_LANG`)
+and pins the language without persisting it, like the landing pages. The worker
+301s `/ai/german` to `/ai/german/`.
+
+**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`). If the source introduces a **new country or language**, add its English name to `COUNTRY_NAMES`/`LANG_EN_NAMES` in **both** `crawler.py` and `script.js` (and the display name to `COUNTRY_NAMES`/`LANG_NAMES` in `script.js`, plus `LANG_NAMES` in `crawler.py`), or its landing page shows the raw code and won't hydrate. A language that reaches 3 outlets in a section gets a section language page: add its copy to `SECTION_PHRASES`/`SECTION_LANG_STRINGS`.
 
 **Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.) Judge robots.txt by RFC 9309 / Google semantics — longest match wins, `*` and `$` wildcards, a 4xx robots.txt means no rules. Python's `urllib.robotparser` gets this wrong (first match, no wildcards, 403 = disallow all), so don't rely on it. The rule is for *adding* sources: an existing source that still works stays even if its robots.txt has since tightened; only sources that stopped working are removed.
 
@@ -187,6 +201,7 @@ Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json
 `/<section>/feed.json` (single-file, like archive days), hides the Countries and
 Archive filter groups, and stores filters under `allnews.<section>.*`. A first visit
 seeds the language filter from the browser languages (relaxed to all if empty).
+On `/<section>/<lang>/` the path pins the language instead (`SECTION_LANG`).
 
 **Menu** lists the sections (current one marked by `script.js`) plus Settings.
 
@@ -211,4 +226,5 @@ the footer "Cookie settings" link reopen it (falls back to `/cookies#manage`).
 The article list is server-rendered at crawl time by `write_rendered_html()` — the home
 feed ships its newest `SSR_LIMIT` (120) rows in the HTML and `script.js` lazy-loads the
 rest, archive day pages and landing pages ship their full slice. Bots get real headlines
-without executing JS.
+without executing JS. Live pages head each older day like `script.js` does
+(`<li class="day-sep">`), so hydration doesn't shift the rows.

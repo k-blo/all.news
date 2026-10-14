@@ -69,8 +69,9 @@ export async function onRequest(context) {
   if (/^\/news\/.+[^/]$/.test(url.pathname) && !url.pathname.slice(1).includes(".")) {
     return Response.redirect(url.origin + url.pathname + "/" + url.search, 301);
   }
-  // Same for sections: /space → /space/.
-  if (SECTIONS.includes(url.pathname.slice(1))) {
+  // Same for sections: /space → /space/, /space/german → /space/german/.
+  const [, first, lang, rest] = url.pathname.split("/");
+  if (SECTIONS.includes(first) && rest === undefined && (lang === undefined || /^[a-z0-9-]+$/.test(lang))) {
     return Response.redirect(url.origin + url.pathname + "/" + url.search, 301);
   }
   const key = r2Key(url.pathname);

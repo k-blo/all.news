@@ -130,7 +130,11 @@ const SECTIONS = [
   "space", "business", "tech", "gaming", "yachting", "logistics", "luxury",
   "aviation", "auto", "energy", "cyber", "biotech", "watches", "rail", "ai", "science",
 ];
-const SECTION = (location.pathname.match(new RegExp(`^/(${SECTIONS.join("|")})/?$`)) || [])[1] || null;
+const _sectionPath = location.pathname.match(
+  new RegExp(`^/(${SECTIONS.join("|")})(?:/([a-z0-9-]+))?/?$`)) || [];
+const SECTION = _sectionPath[1] || null;
+// /<section>/<lang>/ pins the language (resolved below).
+const SECTION_LANG_SLUG = _sectionPath[2] || null;
 
 // ---------- Persistent filter state (localStorage, never the URL) ----------
 // The durable filters — excluded sources, countries, languages — live in
@@ -190,7 +194,8 @@ const COUNTRY_NAMES = {
   PH: "Philippines", VN: "Vietnam", PK: "Pakistan", IL: "Israel", QA: "Qatar", HK: "Hong Kong",
   CN: "China", RU: "Russia",
 };
-// ISO 639-1 -> display name (shown in the source's own language).
+// ISO 639-1 -> display name (shown in the source's own language; mirrors
+// LANG_NAMES in crawler.py).
 const LANG_NAMES = {
   de: "Deutsch", fr: "Français", en: "English", it: "Italiano", es: "Español",
   nl: "Nederlands", pt: "Português", pl: "Polski", sv: "Svenska", no: "Norsk",
@@ -205,7 +210,7 @@ const LANG_NAMES = {
   eu: "Euskara", gl: "Galego", ga: "Gaeilge", cy: "Cymraeg", gd: "Gàidhlig",
 };
 // ISO 639-1 -> English name (mirrors LANG_EN_NAMES in crawler.py). Used only to
-// resolve landing-page URL slugs (/news/<country>/<lang>/) back to codes.
+// resolve URL slugs (/news/<country>/<lang>/, /<section>/<lang>/) back to codes.
 const LANG_EN_NAMES = {
   de: "German", fr: "French", en: "English", it: "Italian", es: "Spanish",
   nl: "Dutch", pt: "Portuguese", pl: "Polish", sv: "Swedish", no: "Norwegian",
@@ -229,6 +234,8 @@ const COUNTRY_BY_SLUG = {};
 for (const cc in COUNTRY_NAMES) COUNTRY_BY_SLUG[slugify(COUNTRY_NAMES[cc])] = cc;
 const LANG_BY_SLUG = {};
 for (const l in LANG_EN_NAMES) LANG_BY_SLUG[slugify(LANG_EN_NAMES[l])] = l;
+// Section language page: its language code.
+const SECTION_LANG = SECTION_LANG_SLUG ? LANG_BY_SLUG[SECTION_LANG_SLUG] || null : null;
 
 const EN_MONTHS = ["", "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
@@ -276,8 +283,9 @@ function matchesQuery(a) {
 }
 
 // Persist the whole filter selection to localStorage. Landing pages are pinned by
-// their /news/<country>/<lang>/ path, so filtering within one is transient and must
-// not overwrite the visitor's remembered home preferences.
+// their /news/<country>/<lang>/ path (section language pages by /<section>/<lang>/),
+// so filtering within one is transient and must not overwrite the visitor's
+// remembered preferences.
 function persistFilters() {
   if (isLanding) return;
   lsSet(STORE_EXCLUDE, [...excluded].join(","));
@@ -879,6 +887,7 @@ const GLOBAL_URL = ARCHIVE_DAY ? `/archive/${ARCHIVE_DAY}.json` : "/crawled.json
 // Landing pages (/news/<country>/<lang>/) pre-set the country+lang filter from the
 // path and behave like a filtered home view. The path is the canonical state, so
 // persistFilters() is a no-op there and won't overwrite the visitor's home prefs.
+// Section language pages (/<section>/<lang>/) are pinned the same way.
 let isLanding = false;
 
 // `current` accumulates the articles loaded so far (union of fetched shards, or the
@@ -1223,12 +1232,12 @@ if (dayParam) {
   const landingMatch = location.pathname.match(/^\/news\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/);
   const landingCC = landingMatch ? COUNTRY_BY_SLUG[landingMatch[1]] : null;
   const landingLang = landingMatch ? LANG_BY_SLUG[landingMatch[2]] : null;
-  isLanding = !!(landingCC && landingLang);
+  isLanding = !!(landingCC && landingLang) || !!SECTION_LANG;
   DATA_URL = SECTION ? `/${SECTION}/feed.json` : "/crawled.json";
   // Sections keep the single-file model; home and archive days shard by country.
   singleFile = !!SECTION;
   // A section's first visit starts from the browser's languages.
-  if (SECTION && lsGet(STORE_LANG) === null) seedSectionLangs();
+  if (SECTION && !SECTION_LANG && lsGet(STORE_LANG) === null) seedSectionLangs();
   // Filter state was already loaded from localStorage at module init; is anything
   // actually narrowing the feed?
   const hasFilter = excluded.size || !countriesAll || !langsAll || query;
@@ -1236,7 +1245,11 @@ if (dayParam) {
   if (SECTION) {
     // Section page: one feed, language + media filters only. Saved (or seeded)
     // filters relax rather than ever leaving the section empty.
-    if (hasFilter) { autoDefault = true; applySsrFilter(); }
+    if (SECTION_LANG) {
+      // Language page: the path fixes the language; never relaxed.
+      setPrimaryLang(SECTION_LANG);
+      applySsrFilter();
+    } else if (hasFilter) { autoDefault = true; applySsrFilter(); }
     loadData().then(() => { if (current.length) render(current, sortMode()); });
   } else if (archiveMatch) {
     // Archive day page: one SSR page per day. The saved filter (loaded from
