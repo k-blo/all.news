@@ -235,11 +235,13 @@ function fmtDayEn(iso) {
   const [y, m, d] = (iso || "").split("-");
   return EN_MONTHS[+m] ? `${+d} ${EN_MONTHS[+m]} ${y}` : iso;
 }
+// YYYY-MM-DD in Swiss local time.
+const ZDAY = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Zurich", year: "numeric", month: "2-digit", day: "2-digit",
+});
 // Today's date (YYYY-MM-DD) in Swiss local time — matches the crawler's "today".
 function todayISO() {
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Europe/Zurich", year: "numeric", month: "2-digit", day: "2-digit",
-  }).format(new Date());
+  return ZDAY.format(new Date());
 }
 // Badge color: brand color if listed, else a stable hashed hue (mirrors
 // color_for() in crawler.py) so every source gets a distinct color.
@@ -334,9 +336,12 @@ let scrollObserver = null;
 function render(articles, mode) {
   const list = document.getElementById("list");
   if (!list) return;
+  if (INFINITE && selectionKey() !== olderKey) { resetOlder(); olderKey = selectionKey(); }
   visibleArticles = sortedArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
-  setCountBadge(visibleArticles.length);
+  setCountBadge(visibleArticles.length); // the live feed only
+  blockStart = new Map();
+  for (const day of olderDays) addDayRows(day, mode);
   if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
   list.innerHTML = "";
   shownCount = 0;
@@ -354,8 +359,11 @@ function appendBatch() {
   const list = document.getElementById("list");
   if (!list) return;
   const end = Math.min(shownCount + PAGE, visibleArticles.length);
+  const mode = sortMode();
   const parts = [];
   for (let i = shownCount; i < end; i++) {
+    const day = dayHeaderAt(i, mode);
+    if (day) parts.push(`<li class="day-sep"><h2 class="day-heading">${esc(fmtDayEn(day))}</h2></li>`);
     parts.push(articleHTML(visibleArticles[i]));
     if ((i + 1) % AD_EVERY === 0 && i + 1 < visibleArticles.length) parts.push(AD_SLOT_HTML);
   }
@@ -369,7 +377,8 @@ function appendBatch() {
 function updateSentinel() {
   const list = document.getElementById("list");
   let sentinel = document.getElementById("scrollSentinel");
-  if (shownCount >= visibleArticles.length) { // all rendered — tear down
+  const more = shownCount < visibleArticles.length || (INFINITE && !olderDone);
+  if (!more) { // all rendered, no older days — tear down
     if (sentinel) sentinel.remove();
     if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
     return;
@@ -380,12 +389,116 @@ function updateSentinel() {
     sentinel.className = "scroll-sentinel";
     list.appendChild(sentinel);
     scrollObserver = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) appendBatch();
+      if (entries.some((e) => e.isIntersecting)) pump();
     }, { rootMargin: "1000px" });
     scrollObserver.observe(sentinel);
   } else {
     list.appendChild(sentinel); // keep it last after the freshly inserted rows
   }
+  pump(); // the observer may not fire again
+}
+
+// Render or load more while the end is near.
+function pump() {
+  const s = document.getElementById("scrollSentinel");
+  const r = s && s.getBoundingClientRect();
+  if (!r || !r.height || r.top > innerHeight + 1000) return; // hidden or far
+  if (shownCount < visibleArticles.length) appendBatch();
+  else loadOlderDay();
+}
+
+// ---------- Infinite scroll into past days ----------
+// Live feeds continue into archive days below.
+const INFINITE = RELATIVE_TIMES; // not on archive day pages
+let olderDays = [];          // loaded past days [{date, articles}], newest first
+let olderUrls = new Set();   // their URLs, for dedup
+let olderKey = null;         // the selection they were loaded for
+let olderGen = 0;            // bumped on reset; drops stale loads
+let olderBusy = false;
+let olderDone = false;
+let olderMiss = 0;           // consecutive days without rows
+let blockStart = new Map();  // row index -> past day starting there
+
+// Country selection the past days depend on.
+function selectionKey() {
+  return SECTION || (countriesAll ? "all" : [...includedCountries].sort().join(","));
+}
+function resetOlder() {
+  olderDays = []; olderUrls = new Set();
+  olderBusy = false; olderDone = false; olderMiss = 0;
+  olderGen++;
+}
+
+function dayOf(a) {
+  const d = new Date(a.published);
+  return isNaN(d) ? "" : ZDAY.format(d);
+}
+// Day header before row i, else null.
+function dayHeaderAt(i, mode) {
+  if (!INFINITE) return null;
+  if (mode !== "date") return blockStart.get(i) || null; // by source: per day block
+  const d = dayOf(visibleArticles[i]);
+  return d && d !== (i ? dayOf(visibleArticles[i - 1]) : todayISO()) ? d : null;
+}
+
+function addDayRows(day, mode) {
+  const rows = sortArticles(day.articles, mode)
+    .filter((a) => !isExcluded(a) && matchesQuery(a));
+  if (rows.length) {
+    blockStart.set(visibleArticles.length, day.date);
+    visibleArticles = visibleArticles.concat(rows);
+  }
+  return rows.length;
+}
+
+// Small per-country files; full day as fallback.
+function fetchDay(d) {
+  const arts = (u) => fetchJson(u).then((x) => x.articles || []);
+  if (SECTION) return arts(`/archive/${SECTION}/${d}.json`);
+  if (countriesAll) return arts(`/archive/${d}.json`);
+  return fetchJson(`/archive/${d}/manifest.json`).then((m) => {
+    const have = new Set((m.countries || []).map((c) => c.toLowerCase()));
+    const want = [...includedCountries].filter((c) => have.has(c));
+    return Promise.all(want.map((c) => arts(`/archive/${d}/${c}.json`)))
+      .then((parts) => parts.flat());
+  }, () => arts(`/archive/${d}.json`)); // day predates the shards
+}
+
+let indexPromise = null;
+function nextOlderDate() {
+  if (!indexPromise) {
+    indexPromise = fetchJson("/archive/index.json?v=2")
+      .then((idx) => idx.dates || [])
+      .catch(() => { indexPromise = null; return []; });
+  }
+  const last = olderDays.length ? olderDays[olderDays.length - 1].date : todayISO();
+  return indexPromise.then((dates) => dates.filter((d) => d < last).sort().pop() || null);
+}
+
+function loadOlderDay() {
+  if (!INFINITE || olderBusy || olderDone) return;
+  olderBusy = true;
+  const gen = olderGen;
+  nextOlderDate()
+    .then((d) => d && fetchDay(d).then(
+      (articles) => ({ date: d, articles }),
+      () => ({ date: d, articles: [] })))
+    .then((day) => {
+      if (gen !== olderGen) return; // selection changed meanwhile
+      olderBusy = false;
+      if (!day) { olderDone = true; updateSentinel(); return; }
+      const fresh = []; // skip rows already shown above
+      for (const a of day.articles) {
+        if (!a || _mergedUrls.has(a.url) || olderUrls.has(a.url)) continue;
+        olderUrls.add(a.url);
+        fresh.push(a);
+      }
+      day.articles = fresh;
+      olderDays.push(day);
+      olderMiss = addDayRows(day, sortMode()) ? 0 : olderMiss + 1;
+      if (olderMiss >= 7) olderDone = true; // a week of nothing: stop
+      appendBatch();
+    });
 }
 
 // If the URL targets an article (#id) beyond the current window, render up to it.
@@ -755,7 +868,9 @@ let singlePromise = null;
 const _inflight = new Map();
 function fetchJson(u) {
   if (_inflight.has(u)) return _inflight.get(u);
-  const p = fetch(u).then((r) => r.json()).finally(() => _inflight.delete(u));
+  const p = fetch(u)
+    .then((r) => { if (!r.ok) throw new Error(`${r.status} ${u}`); return r.json(); })
+    .finally(() => _inflight.delete(u));
   _inflight.set(u, p);
   return p;
 }

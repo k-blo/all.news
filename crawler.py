@@ -5750,7 +5750,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="/styles.css?v=6">
+  <link rel="stylesheet" href="/styles.css?v=7">
   <style>
     .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
     .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
@@ -6001,6 +6001,30 @@ def run_reduce(partial_paths):
     write_outputs(rows)
 
 
+def by_country(articles):
+    """Articles grouped by uppercase country code."""
+    out = {}
+    for a in articles:
+        cc = (a.get("country") or "").upper()
+        if cc:
+            out.setdefault(cc, []).append(a)
+    return out
+
+
+def write_day_shards(date, articles, now_iso):
+    """archive/<date>/<cc>.json plus a manifest."""
+    # Infinite scroll loads these, not 45 MB.
+    d = os.path.join(ARCHIVE_DIR, date)
+    os.makedirs(d, exist_ok=True)
+    groups = by_country(articles)
+    for cc, arts in groups.items():
+        write_json(os.path.join(d, f"{cc.lower()}.json"),
+                   {"generated": now_iso, "date": date, "country": cc,
+                    "count": len(arts), "articles": arts})
+    write_json(os.path.join(d, "manifest.json"),
+               {"generated": now_iso, "date": date, "countries": sorted(groups)})
+
+
 def write_country_shards(articles, now_iso, today):
     """Split today's feed into per-country files (data/<cc>.json) plus a manifest
     (data/manifest.json) that lists every country and the languages it publishes.
@@ -6008,13 +6032,8 @@ def write_country_shards(articles, now_iso, today):
     the download scales with the selection instead of the whole world. The manifest
     lets the site render the full country/language picker before any shard loads."""
     os.makedirs(DATA_DIR, exist_ok=True)
-    by_country = {}
-    for a in articles:
-        cc = (a.get("country") or "").upper()
-        if cc:
-            by_country.setdefault(cc, []).append(a)
     manifest = []
-    for cc, arts in sorted(by_country.items()):
+    for cc, arts in sorted(by_country(articles).items()):
         write_json(os.path.join(DATA_DIR, f"{cc.lower()}.json"),
                    {"generated": now_iso, "date": today, "country": cc,
                     "count": len(arts), "articles": arts})
@@ -6166,6 +6185,7 @@ def write_outputs(articles):
                 "count": len(result), "articles": result})
     write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"),  # this date's crawl
                {"generated": now_iso, "date": today, "count": len(day), "articles": day})
+    write_day_shards(today, day, now_iso)                  # archive/<date>/<cc>.json
     write_country_shards(result, now_iso, today)           # data/<cc>.json + manifest
     write_json(SEEN_FILE, sorted(seen | batch))
     # Date list = prior dates (from index.json, which the workflow pulls from R2)

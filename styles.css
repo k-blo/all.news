@@ -748,6 +748,9 @@ a { color: inherit; }
 
 /* Invisible scroll sentinel that triggers lazy-loading of more articles. */
 .scroll-sentinel { list-style: none; height: 1px; margin: 0; padding: 0; }
+/* Day header between days (infinite scroll). */
+.day-sep { list-style: none; margin: 22px 0 4px; }
+.day-sep .day-heading { margin: 0; }
 
 /* Archive pagination */
 .pager { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 24px 2px; }

@@ -91,6 +91,15 @@ complete before any shard loads. The "all countries" view still loads `crawled.j
 Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2 (not
 `copy`), since they only ever hold the live feed.
 
+**Infinite scroll:** live feeds (home, landing pages, sections) continue into past
+days. At the end of the list `script.js` (`loadOlderDay()`) appends the previous
+archive day below a date header, minus rows already shown, then the day before,
+and so on. Filtered views load the per-country day shards `archive/<date>/<cc>.json`
+(+ `manifest.json`, written by `write_day_shards()`), not the ~45 MB full day; days
+from before the shards existed fall back to `archive/<date>.json`; sections use
+`archive/<key>/<date>.json`. Sorted by date, a header marks every Zurich day change;
+sorted by source, each past day is its own block. Archive day pages keep their pager.
+
 **Canonical host — always `https://www.all.news`.** The apex 301-redirects to
 `www` (a Cloudflare-side rule we can't currently remove), so every absolute URL we
 emit must use `www`: a canonical or `hreflang` pointing at a redirect is a signal
