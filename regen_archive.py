@@ -2,9 +2,12 @@
 """Re-render past archive day pages in R2 with the current template.
 
 Archive day pages are written once, on the day they happen, and then never
-touched again — so every change to template.html (nav, analytics, ad slots,
-pagination) leaves the older days frozen in whatever layout was current back
-then. This re-renders them from the day's JSON, which is the durable record.
+touched again — so every change to template.html (nav, analytics, ad slots)
+leaves the older days frozen in whatever layout was current back then. This
+re-renders them from the day's JSON, which is the durable record. It also
+(re)writes each day's country shards (archive/<date>/<cc>.json, which infinite
+scroll loads) and deletes the old archive/<date>-N.html pages: days are one
+page now.
 
     python3 regen_archive.py --all              # every day except today
     python3 regen_archive.py 2026-06-05 …       # specific days
@@ -14,11 +17,11 @@ Today is skipped: the hourly crawl rewrites it from the same template anyway.
 
 Needs CLOUDFLARE_TOKEN in .env (an API token with R2 read+write) and boto3 —
 this is a maintenance tool, not part of the stdlib-only crawl path. Past-day
-pages are served `immutable` for a year (functions/[[path]].js), so already
-cached copies keep serving the old layout until the zone cache is purged.
+pages are edge-cached for a day (functions/[[path]].js), so already cached
+copies keep serving the old layout until then, or until the cache is purged.
 """
 import argparse, concurrent.futures, hashlib, json, os, re, sys, urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 
 import crawler
 
@@ -88,50 +91,37 @@ def day_keys(s3, date):
     return keys
 
 
-def day_count(s3, date):
-    """Article count for a day, read from the JSON header via a Range request so a
-    dry run doesn't pull 30 MB per day just to count."""
-    head = s3.get_object(Bucket=BUCKET, Key=f"archive/{date}.json",
-                         Range="bytes=0-400")["Body"].read()
-    m = re.search(rb'"count":\s*(\d+)', head)
-    return int(m.group(1)) if m else None
-
-
 def regen_day(s3, date, out_dir, dry_run=False):
-    """Re-render one day; returns (pages_written, orphans_removed)."""
-    old = day_keys(s3, date)
+    """Re-render one day; returns (shards, old pages removed)."""
+    page = f"archive/{date}.html"
+    orphans = [k for k in day_keys(s3, date) if k != page]  # old page N
     if dry_run:
-        n = day_count(s3, date)
-        if n is None:  # no count header — fall back to the full read
-            n = len(json.loads(s3.get_object(Bucket=BUCKET,
-                                             Key=f"archive/{date}.json")["Body"].read())["articles"])
-        pages = max(1, -(-n // crawler.ARCHIVE_PAGE_SIZE))
-        return pages, max(0, len(old) - pages)
+        return 0, len(orphans)
 
     body = s3.get_object(Bucket=BUCKET, Key=f"archive/{date}.json")["Body"].read()
     articles = json.loads(body)["articles"]
     crawler.ARCHIVE_DIR = out_dir          # write_archive_day joins onto this
+    shard_dir = os.path.join(out_dir, date)
     os.makedirs(out_dir, exist_ok=True)
-    pages = crawler.write_archive_day(date, articles)
+    crawler.write_archive_day(date, articles)
+    crawler.write_country_shards(articles, datetime.now(timezone.utc).isoformat(),
+                                 date, shard_dir)
+    uploads = [(crawler.archive_page_path(date), page, "text/html; charset=utf-8")]
+    uploads += [(os.path.join(shard_dir, n), f"archive/{date}/{n}",
+                 "application/json; charset=utf-8") for n in os.listdir(shard_dir)]
 
-    def put(p):
-        path = crawler.archive_page_path(date, p)
+    def put(u):
+        path, key, ctype = u
         with open(path, "rb") as f:
-            s3.put_object(Bucket=BUCKET, Key=f"archive/{os.path.basename(path)}",
-                          Body=f.read(), ContentType="text/html; charset=utf-8")
+            s3.put_object(Bucket=BUCKET, Key=key, Body=f.read(), ContentType=ctype)
         os.remove(path)
 
     with concurrent.futures.ThreadPoolExecutor(8) as ex:
-        list(ex.map(put, range(1, pages + 1)))
-
-    # Pages the day no longer has (older renders split it differently) would
-    # otherwise linger as orphans, reachable and stale.
-    fresh = {os.path.basename(crawler.archive_page_path(date, p)) for p in range(1, pages + 1)}
-    orphans = [k for k in old if os.path.basename(k) not in fresh]
-    for i in range(0, len(orphans), 1000):
+        list(ex.map(put, uploads))
+    for i in range(0, len(orphans), 1000):  # after the new page is up
         s3.delete_objects(Bucket=BUCKET,
                           Delete={"Objects": [{"Key": k} for k in orphans[i:i + 1000]]})
-    return pages, len(orphans)
+    return len(uploads) - 1, len(orphans)
 
 
 def main():
@@ -139,7 +129,7 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("dates", nargs="*", help="days to re-render (YYYY-MM-DD)")
     ap.add_argument("--all", action="store_true", help="every day in archive/index.json")
-    ap.add_argument("--dry-run", action="store_true", help="report page counts, write nothing")
+    ap.add_argument("--dry-run", action="store_true", help="count old pages, write nothing")
     ap.add_argument("--out", default="/tmp/regen-archive", help="scratch dir for rendered pages")
     args = ap.parse_args()
 
@@ -155,16 +145,16 @@ def main():
         ap.error("pass dates or --all")
     dates = [d for d in dates if d != today]
 
-    total_pages = total_orphans = 0
+    total_shards = total_orphans = 0
     for i, d in enumerate(dates, 1):
-        pages, orphans = regen_day(s3, d, args.out, args.dry_run)
-        total_pages += pages
+        shards, orphans = regen_day(s3, d, args.out, args.dry_run)
+        total_shards += shards
         total_orphans += orphans
-        print(f"[{i}/{len(dates)}] {d}: {pages} pages"
-              + (f", {orphans} orphaned removed" if orphans else ""), flush=True)
-    verb = "would write" if args.dry_run else "wrote"
-    print(f"{verb} {total_pages} pages across {len(dates)} days"
-          f" ({total_orphans} orphaned pages {'stale' if args.dry_run else 'deleted'})")
+        print(f"[{i}/{len(dates)}] {d}: {shards} country shards"
+              + (f", {orphans} old pages removed" if orphans else ""), flush=True)
+    verb = "would remove" if args.dry_run else "removed"
+    print(f"{len(dates)} days, {total_shards} country shards; "
+          f"{verb} {total_orphans} old pages")
 
 
 if __name__ == "__main__":

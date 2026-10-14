@@ -95,10 +95,15 @@ Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2
 days. At the end of the list `script.js` (`loadOlderDay()`) appends the previous
 archive day below a date header, minus rows already shown, then the day before,
 and so on. Filtered views load the per-country day shards `archive/<date>/<cc>.json`
-(+ `manifest.json`, written by `write_day_shards()`), not the ~45 MB full day; days
-from before the shards existed fall back to `archive/<date>.json`; sections use
-`archive/<key>/<date>.json`. Sorted by date, a header marks every Zurich day change;
-sorted by source, each past day is its own block. Archive day pages keep their pager.
+(+ `manifest.json`, same `write_country_shards()` as `data/`), not the ~45 MB full
+day; a day without shards falls back to `archive/<date>.json`; sections use
+`archive/<key>/<date>.json`. `regen_archive.py` backfills shards for past days.
+Sorted by date, a header marks every Zurich day change; sorted by source, each past
+day is its own block. **Archive days are one page each**: the newest 500 rows are
+server-rendered (`ARCHIVE_SSR_LIMIT`); unfiltered, the rest of the day loads when the
+visitor reaches their end (`adoptSsr()`), filtered, the page re-renders from the
+day's shards. Old `archive/<date>-N.html` URLs 301 to the day page
+(`functions/[[path]].js`); `regen_archive.py --all` deletes them from R2.
 
 **Canonical host — always `https://www.all.news`.** The apex 301-redirects to
 `www` (a Cloudflare-side rule we can't currently remove), so every absolute URL we
@@ -130,9 +135,8 @@ shard.
 
 **Sitemap:** `write_sitemap()` emits `<lastmod>` on every URL (the crawl timestamp
 for the hourly pages, the day itself for settled archive days) — the only hint here
-Google acts on; `changefreq`/`priority` are ignored. Archive days list **page 1
-only**: Search Console showed the deeper pages as "crawled – currently not indexed",
-so listing them just spent crawl budget. They stay reachable through the pager.
+Google acts on; `changefreq`/`priority` are ignored. Each archive day is one URL:
+Search Console showed the old pages 2+ as "crawled – currently not indexed".
 
 **IndexNow:** after the R2 upload the workflow runs `crawler.py --indexnow`
 (`ping_indexnow()`), which pings `api.indexnow.org` (shared with Bing, Yandex, Naver,

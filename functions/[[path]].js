@@ -82,7 +82,12 @@ export async function onRequest(context) {
   if (cached) return cached;
 
   const obj = await env.BUCKET.get(key);
-  if (!obj) return new Response("Not found", { status: 404 });
+  if (!obj) {
+    // Old archive page N: one page per day now.
+    const day = key.match(/^archive\/(\d{4}-\d{2}-\d{2})-\d+\.html$/);
+    if (day) return Response.redirect(`${url.origin}/archive/${day[1]}.html`, 301);
+    return new Response("Not found", { status: 404 });
+  }
 
   const headers = new Headers();
   obj.writeHttpMetadata(headers); // content-type from stored metadata, if any

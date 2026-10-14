@@ -5274,22 +5274,17 @@ def write_colors_js():
 AD_EVERY = 25  # insert an ad slot after every N articles (mirrors AD_EVERY in script.js)
 AD_SLOT = '      <li class="ad-slot">Werbung</li>'
 # index.html server-renders only the newest SSR_LIMIT articles for a fast first
-# paint; script.js lazy-renders the rest from crawled.json on scroll. Archive
-# pages are not capped. Keep this >= a couple of screens of rows for SEO.
+# paint; script.js lazy-renders the rest from crawled.json on scroll.
+# Keep this >= a couple of screens of rows for SEO.
 SSR_LIMIT = 120
-# Archive days are split into static pages of this many articles, so a single
-# page never balloons regardless of how many sources we add (more sources just
-# mean more pages). Each page is fully server-rendered → crawlable for SEO.
-ARCHIVE_PAGE_SIZE = 500
+ARCHIVE_SSR_LIMIT = 500  # archive day page; rest scrolls in
 
 
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
-                        date_heading, older_dates=(), limit=None, count=None,
-                        pager="", head_links="", html_lang="en", archive_link=True,
-                        relative_to=None):
-    """Render a page. `limit` caps the server-rendered rows (index.html lazy-loads
-    the rest); `count` overrides the badge total (so a paginated archive page shows
-    the whole day's count); `pager`/`head_links` add archive pagination chrome;
+                        date_heading, older_dates=(), limit=None, head_links="",
+                        html_lang="en", archive_link=True, relative_to=None):
+    """Render a page. `limit` caps the server-rendered rows (script.js loads the
+    rest); the badge counts them all. `head_links` adds <head> links (hreflang);
     `html_lang` sets <html lang>; landing pages pass their own language, everything
     else (home, archive index, archive days) is an English page listing many
     languages, so the default is "en". `archive_link=False` drops the bottom
@@ -5298,7 +5293,7 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
     with open("template.html", encoding="utf-8") as f:
         tmpl = f.read()
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
-    total = count if count is not None else len(articles)
+    total = len(articles)
     head = articles[:limit] if limit else articles
     rows = []
     for i, a in enumerate(head):
@@ -5316,68 +5311,29 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
             .replace("<!-- COUNT -->", str(total))
             .replace("<!-- DATE_HEADING -->", escape(date_heading))
             .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates) if archive_link else "")
-            .replace("<!-- PAGER -->", pager)
             .replace("<!-- ARTICLES -->", items))
     with open(dest_path, "w", encoding="utf-8") as f:
         f.write(html)
 
 
-def archive_page_path(date, p):
-    """Filesystem path for archive day `date`, page `p` (page 1 keeps the bare name)."""
-    return os.path.join(ARCHIVE_DIR, f"{date}.html" if p == 1 else f"{date}-{p}.html")
+def archive_page_path(date):
+    return os.path.join(ARCHIVE_DIR, f"{date}.html")
 
 
-def archive_page_url(date, p):
-    return f"/archive/{date}.html" if p == 1 else f"/archive/{date}-{p}.html"
-
-
-def render_pager(date, p, pages):
-    """Numbered prev/next pager (windowed: first, last, current±2)."""
-    if pages <= 1:
-        return ""
-    parts = []
-    if p > 1:
-        parts.append(f'<a class="pg" href="{archive_page_url(date, p-1)}" rel="prev">‹</a>')
-    nums = sorted(set([1, pages] + list(range(max(1, p - 2), min(pages, p + 2) + 1))))
-    prev = 0
-    for n in nums:
-        if n - prev > 1:
-            parts.append('<span class="pg-gap">…</span>')
-        if n == p:
-            parts.append(f'<span class="pg pg-cur" aria-current="page">{n}</span>')
-        else:
-            parts.append(f'<a class="pg" href="{archive_page_url(date, n)}">{n}</a>')
-        prev = n
-    if p < pages:
-        parts.append(f'<a class="pg" href="{archive_page_url(date, p+1)}" rel="next">›</a>')
-    return '<nav class="pager" aria-label="Archive pages">' + "".join(parts) + "</nav>"
+def archive_page_url(date):
+    return f"/archive/{date}.html"
 
 
 def write_archive_day(date, articles):
-    """Write a day's archive as one or more paginated static pages. Returns the
-    page count. Newest-first; each page fully SSR'd and self-canonical."""
-    articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
-    total = len(articles)
-    pages = max(1, -(-total // ARCHIVE_PAGE_SIZE))  # ceil
-    day_en, day_de = fmt_day_en(date), fmt_day_heading(date)
-    for p in range(1, pages + 1):
-        sl = articles[(p - 1) * ARCHIVE_PAGE_SIZE: p * ARCHIVE_PAGE_SIZE]
-        url = archive_page_url(date, p)
-        head = []
-        if p > 1:
-            head.append(f'<link rel="prev" href="{SITE_ORIGIN}{archive_page_url(date, p-1)}">')
-        if p < pages:
-            head.append(f'<link rel="next" href="{SITE_ORIGIN}{archive_page_url(date, p+1)}">')
-        title = (f"News Archive for {day_en} – all.news" if p == 1
-                 else f"News Archive for {day_en} (page {p}) – all.news")
-        write_rendered_html(
-            sl, archive_page_path(date, p),
-            title=title,
-            description=f"All world news headlines collected on {day_en} by all.news.",
-            canonical=f"{SITE_ORIGIN}{url}",
-            date_heading=day_de, older_dates=[], count=total,
-            pager=render_pager(date, p, pages), head_links="".join(head))
-    return pages
+    """One page per day: the newest rows server-rendered."""
+    # script.js scrolls in the rest (and older days).
+    day_en = fmt_day_en(date)
+    write_rendered_html(
+        articles, archive_page_path(date),
+        title=f"News Archive for {day_en} – all.news",
+        description=f"All world news headlines collected on {day_en} by all.news.",
+        canonical=f"{SITE_ORIGIN}{archive_page_url(date)}",
+        date_heading=fmt_day_heading(date), older_dates=[], limit=ARCHIVE_SSR_LIMIT)
 
 
 # Static pages (legal, about) — listed without lastmod.
@@ -5416,7 +5372,7 @@ def write_sitemap(dates, landing_urls=(), now_iso=None, section_urls=()):
     for d in dates:
         # Today's day page is still being appended to; past days are settled.
         current = d == today
-        urls.append(url(archive_page_url(d, 1), fresh if current else d,
+        urls.append(url(archive_page_url(d), fresh if current else d,
                         "hourly" if current else "never", "0.3"))
     with open("sitemap.xml", "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
@@ -6011,35 +5967,22 @@ def by_country(articles):
     return out
 
 
-def write_day_shards(date, articles, now_iso):
-    """archive/<date>/<cc>.json plus a manifest."""
-    # Infinite scroll loads these, not 45 MB.
-    d = os.path.join(ARCHIVE_DIR, date)
-    os.makedirs(d, exist_ok=True)
-    groups = by_country(articles)
-    for cc, arts in groups.items():
-        write_json(os.path.join(d, f"{cc.lower()}.json"),
-                   {"generated": now_iso, "date": date, "country": cc,
-                    "count": len(arts), "articles": arts})
-    write_json(os.path.join(d, "manifest.json"),
-               {"generated": now_iso, "date": date, "countries": sorted(groups)})
-
-
-def write_country_shards(articles, now_iso, today):
-    """Split today's feed into per-country files (data/<cc>.json) plus a manifest
+def write_country_shards(articles, now_iso, today, out_dir=DATA_DIR):
+    """Split a feed into per-country files (data/<cc>.json) plus a manifest
     (data/manifest.json) that lists every country and the languages it publishes.
+    Archive days get the same in archive/<date>/ (`out_dir`), for infinite scroll.
     The client fetches only the shards for the countries a visitor filters to, so
     the download scales with the selection instead of the whole world. The manifest
     lets the site render the full country/language picker before any shard loads."""
-    os.makedirs(DATA_DIR, exist_ok=True)
+    os.makedirs(out_dir, exist_ok=True)
     manifest = []
     for cc, arts in sorted(by_country(articles).items()):
-        write_json(os.path.join(DATA_DIR, f"{cc.lower()}.json"),
+        write_json(os.path.join(out_dir, f"{cc.lower()}.json"),
                    {"generated": now_iso, "date": today, "country": cc,
                     "count": len(arts), "articles": arts})
         langs = sorted({(a.get("lang") or "").lower() for a in arts if a.get("lang")})
         manifest.append({"code": cc, "count": len(arts), "langs": langs})
-    write_json(os.path.join(DATA_DIR, "manifest.json"),
+    write_json(os.path.join(out_dir, "manifest.json"),
                {"generated": now_iso, "date": today, "countries": manifest})
 
 
@@ -6185,7 +6128,8 @@ def write_outputs(articles):
                 "count": len(result), "articles": result})
     write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"),  # this date's crawl
                {"generated": now_iso, "date": today, "count": len(day), "articles": day})
-    write_day_shards(today, day, now_iso)                  # archive/<date>/<cc>.json
+    write_country_shards(day, now_iso, today,              # archive/<date>/<cc>.json
+                         os.path.join(ARCHIVE_DIR, today))
     write_country_shards(result, now_iso, today)           # data/<cc>.json + manifest
     write_json(SEEN_FILE, sorted(seen | batch))
     # Date list = prior dates (from index.json, which the workflow pulls from R2)
@@ -6212,7 +6156,7 @@ def write_outputs(articles):
         limit=SSR_LIMIT,  # index head only; script.js lazy-loads the rest
         relative_to=now,
     )
-    write_archive_day(today, day)  # paginated static pages
+    write_archive_day(today, day)  # archive/<date>.html
     write_json(INDEX_FILE, {"dates": all_dates})
     landing_urls = write_landing_pages(result, today, now)  # /news/<country>/<lang>/ + hub
     section_urls = write_sections(articles, now, today, since)  # /space/, /tech/ …

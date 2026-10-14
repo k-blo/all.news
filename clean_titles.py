@@ -15,7 +15,7 @@ Archive days live in R2 and CI only pulls today's, so round-trip them:
     rclone copy archive "R2:$R2_BUCKET/archive" -v
     rclone copy crawled.json "R2:$R2_BUCKET/" -v
 
-Re-rendering goes through write_archive_day(), the same paginated renderer the
+Re-rendering goes through write_archive_day(), the same renderer the
 crawler uses — not backfill.py, which predates pagination and skips days whose
 HTML already exists.
 """
@@ -51,9 +51,9 @@ for path in ["crawled.json"] + sorted(glob.glob(os.path.join("archive", "2*.json
     if path != "crawled.json":
         if not rerendered:
             write_colors_js()
-        pages = write_archive_day(date, articles)
+        write_archive_day(date, articles)
         rerendered += 1
-        print(f"    re-rendered {date}: {pages} page(s)")
+        print(f"    re-rendered {date}")
 
 print(f"done: {changed_titles} titles across {changed_files} files, "
       f"{rerendered} archive day(s) re-rendered")

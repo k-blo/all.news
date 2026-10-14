@@ -45,10 +45,11 @@ function fmtTime(s) {
   });
 }
 
-// Archive day page: /archive/2026-06-07.html (or -2, -3 …).
+// Archive day page: /archive/2026-06-07.html (old -2, -3 … too).
 const ARCHIVE_DAY_RE = /\/archive\/(\d{4}-\d{2}-\d{2})(?:-\d+)?\.html$/;
+const ARCHIVE_DAY = (location.pathname.match(ARCHIVE_DAY_RE) || [])[1] || null;
 // Live feeds show "3 h ago" (#48).
-const RELATIVE_TIMES = !ARCHIVE_DAY_RE.test(location.pathname);
+const RELATIVE_TIMES = !ARCHIVE_DAY;
 
 // Mirrors fmt_ago in crawler.py.
 function fmtAgo(s) {
@@ -336,7 +337,7 @@ let scrollObserver = null;
 function render(articles, mode) {
   const list = document.getElementById("list");
   if (!list) return;
-  if (INFINITE && selectionKey() !== olderKey) { resetOlder(); olderKey = selectionKey(); }
+  if (selectionKey() !== olderKey) { resetOlder(); olderKey = selectionKey(); }
   visibleArticles = sortedArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
   setCountBadge(visibleArticles.length); // the live feed only
@@ -377,7 +378,7 @@ function appendBatch() {
 function updateSentinel() {
   const list = document.getElementById("list");
   let sentinel = document.getElementById("scrollSentinel");
-  const more = shownCount < visibleArticles.length || (INFINITE && !olderDone);
+  const more = ssrPending || shownCount < visibleArticles.length || !olderDone;
   if (!more) { // all rendered, no older days — tear down
     if (sentinel) sentinel.remove();
     if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
@@ -403,13 +404,13 @@ function pump() {
   const s = document.getElementById("scrollSentinel");
   const r = s && s.getBoundingClientRect();
   if (!r || !r.height || r.top > innerHeight + 1000) return; // hidden or far
-  if (shownCount < visibleArticles.length) appendBatch();
+  if (ssrPending) adoptSsr();
+  else if (shownCount < visibleArticles.length) appendBatch();
   else loadOlderDay();
 }
 
 // ---------- Infinite scroll into past days ----------
-// Live feeds continue into archive days below.
-const INFINITE = RELATIVE_TIMES; // not on archive day pages
+// Every feed continues into older days below.
 let olderDays = [];          // loaded past days [{date, articles}], newest first
 let olderUrls = new Set();   // their URLs, for dedup
 let olderKey = null;         // the selection they were loaded for
@@ -418,6 +419,33 @@ let olderBusy = false;
 let olderDone = false;
 let olderMiss = 0;           // consecutive days without rows
 let blockStart = new Map();  // row index -> past day starting there
+
+// The page's own day: archive day, else today.
+function baseDay() { return ARCHIVE_DAY || todayISO(); }
+
+// Unfiltered archive page: keep the SSR rows and,
+// at their end, load the day to continue below.
+let ssrPending = false;
+let adopting = false;
+function adoptSsr() {
+  if (adopting) return;
+  adopting = true;
+  loadData().then(() => {
+    const byUrl = new Map(current.map((a) => [a.url, a]));
+    const shown = [];
+    for (const el of document.querySelectorAll("#list .article a.title")) {
+      const a = byUrl.get(el.getAttribute("href"));
+      if (a) shown.push(a);
+    }
+    const seen = new Set(shown.map((a) => a.url));
+    visibleArticles = shown.concat(sortedArticles(current, sortMode())
+      .filter((a) => !seen.has(a.url) && !isExcluded(a) && matchesQuery(a)));
+    shownCount = shown.length;
+    olderKey = selectionKey();
+    ssrPending = false;
+    appendBatch();
+  });
+}
 
 // Country selection the past days depend on.
 function selectionKey() {
@@ -435,10 +463,9 @@ function dayOf(a) {
 }
 // Day header before row i, else null.
 function dayHeaderAt(i, mode) {
-  if (!INFINITE) return null;
   if (mode !== "date") return blockStart.get(i) || null; // by source: per day block
   const d = dayOf(visibleArticles[i]);
-  return d && d !== (i ? dayOf(visibleArticles[i - 1]) : todayISO()) ? d : null;
+  return d && d !== (i ? dayOf(visibleArticles[i - 1]) : baseDay()) ? d : null;
 }
 
 function addDayRows(day, mode) {
@@ -457,7 +484,7 @@ function fetchDay(d) {
   if (SECTION) return arts(`/archive/${SECTION}/${d}.json`);
   if (countriesAll) return arts(`/archive/${d}.json`);
   return fetchJson(`/archive/${d}/manifest.json`).then((m) => {
-    const have = new Set((m.countries || []).map((c) => c.toLowerCase()));
+    const have = new Set((m.countries || []).map((c) => (c.code || c).toLowerCase()));
     const want = [...includedCountries].filter((c) => have.has(c));
     return Promise.all(want.map((c) => arts(`/archive/${d}/${c}.json`)))
       .then((parts) => parts.flat());
@@ -471,12 +498,12 @@ function nextOlderDate() {
       .then((idx) => idx.dates || [])
       .catch(() => { indexPromise = null; return []; });
   }
-  const last = olderDays.length ? olderDays[olderDays.length - 1].date : todayISO();
+  const last = olderDays.length ? olderDays[olderDays.length - 1].date : baseDay();
   return indexPromise.then((dates) => dates.filter((d) => d < last).sort().pop() || null);
 }
 
 function loadOlderDay() {
-  if (!INFINITE || olderBusy || olderDone) return;
+  if (olderBusy || olderDone) return;
   olderBusy = true;
   const gen = olderGen;
   nextOlderDate()
@@ -843,10 +870,12 @@ function applySsrFilter() {
 // manifest (/data/manifest.json) lists every available country + its languages, so
 // the picker is complete before any shard loads. The "all countries" view still
 // needs everything, so it falls back to the single global /crawled.json.
-// Archive day pages and sections keep a single-file model (that day's JSON, or
-// /<section>/feed.json), loaded lazily.
-let DATA_URL = "/crawled.json";  // archive pages / sections point this at their JSON
-let singleFile = false;          // archive day or section: one JSON, no shards
+// Archive day pages shard the same way (/archive/<day>/<cc>.json, else the whole
+// /archive/<day>.json); sections keep a single file (/<section>/feed.json).
+let DATA_URL = "/crawled.json";  // sections point this at their feed
+let singleFile = false;          // section: one JSON, no shards
+const SHARD_DIR = ARCHIVE_DAY ? `/archive/${ARCHIVE_DAY}` : "/data";
+const GLOBAL_URL = ARCHIVE_DAY ? `/archive/${ARCHIVE_DAY}.json` : "/crawled.json";
 // Landing pages (/news/<country>/<lang>/) pre-set the country+lang filter from the
 // path and behave like a filtered home view. The path is the canonical state, so
 // persistFilters() is a no-op there and won't overwrite the visitor's home prefs.
@@ -890,7 +919,7 @@ function mergeArticles(arr) {
 function ensureManifest() {
   if (singleFile) return Promise.resolve(null);
   if (manifestPromise) return manifestPromise;
-  manifestPromise = fetchJson("/data/manifest.json")
+  manifestPromise = fetchJson(`${SHARD_DIR}/manifest.json`)
     .then((m) => { manifest = m; return m; })
     .catch(() => { manifestPromise = null; return null; }); // allow retry
   return manifestPromise;
@@ -908,15 +937,15 @@ function ensureCountryData() {
     return singlePromise;
   }
   if (globalLoaded) return Promise.resolve(current); // superset already loaded
-  if (countriesAll) {
-    return fetchJson("/crawled.json")
+  if (countriesAll || (ARCHIVE_DAY && !manifest)) { // no manifest: day predates shards
+    return fetchJson(GLOBAL_URL)
       .then((d) => { mergeArticles(d.articles); globalLoaded = true; return current; })
       .catch(() => current);
   }
   const need = [...includedCountries].filter((c) => !shardLoaded.has(c));
   if (!need.length) return Promise.resolve(current);
   return Promise.all(need.map((c) =>
-    fetchJson(`/data/${c}.json`)
+    fetchJson(`${SHARD_DIR}/${c}.json`)
       .then((d) => { shardLoaded.add(c); mergeArticles(d.articles); })
       .catch(() => { shardLoaded.add(c); }) // missing shard = no articles for it
   )).then(() => current);
@@ -1195,10 +1224,9 @@ if (dayParam) {
   const landingCC = landingMatch ? COUNTRY_BY_SLUG[landingMatch[1]] : null;
   const landingLang = landingMatch ? LANG_BY_SLUG[landingMatch[2]] : null;
   isLanding = !!(landingCC && landingLang);
-  DATA_URL = archiveMatch ? `${archiveMatch[1]}.json`
-    : SECTION ? `/${SECTION}/feed.json` : "/crawled.json";
-  // Archive days and sections keep the single-file model; home shards by country.
-  singleFile = !!archiveMatch || !!SECTION;
+  DATA_URL = SECTION ? `/${SECTION}/feed.json` : "/crawled.json";
+  // Sections keep the single-file model; home and archive days shard by country.
+  singleFile = !!SECTION;
   // A section's first visit starts from the browser's languages.
   if (SECTION && lsGet(STORE_LANG) === null) seedSectionLangs();
   // Filter state was already loaded from localStorage at module init; is anything
@@ -1211,13 +1239,16 @@ if (dayParam) {
     if (hasFilter) { autoDefault = true; applySsrFilter(); }
     loadData().then(() => { if (current.length) render(current, sortMode()); });
   } else if (archiveMatch) {
-    // Archive day page: static paginated HTML. The saved filter (loaded from
+    // Archive day page: one SSR page per day. The saved filter (loaded from
     // localStorage) applies here too; pre-filter the SSR rows, then re-render that
-    // day from its JSON. (The Filter menu is present on every archive day page.)
+    // day from its country shards. (The Filter menu is present on every archive day page.)
     if (hasFilter) {
       autoDefault = true; // relax rather than show an empty day if a pick empties it
       applySsrFilter();
       loadData().then(() => { if (current.length) render(current, sortMode()); });
+    } else {
+      ssrPending = true; // the day loads at the end of its SSR rows
+      updateSentinel();
     }
   } else if (isLanding) {
     // Landing page: the path fixes the country + language. Behave like a filtered
