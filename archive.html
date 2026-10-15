@@ -12,15 +12,15 @@
   <meta property="og:url" content="https://www.all.news/archive">
   <meta property="og:image" content="https://www.all.news/og-image.png">
   <meta name="robots" content="index, follow">
-  <!-- Apply saved theme before first paint. -->
-  <script>try{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}catch(e){}</script>
+  <!-- Theme first; hide text awaiting translation. -->
+  <script>try{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}catch(e){}(function(){var u=null;try{u=localStorage.getItem("allnews.uilang")}catch(e){}try{var h=document.documentElement,p=h.dataset.ui||"en",w=(u&&u!=="auto"?u:h.dataset.ui||navigator.language||"en").toLowerCase();if(/^(ar|he|fa|ur)\b/.test(w))h.dataset.uidir="rtl";if(w.slice(0,2)!==p.slice(0,2)){h.classList.add("i18n-wait");setTimeout(function(){h.classList.remove("i18n-wait")},3000)}}catch(e){}})()</script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="/favicon-192.png">
   <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-latin-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=8">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N83C506R65"></script>
   <script>
@@ -46,11 +46,11 @@
       <a href="/" class="brand-link">all.news</a>
       <nav class="topnav">
         <a href="/" class="nav-btn" style="text-decoration:none">
-          Filter
+          <span data-i18n="filter">Filter</span>
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="3" cy="3" r="2.25" transform="matrix(-1 0 0 1 13.5 1.5)"/><path d="M16 4.5H12.5M0 4.5H8"/><circle cx="3" cy="3" r="2.25" transform="matrix(1 -8.74228e-08 -8.74228e-08 -1 2.5 14.5)"/><path d="M0 11.5L3.5 11.5M16 11.5L8 11.5"/></svg></span>
         </a>
         <a href="/" class="nav-btn" style="text-decoration:none">
-          Menu
+          <span data-i18n="menu">Menu</span>
           <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4.5H12.5H8H0"/><path d="M0 11.5L3.5 11.5L8 11.5L16 11.5"/></svg></span>
         </a>
       </nav>
@@ -61,39 +61,31 @@
     </main>
 
     <footer class="site-footer">
-      <nav class="footer-links" aria-label="Legal">
-        <a href="/about">About</a>
-        <a href="/privacy">Privacy</a>
-        <a href="/cookies">Cookies</a>
-        <a href="/terms">Terms</a>
-        <a href="/imprint">Imprint</a>
-        <a href="/settings">Settings</a>
-        <a href="/cookies#manage" class="cookie-settings">Cookie settings</a>
+      <nav class="footer-links" aria-label="Legal" data-i18n-aria="legal">
+        <a href="/about" data-i18n="about">About</a>
+        <a href="/privacy" data-i18n="privacy">Privacy</a>
+        <a href="/cookies" data-i18n="cookies">Cookies</a>
+        <a href="/terms" data-i18n="terms">Terms</a>
+        <a href="/imprint" data-i18n="imprint">Imprint</a>
+        <a href="/settings" data-i18n="settings">Settings</a>
+        <a href="/cookies#manage" class="cookie-settings" data-i18n="cookie_settings">Cookie settings</a>
       </nav>
       <div class="footer-meta">
         <span>© Copyright 2026 all.news</span>
-        <span><a href="/news/">Browse by country &amp; language</a></span>
-        <span>all.news is not responsible for the content of external sites</span>
+        <span><a href="/news/" data-i18n="browse">Browse by country &amp; language</a></span>
+        <span data-i18n="disclaimer">all.news is not responsible for the content of external sites</span>
       </div>
     </footer>
   </div>
-  <script src="/site.js"></script>
+  <script src="/site.js?v=2"></script>
 
   <script>
-    const MONTHS = ["", "Januar", "Februar", "März", "April", "Mai", "Juni",
-                    "Juli", "August", "September", "Oktober", "November", "Dezember"];
     const chev = '<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>';
-
-    function dayHeading(d) {
-      const [y, m, day] = d.split("-");
-      return `${+day}. ${MONTHS[+m]} ${y}`;
-    }
 
     // Absolute path (this page is also served at /archive) and ?v=2 to bust the
     // year-long `immutable` copies cached before that was fixed — see script.js.
-    fetch("/archive/index.json?v=2")
-      .then((r) => r.json())
-      .then((idx) => {
+    Promise.all([fetch("/archive/index.json?v=2").then((r) => r.json()), I18N.ready])
+      .then(([idx]) => {
         const root = document.getElementById("archive");
         const dates = (idx.dates || []).slice().sort().reverse(); // newest first
 
@@ -109,14 +101,14 @@
           const [y, m] = d.split("-");
           const key = `${y}-${m}`;
           if (!byKey[key]) {
-            byKey[key] = { label: multiYear ? `${MONTHS[+m]} ${y}` : MONTHS[+m], days: [] };
+            byKey[key] = { label: multiYear ? I18N.monthYear(+m, y) : I18N.month(+m), days: [] };
             groups.push(byKey[key]);
           }
           byKey[key].days.push(d);
         }
 
         if (!groups.length) {
-          root.textContent = "archiv nicht verfügbar";
+          root.textContent = I18N.t("archive_missing");
           return;
         }
 
@@ -127,7 +119,8 @@
 
           const sum = document.createElement("summary");
           sum.className = "month-head";
-          sum.innerHTML = `<span>${g.label}</span>${chev}`;
+          sum.innerHTML = `<span></span>${chev}`;
+          sum.firstChild.textContent = g.label;
           det.appendChild(sum);
 
           const days = document.createElement("div");
@@ -136,7 +129,8 @@
             const a = document.createElement("a");
             a.className = "day-row";
             a.href = `archive/${d}.html`;
-            a.innerHTML = `<span>${dayHeading(d)}</span>${chev}`;
+            a.innerHTML = `<span></span>${chev}`;
+            a.firstChild.textContent = I18N.date(d);
             days.appendChild(a);
           }
           det.appendChild(days);
@@ -144,7 +138,9 @@
         });
       })
       .catch(() => {
-        document.getElementById("archive").textContent = "archiv nicht verfügbar";
+        I18N.ready.then(() => {
+          document.getElementById("archive").textContent = I18N.t("archive_missing");
+        });
       });
   </script>
 </body>

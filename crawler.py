@@ -5111,12 +5111,9 @@ def fmt_datetime(iso_str):
         return ""
 
 
-DE_MONTHS = ["", "Jan.", "Feb.", "März", "Apr.", "Mai", "Juni",
-             "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."]
-
 # Icons reference a shared <symbol> sprite (defined once in template.html) via
 # <use>, instead of inlining the full SVG on every row. Mirrors the
-# OPEN_SVG/LINK_SVG/HIDE_BTN constants in script.js.
+# OPEN_SVG/LINK_SVG constants and hideSrcBtn() in script.js.
 
 
 def fmt_time(iso_str):
@@ -5130,9 +5127,47 @@ def fmt_time(iso_str):
         return ""
 
 
-def fmt_ago(iso_str, now):
+# ---- UI language (#53) ----
+# UI strings, dates and relative times per language live in i18n/<code>.json
+# (built by i18n/build.mjs, shared with site.js). Pages are English unless they
+# have a language of their own (landing and section language pages: `ui`).
+I18N_DIR = "i18n"
+_i18n = {}
+PLURAL_CATS = {"z": "zero", "o": "one", "t": "two", "f": "few", "m": "many", "x": "other"}
+
+
+def i18n(ui):
+    """i18n/<ui>.json, cached."""
+    if ui not in _i18n:
+        with open(os.path.join(I18N_DIR, f"{ui}.json"), encoding="utf-8") as f:
+            _i18n[ui] = json.load(f)
+    return _i18n[ui]
+
+
+def ui_code(lang, cc=None):
+    """UI language for a page in `lang`."""
+    if lang == "zh":  # script follows the country
+        return "zh-hans" if cc in ("CN", "SG") else "zh-hant"
+    return lang if os.path.exists(os.path.join(I18N_DIR, f"{lang}.json")) else "en"
+
+
+def t(ui, key):
+    """A UI string (English if untranslated)."""
+    return i18n(ui)["ui"].get(key) or i18n("en")["ui"][key]
+
+
+def fmt_date(date_iso, ui="en"):
+    """'2026-10-14' -> '14 October 2026' (mirrors I18N.date)."""
+    try:
+        y, m, d = date_iso.split("-")
+        return i18n(ui)["dates"][int(m) - 1].replace("{d}", str(int(d))).replace("{y}", y)
+    except (ValueError, IndexError):
+        return date_iso
+
+
+def fmt_ago(iso_str, now, ui="en"):
     """'just now', '5 min ago', '3 h ago'."""
-    # Mirrors fmtAgo in script.js.
+    # Mirrors I18N.ago in site.js.
     try:
         dt = datetime.fromisoformat((iso_str or "").replace("Z", "+00:00"))
     except ValueError:
@@ -5141,24 +5176,32 @@ def fmt_ago(iso_str, now):
         dt = dt.replace(tzinfo=timezone.utc)
     mins = int((now - dt).total_seconds() // 60)
     if mins < 1:
-        return "just now"
-    if mins < 60:
-        return f"{mins} min ago"
-    if mins < 24 * 60:
-        return f"{mins // 60} h ago"
-    return f"{mins // (24 * 60)} d ago"
+        return t(ui, "just_now")
+    unit, n = (("m", mins) if mins < 60 else ("h", mins // 60) if mins < 24 * 60
+               else ("d", mins // (24 * 60)))
+    data = i18n(ui)
+    cat = PLURAL_CATS[data["plurals"][n]] if n < len(data["plurals"]) else "other"
+    forms = data["ago"][unit]
+    return (forms.get(cat) or forms["other"]).replace("{n}", str(n))
 
 
-LIVE_HEADING = "Last 24 hours"  # heading of the live feeds
+_I18N_TEXT = re.compile(r'(<(\w+)\b[^>]*\bdata-i18n="(\w+)"[^>]*>)[^<]*(</\2>)')
+_I18N_TAG = re.compile(r'<\w+\b[^>]*\bdata-i18n-(?:ph|aria|title)="\w+"[^>]*>')
+_I18N_ATTRS = {"ph": "placeholder", "aria": "aria-label", "title": "title"}
 
 
-def fmt_day_heading(date_iso):
-    """'2026-08-08' -> '08. Aug. 2026'."""
-    try:
-        y, m, d = date_iso.split("-")
-        return f"{d}. {DE_MONTHS[int(m)]} {y}"
-    except (ValueError, IndexError):
-        return date_iso
+def localize(html, ui):
+    """Fill the data-i18n markers in `ui` (mirrors I18N.apply)."""
+    html = _I18N_TEXT.sub(lambda m: m[1] + escape(t(ui, m[3])) + m[4], html)
+
+    def attrs(m):
+        tag = m[0]
+        for kind, key in re.findall(r'data-i18n-(ph|aria|title)="(\w+)"', tag):
+            name = _I18N_ATTRS[kind]
+            tag = re.sub(rf'(?<![\w-]){name}="[^"]*"',
+                         lambda _: f'{name}="{escape(t(ui, key))}"', tag)
+        return tag
+    return _I18N_TAG.sub(attrs, html)
 
 
 EN_MONTHS = ["", "January", "February", "March", "April", "May", "June",
@@ -5177,10 +5220,14 @@ def fmt_day_en(date_iso):
 # Action icons next to each row on hover (mirror OPEN_SVG / LINK_SVG in script.js).
 OPEN_SVG = '<svg width="18" height="18"><use href="#ico-arrow"/></svg>'
 LINK_SVG = '<svg width="18" height="18"><use href="#ico-link"/></svg>'
-# Eye toggle next to the time: hides this source from the feed (mirrors HIDE_BTN
-# in script.js). Replaces the old external-link arrow per #4.
-HIDE_BTN = ('<button class="hide-src" type="button" aria-label="Hide source"'
-            ' title="Hide source"><svg width="14" height="14"><use href="#ico-eye-off"/></svg></button>')
+
+
+def hide_btn(ui):
+    """Eye toggle hiding the row's source (#4)."""
+    # Mirrors hideSrcBtn() in script.js.
+    label = escape(t(ui, "hide_source"))
+    return (f'<button class="hide-src" type="button" aria-label="{label}" title="{label}">'
+            '<svg width="14" height="14"><use href="#ico-eye-off"/></svg></button>')
 
 
 def portal_home(url):
@@ -5216,13 +5263,15 @@ def article_id(article):
     return f"{slugify(article['title'])}-{djb2(article['url']):x}"
 
 
-def render_article_html(article, now=None):
+def render_article_html(article, now=None, ui="en"):
     color = color_for(article["source"])
     fg = text_color(color)
     url = escape(article["url"])
     home = escape(portal_home(article["url"]))
     pub = article.get("published", "")
-    when = fmt_ago(pub, now) if now else fmt_time(pub)  # live: relative (#48)
+    when = fmt_ago(pub, now, ui) if now else fmt_time(pub)  # live: relative (#48)
+    title = escape(article["title"])
+    open_, share = escape(t(ui, "open_article")), escape(t(ui, "share_article"))
     return (
         f'      <li class="article" id="{escape(article_id(article))}"'
         f' data-lang="{escape(article.get("lang", DEFAULT_LANG))}"'
@@ -5230,22 +5279,22 @@ def render_article_html(article, now=None):
         '<div class="meta-col">'
         f'<a class="source" href="{home}" target="_blank" rel="noopener nofollow ugc"'
         f' style="background:{color};color:{fg}">{escape(article["source"])}</a>'
-        f'<span class="time"><time datetime="{escape(pub)}">{escape(when)}</time> {HIDE_BTN}</span>'
+        f'<span class="time"><time datetime="{escape(pub)}">{escape(when)}</time> {hide_btn(ui)}</span>'
         '</div>'
-        f'<a class="title" href="{url}" target="_blank" rel="noopener nofollow ugc">{escape(article["title"])}</a>'
+        f'<a class="title" href="{url}" target="_blank" rel="noopener nofollow ugc">{title}</a>'
         '<div class="row-actions">'
         # Visible labels repeat on every row; the accessible name carries the headline
         # so a screen reader announces which article the action belongs to (#49).
         f'<a class="row-act open" href="{url}" target="_blank" rel="noopener nofollow ugc"'
-        f' aria-label="Open article: {escape(article["title"])}"><span class="label">Open article</span> {OPEN_SVG}</a>'
+        f' aria-label="{open_}: {title}"><span class="label">{open_}</span> {OPEN_SVG}</a>'
         f'<button class="row-act share" type="button"'
-        f' aria-label="Share article: {escape(article["title"])}"><span class="label">Share article</span> {LINK_SVG}</button>'
+        f' aria-label="{share}: {title}"><span class="label">{share}</span> {LINK_SVG}</button>'
         '</div>'
         '</li>'
     )
 
 
-def render_older_dates(dates):
+def render_older_dates(dates, ui="en"):
     """The most recent days as date rows, then a link to the full archive."""
     chev = ('<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" '
             'stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>')
@@ -5253,14 +5302,14 @@ def render_older_dates(dates):
              'stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>')
     rows = [
         f'      <a class="day-row" href="/archive/{d}.html">'
-        f'<span>{fmt_day_heading(d)}</span>{chev}</a>'
+        f'<span data-date="{d}">{fmt_date(d, ui)}</span>{chev}</a>'
         for d in dates
     ]
     rows.append(
         # /archive, not /archive.html: Pages strips the extension and 308s, so the
         # .html form costs every visitor and crawler an extra hop.
         '      <a class="day-row day-row-all" href="/archive">'
-        f'<span>Full archive</span>{arrow}</a>'
+        f'<span data-i18n="full_archive">{escape(t(ui, "full_archive"))}</span>{arrow}</a>'
     )
     return "\n".join(rows)
 
@@ -5272,7 +5321,6 @@ def write_colors_js():
 
 
 AD_EVERY = 25  # insert an ad slot after every N articles (mirrors AD_EVERY in script.js)
-AD_SLOT = '      <li class="ad-slot">Werbung</li>'
 # index.html server-renders only the newest SSR_LIMIT articles for a fast first
 # paint; script.js lazy-renders the rest from crawled.json on scroll.
 # Keep this >= a couple of screens of rows for SEO.
@@ -5280,10 +5328,21 @@ SSR_LIMIT = 120
 ARCHIVE_SSR_LIMIT = 500  # archive day page; rest scrolls in
 
 
+_templates = {}
+
+
+def page_template(ui):
+    """template.html with its UI text in `ui`."""
+    if ui not in _templates:
+        with open("template.html", encoding="utf-8") as f:
+            _templates[ui] = localize(f.read(), ui)
+    return _templates[ui]
+
+
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
-                        date_heading, older_dates=(), limit=None, head_links="",
+                        heading, older_dates=(), limit=None, head_links="",
                         html_lang="en", archive_link=True, relative_to=None,
-                        lang_nav="", robots="index, follow"):
+                        lang_nav="", robots="index, follow", ui=None):
     """Render a page. `limit` caps the server-rendered rows (script.js loads the
     rest); the badge counts them all. `head_links` adds <head> links (hreflang);
     `html_lang` sets <html lang>; landing pages pass their own language, everything
@@ -5292,9 +5351,12 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
     date/archive nav (sections have no archive pages). `relative_to` (the crawl
     time) shows row times as "3 h ago" and heads each older day, as script.js
     does. `lang_nav` links a section's language pages; `robots` sets the
-    robots meta (thin pages: noindex)."""
-    with open("template.html", encoding="utf-8") as f:
-        tmpl = f.read()
+    robots meta (thin pages: noindex). `heading` is HTML. `ui` serves the page
+    in that UI language (<html data-ui>); None = English, which site.js
+    translates for the visitor."""
+    tmpl = page_template(ui or "en")
+    lang = ui or "en"
+    ad = f'      <li class="ad-slot">{escape(t(lang, "ad"))}</li>'
     articles = sorted(articles, key=lambda a: a.get("published", ""), reverse=True)
     total = len(articles)
     head = articles[:limit] if limit else articles
@@ -5303,23 +5365,25 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
     for i, a in enumerate(head):
         if prev and crawl_day(a) != prev:
             prev = crawl_day(a)  # day change: header, like dayHeaderAt()
-            rows.append(f'      <li class="day-sep"><h2 class="day-heading">{fmt_day_en(prev)}</h2></li>')
-        rows.append(render_article_html(a, relative_to))
+            rows.append(f'      <li class="day-sep"><h2 class="day-heading" data-date="{prev}">'
+                        f'{fmt_date(prev, lang)}</h2></li>')
+        rows.append(render_article_html(a, relative_to, lang))
         if (i + 1) % AD_EVERY == 0 and i + 1 < len(head):
-            rows.append(AD_SLOT)
+            rows.append(ad)
     items = "\n".join(rows)
     os.makedirs(os.path.dirname(dest_path) or ".", exist_ok=True)
     html = (tmpl
             .replace("<!-- HTMLLANG -->", escape(html_lang))
+            .replace("<!-- UIATTR -->", f' data-ui="{ui}"' if ui else "")
             .replace("<!-- ROBOTS -->", robots)
             .replace("<!-- TITLE -->", escape(title))
             .replace("<!-- DESCRIPTION -->", escape(description))
             .replace("<!-- CANONICAL -->", escape(canonical))
             .replace("<!-- HEAD_LINKS -->", head_links)
             .replace("<!-- COUNT -->", str(total))
-            .replace("<!-- DATE_HEADING -->", escape(date_heading))
+            .replace("<!-- DATE_HEADING -->", heading)
             .replace("<!-- LANG_NAV -->", lang_nav)
-            .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates) if archive_link else "")
+            .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates, lang) if archive_link else "")
             .replace("<!-- ARTICLES -->", items))
     with open(dest_path, "w", encoding="utf-8") as f:
         f.write(html)
@@ -5342,7 +5406,8 @@ def write_archive_day(date, articles):
         title=f"News Archive for {day_en} – all.news",
         description=f"All world news headlines collected on {day_en} by all.news.",
         canonical=f"{SITE_ORIGIN}{archive_page_url(date)}",
-        date_heading=fmt_day_heading(date), older_dates=[], limit=ARCHIVE_SSR_LIMIT)
+        heading=f'<span data-date="{date}">{fmt_date(date)}</span>',
+        older_dates=[], limit=ARCHIVE_SSR_LIMIT)
 
 
 # Static pages (legal, about) — listed without lastmod.
@@ -5699,17 +5764,6 @@ def country_name_i18n(cc, lang):
     return COUNTRY_I18N.get(lang, {}).get(cc) or COUNTRY_NAMES.get(cc, cc)
 
 
-def landing_date(lang, today):
-    """Today's date formatted for the page's language (numeric, so no month-name
-    tables): '16 July 2026' (en), '2026年7月16日' (ja/zh), '16.07.2026' (else)."""
-    y, m, d = (int(x) for x in today.split("-"))
-    if lang == "en":
-        return fmt_day_en(today)
-    if lang in ("ja", "zh"):
-        return f"{y}年{m}月{d}日"
-    return f"{d:02d}.{m:02d}.{y}"
-
-
 HUB_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5724,12 +5778,12 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <meta property="og:url" content="{origin}/news/">
   <meta property="og:image" content="{origin}/og-image.png">
   <meta name="robots" content="index, follow">
-  <!-- Apply saved theme before first paint. -->
-  <script>try{{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}}catch(e){{}}</script>
+  <!-- Theme first; hide text awaiting translation. -->
+  <script>try{{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}}catch(e){{}}(function(){{var u=null;try{{u=localStorage.getItem("allnews.uilang")}}catch(e){{}}try{{var h=document.documentElement,p=h.dataset.ui||"en",w=(u&&u!=="auto"?u:h.dataset.ui||navigator.language||"en").toLowerCase();if(/^(ar|he|fa|ur)\\b/.test(w))h.dataset.uidir="rtl";if(w.slice(0,2)!==p.slice(0,2)){{h.classList.add("i18n-wait");setTimeout(function(){{h.classList.remove("i18n-wait")}},3000)}}}}catch(e){{}}}})()</script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="/styles.css?v=8">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <style>
     .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
     .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
@@ -5762,9 +5816,9 @@ HUB_TEMPLATE = """<!DOCTYPE html>
     </header>
     <main class="view">
       <div class="hero">
-        <h1 class="wordmark">Browse by country &amp; language</h1>
+        <h1 class="wordmark" data-i18n="browse">Browse by country &amp; language</h1>
       </div>
-      <p class="hub-intro">Read world news by country and language. Each page collects
+      <p class="hub-intro" data-i18n="hub_intro">Read world news by country and language. Each page collects
       today's headlines from that country's sources, updated hourly. Pick a country
       and a language to start.</p>
       <div class="hub-grid">
@@ -5772,22 +5826,22 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       </div>
     </main>
     <footer class="site-footer">
-      <nav class="footer-links" aria-label="Legal">
-        <a href="/about">About</a>
-        <a href="/privacy">Privacy</a>
-        <a href="/cookies">Cookies</a>
-        <a href="/terms">Terms</a>
-        <a href="/imprint">Imprint</a>
-        <a href="/settings">Settings</a>
-        <a href="/cookies#manage" class="cookie-settings">Cookie settings</a>
+      <nav class="footer-links" aria-label="Legal" data-i18n-aria="legal">
+        <a href="/about" data-i18n="about">About</a>
+        <a href="/privacy" data-i18n="privacy">Privacy</a>
+        <a href="/cookies" data-i18n="cookies">Cookies</a>
+        <a href="/terms" data-i18n="terms">Terms</a>
+        <a href="/imprint" data-i18n="imprint">Imprint</a>
+        <a href="/settings" data-i18n="settings">Settings</a>
+        <a href="/cookies#manage" class="cookie-settings" data-i18n="cookie_settings">Cookie settings</a>
       </nav>
       <div class="footer-meta">
         <span>© Copyright 2026 all.news</span>
-        <span><a href="/">Home</a> · <a href="/archive">Archive</a></span>
+        <span><a href="/" data-i18n="home">Home</a> · <a href="/archive" data-i18n="archive">Archive</a></span>
       </div>
     </footer>
   </div>
-  <script src="/site.js"></script>
+  <script src="/site.js?v=2"></script>
 </body>
 </html>
 """
@@ -5803,15 +5857,16 @@ def write_news_hub(langs_by_country):
         links = []
         for lang in sorted(set(langs_by_country[cc]), key=lambda l: LANG_EN_NAMES.get(l, l)):
             lname = LANG_EN_NAMES.get(lang, lang)
-            links.append(f'<li><a href="{landing_url(cc, lang)}">{escape(lname)}</a></li>')
+            links.append(f'<li><a href="{landing_url(cc, lang)}" data-lang-name="{lang}">'
+                         f'{escape(lname)}</a></li>')
         cards.append(
-            f'        <section class="hub-card"><h2>{escape(cname)}</h2>'
+            f'        <section class="hub-card"><h2 data-cc="{cc}">{escape(cname)}</h2>'
             f'<ul>{"".join(links)}</ul></section>')
     title = "Browse News by Country and Language – all.news"
     desc = ("Browse world news by country and language. all.news aggregates headlines "
             "from hundreds of sources across every country we cover, updated hourly.")
-    html = HUB_TEMPLATE.format(origin=SITE_ORIGIN, title=escape(title),
-                               desc=escape(desc), cards="\n".join(cards))
+    html = localize(HUB_TEMPLATE.format(origin=SITE_ORIGIN, title=escape(title),
+                                        desc=escape(desc), cards="\n".join(cards)), "en")
     os.makedirs(LANDING_DIR, exist_ok=True)
     with open(os.path.join(LANDING_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
@@ -5846,9 +5901,9 @@ def write_landing_pages(articles, today, now):
             title=f"{phrase} – all.news",
             description=strings["d"].format(c=cname),
             canonical=f"{SITE_ORIGIN}{url}",
-            date_heading=f"{phrase} · {landing_date(lang, today)}",
+            heading=f"{escape(phrase)} · {fmt_date(today, ui_code(lang, cc))}",
             older_dates=[], limit=SSR_LIMIT, head_links=alts, html_lang=lang,
-            relative_to=now)
+            relative_to=now, ui=ui_code(lang, cc))
     write_news_hub(langs_by_country)
     return landing_urls
 
@@ -6336,18 +6391,21 @@ def section_alternates(key, langs):
     return "\n  ".join(links)
 
 
-def section_lang_nav(key, langs, current=None):
+def section_lang_nav(key, langs, current=None, ui="en"):
     """Links to a section's language pages."""
     if not langs:
         return ""
-    items = [("All languages", f"/{key}/", current is None)]
+    items = [(t(ui, "all_languages"), f"/{key}/", current is None)]
     items += [(LANG_NAMES.get(l, l), section_lang_url(key, l), l == current)
               for l in sorted(langs, key=lang_order)]
     links = []
-    for text, url, here in items:
+    for i, (text, url, here) in enumerate(items):
         mark = ' aria-current="page"' if here else ""
+        mark += ' data-i18n="all_languages"' if i == 0 else ""
         links.append(f'<a href="{url}"{mark}>{escape(text)}</a>')
-    return f'      <nav class="lang-nav" aria-label="Languages">{"".join(links)}</nav>'
+    label = escape(t(ui, "languages"))
+    return (f'      <nav class="lang-nav" aria-label="{label}" data-i18n-aria="languages">'
+            f'{"".join(links)}</nav>')
 
 
 def section_lang_copy(key, lang):
@@ -6386,10 +6444,10 @@ def write_section_langs(key, result, langs, kept, now):
         write_rendered_html(
             pages[lang], os.path.join(key, lang_slug(lang), "index.html"),
             title=title, description=desc, canonical=f"{SITE_ORIGIN}{url}",
-            date_heading=heading, limit=SSR_LIMIT, head_links=alts if listed else "",
+            heading=escape(heading), limit=SSR_LIMIT, head_links=alts if listed else "",
             html_lang=lang, archive_link=False, relative_to=now,
-            lang_nav=section_lang_nav(key, langs, lang),
-            robots="index, follow" if listed else "noindex, follow")
+            lang_nav=section_lang_nav(key, langs, lang, ui_code(lang)),
+            robots="index, follow" if listed else "noindex, follow", ui=ui_code(lang))
     return indexed, state
 
 
@@ -6441,7 +6499,8 @@ def write_sections(rows, now, today, since):
             description=(f"Today's {meta['about']} news from outlets around the world, "
                          "on one page and updated around the clock. Filter by language and source."),
             canonical=f"{SITE_ORIGIN}/{key}/",
-            date_heading=f"{name} · {LIVE_HEADING}",
+            heading=(f'<span data-i18n="{key}">{escape(t("en", key))}</span> · '
+                     f'<span data-i18n="last_24h">{t("en", "last_24h")}</span>'),
             limit=SSR_LIMIT, archive_link=False, relative_to=now,
             head_links=section_alternates(key, indexed), lang_nav=section_lang_nav(key, langs))
         urls.append(f"/{key}/")
@@ -6503,7 +6562,7 @@ def write_outputs(articles):
         title="World News From Every Source in One Place – all.news",
         description="Read world news from hundreds of sources on one page. all.news aggregates global headlines and updates hourly — filter by source, language and more.",
         canonical=f"{SITE_ORIGIN}/",
-        date_heading=LIVE_HEADING,
+        heading=f'<span data-i18n="last_24h">{t("en", "last_24h")}</span>',
         older_dates=older,
         limit=SSR_LIMIT,  # index head only; script.js lazy-loads the rest
         relative_to=now,

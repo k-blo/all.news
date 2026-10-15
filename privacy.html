@@ -12,15 +12,15 @@
   <meta property="og:url" content="https://www.all.news/privacy">
   <meta property="og:image" content="https://www.all.news/og-image.png">
   <meta name="robots" content="index, follow">
-  <!-- Apply saved theme before first paint. -->
-  <script>try{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}catch(e){}</script>
+  <!-- Theme first; hide text awaiting translation. -->
+  <script>try{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}catch(e){}(function(){var u=null;try{u=localStorage.getItem("allnews.uilang")}catch(e){}try{var h=document.documentElement,p=h.dataset.ui||"en",w=(u&&u!=="auto"?u:h.dataset.ui||navigator.language||"en").toLowerCase();if(/^(ar|he|fa|ur)\b/.test(w))h.dataset.uidir="rtl";if(w.slice(0,2)!==p.slice(0,2)){h.classList.add("i18n-wait");setTimeout(function(){h.classList.remove("i18n-wait")},3000)}}catch(e){}})()</script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="/favicon-192.png">
   <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-latin-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=8">
+  <link rel="stylesheet" href="/styles.css?v=9">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N83C506R65"></script>
   <script>
@@ -45,8 +45,8 @@
     <header class="topbar">
       <a href="/" class="brand-link">all.news</a>
       <nav class="topnav">
-        <a href="/" class="nav-btn">News</a>
-        <a href="/settings" class="nav-btn">Settings</a>
+        <a href="/" class="nav-btn" data-i18n="news">News</a>
+        <a href="/settings" class="nav-btn" data-i18n="settings">Settings</a>
       </nav>
     </header>
 
@@ -161,22 +161,22 @@
     </main>
 
     <footer class="site-footer">
-      <nav class="footer-links" aria-label="Legal">
-        <a href="/about">About</a>
-        <a href="/privacy">Privacy</a>
-        <a href="/cookies">Cookies</a>
-        <a href="/terms">Terms</a>
-        <a href="/imprint">Imprint</a>
-        <a href="/settings">Settings</a>
-        <a href="/cookies#manage" class="cookie-settings">Cookie settings</a>
+      <nav class="footer-links" aria-label="Legal" data-i18n-aria="legal">
+        <a href="/about" data-i18n="about">About</a>
+        <a href="/privacy" data-i18n="privacy">Privacy</a>
+        <a href="/cookies" data-i18n="cookies">Cookies</a>
+        <a href="/terms" data-i18n="terms">Terms</a>
+        <a href="/imprint" data-i18n="imprint">Imprint</a>
+        <a href="/settings" data-i18n="settings">Settings</a>
+        <a href="/cookies#manage" class="cookie-settings" data-i18n="cookie_settings">Cookie settings</a>
       </nav>
       <div class="footer-meta">
         <span>© Copyright 2026 all.news</span>
-        <span><a href="/news/">Browse by country &amp; language</a></span>
-        <span>all.news is not responsible for the content of external sites</span>
+        <span><a href="/news/" data-i18n="browse">Browse by country &amp; language</a></span>
+        <span data-i18n="disclaimer">all.news is not responsible for the content of external sites</span>
       </div>
     </footer>
   </div>
-  <script src="/site.js"></script>
+  <script src="/site.js?v=2"></script>
 </body>
 </html>

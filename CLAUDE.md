@@ -114,7 +114,8 @@ generated URLs; `template.html`, `archive.html`, `robots.txt` and `HUB_TEMPLATE`
 
 **`<html lang>`** defaults to `en` (`write_rendered_html`) — the home feed, archive
 index and archive day pages are English pages listing many languages. Only the
-`/news/<country>/<lang>/` landing pages override it, with their own language.
+`/news/<country>/<lang>/` landing pages and `/<section>/<lang>/` pages override it,
+with their own language.
 
 **`/archive`, not `/archive.html`.** Cloudflare Pages strips `.html` from static
 assets and 308s, so the `.html` form costs a hop and makes the served page's
@@ -189,7 +190,7 @@ hreflang cluster until it fills up. `script.js` resolves the slug (`SECTION_LANG
 and pins the language without persisting it, like the landing pages. The worker
 301s `/ai/german` to `/ai/german/`.
 
-**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`). If the source introduces a **new country or language**, add its English name to `COUNTRY_NAMES`/`LANG_EN_NAMES` in **both** `crawler.py` and `script.js` (and the display name to `COUNTRY_NAMES`/`LANG_NAMES` in `script.js`, plus `LANG_NAMES` in `crawler.py`), or its landing page shows the raw code and won't hydrate. A language that reaches 3 outlets in a section gets a section language page: add its copy to `SECTION_PHRASES`/`SECTION_LANG_STRINGS`.
+**Adding a new source:** check robots.txt allows crawling, confirm the sitemap/feed format, add to the appropriate list at the top of the file, add a color to `SOURCE_COLORS` in `crawler.py` (written out to `colors.js` by `write_colors_js()`). If the source introduces a **new country or language**, add its English name to `COUNTRY_NAMES`/`LANG_EN_NAMES` in **both** `crawler.py` and `script.js` (and the display name to `COUNTRY_NAMES`/`LANG_NAMES` in `script.js`, plus `LANG_NAMES` in `crawler.py`), or its landing page shows the raw code and won't hydrate. A language that reaches 3 outlets in a section gets a section language page: add its copy to `SECTION_PHRASES`/`SECTION_LANG_STRINGS`. A new language also needs its UI dictionary, and a new country a rebuild (see **UI language**).
 
 **Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.) Judge robots.txt by RFC 9309 / Google semantics — longest match wins, `*` and `$` wildcards, a 4xx robots.txt means no rules. Python's `urllib.robotparser` gets this wrong (first match, no wildcards, 403 = disallow all), so don't rely on it. The rule is for *adding* sources: an existing source that still works stays even if its robots.txt has since tightened; only sources that stopped working are removed.
 
@@ -205,12 +206,36 @@ On `/<section>/<lang>/` the path pins the language instead (`SECTION_LANG`).
 
 **Menu** lists the sections (current one marked by `script.js`) plus Settings.
 
-**Settings** (`settings.html`, `/settings`): theme (dark default / light / system) in
+**Settings** (`settings.html`, `/settings`): UI language (automatic / any of ours)
+in `allnews.uilang`, theme (dark default / light / system) in
 `allnews.theme`, layout (comfortable / compact) in `allnews.density`. Every page has a
 tiny inline `<head>` script that sets `data-theme` / `data-density` on `<html>`
-before first paint; `styles.css` holds the light palette (`:root[data-theme="light"]`)
-and the compact overrides. Keep that inline script identical in `template.html`,
-`archive.html`, `HUB_TEMPLATE` and the static pages.
+before first paint, and adds `i18n-wait` when the page will be translated;
+`styles.css` holds the light palette (`:root[data-theme="light"]`), the compact
+overrides and the `i18n-wait` rules. Keep that inline script identical in
+`template.html`, `archive.html`, `HUB_TEMPLATE` and the static pages.
+
+**UI language** (#53): menus, buttons, footer, dialogs, dates and relative times
+come in every language we carry (55 UI languages: our 54 content languages, with
+Chinese split into `zh-hans` / `zh-hant`). One dictionary per language,
+`i18n/<code>.json`: `"ui"` holds the hand-written strings (`en.json` is the master
+list of keys); `node i18n/build.mjs` fills the rest from Node's ICU (CLDR) — date
+templates per month, month names, relative-time templates per plural category,
+plural categories for 0–99, country and language names. Markup carries markers
+instead of hardcoded text: `data-i18n` (text), `data-i18n-ph` / `-aria` / `-title`
+(attributes), `data-date`, `data-cc`, `data-lang-name`. Pages with a language of
+their own (landing and section language pages) are rendered in it by the crawler
+(`localize()`, `fmt_date()`, `fmt_ago()`; `ui_code()` maps zh to the script by
+country) and carry `<html data-ui>`; every other page is rendered in English, and
+`site.js` (`window.I18N`) translates the markers for the visitor: the Settings
+choice first, then the page's own language, then the browser's languages, then
+English. `script.js` builds its rows and dialogs with `I18N.t()` / `I18N.date()` /
+`I18N.ago()` once `I18N.ready` resolves. Legal page bodies stay English. The
+dictionaries are fetched as `/i18n/<code>.json?v=N` — bump `VERSION` in `site.js`
+when one changes (static assets are browser-cached for hours). **New UI string:**
+add the key to `en.json` and every other dictionary. **New language:** translate
+`en.json`'s `"ui"` into `i18n/<code>.json`, add the code to `NAMES` in `site.js`,
+run `node i18n/build.mjs`; a new country needs the build rerun too.
 
 **Legal pages** (`about`, `privacy`, `cookies`, `terms`, `imprint` — static `.html`,
 served without the extension): linked from every footer. The privacy/cookie text

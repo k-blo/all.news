@@ -693,6 +693,32 @@ a { color: inherit; }
 .choice[aria-pressed="true"] { color: var(--fg); }
 .choice[aria-pressed="true"]::after { content: "✓"; margin-left: 0.4em; font-weight: 600; }
 .settings-note { color: var(--muted); font-size: 14px; margin-top: 40px; }
+.lang-select {
+  font: inherit;
+  font-size: 17px;
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 10px;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+/* UI text waits for its translation (site.js). */
+.i18n-wait [data-i18n],
+.i18n-wait [data-date],
+.i18n-wait .day-heading,
+.i18n-wait #list time,
+.i18n-wait .row-act .label,
+.i18n-wait .ad-slot { visibility: hidden; }
+.i18n-wait #search::placeholder { color: transparent; }
+/* RTL UI text: own direction, so end punctuation stays put. */
+:root[data-uidir="rtl"] [data-i18n],
+:root[data-uidir="rtl"] [data-date],
+:root[data-uidir="rtl"] #list time,
+:root[data-uidir="rtl"] .row-act .label,
+:root[data-uidir="rtl"] .no-results { unicode-bidi: plaintext; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
