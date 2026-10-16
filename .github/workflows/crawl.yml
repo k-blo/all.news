@@ -152,9 +152,9 @@ jobs:
           echo "--- today's archive objects (by filename) ---"
           rclone lsf "R2:$R2_BUCKET/archive" | grep "^$(TZ=Europe/Zurich date +%F)" | head || true
 
-  # ---- Events (#58): group the live feed into stories ----
+  # ---- Clustering (#58): group the live feed into stories ----
   # Runs after reduce, so the feed is never delayed.
-  events:
+  clustering:
     needs: reduce
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -166,9 +166,9 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: requirements-events.txt
+          cache-dependency-path: requirements-clustering.txt
       - name: Install deps
-        run: pip install -r requirements-events.txt
+        run: pip install -r requirements-clustering.txt
       - name: Model cache
         id: model
         uses: actions/cache@v4
@@ -190,10 +190,10 @@ jobs:
           rclone copy "R2:$R2_BUCKET/crawled.json" .
           # state/ is not served publicly (functions/[[path]].js)
           rclone copy "R2:$R2_BUCKET/state/embeddings.npz" state/ || true
-      - name: Group into events
-        run: python3 events.py
+      - name: Cluster the feed
+        run: python3 clustering.py
         env:
-          EVENTS_BUDGET: "420"  # embed seconds; crawl runs every 30 min
+          CLUSTERING_BUDGET: "420"  # embed seconds; crawl runs every 30 min
       - name: Upload to R2
         run: |
           rclone copy crawled.json "R2:$R2_BUCKET/" -v

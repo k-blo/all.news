@@ -1,6 +1,6 @@
-"""Group the live feed into events (#58)."""
+"""Cluster the live feed into events (#58)."""
 # Runs after the crawl's reduce step.
-# Needs numpy, onnxruntime, tokenizers (requirements-events.txt).
+# Needs numpy, onnxruntime, tokenizers (requirements-clustering.txt).
 import hashlib
 import html
 import json
@@ -16,10 +16,10 @@ from tokenizers import Tokenizer
 
 import crawler
 
-MODEL_DIR = os.environ.get("EVENTS_MODEL", "models/embeddinggemma")
+MODEL_DIR = os.environ.get("CLUSTERING_MODEL", "models/embeddinggemma")
 MODEL_ID = "onnx-community/embeddinggemma-300m-ONNX"  # cache key
 CACHE = os.path.join("state", "embeddings.npz")  # not served publicly
-BUDGET = float(os.environ.get("EVENTS_BUDGET", "720"))  # embedding seconds
+BUDGET = float(os.environ.get("CLUSTERING_BUDGET", "720"))  # embedding seconds
 PROMPT = "task: sentence similarity | query: "
 EMBED_SUMMARY = 200  # summary chars used, as calibrated
 MAX_TOKENS, BATCH, CHUNK = 256, 32, 256
@@ -212,7 +212,7 @@ def main():
     today = datetime.fromisoformat(gen).astimezone(crawler.ZURICH).date().isoformat()
     crawler.write_feed(rows, gen, today, feed.get("since", gen))
     save_cache({a["url"]: cache[a["url"]] for a in rows if a["url"] in cache})
-    print(f"events: embedded {done}/{len(todo)} new, {events} events, "
+    print(f"clustering: embedded {done}/{len(todo)} new, {events} events, "
           f"{tagged}/{len(rows)} articles grouped")
 
 

@@ -194,20 +194,20 @@ and pins the language without persisting it, like the landing pages. The worker
 
 **Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.) Judge robots.txt by RFC 9309 / Google semantics — longest match wins, `*` and `$` wildcards, a 4xx robots.txt means no rules. Python's `urllib.robotparser` gets this wrong (first match, no wildcards, 403 = disallow all), so don't rely on it. The rule is for *adding* sources: an existing source that still works stays even if its robots.txt has since tightened; only sources that stopped working are removed.
 
-## Events (`events.py`, #58)
+## Clustering (`clustering.py`, #58)
 
 Groups live-feed articles about the same story into one row per *event*, within
-one country + language over the 24-hour window. Runs as the `events` job after
+one country + language over the 24-hour window. Runs as the `clustering` job after
 `reduce` (so the feed is never delayed) and rewrites `crawled.json`, the country
 shards and today's archive files via `crawler.write_feed()`. Unlike the crawler it
-needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-events.txt`).
+needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-clustering.txt`).
 
 - **Embeddings:** EmbeddingGemma-300m (ONNX, `onnx-community/embeddinggemma-300m-ONNX`,
   revision pinned in the workflow, kept in the Actions cache), prompt
   `task: sentence similarity | query: ` (its `clustering` prompt groups topics, not
   events), text = title + the summary's first 200 characters (as calibrated). Only
   new articles are embedded, newest first,
-  for at most `EVENTS_BUDGET` seconds per run (420 in the workflow, so crawl +
+  for at most `CLUSTERING_BUDGET` seconds per run (420 in the workflow, so crawl +
   events stay under the 30-minute cadence); vectors are cached as float16
   in R2 `state/embeddings.npz` (~130 MB, not served publicly). A cold cache fills
   over the first day of runs.
@@ -228,8 +228,8 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-events.txt`).
   members first; an event with < 2 visible members shows as a plain row. Deep links
   to a member open its event. Settings → Grouping off shows plain rows. Server-rendered HTML stays ungrouped. `event_count`
   holds plural forms per CLDR category, read with `I18N.count()`.
-- **Local run:** `pip install -r requirements-events.txt`, fetch the model files
-  into `models/embeddinggemma/` (see the workflow step), then `python3 events.py`
+- **Local run:** `pip install -r requirements-clustering.txt`, fetch the model files
+  into `models/embeddinggemma/` (see the workflow step), then `python3 clustering.py`
   next to a `crawled.json`.
 
 **Summaries:** every row shows its RSS summary under the headline — two lines,

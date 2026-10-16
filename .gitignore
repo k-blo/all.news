@@ -42,6 +42,6 @@ cron-worker/.wrangler/
 partial-*.json
 partials/
 
-# events.py: model + embedding cache (CI only)
+# clustering.py: model + embedding cache (CI only)
 /models/
 /state/

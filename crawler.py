@@ -6537,7 +6537,7 @@ def write_sections(rows, now, today, since):
 
 def write_feed(result, now_iso, today, since_iso):
     """Live feed, today's slice, country shards."""
-    # events.py rewrites these too.
+    # clustering.py rewrites these too.
     os.makedirs(ARCHIVE_DIR, exist_ok=True)
     day = [a for a in result if crawl_day(a) == today]  # the archive day
     write_json("crawled.json",                             # live feed (all countries)
