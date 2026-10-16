@@ -374,7 +374,7 @@ function eventHTML(ev) {
   return `<li class="event" id="ev-${esc(ev.id)}">` +
     `<button class="ev-head" type="button" aria-expanded="false">` +
     `<span class="meta-col">` +
-    `<span class="ev-count">${esc(I18N.count("event_count", ev.members.length))}</span>` +
+    `<span class="ev-count">${esc(I18N.count ? I18N.count("event_count", ev.members.length) : ev.members.length)}</span>` +
     `<span class="time"><time datetime="${esc(ev.published)}">${esc(when)}</time></span>` +
     `</span>` +
     `<span class="ev-main">` +
