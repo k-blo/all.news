@@ -192,6 +192,8 @@ jobs:
           rclone copy "R2:$R2_BUCKET/state/embeddings.npz" state/ || true
       - name: Group into events
         run: python3 events.py
+        env:
+          EVENTS_BUDGET: "420"  # embed seconds; crawl runs every 30 min
       - name: Upload to R2
         run: |
           rclone copy crawled.json "R2:$R2_BUCKET/" -v

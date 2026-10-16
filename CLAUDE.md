@@ -207,7 +207,8 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-events.txt`).
   `task: sentence similarity | query: ` (its `clustering` prompt groups topics, not
   events), text = title + the summary's first 200 characters (as calibrated). Only
   new articles are embedded, newest first,
-  for at most `EVENTS_BUDGET` seconds (720) per run; vectors are cached as float16
+  for at most `EVENTS_BUDGET` seconds per run (420 in the workflow, so crawl +
+  events stay under the 30-minute cadence); vectors are cached as float16
   in R2 `state/embeddings.npz` (~130 MB, not served publicly). A cold cache fills
   over the first day of runs.
 - **Clustering:** cosine similarity; star clustering — the best-connected article
