@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} article",
    "other": "{n} articles"
-  }
+  },
+  "grouping": "Agrupació",
+  "grouping_note": "Reuneix en una fila els articles sobre el mateix fet.",
+  "on": "Activada",
+  "off": "Desactivada",
+  "descriptions": "Descripcions",
+  "descriptions_note": "Text sota els titulars, sempre visible en passar-hi o tocar-lo.",
+  "show": "Mostra",
+  "hide": "Amaga"
  },
  "dates": [
   "{d} de gener del {y}",

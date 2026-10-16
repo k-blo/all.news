@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} artículo",
    "other": "{n} artículos"
-  }
+  },
+  "grouping": "Agrupación",
+  "grouping_note": "Reunir en una fila los artículos sobre el mismo hecho.",
+  "on": "Activada",
+  "off": "Desactivada",
+  "descriptions": "Descripciones",
+  "descriptions_note": "Texto bajo los titulares, siempre visible al pasar o tocar.",
+  "show": "Mostrar",
+  "hide": "Ocultar"
  },
  "dates": [
   "{d} de enero de {y}",

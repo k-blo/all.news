@@ -79,7 +79,15 @@
   "language_note": "Ngôn ngữ của menu và nút bấm.",
   "automatic": "Tự động",
   "back": "Quay lại tin tức",
-  "event_count": "{n} bài báo"
+  "event_count": "{n} bài báo",
+  "grouping": "Gom nhóm",
+  "grouping_note": "Gộp các bài về cùng một sự kiện vào một dòng.",
+  "on": "Bật",
+  "off": "Tắt",
+  "descriptions": "Mô tả",
+  "descriptions_note": "Đoạn dưới tiêu đề, luôn hiện khi trỏ hoặc chạm.",
+  "show": "Hiện",
+  "hide": "Ẩn"
  },
  "dates": [
   "{d} tháng 1, {y}",

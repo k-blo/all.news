@@ -83,7 +83,15 @@
    "zero": "{n} rakstu",
    "one": "{n} raksts",
    "other": "{n} raksti"
-  }
+  },
+  "grouping": "Grupēšana",
+  "grouping_note": "Apvienot rakstus par vienu notikumu vienā rindā.",
+  "on": "Ieslēgts",
+  "off": "Izslēgts",
+  "descriptions": "Apraksti",
+  "descriptions_note": "Teksts zem virsrakstiem, vienmēr redzams, norādot vai pieskaroties.",
+  "show": "Rādīt",
+  "hide": "Slēpt"
  },
  "dates": [
   "{y}. gada {d}. janvāris",

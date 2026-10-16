@@ -79,7 +79,15 @@
   "language_note": "メニューやボタンの言語です。",
   "automatic": "自動",
   "back": "ニュースに戻る",
-  "event_count": "{n}件の記事"
+  "event_count": "{n}件の記事",
+  "grouping": "グループ化",
+  "grouping_note": "同じ出来事の記事を1行にまとめます。",
+  "on": "オン",
+  "off": "オフ",
+  "descriptions": "概要",
+  "descriptions_note": "見出しの下の文。ポイントやタップ時は常に表示。",
+  "show": "表示",
+  "hide": "非表示"
  },
  "dates": [
   "{y}年1月{d}日",

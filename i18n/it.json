@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} articolo",
    "other": "{n} articoli"
-  }
+  },
+  "grouping": "Raggruppamento",
+  "grouping_note": "Riunisci in una riga gli articoli sullo stesso evento.",
+  "on": "Attivo",
+  "off": "Disattivo",
+  "descriptions": "Descrizioni",
+  "descriptions_note": "Testo sotto i titoli, sempre visibile al passaggio o al tocco.",
+  "show": "Mostra",
+  "hide": "Nascondi"
  },
  "dates": [
   "{d} gennaio {y}",

@@ -79,7 +79,15 @@
   "language_note": "Iaith y dewislenni a’r botymau.",
   "automatic": "Awtomatig",
   "back": "Yn ôl i’r newyddion",
-  "event_count": "{n} erthygl"
+  "event_count": "{n} erthygl",
+  "grouping": "Grwpio",
+  "grouping_note": "Casglu erthyglau am yr un digwyddiad mewn un rhes.",
+  "on": "Ymlaen",
+  "off": "I ffwrdd",
+  "descriptions": "Disgrifiadau",
+  "descriptions_note": "Testun o dan benawdau, i'w weld bob amser wrth hofran neu dapio.",
+  "show": "Dangos",
+  "hide": "Cuddio"
  },
  "dates": [
   "{d} Ionawr {y}",

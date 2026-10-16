@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} article",
    "other": "{n} articles"
-  }
+  },
+  "grouping": "Regroupement",
+  "grouping_note": "Réunir les articles sur un même événement en une ligne.",
+  "on": "Activé",
+  "off": "Désactivé",
+  "descriptions": "Descriptions",
+  "descriptions_note": "Texte sous les titres, toujours affiché au survol ou au toucher.",
+  "show": "Afficher",
+  "hide": "Masquer"
  },
  "dates": [
   "{d} janvier {y}",

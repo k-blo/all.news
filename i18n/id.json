@@ -79,7 +79,15 @@
   "language_note": "Bahasa untuk menu dan tombol.",
   "automatic": "Otomatis",
   "back": "Kembali ke berita",
-  "event_count": "{n} artikel"
+  "event_count": "{n} artikel",
+  "grouping": "Pengelompokan",
+  "grouping_note": "Gabungkan artikel tentang peristiwa yang sama dalam satu baris.",
+  "on": "Aktif",
+  "off": "Nonaktif",
+  "descriptions": "Deskripsi",
+  "descriptions_note": "Teks di bawah judul, selalu tampil saat disorot atau diketuk.",
+  "show": "Tampilkan",
+  "hide": "Sembunyikan"
  },
  "dates": [
   "{d} Januari {y}",

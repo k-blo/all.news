@@ -83,7 +83,15 @@
    "one": "{n} članak",
    "few": "{n} članka",
    "other": "{n} članaka"
-  }
+  },
+  "grouping": "Grupiranje",
+  "grouping_note": "Spoji članke o istom događaju u jedan red.",
+  "on": "Uključeno",
+  "off": "Isključeno",
+  "descriptions": "Opisi",
+  "descriptions_note": "Tekst ispod naslova, uvijek vidljiv pri prelasku ili dodiru.",
+  "show": "Prikaži",
+  "hide": "Sakrij"
  },
  "dates": [
   "{d}. siječnja {y}.",

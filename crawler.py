@@ -1646,7 +1646,8 @@ FEEDS = [
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
 USER_AGENT = "AllNewsBot/0.1 (+https://github.com/yourname/all.news; POC)"
 TIMEOUT = 15
-SUMMARY_MAX = 200  # keep snippets short — legal caution
+SUMMARY_MAX = 400  # keep snippets short — legal caution
+LEGACY_SUMMARY_MAX = 200  # old cap: hard cut, mid-word
 DAILY_PER_SOURCE = 150  # max articles kept per source per day (anti-spam cap)
 WELTWOCHE_SITEMAP_INDEX = "https://weltwoche.ch/sitemap_index.xml"
 WELTWOCHE_MAX = 50  # newest N stories from the latest weekly sitemap
@@ -4417,6 +4418,13 @@ def strip_html(text):
     return re.sub(r"<[^>]+>", "", text or "").strip()
 
 
+def clip(text, n):
+    """Cut at a word; mark with …"""
+    if len(text) <= n:
+        return text
+    return re.sub(r"\s+\S*$", "", text[:n]) + "…"
+
+
 def clean_title(text):
     """Normalize a headline for display (#31).
 
@@ -4575,7 +4583,7 @@ def parse_feed(source, xml_bytes, allow_summary=True):
             continue
         summary = ""
         if allow_summary:
-            summary = strip_html(text_of(item, "description", "summary"))[:SUMMARY_MAX]
+            summary = clip(strip_html(text_of(item, "description", "summary")), SUMMARY_MAX)
         out.append({
             "source": source,
             "title": title,
@@ -5266,12 +5274,15 @@ def article_id(article):
 def clean_summary(article):
     """Summary worth showing, else ''."""
     # Mirrors cleanSummary() in script.js.
-    s = re.sub(r"\s+", " ", unescape(article.get("summary") or "")).strip()
+    raw = article.get("summary") or ""
+    s = re.sub(r"\s+", " ", unescape(raw)).strip()
     s = re.sub(r"\s+The post .*$", "", s)  # WordPress footer
     title = re.sub(r"\s+", " ", article.get("title") or "").strip()
     if len(s) < 25 or s.startswith(title[:40]):
         return ""
-    return re.sub(r"\s+\S*$", "", s) + "…" if len(s) >= 195 else s
+    if len(raw) == LEGACY_SUMMARY_MAX and not s.endswith(tuple(".!?…»\"”")):
+        s = re.sub(r"\s+\S*$", "", s) + "…"  # old mid-word cut
+    return s
 
 
 def render_article_html(article, now=None, ui="en"):
@@ -5792,11 +5803,11 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <meta property="og:image" content="{origin}/og-image.png">
   <meta name="robots" content="index, follow">
   <!-- Theme first; hide text awaiting translation. -->
-  <script>try{{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}}catch(e){{}}(function(){{var u=null;try{{u=localStorage.getItem("allnews.uilang")}}catch(e){{}}try{{var h=document.documentElement,p=h.dataset.ui||"en",w=(u&&u!=="auto"?u:h.dataset.ui||navigator.language||"en").toLowerCase();if(/^(ar|he|fa|ur)\\b/.test(w))h.dataset.uidir="rtl";if(w.slice(0,2)!==p.slice(0,2)){{h.classList.add("i18n-wait");setTimeout(function(){{h.classList.remove("i18n-wait")}},3000)}}}}catch(e){{}}}})()</script>
+  <script>try{{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact";if(s.getItem("allnews.summaries")==="hide")r.dataset.summaries="hide"}}catch(e){{}}(function(){{var u=null;try{{u=localStorage.getItem("allnews.uilang")}}catch(e){{}}try{{var h=document.documentElement,p=h.dataset.ui||"en",w=(u&&u!=="auto"?u:h.dataset.ui||navigator.language||"en").toLowerCase();if(/^(ar|he|fa|ur)\\b/.test(w))h.dataset.uidir="rtl";if(w.slice(0,2)!==p.slice(0,2)){{h.classList.add("i18n-wait");setTimeout(function(){{h.classList.remove("i18n-wait")}},3000)}}}}catch(e){{}}}})()</script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="/styles.css?v=10">
+  <link rel="stylesheet" href="/styles.css?v=11">
   <style>
     .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
     .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
@@ -5854,7 +5865,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       </div>
     </footer>
   </div>
-  <script src="/site.js?v=3"></script>
+  <script src="/site.js?v=4"></script>
 </body>
 </html>
 """

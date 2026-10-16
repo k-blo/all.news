@@ -79,7 +79,15 @@
   "language_note": "Sprache der Menüs und Schaltflächen.",
   "automatic": "Automatisch",
   "back": "Zurück zu den Nachrichten",
-  "event_count": "{n} Artikel"
+  "event_count": "{n} Artikel",
+  "grouping": "Gruppierung",
+  "grouping_note": "Artikel zum selben Ereignis in einer Zeile bündeln.",
+  "on": "Ein",
+  "off": "Aus",
+  "descriptions": "Beschreibungen",
+  "descriptions_note": "Text unter Schlagzeilen, beim Zeigen oder Tippen immer sichtbar.",
+  "show": "Anzeigen",
+  "hide": "Ausblenden"
  },
  "dates": [
   "{d}. Januar {y}",

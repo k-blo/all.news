@@ -79,7 +79,15 @@
   "language_note": "菜单和按钮所用的语言。",
   "automatic": "自动",
   "back": "返回新闻",
-  "event_count": "{n}篇文章"
+  "event_count": "{n}篇文章",
+  "grouping": "分组",
+  "grouping_note": "将同一事件的文章合并为一行。",
+  "on": "开",
+  "off": "关",
+  "descriptions": "摘要",
+  "descriptions_note": "标题下的文字，悬停或点按时始终显示。",
+  "show": "显示",
+  "hide": "隐藏"
  },
  "dates": [
   "{y}年1月{d}日",

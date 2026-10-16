@@ -79,7 +79,15 @@
   "language_note": "Menülerin ve düğmelerin dili.",
   "automatic": "Otomatik",
   "back": "Haberlere dön",
-  "event_count": "{n} haber"
+  "event_count": "{n} haber",
+  "grouping": "Gruplama",
+  "grouping_note": "Aynı olayla ilgili haberleri tek satırda topla.",
+  "on": "Açık",
+  "off": "Kapalı",
+  "descriptions": "Açıklamalar",
+  "descriptions_note": "Başlıkların altındaki metin, üzerine gelince veya dokununca hep görünür.",
+  "show": "Göster",
+  "hide": "Gizle"
  },
  "dates": [
   "{d} Ocak {y}",

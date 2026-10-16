@@ -13,14 +13,14 @@
   <meta property="og:image" content="https://www.all.news/og-image.png">
   <meta name="robots" content="noindex, follow">
   <!-- Theme first; hide text awaiting translation. -->
-  <script>try{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact"}catch(e){}(function(){var u=null;try{u=localStorage.getItem("allnews.uilang")}catch(e){}try{var h=document.documentElement,p=h.dataset.ui||"en",w=(u&&u!=="auto"?u:h.dataset.ui||navigator.language||"en").toLowerCase();if(/^(ar|he|fa|ur)\b/.test(w))h.dataset.uidir="rtl";if(w.slice(0,2)!==p.slice(0,2)){h.classList.add("i18n-wait");setTimeout(function(){h.classList.remove("i18n-wait")},3000)}}catch(e){}})()</script>
+  <script>try{var s=localStorage,t=s.getItem("allnews.theme"),r=document.documentElement;if(t==="light"||t==="system"&&matchMedia("(prefers-color-scheme: light)").matches)r.dataset.theme="light";if(s.getItem("allnews.density")==="compact")r.dataset.density="compact";if(s.getItem("allnews.summaries")==="hide")r.dataset.summaries="hide"}catch(e){}(function(){var u=null;try{u=localStorage.getItem("allnews.uilang")}catch(e){}try{var h=document.documentElement,p=h.dataset.ui||"en",w=(u&&u!=="auto"?u:h.dataset.ui||navigator.language||"en").toLowerCase();if(/^(ar|he|fa|ur)\b/.test(w))h.dataset.uidir="rtl";if(w.slice(0,2)!==p.slice(0,2)){h.classList.add("i18n-wait");setTimeout(function(){h.classList.remove("i18n-wait")},3000)}}catch(e){}})()</script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
   <link rel="apple-touch-icon" href="/favicon-192.png">
   <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/inter-latin-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css?v=10">
+  <link rel="stylesheet" href="/styles.css?v=11">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N83C506R65"></script>
   <script>
@@ -80,6 +80,24 @@
         </div>
       </section>
 
+      <section class="setting">
+        <h2 data-i18n="grouping">Grouping</h2>
+        <p data-i18n="grouping_note">Combine articles about the same event into one row.</p>
+        <div class="choice-row" data-key="allnews.events" data-default="on">
+          <button type="button" class="choice" data-value="on" data-i18n="on">On</button>
+          <button type="button" class="choice" data-value="off" data-i18n="off">Off</button>
+        </div>
+      </section>
+
+      <section class="setting">
+        <h2 data-i18n="descriptions">Descriptions</h2>
+        <p data-i18n="descriptions_note">Text under headlines, always shown on hover or tap.</p>
+        <div class="choice-row" data-key="allnews.summaries" data-default="show">
+          <button type="button" class="choice" data-value="show" data-i18n="show">Show</button>
+          <button type="button" class="choice" data-value="hide" data-i18n="hide">Hide</button>
+        </div>
+      </section>
+
       <p class="settings-note"><a href="/" data-i18n="back">Back to the news</a></p>
     </main>
 
@@ -100,7 +118,7 @@
       </div>
     </footer>
   </div>
-  <script src="/site.js?v=3"></script>
+  <script src="/site.js?v=4"></script>
   <script>
     // Settings: each row stores one localStorage key.
     function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -114,6 +132,8 @@
       if (light) root.dataset.theme = "light"; else delete root.dataset.theme;
       if (lsGet("allnews.density") === "compact") root.dataset.density = "compact";
       else delete root.dataset.density;
+      if (lsGet("allnews.summaries") === "hide") root.dataset.summaries = "hide";
+      else delete root.dataset.summaries;
     }
     for (const row of document.querySelectorAll(".choice-row")) {
       const key = row.dataset.key;

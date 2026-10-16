@@ -79,7 +79,15 @@
   "language_note": "Cànan nan clàr-taice is nam putan.",
   "automatic": "Fèin-obrachail",
   "back": "Air ais gu na naidheachdan",
-  "event_count": "Artaigilean: {n}"
+  "event_count": "Artaigilean: {n}",
+  "grouping": "Buidhneachadh",
+  "grouping_note": "Cuir artaigilean mun aon tachartas còmhla ann an aon sreath.",
+  "on": "Air",
+  "off": "Dheth",
+  "descriptions": "Tuairisgeulan",
+  "descriptions_note": "Teacsa fo na ceann-loidhnichean, ri fhaicinn an-còmhnaidh le fantainn no tapadh.",
+  "show": "Seall",
+  "hide": "Falaich"
  },
  "dates": [
   "{d}mh dhen Fhaoilleach {y}",

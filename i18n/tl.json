@@ -79,7 +79,15 @@
   "language_note": "Wika ng mga menu at button.",
   "automatic": "Awtomatiko",
   "back": "Bumalik sa balita",
-  "event_count": "{n} artikulo"
+  "event_count": "{n} artikulo",
+  "grouping": "Pagpapangkat",
+  "grouping_note": "Pagsamahin sa isang hanay ang mga artikulo tungkol sa iisang pangyayari.",
+  "on": "Naka-on",
+  "off": "Naka-off",
+  "descriptions": "Mga paglalarawan",
+  "descriptions_note": "Teksto sa ilalim ng mga headline, laging lumalabas kapag tinuro o tinap.",
+  "show": "Ipakita",
+  "hide": "Itago"
  },
  "dates": [
   "Enero {d}, {y}",

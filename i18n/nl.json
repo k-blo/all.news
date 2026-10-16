@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} artikel",
    "other": "{n} artikelen"
-  }
+  },
+  "grouping": "Groeperen",
+  "grouping_note": "Artikelen over hetzelfde nieuws in één rij bundelen.",
+  "on": "Aan",
+  "off": "Uit",
+  "descriptions": "Beschrijvingen",
+  "descriptions_note": "Tekst onder koppen, altijd zichtbaar bij aanwijzen of tikken.",
+  "show": "Tonen",
+  "hide": "Verbergen"
  },
  "dates": [
   "{d} januari {y}",

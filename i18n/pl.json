@@ -84,7 +84,15 @@
    "few": "{n} artykuły",
    "many": "{n} artykułów",
    "other": "{n} artykułu"
-  }
+  },
+  "grouping": "Grupowanie",
+  "grouping_note": "Łącz artykuły o tym samym wydarzeniu w jeden wiersz.",
+  "on": "Włączone",
+  "off": "Wyłączone",
+  "descriptions": "Opisy",
+  "descriptions_note": "Tekst pod nagłówkami, zawsze widoczny po najechaniu lub dotknięciu.",
+  "show": "Pokaż",
+  "hide": "Ukryj"
  },
  "dates": [
   "{d} stycznia {y}",

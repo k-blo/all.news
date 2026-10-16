@@ -83,7 +83,15 @@
    "one": "{n} articol",
    "few": "{n} articole",
    "other": "{n} de articole"
-  }
+  },
+  "grouping": "Grupare",
+  "grouping_note": "Reunește articolele despre același eveniment într-un rând.",
+  "on": "Activată",
+  "off": "Dezactivată",
+  "descriptions": "Descrieri",
+  "descriptions_note": "Text sub titluri, mereu afișat la trecere sau atingere.",
+  "show": "Afișează",
+  "hide": "Ascunde"
  },
  "dates": [
   "{d} ianuarie {y}",

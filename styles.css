@@ -934,6 +934,23 @@ a { color: inherit; }
 }
 :root[data-density="compact"] .article.has-sum { row-gap: 4px; }
 :root[data-density="compact"] .summary { font-size: 13.5px; -webkit-line-clamp: 1; }
+/* Settings → Descriptions: hide (#58). */
+/* Hidden in the list, shown when focused. */
+:root[data-summaries="hide"] .summary { display: none; }
+:root[data-summaries="hide"] .article.has-sum { align-items: center; }
+:root[data-summaries="hide"] .article.has-sum .meta-col { grid-row: auto; }
+:root[data-summaries="hide"] .article:is(.active, .highlight) .summary { display: block; }
+:root[data-summaries="hide"] .article.has-sum:is(.active, .highlight) { align-items: start; }
+@media (min-width: 641px) {
+  :root[data-summaries="hide"] .article.has-sum:is(.active, .highlight) .meta-col { grid-row: 1 / span 2; }
+}
+@media (hover: hover) {
+  :root[data-summaries="hide"] .article:is(:hover, :focus-within) .summary { display: block; }
+  :root[data-summaries="hide"] .article.has-sum:is(:hover, :focus-within) { align-items: start; }
+}
+@media (hover: hover) and (min-width: 641px) {
+  :root[data-summaries="hide"] .article.has-sum:is(:hover, :focus-within) .meta-col { grid-row: 1 / span 2; }
+}
 
 /* ---------- Events (#58): one row per story ---------- */
 .event { list-style: none; border-bottom: 1px solid var(--line); }

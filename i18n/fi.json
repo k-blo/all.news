@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} artikkeli",
    "other": "{n} artikkelia"
-  }
+  },
+  "grouping": "Ryhmittely",
+  "grouping_note": "Kokoa saman tapahtuman artikkelit yhdelle riville.",
+  "on": "Päällä",
+  "off": "Pois",
+  "descriptions": "Kuvaukset",
+  "descriptions_note": "Teksti otsikoiden alla, näkyy aina osoitettaessa tai napautettaessa.",
+  "show": "Näytä",
+  "hide": "Piilota"
  },
  "dates": [
   "{d}. tammikuuta {y}",

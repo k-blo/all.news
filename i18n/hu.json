@@ -79,7 +79,15 @@
   "language_note": "A menük és a gombok nyelve.",
   "automatic": "Automatikus",
   "back": "Vissza a hírekhez",
-  "event_count": "{n} cikk"
+  "event_count": "{n} cikk",
+  "grouping": "Csoportosítás",
+  "grouping_note": "Az azonos eseményről szóló cikkek egy sorban.",
+  "on": "Be",
+  "off": "Ki",
+  "descriptions": "Leírások",
+  "descriptions_note": "Szöveg a címek alatt, rámutatáskor vagy koppintáskor mindig látható.",
+  "show": "Megjelenítés",
+  "hide": "Elrejtés"
  },
  "dates": [
   "{y}. január {d}.",

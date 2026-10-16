@@ -205,7 +205,8 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-events.txt`).
 - **Embeddings:** EmbeddingGemma-300m (ONNX, `onnx-community/embeddinggemma-300m-ONNX`,
   revision pinned in the workflow, kept in the Actions cache), prompt
   `task: sentence similarity | query: ` (its `clustering` prompt groups topics, not
-  events), text = title + summary. Only new articles are embedded, newest first,
+  events), text = title + the summary's first 200 characters (as calibrated). Only
+  new articles are embedded, newest first,
   for at most `EVENTS_BUDGET` seconds (720) per run; vectors are cached as float16
   in R2 `state/embeddings.npz` (~130 MB, not served publicly). A cold cache fills
   over the first day of runs.
@@ -224,16 +225,19 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-events.txt`).
   the newest member — lead headline, an `event_count` chip, source dots — when
   sorted by date; clicking expands the members (normal rows). Filters apply to
   members first; an event with < 2 visible members shows as a plain row. Deep links
-  to a member open its event. Server-rendered HTML stays ungrouped. `event_count`
+  to a member open its event. Settings → Grouping off shows plain rows. Server-rendered HTML stays ungrouped. `event_count`
   holds plural forms per CLDR category, read with `I18N.count()`.
 - **Local run:** `pip install -r requirements-events.txt`, fetch the model files
   into `models/embeddinggemma/` (see the workflow step), then `python3 events.py`
   next to a `crawled.json`.
 
 **Summaries:** every row shows its RSS summary under the headline — two lines,
-the whole text on hover/focus. `clean_summary()` (crawler) and `cleanSummary()`
-(`script.js`) mirror each other: they decode entities, drop WordPress footers and
-summaries that just repeat the title, and end cut-off text on a word.
+the whole text on hover/focus; Settings → Descriptions → Hide shows it only then.
+`parse_feed()` keeps up to `SUMMARY_MAX` (400) characters, cut at a word with "…"
+(`clip()`); rows from before the change hold a hard, mid-word cut at 200.
+`clean_summary()` (crawler) and `cleanSummary()` (`script.js`) mirror each other:
+they decode entities, drop WordPress footers and summaries that just repeat the
+title, and end those old 200-character cuts on a word.
 
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
@@ -249,11 +253,14 @@ On `/<section>/<lang>/` the path pins the language instead (`SECTION_LANG`).
 
 **Settings** (`settings.html`, `/settings`): UI language (automatic / any of ours)
 in `allnews.uilang`, theme (dark default / light / system) in
-`allnews.theme`, layout (comfortable / compact) in `allnews.density`. Every page has a
-tiny inline `<head>` script that sets `data-theme` / `data-density` on `<html>`
+`allnews.theme`, layout (comfortable / compact) in `allnews.density`, grouping into
+events (on / off) in `allnews.events` (read by `script.js`), descriptions (show /
+hide) in `allnews.summaries`. Every page has a
+tiny inline `<head>` script that sets `data-theme` / `data-density` /
+`data-summaries` on `<html>`
 before first paint, and adds `i18n-wait` when the page will be translated;
 `styles.css` holds the light palette (`:root[data-theme="light"]`), the compact
-overrides and the `i18n-wait` rules. Keep that inline script identical in
+overrides, the hidden-descriptions rules and the `i18n-wait` rules. Keep that inline script identical in
 `template.html`, `archive.html`, `HUB_TEMPLATE` and the static pages.
 
 **UI language** (#53): menus, buttons, footer, dialogs, dates and relative times

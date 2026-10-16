@@ -79,7 +79,15 @@
   "language_note": "Teanga na roghchlár agus na gcnaipí.",
   "automatic": "Uathoibríoch",
   "back": "Ar ais chuig an nuacht",
-  "event_count": "Ailt: {n}"
+  "event_count": "Ailt: {n}",
+  "grouping": "Grúpáil",
+  "grouping_note": "Cuir ailt faoin eachtra chéanna le chéile i ró amháin.",
+  "on": "Air",
+  "off": "As",
+  "descriptions": "Cur síos",
+  "descriptions_note": "Téacs faoi na ceannlínte, le feiceáil i gcónaí ar ainliú nó tapáil.",
+  "show": "Taispeáin",
+  "hide": "Folaigh"
  },
  "dates": [
   "{d} Eanáir {y}",

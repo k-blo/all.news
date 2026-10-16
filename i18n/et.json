@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} artikkel",
    "other": "{n} artiklit"
-  }
+  },
+  "grouping": "Rühmitamine",
+  "grouping_note": "Koonda sama sündmuse artiklid ühele reale.",
+  "on": "Sees",
+  "off": "Väljas",
+  "descriptions": "Kirjeldused",
+  "descriptions_note": "Tekst pealkirjade all, alati nähtav osutamisel või puudutamisel.",
+  "show": "Näita",
+  "hide": "Peida"
  },
  "dates": [
   "{d}. jaanuar {y}",

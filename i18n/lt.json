@@ -84,7 +84,15 @@
    "few": "{n} straipsniai",
    "many": "{n} straipsnio",
    "other": "{n} straipsnių"
-  }
+  },
+  "grouping": "Grupavimas",
+  "grouping_note": "Sujungti straipsnius apie tą patį įvykį į vieną eilutę.",
+  "on": "Įjungta",
+  "off": "Išjungta",
+  "descriptions": "Aprašymai",
+  "descriptions_note": "Tekstas po antraštėmis, visada rodomas užvedus ar palietus.",
+  "show": "Rodyti",
+  "hide": "Slėpti"
  },
  "dates": [
   "{y} m. sausio {d} d.",

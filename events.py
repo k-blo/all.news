@@ -21,6 +21,7 @@ MODEL_ID = "onnx-community/embeddinggemma-300m-ONNX"  # cache key
 CACHE = os.path.join("state", "embeddings.npz")  # not served publicly
 BUDGET = float(os.environ.get("EVENTS_BUDGET", "720"))  # embedding seconds
 PROMPT = "task: sentence similarity | query: "
+EMBED_SUMMARY = 200  # summary chars used, as calibrated
 MAX_TOKENS, BATCH, CHUNK = 256, 32, 256
 
 TAU = 0.79                    # same-event cutoff
@@ -46,7 +47,7 @@ CJK = re.compile(r"[぀-ヿ㐀-鿿]+")
 
 def text_of(a):
     """Title plus summary, as tested."""
-    title, summary = a["title"].strip(), (a.get("summary") or "").strip()
+    title, summary = a["title"].strip(), (a.get("summary") or "")[:EMBED_SUMMARY].strip()
     return f"{title}. {summary}" if summary else title
 
 
@@ -113,7 +114,7 @@ def vague(a):
 
 def words(a):
     """4+ letter words; CJK as bigrams."""
-    text = (a["title"] + " " + html.unescape(a.get("summary") or "")).lower()
+    text = (a["title"] + " " + html.unescape((a.get("summary") or "")[:EMBED_SUMMARY])).lower()
     out = {w for w in WORD.findall(CJK.sub(" ", text)) if len(w) >= 4}
     for run in CJK.findall(text):
         out |= {run[k:k + 2] for k in range(len(run) - 1)}

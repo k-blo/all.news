@@ -84,7 +84,15 @@
    "few": "{n} články",
    "many": "{n} článku",
    "other": "{n} článkov"
-  }
+  },
+  "grouping": "Zoskupovanie",
+  "grouping_note": "Spojiť články o tej istej udalosti do jedného riadka.",
+  "on": "Zapnuté",
+  "off": "Vypnuté",
+  "descriptions": "Popisy",
+  "descriptions_note": "Text pod titulkami, vždy viditeľný pri prechode alebo dotyku.",
+  "show": "Zobraziť",
+  "hide": "Skryť"
  },
  "dates": [
   "{d}. januára {y}",

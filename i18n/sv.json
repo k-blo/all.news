@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} artikel",
    "other": "{n} artiklar"
-  }
+  },
+  "grouping": "Gruppering",
+  "grouping_note": "Samla artiklar om samma händelse på en rad.",
+  "on": "På",
+  "off": "Av",
+  "descriptions": "Beskrivningar",
+  "descriptions_note": "Text under rubriker, visas alltid vid hovring eller tryck.",
+  "show": "Visa",
+  "hide": "Dölj"
  },
  "dates": [
   "{d} januari {y}",

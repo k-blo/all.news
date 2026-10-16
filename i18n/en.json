@@ -82,7 +82,15 @@
   "event_count": {
    "one": "{n} article",
    "other": "{n} articles"
-  }
+  },
+  "grouping": "Grouping",
+  "grouping_note": "Combine articles about the same event into one row.",
+  "on": "On",
+  "off": "Off",
+  "descriptions": "Descriptions",
+  "descriptions_note": "Text under headlines, always shown on hover or tap.",
+  "show": "Show",
+  "hide": "Hide"
  },
  "dates": [
   "{d} January {y}",

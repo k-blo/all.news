@@ -79,7 +79,15 @@
   "language_note": "選單和按鈕使用的語言。",
   "automatic": "自動",
   "back": "返回新聞",
-  "event_count": "{n}篇文章"
+  "event_count": "{n}篇文章",
+  "grouping": "分組",
+  "grouping_note": "將同一事件的文章合併為一列。",
+  "on": "開",
+  "off": "關",
+  "descriptions": "摘要",
+  "descriptions_note": "標題下的文字，懸停或點按時一律顯示。",
+  "show": "顯示",
+  "hide": "隱藏"
  },
  "dates": [
   "{y}年1月{d}日",

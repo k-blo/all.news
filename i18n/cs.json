@@ -84,7 +84,15 @@
    "few": "{n} články",
    "many": "{n} článku",
    "other": "{n} článků"
-  }
+  },
+  "grouping": "Seskupování",
+  "grouping_note": "Spojit články o stejné události do jednoho řádku.",
+  "on": "Zapnuto",
+  "off": "Vypnuto",
+  "descriptions": "Popisy",
+  "descriptions_note": "Text pod titulky, vždy viditelný při najetí nebo klepnutí.",
+  "show": "Zobrazit",
+  "hide": "Skrýt"
  },
  "dates": [
   "{d}. ledna {y}",

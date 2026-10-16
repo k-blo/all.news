@@ -84,7 +84,15 @@
    "two": "{n} članka",
    "few": "{n} članki",
    "other": "{n} člankov"
-  }
+  },
+  "grouping": "Združevanje",
+  "grouping_note": "Združi članke o istem dogodku v eno vrstico.",
+  "on": "Vklopljeno",
+  "off": "Izklopljeno",
+  "descriptions": "Opisi",
+  "descriptions_note": "Besedilo pod naslovi, vedno vidno ob premiku ali dotiku.",
+  "show": "Prikaži",
+  "hide": "Skrij"
  },
  "dates": [
   "{d}. januar {y}",

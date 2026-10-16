@@ -152,6 +152,10 @@ function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return n
 function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } }
 function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
 function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* ignore */ } }
+// Settings: grouping on/off, descriptions shown/hidden.
+function eventsOn() { return lsGet("allnews.events") !== "off"; }
+// Pages older than the head-script check.
+if (lsGet("allnews.summaries") === "hide") document.documentElement.dataset.summaries = "hide";
 const _csvToSet = (s) =>
   new Set((s || "").split(",").map((x) => x.trim().toLowerCase()).filter(Boolean));
 
@@ -305,10 +309,12 @@ function unentity(s) {
 
 // Summary worth showing (mirrors clean_summary).
 function cleanSummary(a) {
-  const s = unentity(a.summary || "").replace(/\s+/g, " ").trim().replace(/\s+The post .*$/, "");
+  const raw = a.summary || "";
+  let s = unentity(raw).replace(/\s+/g, " ").trim().replace(/\s+The post .*$/, "");
   const title = (a.title || "").replace(/\s+/g, " ").trim();
   if (s.length < 25 || s.startsWith(title.slice(0, 40))) return "";
-  return s.length >= 195 ? s.replace(/\s+\S*$/, "") + "…" : s;
+  if (raw.length === 200 && !/[.!?…»"”]$/.test(s)) s = s.replace(/\s+\S*$/, "") + "…"; // old mid-word cut
+  return s;
 }
 
 // One row as an HTML string (mirrors render_article_html in crawler.py). Building
@@ -433,7 +439,7 @@ function render(articles, mode) {
   visibleArticles = sortedArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
   setCountBadge(visibleArticles.length); // the live feed only
-  if (mode === "date") visibleArticles = groupEvents(visibleArticles);
+  if (mode === "date" && eventsOn()) visibleArticles = groupEvents(visibleArticles);
   blockStart = new Map();
   for (const day of olderDays) addDayRows(day, mode);
   if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
@@ -567,7 +573,7 @@ function addDayRows(day, mode) {
     .filter((a) => !isExcluded(a) && matchesQuery(a));
   if (rows.length) {
     blockStart.set(visibleArticles.length, day.date);
-    visibleArticles = visibleArticles.concat(mode === "date" ? groupEvents(rows) : rows);
+    visibleArticles = visibleArticles.concat(mode === "date" && eventsOn() ? groupEvents(rows) : rows);
   }
   return rows.length;
 }
