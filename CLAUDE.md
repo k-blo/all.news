@@ -66,7 +66,7 @@ npx wrangler pages deploy .             # deploy the static site
 
 Three moving parts:
 
-1. **Cloudflare Worker** (`cron-worker/`) — fires `workflow_dispatch` to GitHub every hour via the GitHub API. Exists because GitHub's own `schedule:` trigger is unreliable. Secrets managed with `wrangler secret put GITHUB_TOKEN`.
+1. **Cloudflare Worker** (`cron-worker/`) — fires `workflow_dispatch` to GitHub every 30 minutes (`*/30` in `wrangler.toml`) via the GitHub API. Exists because GitHub's own `schedule:` trigger is unreliable. Secrets managed with `wrangler secret put GITHUB_TOKEN`.
 
 2. **GitHub Actions** (`.github/workflows/crawl.yml`) — runs `crawler.py`, then commits `crawled.json` and `archive/` back to `main` with `git push`. The crawler is stdlib-only so no install step is needed.
 
