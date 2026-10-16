@@ -78,7 +78,11 @@
   "language": "Sprog",
   "language_note": "Sprog i menuer og knapper.",
   "automatic": "Automatisk",
-  "back": "Tilbage til nyhederne"
+  "back": "Tilbage til nyhederne",
+  "event_count": {
+   "one": "{n} artikel",
+   "other": "{n} artikler"
+  }
  },
  "dates": [
   "{d}. januar {y}",

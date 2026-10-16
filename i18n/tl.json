@@ -78,7 +78,8 @@
   "language": "Wika",
   "language_note": "Wika ng mga menu at button.",
   "automatic": "Awtomatiko",
-  "back": "Bumalik sa balita"
+  "back": "Bumalik sa balita",
+  "event_count": "{n} artikulo"
  },
  "dates": [
   "Enero {d}, {y}",

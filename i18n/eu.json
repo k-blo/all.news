@@ -78,7 +78,11 @@
   "language": "Hizkuntza",
   "language_note": "Menuen eta botoien hizkuntza.",
   "automatic": "Automatikoa",
-  "back": "Itzuli albisteetara"
+  "back": "Itzuli albisteetara",
+  "event_count": {
+   "one": "artikulu {n}",
+   "other": "{n} artikulu"
+  }
  },
  "dates": [
   "{y}(e)ko urtarrilaren {d}(a)",

@@ -194,6 +194,47 @@ and pins the language without persisting it, like the landing pages. The worker
 
 **Never add a source whose robots.txt explicitly disallows the feed/sitemap path being crawled** — even if the site offers the feed and the article links themselves are allowed. (e.g. Kanton Thurgau publishes RSS only under `/route/`, which its robots.txt disallows, so it is not a usable source.) Judge robots.txt by RFC 9309 / Google semantics — longest match wins, `*` and `$` wildcards, a 4xx robots.txt means no rules. Python's `urllib.robotparser` gets this wrong (first match, no wildcards, 403 = disallow all), so don't rely on it. The rule is for *adding* sources: an existing source that still works stays even if its robots.txt has since tightened; only sources that stopped working are removed.
 
+## Events (`events.py`, #58)
+
+Groups live-feed articles about the same story into one row per *event*, within
+one country + language over the 24-hour window. Runs as the `events` job after
+`reduce` (so the feed is never delayed) and rewrites `crawled.json`, the country
+shards and today's archive files via `crawler.write_feed()`. Unlike the crawler it
+needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-events.txt`).
+
+- **Embeddings:** EmbeddingGemma-300m (ONNX, `onnx-community/embeddinggemma-300m-ONNX`,
+  revision pinned in the workflow, kept in the Actions cache), prompt
+  `task: sentence similarity | query: ` (its `clustering` prompt groups topics, not
+  events), text = title + summary. Only new articles are embedded, newest first,
+  for at most `EVENTS_BUDGET` seconds (720) per run; vectors are cached as float16
+  in R2 `state/embeddings.npz` (~130 MB, not served publicly). A cold cache fills
+  over the first day of runs.
+- **Clustering:** cosine similarity; star clustering — the best-connected article
+  leads and every member must score ≥ `TAU` (0.79) with it. Pairs scoring ≥ 0.72
+  that share a rare word (in ≤ 5 articles that day) get +0.08. An event needs ≥ 2
+  outlets, none over half its articles. Short title-only rows, horoscopes and
+  multi-story roundups/tickers (`HARD`) are never grouped; live blogs (`LIVE`) may
+  join an event but never lead one. These settings were hand-checked on CH/de,
+  CH/fr, CH/it, GB/en, IN/hi and JP/ja; the keyword lists cover those languages
+  plus a few obvious es/pt/ru/zh/ko words. Same-type local news (e.g. different
+  road crashes) still tends to group — accepted for now.
+- **Output:** members get `ev` (event id, `e` + sha1 of the lead URL) and `evr`
+  (rank; 0 = the lead, whose headline titles the event).
+- **Client:** `script.js` (`groupEvents()`) folds rows sharing `ev` into one row at
+  the newest member — lead headline, an `event_count` chip, source dots — when
+  sorted by date; clicking expands the members (normal rows). Filters apply to
+  members first; an event with < 2 visible members shows as a plain row. Deep links
+  to a member open its event. Server-rendered HTML stays ungrouped. `event_count`
+  holds plural forms per CLDR category, read with `I18N.count()`.
+- **Local run:** `pip install -r requirements-events.txt`, fetch the model files
+  into `models/embeddinggemma/` (see the workflow step), then `python3 events.py`
+  next to a `crawled.json`.
+
+**Summaries:** every row shows its RSS summary under the headline — two lines,
+the whole text on hover/focus. `clean_summary()` (crawler) and `cleanSummary()`
+(`script.js`) mirror each other: they decode entities, drop WordPress footers and
+summaries that just repeat the title, and end cut-off text on a word.
+
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
 Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.

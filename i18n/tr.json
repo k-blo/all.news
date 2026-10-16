@@ -78,7 +78,8 @@
   "language": "Dil",
   "language_note": "Menülerin ve düğmelerin dili.",
   "automatic": "Otomatik",
-  "back": "Haberlere dön"
+  "back": "Haberlere dön",
+  "event_count": "{n} haber"
  },
  "dates": [
   "{d} Ocak {y}",

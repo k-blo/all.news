@@ -78,7 +78,11 @@
   "language": "Kieli",
   "language_note": "Valikkojen ja painikkeiden kieli.",
   "automatic": "Automaattinen",
-  "back": "Takaisin uutisiin"
+  "back": "Takaisin uutisiin",
+  "event_count": {
+   "one": "{n} artikkeli",
+   "other": "{n} artikkelia"
+  }
  },
  "dates": [
   "{d}. tammikuuta {y}",

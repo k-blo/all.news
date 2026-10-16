@@ -78,7 +78,8 @@
   "language": "Cànan",
   "language_note": "Cànan nan clàr-taice is nam putan.",
   "automatic": "Fèin-obrachail",
-  "back": "Air ais gu na naidheachdan"
+  "back": "Air ais gu na naidheachdan",
+  "event_count": "Artaigilean: {n}"
  },
  "dates": [
   "{d}mh dhen Fhaoilleach {y}",

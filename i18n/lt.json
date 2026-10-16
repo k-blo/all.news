@@ -78,7 +78,13 @@
   "language": "Kalba",
   "language_note": "Meniu ir mygtukų kalba.",
   "automatic": "Automatiškai",
-  "back": "Atgal į naujienas"
+  "back": "Atgal į naujienas",
+  "event_count": {
+   "one": "{n} straipsnis",
+   "few": "{n} straipsniai",
+   "many": "{n} straipsnio",
+   "other": "{n} straipsnių"
+  }
  },
  "dates": [
   "{y} m. sausio {d} d.",

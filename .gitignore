@@ -41,3 +41,7 @@ cron-worker/.wrangler/
 # CI crawl artifacts
 partial-*.json
 partials/
+
+# events.py: model + embedding cache (CI only)
+/models/
+/state/

@@ -78,7 +78,11 @@
   "language": "Llengua",
   "language_note": "Llengua dels menús i dels botons.",
   "automatic": "Automàtica",
-  "back": "Torna a les notícies"
+  "back": "Torna a les notícies",
+  "event_count": {
+   "one": "{n} article",
+   "other": "{n} articles"
+  }
  },
  "dates": [
   "{d} de gener del {y}",

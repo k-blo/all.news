@@ -78,7 +78,8 @@
   "language": "Ngôn ngữ hiển thị",
   "language_note": "Ngôn ngữ của menu và nút bấm.",
   "automatic": "Tự động",
-  "back": "Quay lại tin tức"
+  "back": "Quay lại tin tức",
+  "event_count": "{n} bài báo"
  },
  "dates": [
   "{d} tháng 1, {y}",

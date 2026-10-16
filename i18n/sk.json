@@ -78,7 +78,13 @@
   "language": "Jazyk",
   "language_note": "Jazyk ponúk a tlačidiel.",
   "automatic": "Automaticky",
-  "back": "Späť na správy"
+  "back": "Späť na správy",
+  "event_count": {
+   "one": "{n} článok",
+   "few": "{n} články",
+   "many": "{n} článku",
+   "other": "{n} článkov"
+  }
  },
  "dates": [
   "{d}. januára {y}",

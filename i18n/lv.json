@@ -78,7 +78,12 @@
   "language": "Valoda",
   "language_note": "Izvēļņu un pogu valoda.",
   "automatic": "Automātiski",
-  "back": "Atpakaļ uz ziņām"
+  "back": "Atpakaļ uz ziņām",
+  "event_count": {
+   "zero": "{n} rakstu",
+   "one": "{n} raksts",
+   "other": "{n} raksti"
+  }
  },
  "dates": [
   "{y}. gada {d}. janvāris",

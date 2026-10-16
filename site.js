@@ -36,7 +36,7 @@ window.I18N = (() => {
     eu: "Euskara", gl: "Galego", ga: "Gaeilge", cy: "Cymraeg", gd: "Gàidhlig",
   };
   const STORE = "allnews.uilang"; // a code, or "auto"
-  const VERSION = 1;              // bump when a dictionary changes
+  const VERSION = 2;              // bump when a dictionary changes
   const ALIASES = { nb: "no", nn: "no", fil: "tl" };
   const RTL = ["ar", "he", "fa", "ur"];
   const CATS = { z: "zero", o: "one", t: "two", f: "few", m: "many", x: "other" };
@@ -109,6 +109,15 @@ window.I18N = (() => {
     return (forms[cat] || forms.other).replace("{n}", n);
   }
 
+  // "7 Artikel": a form per plural category.
+  function count(key, n) {
+    const forms = dict && dict.ui[key];
+    if (!forms) return String(n);
+    if (typeof forms === "string") return forms.replace("{n}", n);
+    const cat = n < dict.plurals.length ? CATS[dict.plurals[n]] : rules ? rules.select(n) : "other";
+    return (forms[cat] || forms.other).replace("{n}", n);
+  }
+
   function country(cc) {
     cc = (cc || "").toUpperCase();
     return (dict && dict.countries[cc]) || cc;
@@ -157,7 +166,7 @@ window.I18N = (() => {
   }
 
   return {
-    NAMES, ready, t, date, month, monthYear, ago, country, langName, compare, apply, set,
+    NAMES, ready, t, date, month, monthYear, ago, count, country, langName, compare, apply, set,
     get lang() { return lang; },
     served,
     choice: () => (saved() in NAMES ? saved() : "auto"),

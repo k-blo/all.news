@@ -78,7 +78,11 @@
   "language": "Keel",
   "language_note": "Menüüde ja nuppude keel.",
   "automatic": "Automaatne",
-  "back": "Tagasi uudiste juurde"
+  "back": "Tagasi uudiste juurde",
+  "event_count": {
+   "one": "{n} artikkel",
+   "other": "{n} artiklit"
+  }
  },
  "dates": [
   "{d}. jaanuar {y}",

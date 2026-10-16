@@ -78,7 +78,8 @@
   "language": "Nyelv",
   "language_note": "A menük és a gombok nyelve.",
   "automatic": "Automatikus",
-  "back": "Vissza a hírekhez"
+  "back": "Vissza a hírekhez",
+  "event_count": "{n} cikk"
  },
  "dates": [
   "{y}. január {d}.",

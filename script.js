@@ -295,6 +295,22 @@ function esc(s) {
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+// Decode entities some feeds double-escape.
+const _decoder = document.createElement("textarea");
+function unentity(s) {
+  if (!s.includes("&")) return s;
+  _decoder.innerHTML = s;
+  return _decoder.value;
+}
+
+// Summary worth showing (mirrors clean_summary).
+function cleanSummary(a) {
+  const s = unentity(a.summary || "").replace(/\s+/g, " ").trim().replace(/\s+The post .*$/, "");
+  const title = (a.title || "").replace(/\s+/g, " ").trim();
+  if (s.length < 25 || s.startsWith(title.slice(0, 40))) return "";
+  return s.length >= 195 ? s.replace(/\s+\S*$/, "") + "…" : s;
+}
+
 // One row as an HTML string (mirrors render_article_html in crawler.py). Building
 // the whole list as a single string + one innerHTML assignment is far faster than
 // per-node DOM construction; clicks are handled by delegation, so no per-row
@@ -307,12 +323,14 @@ function articleHTML(a) {
   const title = esc(a.title);
   const open = esc(I18N.t("open_article"));
   const share = esc(I18N.t("share_article"));
-  return `<li class="article" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
+  const summary = cleanSummary(a);
+  return `<li class="article${summary ? " has-sum" : ""}" id="${esc(articleId(a))}" data-lang="${esc(a.lang || "de")}" data-country="${esc(a.country || "CH")}">` +
     `<div class="meta-col">` +
     `<a class="source" href="${home}" target="_blank" rel="noopener nofollow ugc" style="background:${color};color:${fg}">${esc(a.source)}</a>` +
     `<span class="time"><time datetime="${esc(a.published)}">${esc(RELATIVE_TIMES ? I18N.ago(a.published) : fmtTime(a.published))}</time> ${hideSrcBtn()}</span>` +
     `</div>` +
     `<a class="title" href="${url}" target="_blank" rel="noopener nofollow ugc">${title}</a>` +
+    (summary ? `<p class="summary" dir="auto">${esc(summary)}</p>` : "") +
     `<div class="row-actions">` +
     // Visible labels stay identical on every row; the accessible name carries the
     // headline so a screen reader announces which article the action belongs to (#49).
@@ -322,6 +340,59 @@ function articleHTML(a) {
 }
 
 function adSlot() { return `<li class="ad-slot">${esc(I18N.t("ad"))}</li>`; }
+
+// ---------- Events (#58) ----------
+// Same "ev" = one event; "evr" 0 leads.
+
+// Fold members into one row.
+function groupEvents(list) {
+  const byEv = new Map();
+  for (const a of list) {
+    if (!a.ev) continue;
+    if (!byEv.has(a.ev)) byEv.set(a.ev, []);
+    byEv.get(a.ev).push(a);
+  }
+  const out = [];
+  const done = new Set();
+  for (const a of list) {
+    const members = a.ev ? byEv.get(a.ev) : null;
+    if (!members || members.length < 2) { out.push(a); continue; }
+    if (done.has(a.ev)) continue;
+    done.add(a.ev);
+    const lead = members.reduce((x, y) => ((y.evr ?? 99) < (x.evr ?? 99) ? y : x));
+    out.push({ event: true, id: a.ev, lead, members, published: members[0].published });
+  }
+  return out;
+}
+
+// Collapsed row; members hidden below.
+function eventHTML(ev) {
+  const srcs = [...new Set(ev.members.map((a) => a.source))];
+  const dots = srcs.slice(0, 5).map((s) => `<i style="background:${colorFor(s)}"></i>`).join("");
+  const names = srcs.slice(0, 3).join(", ") + (srcs.length > 3 ? ` +${srcs.length - 3}` : "");
+  const when = RELATIVE_TIMES ? I18N.ago(ev.published) : fmtTime(ev.published);
+  return `<li class="event" id="ev-${esc(ev.id)}">` +
+    `<button class="ev-head" type="button" aria-expanded="false">` +
+    `<span class="meta-col">` +
+    `<span class="ev-count">${esc(I18N.count("event_count", ev.members.length))}</span>` +
+    `<span class="time"><time datetime="${esc(ev.published)}">${esc(when)}</time></span>` +
+    `</span>` +
+    `<span class="ev-main">` +
+    `<span class="ev-title" dir="auto">${esc(ev.lead.title)}</span>` +
+    `<span class="ev-sources"><span class="ev-dots">${dots}</span><span class="ev-names">${esc(names)}</span></span>` +
+    `</span>` +
+    `<svg class="ev-chev" width="18" height="18" aria-hidden="true"><use href="#ico-chev-right"/></svg>` +
+    `</button>` +
+    `<ul class="ev-members" hidden>${ev.members.map(articleHTML).join("")}</ul></li>`;
+}
+
+function toggleEvent(head) {
+  const li = head.closest(".event");
+  const open = head.getAttribute("aria-expanded") !== "true";
+  head.setAttribute("aria-expanded", String(open));
+  li.querySelector(".ev-members").hidden = !open;
+  li.classList.toggle("open", open);
+}
 
 // SSR rows came in the page's language;
 // relabel them for the visitor's.
@@ -362,6 +433,7 @@ function render(articles, mode) {
   visibleArticles = sortedArticles(articles, mode)
     .filter((a) => !isExcluded(a) && matchesQuery(a));
   setCountBadge(visibleArticles.length); // the live feed only
+  if (mode === "date") visibleArticles = groupEvents(visibleArticles);
   blockStart = new Map();
   for (const day of olderDays) addDayRows(day, mode);
   if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
@@ -386,7 +458,8 @@ function appendBatch() {
   for (let i = shownCount; i < end; i++) {
     const day = dayHeaderAt(i, mode);
     if (day) parts.push(`<li class="day-sep"><h2 class="day-heading">${esc(I18N.date(day))}</h2></li>`);
-    parts.push(articleHTML(visibleArticles[i]));
+    const item = visibleArticles[i];
+    parts.push(item.event ? eventHTML(item) : articleHTML(item));
     if ((i + 1) % AD_EVERY === 0 && i + 1 < visibleArticles.length) parts.push(adSlot());
   }
   const sentinel = document.getElementById("scrollSentinel");
@@ -494,7 +567,7 @@ function addDayRows(day, mode) {
     .filter((a) => !isExcluded(a) && matchesQuery(a));
   if (rows.length) {
     blockStart.set(visibleArticles.length, day.date);
-    visibleArticles = visibleArticles.concat(rows);
+    visibleArticles = visibleArticles.concat(mode === "date" ? groupEvents(rows) : rows);
   }
   return rows.length;
 }
@@ -553,7 +626,8 @@ function loadOlderDay() {
 function ensureHashVisible() {
   const id = decodeURIComponent(location.hash.slice(1));
   if (!id || shownCount >= visibleArticles.length) return;
-  const idx = visibleArticles.findIndex((a) => articleId(a) === id);
+  const idx = visibleArticles.findIndex((a) =>
+    a.event ? a.members.some((m) => articleId(m) === id) : articleId(a) === id);
   while (idx >= shownCount && shownCount < visibleArticles.length) appendBatch();
 }
 
@@ -1349,6 +1423,8 @@ function highlightFromHash() {
   if (!id) return;
   const el = document.getElementById(id);
   if (el) {
+    const ev = el.closest(".event"); // open its event first
+    if (ev && !ev.classList.contains("open")) toggleEvent(ev.querySelector(".ev-head"));
     el.classList.add("highlight");
     el.scrollIntoView({ block: "start", behavior: "auto" });
   }
@@ -1446,6 +1522,9 @@ function setActiveArticle(li) {
 }
 
 document.addEventListener("click", (e) => {
+  const evHead = e.target.closest(".ev-head");
+  if (evHead) { toggleEvent(evHead); return; }
+
   // Eye-off next to the time asks to hide that source from the feed (#4). A
   // confirmation popup explains the action first, so an accidental click can't
   // silently make a source disappear. Works on every device.

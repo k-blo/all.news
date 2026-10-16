@@ -78,7 +78,8 @@
   "language": "Teanga",
   "language_note": "Teanga na roghchlár agus na gcnaipí.",
   "automatic": "Uathoibríoch",
-  "back": "Ar ais chuig an nuacht"
+  "back": "Ar ais chuig an nuacht",
+  "event_count": "Ailt: {n}"
  },
  "dates": [
   "{d} Eanáir {y}",

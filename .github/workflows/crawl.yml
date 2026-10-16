@@ -151,3 +151,51 @@ jobs:
           echo "--- root files ---"; rclone lsl "R2:$R2_BUCKET" --max-depth 1
           echo "--- today's archive objects (by filename) ---"
           rclone lsf "R2:$R2_BUCKET/archive" | grep "^$(TZ=Europe/Zurich date +%F)" | head || true
+
+  # ---- Events (#58): group the live feed into stories ----
+  # Runs after reduce, so the feed is never delayed.
+  events:
+    needs: reduce
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MODEL_REV: 5090578d9565bb06545b4552f76e6bc2c93e4a66  # embeddinggemma-300m-ONNX
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-events.txt
+      - name: Install deps
+        run: pip install -r requirements-events.txt
+      - name: Model cache
+        id: model
+        uses: actions/cache@v4
+        with:
+          path: models/embeddinggemma
+          key: embeddinggemma-${{ env.MODEL_REV }}
+      - name: Download model
+        if: steps.model.outputs.cache-hit != 'true'
+        run: |
+          base="https://huggingface.co/onnx-community/embeddinggemma-300m-ONNX/resolve/$MODEL_REV"
+          mkdir -p models/embeddinggemma/onnx
+          curl -fsSL --retry 3 -o models/embeddinggemma/tokenizer.json "$base/tokenizer.json"
+          curl -fsSL --retry 3 -o models/embeddinggemma/onnx/model.onnx "$base/onnx/model.onnx"
+          curl -fsSL --retry 3 -o models/embeddinggemma/onnx/model.onnx_data "$base/onnx/model.onnx_data"
+      - name: Install rclone
+        run: curl -fsSL https://rclone.org/install.sh | sudo bash
+      - name: Pull feed + embedding cache from R2
+        run: |
+          rclone copy "R2:$R2_BUCKET/crawled.json" .
+          # state/ is not served publicly (functions/[[path]].js)
+          rclone copy "R2:$R2_BUCKET/state/embeddings.npz" state/ || true
+      - name: Group into events
+        run: python3 events.py
+      - name: Upload to R2
+        run: |
+          rclone copy crawled.json "R2:$R2_BUCKET/" -v
+          rclone sync data "R2:$R2_BUCKET/data" -v
+          # only today's day file + shards exist locally
+          rclone copy archive "R2:$R2_BUCKET/archive" -v
+          rclone copy state/embeddings.npz "R2:$R2_BUCKET/state/" -v

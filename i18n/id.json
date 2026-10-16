@@ -78,7 +78,8 @@
   "language": "Bahasa tampilan",
   "language_note": "Bahasa untuk menu dan tombol.",
   "automatic": "Otomatis",
-  "back": "Kembali ke berita"
+  "back": "Kembali ke berita",
+  "event_count": "{n} artikel"
  },
  "dates": [
   "{d} Januari {y}",

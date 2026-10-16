@@ -78,7 +78,8 @@
   "language": "显示语言",
   "language_note": "菜单和按钮所用的语言。",
   "automatic": "自动",
-  "back": "返回新闻"
+  "back": "返回新闻",
+  "event_count": "{n}篇文章"
  },
  "dates": [
   "{y}年1月{d}日",

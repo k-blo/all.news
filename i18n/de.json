@@ -78,7 +78,8 @@
   "language": "Sprache",
   "language_note": "Sprache der Menüs und Schaltflächen.",
   "automatic": "Automatisch",
-  "back": "Zurück zu den Nachrichten"
+  "back": "Zurück zu den Nachrichten",
+  "event_count": "{n} Artikel"
  },
  "dates": [
   "{d}. Januar {y}",

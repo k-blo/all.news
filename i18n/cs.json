@@ -78,7 +78,13 @@
   "language": "Jazyk",
   "language_note": "Jazyk menu a tlačítek.",
   "automatic": "Automaticky",
-  "back": "Zpět na zprávy"
+  "back": "Zpět na zprávy",
+  "event_count": {
+   "one": "{n} článek",
+   "few": "{n} články",
+   "many": "{n} článku",
+   "other": "{n} článků"
+  }
  },
  "dates": [
   "{d}. ledna {y}",

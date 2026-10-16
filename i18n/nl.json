@@ -78,7 +78,11 @@
   "language": "Taal",
   "language_note": "Taal van menu’s en knoppen.",
   "automatic": "Automatisch",
-  "back": "Terug naar het nieuws"
+  "back": "Terug naar het nieuws",
+  "event_count": {
+   "one": "{n} artikel",
+   "other": "{n} artikelen"
+  }
  },
  "dates": [
   "{d} januari {y}",

@@ -78,7 +78,11 @@
   "language": "Språk",
   "language_note": "Språk för menyer och knappar.",
   "automatic": "Automatiskt",
-  "back": "Tillbaka till nyheterna"
+  "back": "Tillbaka till nyheterna",
+  "event_count": {
+   "one": "{n} artikel",
+   "other": "{n} artiklar"
+  }
  },
  "dates": [
   "{d} januari {y}",

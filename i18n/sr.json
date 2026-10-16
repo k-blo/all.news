@@ -78,7 +78,12 @@
   "language": "Jezik",
   "language_note": "Jezik menija i dugmadi.",
   "automatic": "Automatski",
-  "back": "Nazad na vesti"
+  "back": "Nazad na vesti",
+  "event_count": {
+   "one": "{n} članak",
+   "few": "{n} članka",
+   "other": "{n} članaka"
+  }
  },
  "dates": [
   "{d}. januar {y}.",

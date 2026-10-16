@@ -5263,6 +5263,17 @@ def article_id(article):
     return f"{slugify(article['title'])}-{djb2(article['url']):x}"
 
 
+def clean_summary(article):
+    """Summary worth showing, else ''."""
+    # Mirrors cleanSummary() in script.js.
+    s = re.sub(r"\s+", " ", unescape(article.get("summary") or "")).strip()
+    s = re.sub(r"\s+The post .*$", "", s)  # WordPress footer
+    title = re.sub(r"\s+", " ", article.get("title") or "").strip()
+    if len(s) < 25 or s.startswith(title[:40]):
+        return ""
+    return re.sub(r"\s+\S*$", "", s) + "…" if len(s) >= 195 else s
+
+
 def render_article_html(article, now=None, ui="en"):
     color = color_for(article["source"])
     fg = text_color(color)
@@ -5272,8 +5283,9 @@ def render_article_html(article, now=None, ui="en"):
     when = fmt_ago(pub, now, ui) if now else fmt_time(pub)  # live: relative (#48)
     title = escape(article["title"])
     open_, share = escape(t(ui, "open_article")), escape(t(ui, "share_article"))
+    summary = clean_summary(article)
     return (
-        f'      <li class="article" id="{escape(article_id(article))}"'
+        f'      <li class="article{" has-sum" if summary else ""}" id="{escape(article_id(article))}"'
         f' data-lang="{escape(article.get("lang", DEFAULT_LANG))}"'
         f' data-country="{escape(article.get("country", DEFAULT_COUNTRY))}">'
         '<div class="meta-col">'
@@ -5282,6 +5294,7 @@ def render_article_html(article, now=None, ui="en"):
         f'<span class="time"><time datetime="{escape(pub)}">{escape(when)}</time> {hide_btn(ui)}</span>'
         '</div>'
         f'<a class="title" href="{url}" target="_blank" rel="noopener nofollow ugc">{title}</a>'
+        + (f'<p class="summary" dir="auto">{escape(summary)}</p>' if summary else '') +
         '<div class="row-actions">'
         # Visible labels repeat on every row; the accessible name carries the headline
         # so a screen reader announces which article the action belongs to (#49).
@@ -6511,6 +6524,22 @@ def write_sections(rows, now, today, since):
     return urls
 
 
+def write_feed(result, now_iso, today, since_iso):
+    """Live feed, today's slice, country shards."""
+    # events.py rewrites these too.
+    os.makedirs(ARCHIVE_DIR, exist_ok=True)
+    day = [a for a in result if crawl_day(a) == today]  # the archive day
+    write_json("crawled.json",                             # live feed (all countries)
+               {"generated": now_iso, "since": since_iso,
+                "count": len(result), "articles": result})
+    write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"),  # this date's crawl
+               {"generated": now_iso, "date": today, "count": len(day), "articles": day})
+    write_country_shards(day, now_iso, today,              # archive/<date>/<cc>.json
+                         os.path.join(ARCHIVE_DIR, today))
+    write_country_shards(result, now_iso, today)           # data/<cc>.json + manifest
+    return day
+
+
 def write_outputs(articles):
     os.makedirs(ARCHIVE_DIR, exist_ok=True)
     # Each kept article is stamped with the crawl time.
@@ -6533,15 +6562,7 @@ def write_outputs(articles):
     # resolves (prio) are unaffected.
     result = sorted(window + new,
                     key=lambda a: a.get("published", ""), reverse=True)
-    day = [a for a in result if crawl_day(a) == today]  # the archive day
-    write_json("crawled.json",                             # live feed (all countries)
-               {"generated": now_iso, "since": since.isoformat(),
-                "count": len(result), "articles": result})
-    write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"),  # this date's crawl
-               {"generated": now_iso, "date": today, "count": len(day), "articles": day})
-    write_country_shards(day, now_iso, today,              # archive/<date>/<cc>.json
-                         os.path.join(ARCHIVE_DIR, today))
-    write_country_shards(result, now_iso, today)           # data/<cc>.json + manifest
+    day = write_feed(result, now_iso, today, since.isoformat())
     write_json(SEEN_FILE, sorted(seen | batch))
     # Date list = prior dates (from index.json, which the workflow pulls from R2)
     # plus today. Derived from index.json rather than listing the archive dir, so

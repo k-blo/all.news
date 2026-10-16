@@ -78,7 +78,8 @@
   "language": "Iaith",
   "language_note": "Iaith y dewislenni a’r botymau.",
   "automatic": "Awtomatig",
-  "back": "Yn ôl i’r newyddion"
+  "back": "Yn ôl i’r newyddion",
+  "event_count": "{n} erthygl"
  },
  "dates": [
   "{d} Ionawr {y}",

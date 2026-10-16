@@ -78,7 +78,13 @@
   "language": "Jezik",
   "language_note": "Jezik menijev in gumbov.",
   "automatic": "Samodejno",
-  "back": "Nazaj na novice"
+  "back": "Nazaj na novice",
+  "event_count": {
+   "one": "{n} članek",
+   "two": "{n} članka",
+   "few": "{n} članki",
+   "other": "{n} člankov"
+  }
  },
  "dates": [
   "{d}. januar {y}",

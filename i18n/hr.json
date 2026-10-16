@@ -78,7 +78,12 @@
   "language": "Jezik",
   "language_note": "Jezik izbornika i gumba.",
   "automatic": "Automatski",
-  "back": "Natrag na vijesti"
+  "back": "Natrag na vijesti",
+  "event_count": {
+   "one": "{n} članak",
+   "few": "{n} članka",
+   "other": "{n} članaka"
+  }
  },
  "dates": [
   "{d}. siječnja {y}.",

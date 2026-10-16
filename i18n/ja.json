@@ -78,7 +78,8 @@
   "language": "表示言語",
   "language_note": "メニューやボタンの言語です。",
   "automatic": "自動",
-  "back": "ニュースに戻る"
+  "back": "ニュースに戻る",
+  "event_count": "{n}件の記事"
  },
  "dates": [
   "{y}年1月{d}日",
