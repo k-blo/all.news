@@ -91,7 +91,18 @@
   "descriptions": "Apraksti",
   "descriptions_note": "Teksts zem virsrakstiem, vienmēr redzams, norādot vai pieskaroties.",
   "show": "Rādīt",
-  "hide": "Slēpt"
+  "hide": "Slēpt",
+  "also_countries": {
+   "zero": "vēl {n} valstīs",
+   "one": "vēl {n} valstī",
+   "other": "vēl {n} valstīs"
+  },
+  "also_languages": {
+   "zero": "vēl {n} valodās",
+   "one": "vēl {n} valodā",
+   "other": "vēl {n} valodās"
+  },
+  "elsewhere": "Citur"
  },
  "dates": [
   "{y}. gada {d}. janvāris",

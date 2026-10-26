@@ -87,7 +87,10 @@
   "descriptions": "বিবরণ",
   "descriptions_note": "শিরোনামের নিচের লেখা, হোভার বা ট্যাপে সবসময় দেখায়।",
   "show": "দেখান",
-  "hide": "লুকান"
+  "hide": "লুকান",
+  "also_countries": "আরও {n}টি দেশে",
+  "also_languages": "আরও {n}টি ভাষায়",
+  "elsewhere": "অন্যত্র"
  },
  "dates": [
   "{d} জানুয়ারী, {y}",

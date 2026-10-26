@@ -91,7 +91,18 @@
   "descriptions": "Descrieri",
   "descriptions_note": "Text sub titluri, mereu afișat la trecere sau atingere.",
   "show": "Afișează",
-  "hide": "Ascunde"
+  "hide": "Ascunde",
+  "also_countries": {
+   "one": "și în {n} altă țară",
+   "few": "și în {n} alte țări",
+   "other": "și în {n} de alte țări"
+  },
+  "also_languages": {
+   "one": "și în {n} altă limbă",
+   "few": "și în {n} alte limbi",
+   "other": "și în {n} de alte limbi"
+  },
+  "elsewhere": "În altă parte"
  },
  "dates": [
   "{d} ianuarie {y}",

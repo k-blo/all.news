@@ -87,7 +87,10 @@
   "descriptions": "Açıklamalar",
   "descriptions_note": "Başlıkların altındaki metin, üzerine gelince veya dokununca hep görünür.",
   "show": "Göster",
-  "hide": "Gizle"
+  "hide": "Gizle",
+  "also_countries": "{n} başka ülkede de",
+  "also_languages": "{n} başka dilde de",
+  "elsewhere": "Başka yerlerde"
  },
  "dates": [
   "{d} Ocak {y}",

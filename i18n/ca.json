@@ -90,7 +90,16 @@
   "descriptions": "Descripcions",
   "descriptions_note": "Text sota els titulars, sempre visible en passar-hi o tocar-lo.",
   "show": "Mostra",
-  "hide": "Amaga"
+  "hide": "Amaga",
+  "also_countries": {
+   "one": "també a {n} país més",
+   "other": "també a {n} països més"
+  },
+  "also_languages": {
+   "one": "també en {n} llengua més",
+   "other": "també en {n} llengües més"
+  },
+  "elsewhere": "En altres llocs"
  },
  "dates": [
   "{d} de gener del {y}",

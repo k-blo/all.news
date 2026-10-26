@@ -87,7 +87,10 @@
   "descriptions": "Penerangan",
   "descriptions_note": "Teks di bawah tajuk, sentiasa dipaparkan apabila dihala atau diketik.",
   "show": "Tunjuk",
-  "hide": "Sembunyi"
+  "hide": "Sembunyi",
+  "also_countries": "juga di {n} negara lain",
+  "also_languages": "juga dalam {n} bahasa lain",
+  "elsewhere": "Di tempat lain"
  },
  "dates": [
   "{d} Januari {y}",

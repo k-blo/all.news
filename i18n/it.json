@@ -90,7 +90,16 @@
   "descriptions": "Descrizioni",
   "descriptions_note": "Testo sotto i titoli, sempre visibile al passaggio o al tocco.",
   "show": "Mostra",
-  "hide": "Nascondi"
+  "hide": "Nascondi",
+  "also_countries": {
+   "one": "anche in {n} altro paese",
+   "other": "anche in {n} altri paesi"
+  },
+  "also_languages": {
+   "one": "anche in {n} altra lingua",
+   "other": "anche in {n} altre lingue"
+  },
+  "elsewhere": "Altrove"
  },
  "dates": [
   "{d} gennaio {y}",

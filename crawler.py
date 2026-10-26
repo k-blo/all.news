@@ -12,16 +12,22 @@ import json
 import os
 import re
 import sys
+import threading
+import time
 import unicodedata
 import urllib.request
 import urllib.error
 import zlib
 from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
+from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
+from itertools import zip_longest
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html import escape, unescape
 from html.entities import html5 as HTML5_ENTITIES
+from html.parser import HTMLParser
 from zoneinfo import ZoneInfo
 
 ZURICH = ZoneInfo("Europe/Zurich")
@@ -1646,7 +1652,7 @@ FEEDS = [
 # Descriptive UA + contact. Generic bot UAs get 403'd by these sites.
 USER_AGENT = "AllNewsBot/0.1 (+https://github.com/yourname/all.news; POC)"
 TIMEOUT = 15
-SUMMARY_MAX = 400  # keep snippets short — legal caution
+SUMMARY_MAX = 800  # keep snippets short — legal caution
 LEGACY_SUMMARY_MAX = 200  # old cap: hard cut, mid-word
 DAILY_PER_SOURCE = 150  # max articles kept per source per day (anti-spam cap)
 WELTWOCHE_SITEMAP_INDEX = "https://weltwoche.ch/sitemap_index.xml"
@@ -4358,6 +4364,10 @@ class NotModified(Exception):
     pass
 
 
+# Per-source fetch settings for article pages.
+SOURCE_UA = {s["source"]: s["ua"] for s in FEEDS + SECTION_SOURCES if s.get("ua")}
+NO_SUMMARY_SOURCES = {s["source"] for s in FEEDS if s.get("summary") is False}
+
 _http_cache: dict = {}
 _fetched_urls: set = set()  # URLs fetched this run — used to emit the per-shard cache delta
 
@@ -4423,6 +4433,197 @@ def clip(text, n):
     if len(text) <= n:
         return text
     return re.sub(r"\s+\S*$", "", text[:n]) + "…"
+
+
+# ---- Descriptions for articles without one (#58) ---------------------------
+# Meta descriptions for new articles; see CLAUDE.md.
+DESCRIBE_STATE = os.path.join("state", "describe.json")  # known URLs, robots rules
+DESCRIBE_BUDGET = float(os.environ.get("DESCRIBE_BUDGET", "120"))  # seconds per shard
+DESCRIBE_KEEP = 48 * 3600   # forget tried URLs after two days
+ROBOTS_TTL = 24 * 3600      # refetch robots.txt daily
+DESCRIBE_MAX_BYTES = 300_000
+ROBOTS_AGENT = "allnewsbot"  # our product token
+_META_KEYS = ("og:description", "description", "twitter:description")
+
+
+def load_describe_state(path=DESCRIBE_STATE):
+    """Known URLs + robots rules, or None."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            st = json.load(f)
+        return {"urls": st.get("urls", {}), "robots": st.get("robots", {})}
+    except (FileNotFoundError, json.JSONDecodeError, AttributeError):
+        return None
+
+
+def robots_rules(text, agent=ROBOTS_AGENT):
+    """[(allow, pattern)] for our agent, else '*'."""
+    groups, cur, in_agents = {}, None, False
+    for line in text.splitlines():
+        line = line.split("#", 1)[0].strip()
+        if ":" not in line:
+            continue
+        key, val = (x.strip() for x in line.split(":", 1))
+        key = key.lower()
+        if key == "user-agent":
+            if not in_agents:
+                cur = []
+            groups.setdefault(val.lower(), []).append(cur)
+            in_agents = True
+        elif key in ("allow", "disallow") and cur is not None:
+            in_agents = False
+            if val:  # empty Disallow allows all
+                cur.append((key == "allow", val))
+        else:
+            in_agents = False
+    pick = groups.get(agent) or groups.get("*") or []
+    return [r for g in pick for r in g]
+
+
+def robots_allows(rules, path):
+    """Longest match wins; ties allow."""
+    best_len, allowed = -1, True
+    for allow, pat in rules:
+        rx = re.escape(pat).replace(r"\*", ".*")
+        if rx.endswith(r"\$"):
+            rx = rx[:-2] + "$"
+        if re.match(rx, path) and (len(pat) > best_len or (len(pat) == best_len and allow)):
+            best_len, allowed = len(pat), allow
+    return allowed
+
+
+def fetch_page(url, ua=None, limit=DESCRIBE_MAX_BYTES):
+    """First `limit` bytes of a page."""
+    headers = {"User-Agent": COMPAT_USER_AGENT if ua == "compat" else USER_AGENT,
+               "Accept": "text/html"}
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=10) as r:
+        data = r.read(limit)
+        charset = r.headers.get_content_charset() or "utf-8"
+    if data[:2] == b"\x1f\x8b":
+        data = gzip.decompress(data)
+    return data.decode(charset, errors="replace")
+
+
+class _MetaParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.found = {}
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "meta":
+            a = dict(attrs)
+            key = (a.get("property") or a.get("name") or "").lower()
+            if key in _META_KEYS and a.get("content"):
+                self.found.setdefault(key, a["content"])
+
+
+def page_description(html_text):
+    """og:description, else description."""
+    p = _MetaParser()
+    try:
+        p.feed(html_text)
+    except Exception:  # broken markup: keep what we found
+        pass
+    return next((p.found[k] for k in _META_KEYS if k in p.found), "")
+
+
+def wants_description(a, known):
+    """New news article lacking a summary."""
+    return ("news" in sections_of(a["source"]) and a["source"] not in NO_SUMMARY_SOURCES
+            and a["url"] not in known and is_today(a.get("published"))
+            and not clean_summary(a))
+
+
+def describe_rows(rows, state, budget=DESCRIBE_BUDGET):
+    """Fill summaries from meta descriptions."""
+    if state is None:  # first run: reduce seeds the state
+        print("describe: no state yet, skipped", file=sys.stderr)
+        return {"urls": {}, "robots": {}}
+    todo, seen = [], set()
+    for a in rows:
+        if a["url"] not in seen and wants_description(a, state["urls"]):
+            seen.add(a["url"])
+            todo.append(a)
+    now = time.time()
+    deadline = time.monotonic() + budget
+    robots = {h: r for h, r in state["robots"].items() if now - r.get("ts", 0) < ROBOTS_TTL}
+    new_robots, tried, lock = {}, {}, threading.Lock()
+    host_locks = defaultdict(lambda: threading.Semaphore(2))
+    robots_locks = defaultdict(threading.Lock)
+    stats = Counter()
+
+    def rules_for(scheme, host, ua):
+        with robots_locks[host]:
+            if host not in robots:
+                try:
+                    text = fetch_page(f"{scheme}://{host}/robots.txt", ua, 500_000)
+                    robots[host] = {"ts": now, "rules": robots_rules(text)}
+                except urllib.error.HTTPError as e:
+                    if e.code >= 500:
+                        return None  # unreachable: skip this run
+                    robots[host] = {"ts": now, "rules": []}  # 4xx: no rules
+                except Exception:
+                    return None
+                with lock:
+                    new_robots[host] = robots[host]
+            return robots[host]["rules"]
+
+    def job(a):
+        if time.monotonic() > deadline:
+            stats["budget"] += 1
+            return
+        u = urlsplit(a["url"])
+        ua = SOURCE_UA.get(a["source"])
+        with host_locks[u.hostname]:
+            if time.monotonic() > deadline:
+                stats["budget"] += 1
+                return
+            rules = rules_for(u.scheme, u.hostname, ua)
+            if rules is None:
+                stats["robots_error"] += 1
+                return
+            path = (u.path or "/") + (f"?{u.query}" if u.query else "")
+            if not robots_allows(rules, path):
+                stats["disallowed"] += 1
+                desc = ""
+            else:
+                try:
+                    desc = page_description(fetch_page(a["url"], ua))
+                except Exception:
+                    stats["error"] += 1
+                    desc = ""
+        text = clean_summary({"title": a["title"], "summary": desc})
+        if text:
+            a["summary"] = clip(text, SUMMARY_MAX)
+            stats["ok"] += 1
+        elif desc:
+            stats["unusable"] += 1
+        with lock:
+            tried[a["url"]] = now
+
+    by_host = defaultdict(list)  # round-robin: no site hogs threads
+    for a in todo:
+        by_host[urlsplit(a["url"]).hostname].append(a)
+    order = [a for batch in zip_longest(*by_host.values()) for a in batch if a]
+    with ThreadPoolExecutor(16) as ex:
+        list(ex.map(job, order))
+    print(f"describe: {len(todo)} wanted, {dict(stats)}", file=sys.stderr)
+    return {"urls": tried, "robots": new_robots}
+
+
+def update_describe_state(state, delta, result, path=DESCRIBE_STATE):
+    """Window URLs + tried ones, pruned."""
+    now = time.time()
+    st = state or {"urls": {}, "robots": {}}
+    urls = {u: ts for u, ts in st["urls"].items() if now - ts < DESCRIBE_KEEP}
+    for a in result:
+        urls.setdefault(a["url"], now)
+    urls.update(delta.get("urls", {}))
+    robots = {h: r for h, r in st["robots"].items() if now - r.get("ts", 0) < 7 * 86400}
+    robots.update(delta.get("robots", {}))
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump({"urls": urls, "robots": robots}, f, separators=(",", ":"))
 
 
 def clean_title(text):
@@ -5807,7 +6008,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="stylesheet" href="/styles.css?v=13">
   <style>
     .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
     .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
@@ -5865,7 +6066,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       </div>
     </footer>
   </div>
-  <script src="/site.js?v=4"></script>
+  <script src="/site.js?v=5"></script>
 </body>
 </html>
 """
@@ -6039,8 +6240,9 @@ def run_map(group, out_path, shard=None, of=None):
     if of and of > 1:
         jobs = jobs[shard::of]
     rows = run_jobs(jobs)
+    described = describe_rows(rows, load_describe_state())
     cache_delta = {u: _http_cache[u] for u in _fetched_urls if u in _http_cache}
-    write_json(out_path, {"rows": rows, "http_cache": cache_delta})
+    write_json(out_path, {"rows": rows, "http_cache": cache_delta, "described": described})
     tag = f"{group}{f' shard {shard}/{of}' if of and of > 1 else ''}"
     print(f"wrote {out_path}: {len(rows)} rows, {len(cache_delta)} cache entries ({tag})",
           file=sys.stderr)
@@ -6050,13 +6252,17 @@ def run_reduce(partial_paths):
     """Merge shard partials, then dedup/date-filter/stamp and write all outputs."""
     global _http_cache
     rows, merged_cache = [], {}
+    described = {"urls": {}, "robots": {}}
     for p in partial_paths:
         with open(p, encoding="utf-8") as f:
             part = json.load(f)
         rows += part.get("rows", [])
         merged_cache.update(part.get("http_cache", {}))  # groups crawl disjoint URLs
+        for k in described:
+            described[k].update(part.get("described", {}).get(k, {}))
     _http_cache = merged_cache
-    write_outputs(rows)
+    result = write_outputs(rows)
+    update_describe_state(load_describe_state(), described, result)
 
 
 def by_country(articles):
@@ -6606,12 +6812,16 @@ def write_outputs(articles):
     write_sitemap(all_dates, landing_urls, now_iso, section_urls)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} in the last 24 hours, "
           f"{len(day)} today ({today})", file=sys.stderr)
+    return result
 
 
 def main():
     """Full local run: crawl every group in one process and write all outputs."""
     load_http_cache()
-    write_outputs(run_jobs(jobs_for(None)))
+    rows = run_jobs(jobs_for(None))
+    state = load_describe_state()
+    described = describe_rows(rows, state)
+    update_describe_state(state, described, write_outputs(rows))
 
 
 if __name__ == "__main__":

@@ -90,7 +90,10 @@
   "descriptions": "Deskribapenak",
   "descriptions_note": "Izenburuen azpiko testua, beti ikusgai gainean jarri edo ukitzean.",
   "show": "Erakutsi",
-  "hide": "Ezkutatu"
+  "hide": "Ezkutatu",
+  "also_countries": "beste {n} herrialdetan ere",
+  "also_languages": "beste {n} hizkuntzatan ere",
+  "elsewhere": "Beste nonbait"
  },
  "dates": [
   "{y}(e)ko urtarrilaren {d}(a)",

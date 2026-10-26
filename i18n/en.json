@@ -90,7 +90,16 @@
   "descriptions": "Descriptions",
   "descriptions_note": "Text under headlines, always shown on hover or tap.",
   "show": "Show",
-  "hide": "Hide"
+  "hide": "Hide",
+  "also_countries": {
+   "one": "also in {n} other country",
+   "other": "also in {n} other countries"
+  },
+  "also_languages": {
+   "one": "also in {n} other language",
+   "other": "also in {n} other languages"
+  },
+  "elsewhere": "Elsewhere"
  },
  "dates": [
   "{d} January {y}",

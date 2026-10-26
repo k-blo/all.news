@@ -30,7 +30,7 @@
     "logo": "https://www.all.news/favicon-512.png"
   }
   </script>
-  <link rel="stylesheet" href="/styles.css?v=12">
+  <link rel="stylesheet" href="/styles.css?v=13">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N83C506R65"></script>
   <script>
@@ -120,7 +120,7 @@
 
     <!-- ===== Feed settings view ===== -->
     <section id="settingsView" class="view" hidden>
-      <!-- Column order: Categories | Countries | Languages | Medias | Archive (#2).
+      <!-- Column order: Categories | Countries | Languages | Medias (#2).
            Countries, Languages and Medias are wired to the article data model
            (data-country / data-lang / source) and persisted in the URL. -->
       <div class="feed-settings">
@@ -166,15 +166,6 @@
           <div class="fs-list" id="filters"></div>
         </div>
 
-        <div class="fs-group" id="archiveGroup">
-          <div class="fs-archive" data-i18n="archive">Archive</div>
-          <!-- Full-archive link sits where "Select all" sits in the other columns;
-               the header itself is no longer a link (#23). -->
-          <a class="fs-all fs-open-archive" href="/archive" target="_blank" rel="noopener"><span data-i18n="open_archive">Open Archive</span> <span class="ext" aria-hidden="true">↗</span></a>
-          <!-- "Today" (the home feed) + up to 30 past archive days, populated by
-               script.js. Past-day links carry the active filter (#2). -->
-          <div class="fs-list fs-days" id="archiveDays"></div>
-        </div>
       </div>
     </section>
 
@@ -182,6 +173,7 @@
     <!-- script.js marks the current section (aria-current). -->
     <section id="moreView" class="view" hidden>
       <nav class="section-nav" aria-label="Sections" data-i18n-aria="sections">
+        <a class="section-link" href="/news/" data-section="browse"><span data-i18n="browse">Browse by country &amp; language</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/" data-section="news"><span data-i18n="news">News</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/space/" data-section="space"><span data-i18n="space">Space</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/business/" data-section="business"><span data-i18n="business">Business</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
@@ -199,6 +191,7 @@
         <a class="section-link" href="/rail/" data-section="rail"><span data-i18n="rail">Rail</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/ai/" data-section="ai"><span data-i18n="ai">AI</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/science/" data-section="science"><span data-i18n="science">Science</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
+        <a class="section-link" href="/archive" data-section="archive"><span data-i18n="archive">Archive</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
       </nav>
       <nav class="menu-secondary" aria-label="More" data-i18n-aria="more">
         <a href="/settings" data-i18n="settings">Settings</a>
@@ -223,8 +216,8 @@
     </footer>
   </div>
 
-  <script src="/site.js?v=4"></script>
+  <script src="/site.js?v=5"></script>
   <script src="/colors.js"></script>
-  <script src="/script.js?v=18"></script>
+  <script src="/script.js?v=19"></script>
 </body>
 </html>

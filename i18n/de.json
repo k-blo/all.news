@@ -87,7 +87,16 @@
   "descriptions": "Beschreibungen",
   "descriptions_note": "Text unter Schlagzeilen, beim Zeigen oder Tippen immer sichtbar.",
   "show": "Anzeigen",
-  "hide": "Ausblenden"
+  "hide": "Ausblenden",
+  "also_countries": {
+   "one": "auch in {n} weiteren Land",
+   "other": "auch in {n} weiteren Ländern"
+  },
+  "also_languages": {
+   "one": "auch in {n} weiteren Sprache",
+   "other": "auch in {n} weiteren Sprachen"
+  },
+  "elsewhere": "Anderswo"
  },
  "dates": [
   "{d}. Januar {y}",

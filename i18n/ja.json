@@ -87,7 +87,10 @@
   "descriptions": "概要",
   "descriptions_note": "見出しの下の文。ポイントやタップ時は常に表示。",
   "show": "表示",
-  "hide": "非表示"
+  "hide": "非表示",
+  "also_countries": "他に{n}か国でも",
+  "also_languages": "他に{n}言語でも",
+  "elsewhere": "他の国・言語"
  },
  "dates": [
   "{y}年1月{d}日",

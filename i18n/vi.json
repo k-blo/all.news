@@ -87,7 +87,10 @@
   "descriptions": "Mô tả",
   "descriptions_note": "Đoạn dưới tiêu đề, luôn hiện khi trỏ hoặc chạm.",
   "show": "Hiện",
-  "hide": "Ẩn"
+  "hide": "Ẩn",
+  "also_countries": "cũng có ở {n} quốc gia khác",
+  "also_languages": "cũng có bằng {n} ngôn ngữ khác",
+  "elsewhere": "Nơi khác"
  },
  "dates": [
   "{d} tháng 1, {y}",

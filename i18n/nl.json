@@ -90,7 +90,16 @@
   "descriptions": "Beschrijvingen",
   "descriptions_note": "Tekst onder koppen, altijd zichtbaar bij aanwijzen of tikken.",
   "show": "Tonen",
-  "hide": "Verbergen"
+  "hide": "Verbergen",
+  "also_countries": {
+   "one": "ook in {n} ander land",
+   "other": "ook in {n} andere landen"
+  },
+  "also_languages": {
+   "one": "ook in {n} andere taal",
+   "other": "ook in {n} andere talen"
+  },
+  "elsewhere": "Elders"
  },
  "dates": [
   "{d} januari {y}",

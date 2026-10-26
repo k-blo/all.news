@@ -90,7 +90,16 @@
   "descriptions": "Beskrivningar",
   "descriptions_note": "Text under rubriker, visas alltid vid hovring eller tryck.",
   "show": "Visa",
-  "hide": "Dölj"
+  "hide": "Dölj",
+  "also_countries": {
+   "one": "även i {n} annat land",
+   "other": "även i {n} andra länder"
+  },
+  "also_languages": {
+   "one": "även på {n} annat språk",
+   "other": "även på {n} andra språk"
+  },
+  "elsewhere": "På andra håll"
  },
  "dates": [
   "{d} januari {y}",

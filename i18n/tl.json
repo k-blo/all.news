@@ -87,7 +87,10 @@
   "descriptions": "Mga paglalarawan",
   "descriptions_note": "Teksto sa ilalim ng mga headline, laging lumalabas kapag tinuro o tinap.",
   "show": "Ipakita",
-  "hide": "Itago"
+  "hide": "Itago",
+  "also_countries": "pati sa {n} pang bansa",
+  "also_languages": "pati sa {n} pang wika",
+  "elsewhere": "Sa ibang lugar"
  },
  "dates": [
   "Enero {d}, {y}",

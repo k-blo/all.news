@@ -87,7 +87,10 @@
   "descriptions": "Disgrifiadau",
   "descriptions_note": "Testun o dan benawdau, i'w weld bob amser wrth hofran neu dapio.",
   "show": "Dangos",
-  "hide": "Cuddio"
+  "hide": "Cuddio",
+  "also_countries": "hefyd mewn {n} gwlad arall",
+  "also_languages": "hefyd mewn {n} iaith arall",
+  "elsewhere": "Mewn mannau eraill"
  },
  "dates": [
   "{d} Ionawr {y}",

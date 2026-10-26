@@ -90,7 +90,16 @@
   "descriptions": "Descriptions",
   "descriptions_note": "Texte sous les titres, toujours affiché au survol ou au toucher.",
   "show": "Afficher",
-  "hide": "Masquer"
+  "hide": "Masquer",
+  "also_countries": {
+   "one": "aussi dans {n} autre pays",
+   "other": "aussi dans {n} autres pays"
+  },
+  "also_languages": {
+   "one": "aussi en {n} autre langue",
+   "other": "aussi en {n} autres langues"
+  },
+  "elsewhere": "Ailleurs"
  },
  "dates": [
   "{d} janvier {y}",

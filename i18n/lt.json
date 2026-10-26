@@ -92,7 +92,20 @@
   "descriptions": "Aprašymai",
   "descriptions_note": "Tekstas po antraštėmis, visada rodomas užvedus ar palietus.",
   "show": "Rodyti",
-  "hide": "Slėpti"
+  "hide": "Slėpti",
+  "also_countries": {
+   "one": "dar {n} šalyje",
+   "few": "dar {n} šalyse",
+   "many": "dar {n} šalių",
+   "other": "dar {n} šalių"
+  },
+  "also_languages": {
+   "one": "dar {n} kalba",
+   "few": "dar {n} kalbomis",
+   "many": "dar {n} kalbų",
+   "other": "dar {n} kalbų"
+  },
+  "elsewhere": "Kitur"
  },
  "dates": [
   "{y} m. sausio {d} d.",

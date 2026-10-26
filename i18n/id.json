@@ -87,7 +87,10 @@
   "descriptions": "Deskripsi",
   "descriptions_note": "Teks di bawah judul, selalu tampil saat disorot atau diketuk.",
   "show": "Tampilkan",
-  "hide": "Sembunyikan"
+  "hide": "Sembunyikan",
+  "also_countries": "juga di {n} negara lain",
+  "also_languages": "juga dalam {n} bahasa lain",
+  "elsewhere": "Di tempat lain"
  },
  "dates": [
   "{d} Januari {y}",

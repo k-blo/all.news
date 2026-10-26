@@ -92,7 +92,20 @@
   "descriptions": "Popisy",
   "descriptions_note": "Text pod titulkami, vždy viditeľný pri prechode alebo dotyku.",
   "show": "Zobraziť",
-  "hide": "Skryť"
+  "hide": "Skryť",
+  "also_countries": {
+   "one": "aj v {n} ďalšej krajine",
+   "few": "aj v {n} ďalších krajinách",
+   "many": "aj v {n} ďalších krajinách",
+   "other": "aj v {n} ďalších krajinách"
+  },
+  "also_languages": {
+   "one": "aj v {n} ďalšom jazyku",
+   "few": "aj v {n} ďalších jazykoch",
+   "many": "aj v {n} ďalších jazykoch",
+   "other": "aj v {n} ďalších jazykoch"
+  },
+  "elsewhere": "Inde"
  },
  "dates": [
   "{d}. januára {y}",

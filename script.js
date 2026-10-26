@@ -371,12 +371,35 @@ function groupEvents(list) {
   return out;
 }
 
+// Same story in another edition (sx entry).
+function editionHTML([cc, lang, n, title, url]) {
+  const page = COUNTRY_NAMES[cc] && LANG_EN_NAMES[lang]
+    ? `/news/${slugify(COUNTRY_NAMES[cc])}/${slugify(LANG_EN_NAMES[lang])}/#${articleId({ title, url })}`
+    : url;
+  const count = I18N.count ? I18N.count("event_count", n) : n;
+  return `<li><a class="ev-x" href="${esc(page)}">` +
+    `<span class="ev-x-where">${esc(I18N.country(cc))} · ${esc(I18N.langName(lang))}</span>` +
+    `<span class="ev-x-title" dir="auto">${esc(title)}</span>` +
+    `<span class="ev-x-n">${esc(count)}</span></a></li>`;
+}
+
+// "also in 3 other countries" for the row.
+function alsoText(ev, sx) {
+  if (!sx.length || !I18N.count) return "";
+  const countries = new Set(sx.map((x) => x[0]).filter((c) => c !== ev.lead.country));
+  if (countries.size) return I18N.count("also_countries", countries.size);
+  const langs = new Set(sx.map((x) => x[1]).filter((l) => l !== ev.lead.lang));
+  return langs.size ? I18N.count("also_languages", langs.size) : "";
+}
+
 // Collapsed row; members hidden below.
 function eventHTML(ev) {
   const srcs = [...new Set(ev.members.map((a) => a.source))];
   const dots = srcs.slice(0, 5).map((s) => `<i style="background:${colorFor(s)}"></i>`).join("");
   const names = srcs.slice(0, 3).join(", ") + (srcs.length > 3 ? ` +${srcs.length - 3}` : "");
   const when = RELATIVE_TIMES ? I18N.ago(ev.published) : fmtTime(ev.published);
+  const sx = (ev.members.find((m) => m.sx) || {}).sx || [];
+  const also = alsoText(ev, sx);
   return `<li class="event" id="ev-${esc(ev.id)}">` +
     `<button class="ev-head" type="button" aria-expanded="false">` +
     `<span class="meta-col">` +
@@ -385,11 +408,14 @@ function eventHTML(ev) {
     `</span>` +
     `<span class="ev-main">` +
     `<span class="ev-title" dir="auto">${esc(ev.lead.title)}</span>` +
-    `<span class="ev-sources"><span class="ev-dots">${dots}</span><span class="ev-names">${esc(names)}</span></span>` +
+    `<span class="ev-sources"><span class="ev-dots">${dots}</span><span class="ev-names">${esc(names)}</span>` +
+    (also ? `<span class="ev-also">${esc(also)}</span>` : "") + `</span>` +
     `</span>` +
     `<svg class="ev-chev" width="18" height="18" aria-hidden="true"><use href="#ico-chev-right"/></svg>` +
     `</button>` +
-    `<ul class="ev-members" hidden>${ev.members.map(articleHTML).join("")}</ul></li>`;
+    `<ul class="ev-members" hidden>${ev.members.map(articleHTML).join("")}</ul>` +
+    (sx.length ? `<div class="ev-elsewhere" hidden><p class="ev-x-head">${esc(I18N.t("elsewhere"))}</p>` +
+      `<ul>${sx.map(editionHTML).join("")}</ul></div>` : "") + `</li>`;
 }
 
 function toggleEvent(head) {
@@ -397,6 +423,8 @@ function toggleEvent(head) {
   const open = head.getAttribute("aria-expanded") !== "true";
   head.setAttribute("aria-expanded", String(open));
   li.querySelector(".ev-members").hidden = !open;
+  const other = li.querySelector(".ev-elsewhere");
+  if (other) other.hidden = !open;
   li.classList.toggle("open", open);
 }
 
@@ -818,44 +846,6 @@ function updateAllToggles() {
   set("media", excluded.size === 0); // no source excluded = all shown
 }
 
-// Archive section: the home feed (last 24 hours, active) + up to 30 past archive
-// days. Built once from /archive/index.json. Links are plain
-// paths — the active filter lives in localStorage, which every archive day page
-// reads on load, so it carries across without being threaded through the URL.
-let archiveDatesPromise = null;
-function loadArchiveDates() {
-  if (SECTION) return Promise.resolve([]); // the archive covers news only
-  if (archiveDatesPromise) return archiveDatesPromise;
-  // ?v=2 busts the copies handed out with a year-long `immutable` Cache-Control
-  // before that was fixed (functions/[[path]].js) — those browser and edge caches
-  // would otherwise keep serving a frozen date list for months.
-  archiveDatesPromise = Promise.all([fetch("/archive/index.json?v=2").then((r) => r.json()), I18N.ready])
-    .then(([idx]) => { buildArchiveDays(idx.dates || []); return idx.dates; })
-    .catch(() => { archiveDatesPromise = null; });
-  return archiveDatesPromise;
-}
-function buildArchiveDays(dates) {
-  const box = document.getElementById("archiveDays");
-  if (!box) return;
-  box.innerHTML = "";
-  const today = todayISO();
-  const a0 = document.createElement("a");
-  a0.className = "today";
-  a0.href = "/";
-  a0.textContent = I18N.t("last_24h"); // the home feed
-  box.appendChild(a0);
-  const past = dates.slice().sort().reverse().filter((d) => d < today).slice(0, 30);
-  for (const d of past) {
-    const a = document.createElement("a");
-    a.className = "past";
-    a.href = `/archive/${d}.html`;
-    a.target = "_blank";          // open the archive day in a new tab
-    a.rel = "noopener";
-    a.textContent = I18N.date(d);
-    box.appendChild(a);
-  }
-}
-
 // True while every country is deselected (the explicit "none" state).
 function noCountriesSelected() { return !countriesAll && includedCountries.size === 0; }
 // Exclude every currently-loaded source (the "deselect all media" state).
@@ -1090,16 +1080,15 @@ const moreView = document.getElementById("moreView");
 const filterToggle = document.getElementById("filterToggle");
 const moreToggle = document.getElementById("moreToggle");
 
-// Menu: mark the current section (news covers home, archive, landing pages).
+// Menu: mark the current section (news covers home, landing pages).
+const MENU_CURRENT = SECTION || (ARCHIVE_DAY ? "archive" : "news");
 for (const a of document.querySelectorAll(".section-link")) {
-  if (a.dataset.section === (SECTION || "news")) a.setAttribute("aria-current", "page");
+  if (a.dataset.section === MENU_CURRENT) a.setAttribute("aria-current", "page");
 }
-// Sections have no country split and no archive: hide those filter groups.
+// Sections have no country split: hide that filter group.
 if (SECTION) {
-  for (const id of ["countryGroup", "archiveGroup"]) {
-    const el = document.getElementById(id);
-    if (el) el.hidden = true;
-  }
+  const el = document.getElementById("countryGroup");
+  if (el) el.hidden = true;
 }
 
 function showView(name) {
@@ -1118,7 +1107,6 @@ function toggleSettings() {
   showView(opening ? "settings" : "feed");
   if (opening) {
     loadData();          // ensure filter panels are populated (esp. on archive pages)
-    loadArchiveDates();  // populate the Archive day list (Today + last 10 days)
   }
 }
 if (filterToggle) filterToggle.addEventListener("click", toggleSettings);
@@ -1512,7 +1500,6 @@ function confirmHide(name) {
     close();
     showView("settings");
     loadData();
-    loadArchiveDates();
   });
 }
 

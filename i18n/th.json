@@ -87,7 +87,10 @@
   "descriptions": "คำอธิบาย",
   "descriptions_note": "ข้อความใต้พาดหัว แสดงเสมอเมื่อชี้หรือแตะ",
   "show": "แสดง",
-  "hide": "ซ่อน"
+  "hide": "ซ่อน",
+  "also_countries": "รวมถึงอีก {n} ประเทศ",
+  "also_languages": "รวมถึงอีก {n} ภาษา",
+  "elsewhere": "ที่อื่น"
  },
  "dates": [
   "{d} มกราคม {y}",

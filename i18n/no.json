@@ -90,7 +90,16 @@
   "descriptions": "Beskrivelser",
   "descriptions_note": "Tekst under titlene, alltid vist ved peking eller trykk.",
   "show": "Vis",
-  "hide": "Skjul"
+  "hide": "Skjul",
+  "also_countries": {
+   "one": "også i {n} annet land",
+   "other": "også i {n} andre land"
+  },
+  "also_languages": {
+   "one": "også på {n} annet språk",
+   "other": "også på {n} andre språk"
+  },
+  "elsewhere": "Andre steder"
  },
  "dates": [
   "{d}. januar {y}",

@@ -87,7 +87,10 @@
   "descriptions": "Leírások",
   "descriptions_note": "Szöveg a címek alatt, rámutatáskor vagy koppintáskor mindig látható.",
   "show": "Megjelenítés",
-  "hide": "Elrejtés"
+  "hide": "Elrejtés",
+  "also_countries": "{n} további országban is",
+  "also_languages": "{n} további nyelven is",
+  "elsewhere": "Máshol"
  },
  "dates": [
   "{y}. január {d}.",

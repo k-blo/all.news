@@ -36,7 +36,7 @@ window.I18N = (() => {
     eu: "Euskara", gl: "Galego", ga: "Gaeilge", cy: "Cymraeg", gd: "Gàidhlig",
   };
   const STORE = "allnews.uilang"; // a code, or "auto"
-  const VERSION = 3;              // bump when a dictionary changes
+  const VERSION = 4;              // bump when a dictionary changes
   const ALIASES = { nb: "no", nn: "no", fil: "tl" };
   const RTL = ["ar", "he", "fa", "ur"];
   const CATS = { z: "zero", o: "one", t: "two", f: "few", m: "many", x: "other" };

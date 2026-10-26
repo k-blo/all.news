@@ -90,7 +90,10 @@
   "descriptions": "Kuvaukset",
   "descriptions_note": "Teksti otsikoiden alla, näkyy aina osoitettaessa tai napautettaessa.",
   "show": "Näytä",
-  "hide": "Piilota"
+  "hide": "Piilota",
+  "also_countries": "myös {n} muussa maassa",
+  "also_languages": "myös {n} muulla kielellä",
+  "elsewhere": "Muualla"
  },
  "dates": [
   "{d}. tammikuuta {y}",

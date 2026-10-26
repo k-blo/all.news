@@ -87,7 +87,10 @@
   "descriptions": "摘要",
   "descriptions_note": "标题下的文字，悬停或点按时始终显示。",
   "show": "显示",
-  "hide": "隐藏"
+  "hide": "隐藏",
+  "also_countries": "另有{n}个国家报道",
+  "also_languages": "另有{n}种语言报道",
+  "elsewhere": "其他地区"
  },
  "dates": [
   "{y}年1月{d}日",

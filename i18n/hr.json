@@ -91,7 +91,18 @@
   "descriptions": "Opisi",
   "descriptions_note": "Tekst ispod naslova, uvijek vidljiv pri prelasku ili dodiru.",
   "show": "Prikaži",
-  "hide": "Sakrij"
+  "hide": "Sakrij",
+  "also_countries": {
+   "one": "i u još {n} zemlji",
+   "few": "i u još {n} zemlje",
+   "other": "i u još {n} zemalja"
+  },
+  "also_languages": {
+   "one": "i na još {n} jeziku",
+   "few": "i na još {n} jezika",
+   "other": "i na još {n} jezika"
+  },
+  "elsewhere": "Drugdje"
  },
  "dates": [
   "{d}. siječnja {y}.",

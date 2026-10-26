@@ -40,8 +40,10 @@ jobs:
           python-version: "3.12"
       - name: Install rclone
         run: curl -fsSL https://rclone.org/install.sh | sudo bash
-      - name: Pull HTTP cache from R2
-        run: mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
+      - name: Pull HTTP cache + description state from R2
+        run: |
+          mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
+          rclone copy "R2:$R2_BUCKET/state/describe.json" state/ || true
       - name: Crawl (main shard ${{ matrix.shard }}/3)
         run: python3 crawler.py --group main --shard ${{ matrix.shard }} --of 3 --out partial-main-${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
@@ -59,8 +61,10 @@ jobs:
           python-version: "3.12"
       - name: Install rclone
         run: curl -fsSL https://rclone.org/install.sh | sudo bash
-      - name: Pull HTTP cache from R2
-        run: mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
+      - name: Pull HTTP cache + description state from R2
+        run: |
+          mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
+          rclone copy "R2:$R2_BUCKET/state/describe.json" state/ || true
       - name: Connect VPN
         run: |
           sudo apt-get install -y -qq wireguard-tools
@@ -101,6 +105,8 @@ jobs:
           rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
           rclone copy "R2:$R2_BUCKET/archive/index.json" archive/ || true
           rclone copy "R2:$R2_BUCKET/archive/indexnow.json" archive/ || true
+          # URLs already in the feed or tried for a description
+          rclone copy "R2:$R2_BUCKET/state/describe.json" state/ || true
           # backfill for thin section language pages
           rclone copy "R2:$R2_BUCKET/archive/section-langs.json" archive/ || true
           # topic sections: today's feed + seen-set (so reruns append, never re-add)
@@ -138,6 +144,7 @@ jobs:
           done
           # today's archive pages + JSON + state files (copy = never deletes old days)
           rclone copy archive "R2:$R2_BUCKET/archive" -v
+          rclone copy state/describe.json "R2:$R2_BUCKET/state/" -v
       - name: Ping IndexNow
         # After the upload, so engines fetch fresh pages.
         run: |

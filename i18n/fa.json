@@ -87,7 +87,10 @@
   "descriptions": "توضیحات",
   "descriptions_note": "متن زیر تیترها، همیشه با اشاره یا لمس نمایش داده می‌شود.",
   "show": "نمایش",
-  "hide": "پنهان"
+  "hide": "پنهان",
+  "also_countries": "در {n} کشور دیگر هم",
+  "also_languages": "به {n} زبان دیگر هم",
+  "elsewhere": "جاهای دیگر"
  },
  "dates": [
   "{d} ژانویهٔ {y}",

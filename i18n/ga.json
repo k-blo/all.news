@@ -87,7 +87,10 @@
   "descriptions": "Cur síos",
   "descriptions_note": "Téacs faoi na ceannlínte, le feiceáil i gcónaí ar ainliú nó tapáil.",
   "show": "Taispeáin",
-  "hide": "Folaigh"
+  "hide": "Folaigh",
+  "also_countries": "i dtíortha eile freisin: {n}",
+  "also_languages": "i dteangacha eile freisin: {n}",
+  "elsewhere": "In áiteanna eile"
  },
  "dates": [
   "{d} Eanáir {y}",

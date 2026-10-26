@@ -87,7 +87,10 @@
   "descriptions": "설명",
   "descriptions_note": "제목 아래 글, 가리키거나 탭하면 항상 표시.",
   "show": "표시",
-  "hide": "숨기기"
+  "hide": "숨기기",
+  "also_countries": "다른 {n}개국에서도",
+  "also_languages": "다른 {n}개 언어로도",
+  "elsewhere": "다른 곳"
  },
  "dates": [
   "{y}년 1월 {d}일",

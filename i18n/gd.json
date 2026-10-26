@@ -87,7 +87,10 @@
   "descriptions": "Tuairisgeulan",
   "descriptions_note": "Teacsa fo na ceann-loidhnichean, ri fhaicinn an-còmhnaidh le fantainn no tapadh.",
   "show": "Seall",
-  "hide": "Falaich"
+  "hide": "Falaich",
+  "also_countries": "ann an dùthchannan eile cuideachd: {n}",
+  "also_languages": "ann an cànanan eile cuideachd: {n}",
+  "elsewhere": "Ann an àiteachan eile"
  },
  "dates": [
   "{d}mh dhen Fhaoilleach {y}",

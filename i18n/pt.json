@@ -90,7 +90,16 @@
   "descriptions": "Descrições",
   "descriptions_note": "Texto sob as manchetes, sempre visível ao apontar ou tocar.",
   "show": "Mostrar",
-  "hide": "Ocultar"
+  "hide": "Ocultar",
+  "also_countries": {
+   "one": "também em {n} outro país",
+   "other": "também em {n} outros países"
+  },
+  "also_languages": {
+   "one": "também em {n} outra língua",
+   "other": "também em {n} outras línguas"
+  },
+  "elsewhere": "Noutros lugares"
  },
  "dates": [
   "{d} de janeiro de {y}",

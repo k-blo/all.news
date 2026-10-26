@@ -92,7 +92,20 @@
   "descriptions": "Opisi",
   "descriptions_note": "Besedilo pod naslovi, vedno vidno ob premiku ali dotiku.",
   "show": "Prikaži",
-  "hide": "Skrij"
+  "hide": "Skrij",
+  "also_countries": {
+   "one": "tudi v {n} drugi državi",
+   "two": "tudi v {n} drugih državah",
+   "few": "tudi v {n} drugih državah",
+   "other": "tudi v {n} drugih državah"
+  },
+  "also_languages": {
+   "one": "tudi v {n} drugem jeziku",
+   "two": "tudi v {n} drugih jezikih",
+   "few": "tudi v {n} drugih jezikih",
+   "other": "tudi v {n} drugih jezikih"
+  },
+  "elsewhere": "Drugje"
  },
  "dates": [
   "{d}. januar {y}",

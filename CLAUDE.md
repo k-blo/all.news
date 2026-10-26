@@ -212,21 +212,32 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-clustering.txt`).
   in R2 `state/embeddings.npz` (~130 MB, not served publicly). A cold cache fills
   over the first day of runs.
 - **Clustering:** cosine similarity; star clustering — the best-connected article
-  leads and every member must score ≥ `TAU` (0.79) with it. Pairs scoring ≥ 0.72
+  leads and every member must score ≥ `TAU` (0.80; 0.79 before descriptions were
+  fetched) with it. Pairs scoring ≥ 0.72
   that share a rare word (in ≤ 5 articles that day) get +0.08. An event needs ≥ 2
   outlets, none over half its articles. Short title-only rows, horoscopes and
-  multi-story roundups/tickers (`HARD`) are never grouped; live blogs (`LIVE`) may
+  multi-story roundups/tickers and lottery results (`HARD`) are never grouped; live blogs (`LIVE`) may
   join an event but never lead one. These settings were hand-checked on CH/de,
   CH/fr, CH/it, GB/en, IN/hi and JP/ja; the keyword lists cover those languages
   plus a few obvious es/pt/ru/zh/ko words. Same-type local news (e.g. different
   road crashes) still tends to group — accepted for now.
 - **Output:** members get `ev` (event id, `e` + sha1 of the lead URL) and `evr`
   (rank; 0 = the lead, whose headline titles the event).
+- **Cross-edition stories:** after per-edition clustering, each event's vectors are
+  averaged and events of *different* editions (country + language) scoring ≥ `XTAU`
+  (0.85) are star-clustered into stories (`link_events()`, under a second). The lead
+  row of every linked event gets `sx`: the story's other editions, one entry each
+  (its largest event) as `[country, lang, articles, lead title, lead URL]`, at most
+  `MAX_SX` (12). Hand-checked at ~90% correct on 13 editions; misses are generic
+  recurring topics (weather, Halloween).
 - **Client:** `script.js` (`groupEvents()`) folds rows sharing `ev` into one row at
   the newest member — lead headline, an `event_count` chip, source dots — when
   sorted by date; clicking expands the members (normal rows). Filters apply to
   members first; an event with < 2 visible members shows as a plain row. Deep links
-  to a member open its event. Settings → Grouping off shows plain rows. Server-rendered HTML stays ungrouped. `event_count`
+  to a member open its event. Settings → Grouping off shows plain rows. A lead with
+  `sx` adds "also in 3 other countries" (`also_countries` / `also_languages`) to the
+  row and an "Elsewhere" list when opened; each entry links to that edition's
+  landing page with the lead article's `#id`, which opens the event there. Server-rendered HTML stays ungrouped. `event_count`
   holds plural forms per CLDR category, read with `I18N.count()`.
 - **Local run:** `pip install -r requirements-clustering.txt`, fetch the model files
   into `models/embeddinggemma/` (see the workflow step), then `python3 clustering.py`
@@ -234,23 +245,36 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-clustering.txt`).
 
 **Summaries:** every row shows its RSS summary under the headline — two lines,
 the whole text on hover/focus; Settings → Descriptions → Hide shows it only then.
-`parse_feed()` keeps up to `SUMMARY_MAX` (400) characters, cut at a word with "…"
+`parse_feed()` keeps up to `SUMMARY_MAX` (800) characters, cut at a word with "…"
 (`clip()`); rows from before the change hold a hard, mid-word cut at 200.
 `clean_summary()` (crawler) and `cleanSummary()` (`script.js`) mirror each other:
 they decode entities, drop WordPress footers and summaries that just repeat the
 title, and end those old 200-character cuts on a word.
+
+**Descriptions for articles without one:** each crawl shard (`run_map()` →
+`describe_rows()`) fetches the page's `og:description` / `description` for new
+news articles whose feed gave no usable summary (not for `"summary": False`
+sources like NZZ). Polite: robots.txt checked with RFC 9309 semantics (longest
+match, wildcards, 4xx = no rules) and cached a day, 2 connections per site with
+sites interleaved, first 300 KB only, at most `DESCRIBE_BUDGET` (120) seconds per
+shard. VPN sources are fetched in the VPN job. `state/describe.json` (R2, not
+public) holds the URLs already in the feed or tried in the last 48 h plus the
+robots rules; shards pull it, reduce updates and uploads it. Without it (first
+run) shards skip fetching and reduce seeds it.
 
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
 Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.
 
 **Sections in the client:** `script.js` detects `/<section>/` (`SECTION`), loads
-`/<section>/feed.json` (single-file, like archive days), hides the Countries and
-Archive filter groups, and stores filters under `allnews.<section>.*`. A first visit
+`/<section>/feed.json` (single-file, like archive days), hides the Countries filter
+group, and stores filters under `allnews.<section>.*`. A first visit
 seeds the language filter from the browser languages (relaxed to all if empty).
 On `/<section>/<lang>/` the path pins the language instead (`SECTION_LANG`).
 
-**Menu** lists the sections (current one marked by `script.js`) plus Settings.
+**Menu** lists "Browse by country & language" (`/news/`) first, then the sections,
+then Archive (`/archive`) last, plus Settings (current entry marked by `script.js`;
+Archive on archive day pages). The filter panel has Countries, Languages and Medias.
 
 **Settings** (`settings.html`, `/settings`): UI language (automatic / any of ours)
 in `allnews.uilang`, theme (dark default / light / system) in

@@ -90,7 +90,10 @@
   "descriptions": "वर्णने",
   "descriptions_note": "शीर्षकांखालील मजकूर, होवर किंवा टॅपवर नेहमी दिसतो.",
   "show": "दाखवा",
-  "hide": "लपवा"
+  "hide": "लपवा",
+  "also_countries": "आणखी {n} देशांतही",
+  "also_languages": "आणखी {n} भाषांतही",
+  "elsewhere": "इतरत्र"
  },
  "dates": [
   "{d} जानेवारी, {y}",

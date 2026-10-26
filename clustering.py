@@ -24,7 +24,9 @@ PROMPT = "task: sentence similarity | query: "
 EMBED_SUMMARY = 200  # summary chars used, as calibrated
 MAX_TOKENS, BATCH, CHUNK = 256, 32, 256
 
-TAU = 0.79                    # same-event cutoff
+TAU = 0.80                    # same-event cutoff (with fetched descriptions)
+XTAU = 0.85                   # cross-edition cutoff, event averages
+MAX_SX = 12                   # other editions listed per event
 BONUS, BONUS_FROM = 0.08, 0.72  # shared rare word lifts near-misses
 RARE_DF = 5                   # rare: in at most 5 articles
 MIN_SOURCES, MAX_SHARE = 2, 0.5
@@ -33,7 +35,8 @@ MIN_SOURCES, MAX_SHARE = 2, 0.5
 HARD = re.compile(
     r"\+\+|News-?[Tt]icker|im Ticker|Newsblog|Taza Khabar|politics live|news live|"
     r"[Hh]oroscope|[Hh]oroskop|[Oo]roscopo|[Hh]or[oó]scopo|[Rr]ashifal|राशिफल|राशि –|"
-    r"मूलांक|पंचांग|[Pp]anchang|[Tt]arot|гороскоп|Гороскоп|星座|占い|運勢|运势|운세")
+    r"मूलांक|पंचांग|[Pp]anchang|[Tt]arot|гороскоп|Гороскоп|星座|占い|運勢|运势|운세|"
+    r"\b[Ll]otto\b|[Ll]oter[ií]a|Primitiva|Chispazo|Euro[Mm]illion|Powerball|ロト|ナンバーズ|宝くじ")
 # Live blogs: may join, never lead.
 LIVE = re.compile(
     r"\bLIVE\b|\bLive:|live updates|live blog|Liveticker|Live-Ticker|EN DIRECT|^En direct|"
@@ -185,6 +188,57 @@ def cluster(rows, vecs):
     return [lead_first(e, sim, rows) for e in star(boosted, [a["source"] for a in rows], skip, live)]
 
 
+def centroid(vecs):
+    """Unit-length average vector."""
+    c = np.mean(np.stack(vecs).astype(np.float32), axis=0)
+    return c / np.linalg.norm(c)
+
+
+def link_events(events):
+    """Stories: events across editions."""
+    if len(events) < 2:
+        return []
+    m = np.stack([e["c"] for e in events])
+    sim = m @ m.T
+    keys = {}
+    kid = np.array([keys.setdefault(e["key"], len(keys)) for e in events])
+    sim[kid[:, None] == kid[None, :]] = -1.0  # same edition: no link
+    adj = sim >= XTAU
+    free = np.ones(len(events), bool)
+    deg = adj.sum(1)
+    stories = []
+    while True:
+        cand = np.where(free)[0]
+        if not len(cand):
+            break
+        seed = int(cand[np.argmax(deg[cand])])
+        if deg[seed] < 1:
+            break
+        mem = [seed] + [int(j) for j in np.where(adj[seed] & free)[0]]
+        stories.append(mem)
+        free[mem] = False
+        deg -= adj[:, mem].sum(1)
+    return stories
+
+
+def tag_stories(events):
+    """Lead rows list other editions (sx)."""
+    stories = link_events(events)
+    for story in stories:
+        for i in story:
+            best = {}  # one entry per edition: its largest event
+            for j in story:
+                e = events[j]
+                if e["key"] != events[i]["key"] and len(e["rows"]) > len(best.get(e["key"], {"rows": []})["rows"]):
+                    best[e["key"]] = e
+            others = sorted(best.values(), key=lambda e: -len(e["rows"]))[:MAX_SX]
+            if others:
+                events[i]["rows"][0]["sx"] = [
+                    [e["key"][0], e["key"][1], len(e["rows"]), e["rows"][0]["title"], e["rows"][0]["url"]]
+                    for e in others]
+    return stories
+
+
 def main():
     with open("crawled.json", encoding="utf-8") as f:
         feed = json.load(f)
@@ -194,26 +248,30 @@ def main():
     done = embed_new(todo, cache) if todo else 0
     groups = defaultdict(list)
     for a in rows:
-        a.pop("ev", None)
-        a.pop("evr", None)
+        for k in ("ev", "evr", "sx"):
+            a.pop(k, None)
         if a["url"] in cache:
             groups[(a.get("country"), a.get("lang"))].append(a)
-    events = tagged = 0
-    for grp in groups.values():
+    events, tagged = [], 0
+    for key, grp in groups.items():
         if len({a["source"] for a in grp}) < MIN_SOURCES:
             continue
         for ev in cluster(grp, [cache[a["url"]] for a in grp]):
             eid = "e" + hashlib.sha1(grp[ev[0]]["url"].encode()).hexdigest()[:10]
             for rank, m in enumerate(ev):
                 grp[m]["ev"], grp[m]["evr"] = eid, rank
-            events += 1
+            members = [grp[m] for m in ev]
+            events.append({"key": key, "rows": members,
+                           "c": centroid([cache[a["url"]] for a in members])})
             tagged += len(ev)
+    stories = tag_stories(events)
     gen = feed["generated"]
     today = datetime.fromisoformat(gen).astimezone(crawler.ZURICH).date().isoformat()
     crawler.write_feed(rows, gen, today, feed.get("since", gen))
     save_cache({a["url"]: cache[a["url"]] for a in rows if a["url"] in cache})
-    print(f"clustering: embedded {done}/{len(todo)} new, {events} events, "
-          f"{tagged}/{len(rows)} articles grouped")
+    print(f"clustering: embedded {done}/{len(todo)} new, {len(events)} events, "
+          f"{tagged}/{len(rows)} articles grouped, {len(stories)} cross-edition stories "
+          f"({sum(map(len, stories))} events)")
 
 
 if __name__ == "__main__":

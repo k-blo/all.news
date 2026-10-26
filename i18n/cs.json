@@ -92,7 +92,20 @@
   "descriptions": "Popisy",
   "descriptions_note": "Text pod titulky, vždy viditelný při najetí nebo klepnutí.",
   "show": "Zobrazit",
-  "hide": "Skrýt"
+  "hide": "Skrýt",
+  "also_countries": {
+   "one": "také v {n} další zemi",
+   "few": "také v {n} dalších zemích",
+   "many": "také v {n} dalších zemích",
+   "other": "také v {n} dalších zemích"
+  },
+  "also_languages": {
+   "one": "také v {n} dalším jazyce",
+   "few": "také v {n} dalších jazycích",
+   "many": "také v {n} dalších jazycích",
+   "other": "také v {n} dalších jazycích"
+  },
+  "elsewhere": "Jinde"
  },
  "dates": [
   "{d}. ledna {y}",

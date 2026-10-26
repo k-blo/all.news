@@ -92,7 +92,20 @@
   "descriptions": "Opisy",
   "descriptions_note": "Tekst pod nagłówkami, zawsze widoczny po najechaniu lub dotknięciu.",
   "show": "Pokaż",
-  "hide": "Ukryj"
+  "hide": "Ukryj",
+  "also_countries": {
+   "one": "także w {n} innym kraju",
+   "few": "także w {n} innych krajach",
+   "many": "także w {n} innych krajach",
+   "other": "także w {n} innych krajach"
+  },
+  "also_languages": {
+   "one": "także w {n} innym języku",
+   "few": "także w {n} innych językach",
+   "many": "także w {n} innych językach",
+   "other": "także w {n} innych językach"
+  },
+  "elsewhere": "Gdzie indziej"
  },
  "dates": [
   "{d} stycznia {y}",

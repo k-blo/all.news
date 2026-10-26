@@ -90,7 +90,16 @@
   "descriptions": "Descricións",
   "descriptions_note": "Texto baixo os titulares, sempre visible ao pasar ou tocar.",
   "show": "Amosar",
-  "hide": "Agochar"
+  "hide": "Agochar",
+  "also_countries": {
+   "one": "tamén en {n} país máis",
+   "other": "tamén en {n} países máis"
+  },
+  "also_languages": {
+   "one": "tamén en {n} lingua máis",
+   "other": "tamén en {n} linguas máis"
+  },
+  "elsewhere": "Noutros lugares"
  },
  "dates": [
   "{d} de xaneiro de {y}",

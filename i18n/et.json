@@ -90,7 +90,10 @@
   "descriptions": "Kirjeldused",
   "descriptions_note": "Tekst pealkirjade all, alati nähtav osutamisel või puudutamisel.",
   "show": "Näita",
-  "hide": "Peida"
+  "hide": "Peida",
+  "also_countries": "ka {n} muus riigis",
+  "also_languages": "ka {n} muus keeles",
+  "elsewhere": "Mujal"
  },
  "dates": [
   "{d}. jaanuar {y}",
