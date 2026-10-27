@@ -248,16 +248,22 @@ the whole text on hover/focus; Settings → Descriptions → Hide shows it only 
 `parse_feed()` keeps up to `SUMMARY_MAX` (800) characters, cut at a word with "…"
 (`clip()`); rows from before the change hold a hard, mid-word cut at 200.
 `clean_summary()` (crawler) and `cleanSummary()` (`script.js`) mirror each other:
-they decode entities, drop WordPress footers and summaries that just repeat the
-title, and end those old 200-character cuts on a word.
+they decode entities, drop WordPress footers, cut a repeated headline off the
+front (keeping the rest), and end those old 200-character cuts on a word.
 
 **Descriptions for articles without one:** each crawl shard (`run_map()` →
-`describe_rows()`) fetches the page's `og:description` / `description` for new
-news articles whose feed gave no usable summary (not for `"summary": False`
-sources like NZZ). Polite: robots.txt checked with RFC 9309 semantics (longest
-match, wildcards, 4xx = no rules) and cached a day, 2 connections per site with
-sites interleaved, first 300 KB only, at most `DESCRIBE_BUDGET` (120) seconds per
-shard. VPN sources are fetched in the VPN job. `state/describe.json` (R2, not
+`describe_rows()`) reads the article page's `<head>` for new news articles whose
+feed gave no usable summary and takes the first usable meta description
+(`og:description`, `description`, `twitter:description`; not just the headline,
+not a Latin-script blurb under a non-Latin headline). **Policy: never fetch or use
+page content — only what's in `<head>` / meta descriptions.** `fetch_head()` stops
+downloading at `</head>` (max 300 KB) and only that part is parsed. This applies to
+every source, NZZ included (`"summary": False` only drops its RSS summary). Polite:
+robots.txt checked with RFC 9309 semantics (longest match, wildcards, 4xx = no
+rules) and cached a day, 2 connections per site with sites interleaved, URLs
+percent-encoded (`safe_url()`), at most `DESCRIBE_BUDGET` (120) seconds per shard.
+Sites that answer 403 (bot protection, e.g. Zeit Online, Irish Independent) are
+left alone. VPN sources are fetched in the VPN job. `state/describe.json` (R2, not
 public) holds the URLs already in the feed or tried in the last 48 h plus the
 robots rules; shards pull it, reduce updates and uploads it. Without it (first
 run) shards skip fetching and reduce seeds it.

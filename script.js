@@ -312,7 +312,10 @@ function cleanSummary(a) {
   const raw = a.summary || "";
   let s = unentity(raw).replace(/\s+/g, " ").trim().replace(/\s+The post .*$/, "");
   const title = (a.title || "").replace(/\s+/g, " ").trim();
-  if (s.length < 25 || s.startsWith(title.slice(0, 40))) return "";
+  if (title && s.startsWith(title.slice(0, 40))) { // repeats the headline: keep the rest
+    s = s.startsWith(title) ? s.slice(title.length).replace(/^[\s.:,|·–—-]+/, "") : "";
+  }
+  if (s.length < 25) return "";
   if (raw.length === 200 && !/[.!?…»"”]$/.test(s)) s = s.replace(/\s+\S*$/, "") + "…"; // old mid-word cut
   return s;
 }

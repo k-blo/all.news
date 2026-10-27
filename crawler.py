@@ -18,7 +18,7 @@ import unicodedata
 import urllib.request
 import urllib.error
 import zlib
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit, urlunsplit
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
@@ -4366,7 +4366,6 @@ class NotModified(Exception):
 
 # Per-source fetch settings for article pages.
 SOURCE_UA = {s["source"]: s["ua"] for s in FEEDS + SECTION_SOURCES if s.get("ua")}
-NO_SUMMARY_SOURCES = {s["source"] for s in FEEDS if s.get("summary") is False}
 
 _http_cache: dict = {}
 _fetched_urls: set = set()  # URLs fetched this run — used to emit the per-shard cache delta
@@ -4492,11 +4491,19 @@ def robots_allows(rules, path):
     return allowed
 
 
+def safe_url(url):
+    """Percent-encode non-ASCII URL parts."""
+    u = urlsplit(url)
+    host = (u.hostname or "").encode("idna").decode("ascii") + (f":{u.port}" if u.port else "")
+    return urlunsplit((u.scheme, host, quote(u.path, safe="/%:@!$&'()*+,;=~-._"),
+                       quote(u.query, safe="=&%/:?+,;@!$'()*~-._"), ""))
+
+
 def fetch_page(url, ua=None, limit=DESCRIBE_MAX_BYTES):
     """First `limit` bytes of a page."""
     headers = {"User-Agent": COMPAT_USER_AGENT if ua == "compat" else USER_AGENT,
                "Accept": "text/html"}
-    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=10) as r:
+    with urllib.request.urlopen(urllib.request.Request(safe_url(url), headers=headers), timeout=10) as r:
         data = r.read(limit)
         charset = r.headers.get_content_charset() or "utf-8"
     if data[:2] == b"\x1f\x8b":
@@ -4517,21 +4524,53 @@ class _MetaParser(HTMLParser):
                 self.found.setdefault(key, a["content"])
 
 
-def page_description(html_text):
-    """og:description, else description."""
+def fetch_head(url, ua=None, limit=DESCRIBE_MAX_BYTES):
+    """A page's <head> only, never content."""
+    headers = {"User-Agent": COMPAT_USER_AGENT if ua == "compat" else USER_AGENT,
+               "Accept": "text/html"}
+    buf = b""
+    with urllib.request.urlopen(urllib.request.Request(safe_url(url), headers=headers), timeout=10) as r:
+        charset = r.headers.get_content_charset() or "utf-8"
+        while len(buf) < limit:
+            chunk = r.read(16384)
+            if not chunk:
+                break
+            buf += chunk
+            if buf[:2] != b"\x1f\x8b" and b"</head>" in buf[-16400:].lower():
+                break  # stop downloading at </head>
+    if buf[:2] == b"\x1f\x8b":  # gzip despite no Accept-Encoding
+        buf = zlib.decompressobj(16 + zlib.MAX_WBITS).decompress(buf)
+    text = buf.decode(charset, errors="replace")
+    end = text.lower().find("</head>")
+    return text[:end] if end >= 0 else text
+
+
+def page_descriptions(head_html):
+    """Meta descriptions, best first."""
     p = _MetaParser()
     try:
-        p.feed(html_text)
+        p.feed(head_html)
     except Exception:  # broken markup: keep what we found
         pass
-    return next((p.found[k] for k in _META_KEYS if k in p.found), "")
+    return list(dict.fromkeys(p.found[k] for k in _META_KEYS if k in p.found))
+
+
+def latin_share(text):
+    """Share of letters that are ASCII."""
+    letters = [ch for ch in text if ch.isalpha()]
+    return sum(ch.isascii() for ch in letters) / len(letters) if letters else 0.0
+
+
+def same_script(title, text):
+    """No Latin blurb under non-Latin headline."""
+    return not (latin_share(title) < 0.3 and latin_share(text) > 0.7)
 
 
 def wants_description(a, known):
     """New news article lacking a summary."""
-    return ("news" in sections_of(a["source"]) and a["source"] not in NO_SUMMARY_SOURCES
-            and a["url"] not in known and is_today(a.get("published"))
-            and not clean_summary(a))
+    # Head meta only, so NZZ too.
+    return ("news" in sections_of(a["source"]) and a["url"] not in known
+            and is_today(a.get("published")) and not clean_summary(a))
 
 
 def describe_rows(rows, state, budget=DESCRIBE_BUDGET):
@@ -4572,7 +4611,7 @@ def describe_rows(rows, state, budget=DESCRIBE_BUDGET):
         if time.monotonic() > deadline:
             stats["budget"] += 1
             return
-        u = urlsplit(a["url"])
+        u = urlsplit(safe_url(a["url"]))  # robots rules match encoded paths
         ua = SOURCE_UA.get(a["source"])
         with host_locks[u.hostname]:
             if time.monotonic() > deadline:
@@ -4585,18 +4624,20 @@ def describe_rows(rows, state, budget=DESCRIBE_BUDGET):
             path = (u.path or "/") + (f"?{u.query}" if u.query else "")
             if not robots_allows(rules, path):
                 stats["disallowed"] += 1
-                desc = ""
+                cands = []
             else:
                 try:
-                    desc = page_description(fetch_page(a["url"], ua))
+                    cands = page_descriptions(fetch_head(a["url"], ua))
                 except Exception:
                     stats["error"] += 1
-                    desc = ""
-        text = clean_summary({"title": a["title"], "summary": desc})
+                    cands = []
+        # first meta that isn't just the headline
+        text = next((t for t in (clean_summary({"title": a["title"], "summary": c}) for c in cands)
+                     if t and same_script(a["title"], t)), "")
         if text:
             a["summary"] = clip(text, SUMMARY_MAX)
             stats["ok"] += 1
-        elif desc:
+        elif cands:
             stats["unusable"] += 1
         with lock:
             tried[a["url"]] = now
@@ -5479,7 +5520,9 @@ def clean_summary(article):
     s = re.sub(r"\s+", " ", unescape(raw)).strip()
     s = re.sub(r"\s+The post .*$", "", s)  # WordPress footer
     title = re.sub(r"\s+", " ", article.get("title") or "").strip()
-    if len(s) < 25 or s.startswith(title[:40]):
+    if title and s.startswith(title[:40]):  # repeats the headline: keep the rest
+        s = re.sub(r"^[\s.:,|·–—-]+", "", s[len(title):]) if s.startswith(title) else ""
+    if len(s) < 25:
         return ""
     if len(raw) == LEGACY_SUMMARY_MAX and not s.endswith(tuple(".!?…»\"”")):
         s = re.sub(r"\s+\S*$", "", s) + "…"  # old mid-word cut
