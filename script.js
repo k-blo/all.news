@@ -120,7 +120,7 @@ function sortedArticles(articles, mode) {
 // /space/, /business/, /tech/, /gaming/ …: one feed each (/<section>/feed.json),
 // not split by country — only language + media filters. null = the news feed.
 const SECTIONS = [
-  "space", "business", "tech", "gaming", "yachting", "logistics", "luxury",
+  "space", "business", "finance", "tech", "gaming", "yachting", "logistics", "luxury",
   "aviation", "auto", "energy", "cyber", "biotech", "watches", "rail", "ai", "science",
 ];
 const _sectionPath = location.pathname.match(

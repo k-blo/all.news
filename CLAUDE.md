@@ -161,7 +161,7 @@ feed, so the URL set is stable and `rclone sync`ed to R2. `COUNTRY_NAMES` +
 and must stay in sync. The `functions/[[path]].js` worker serves `/news/*` from R2 and
 301-redirects the no-trailing-slash form to the canonical slash form.
 
-**Topic sections** (`/space/`, `/business/`, `/tech/`, `/gaming/`,
+**Topic sections** (`/space/`, `/business/`, `/finance/`, `/tech/`, `/gaming/`,
 `/yachting/`, `/logistics/`, `/luxury/`, `/aviation/`, `/auto/`, `/energy/`,
 `/cyber/`, `/biotech/`, `/watches/`, `/rail/`, `/ai/`, `/science/`): `SECTIONS` in
 `crawler.py`. Each is an independent daily feed of its sources, **not split by
