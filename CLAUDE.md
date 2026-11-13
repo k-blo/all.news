@@ -10,11 +10,11 @@ expand its scope to more countries. all.news runs its own independent pipeline a
 analytics; the original swissnews.org project keeps running separately. When generalizing
 beyond Switzerland, the Swiss-specific framing still in the codebase will need revisiting:
 the "Schweizer Nachrichten" taglines, the Swiss-flag logo
-(`favicon.svg` and the inline SVG in `template.html`/`archive.html`), and the
+(`favicon.svg` and the inline SVG in `template.html`), and the
 single-timezone "today" check (`ZURICH`) in `crawler.py`.
 
 Analytics is intentionally left as a placeholder (see the "Analytics placeholder" comment
-in `template.html` and `archive.html`) — wire up all.news's own analytics there rather than
+in `template.html`) — wire up all.news's own analytics there rather than
 reusing swissnews.org's tag.
 
 ## Issue tracker
@@ -66,9 +66,9 @@ npx wrangler pages deploy .             # deploy the static site
 
 Three moving parts:
 
-1. **Cloudflare Worker** (`cron-worker/`) — fires `workflow_dispatch` to GitHub every 30 minutes (`*/30` in `wrangler.toml`) via the GitHub API. Exists because GitHub's own `schedule:` trigger is unreliable. Secrets managed with `wrangler secret put GITHUB_TOKEN`.
+1. **Cloudflare Worker** (`cron-worker/`) — fires `workflow_dispatch` to GitHub every hour (`0 * * * *` in `wrangler.toml`) via the GitHub API. Exists because GitHub's own `schedule:` trigger is unreliable. Secrets managed with `wrangler secret put GITHUB_TOKEN`.
 
-2. **GitHub Actions** (`.github/workflows/crawl.yml`) — runs `crawler.py`, then commits `crawled.json` and `archive/` back to `main` with `git push`. The crawler is stdlib-only so no install step is needed.
+2. **GitHub Actions** (`.github/workflows/crawl.yml`) — runs `crawler.py`, then uploads the outputs to R2 with rclone. The crawler is stdlib-only so no install step is needed.
 
 3. **Cloudflare Pages** — serves the repo root statically. No build step; connecting the repo in the dashboard is enough.
 
@@ -88,8 +88,7 @@ the languages it publishes). The site (`script.js`) fetches only the shards for 
 countries a visitor filters to, instead of the whole `crawled.json`, so the download
 scales with the selection. The manifest drives the country/language picker so it's
 complete before any shard loads. The "all countries" view still loads `crawled.json`.
-Archive day pages keep their single-file model. Shards are `rclone sync`ed to R2 (not
-`copy`), since they only ever hold the live feed.
+Shards are `rclone sync`ed to R2 (not `copy`), since they only ever hold the live feed.
 
 **Infinite scroll:** live feeds (home, landing pages, sections) continue into past
 days. At the end of the list `script.js` (`loadOlderDay()`) appends the previous
@@ -97,33 +96,37 @@ archive day below a date header, minus rows already shown, then the day before,
 and so on. Filtered views load the per-country day shards `archive/<date>/<cc>.json`
 (+ `manifest.json`, same `write_country_shards()` as `data/`), not the ~45 MB full
 day; a day without shards falls back to `archive/<date>.json`; sections use
-`archive/<key>/<date>.json`. `regen_archive.py` backfills shards for past days.
-Sorted by date, a header marks every Zurich day change; sorted by source, each past
-day is its own block. **Archive days are one page each**: the newest 500 rows are
-server-rendered (`ARCHIVE_SSR_LIMIT`); unfiltered, the rest of the day loads when the
-visitor reaches their end (`adoptSsr()`), filtered, the page re-renders from the
-day's shards. Old `archive/<date>-N.html` URLs 301 to the day page
-(`functions/[[path]].js`); `regen_archive.py --all` deletes them from R2.
+`archive/<key>/<date>.json`. Sorted by date, a header marks every Zurich day change;
+sorted by source, each past day is its own block. Scroll reaches back
+`ARCHIVE_DAYS` (7): `archive/index.json` lists only those days, and an R2 lifecycle
+rule deletes `archive/` objects 9 days after their last upload. The news day files
+are written by the clustering job only (`write_feed(day_files=True)`); reduce skips
+them, since scroll never loads today. **There are no archive pages** (removed to cut
+R2 costs): `/archive` 301s to `/`, `archive/*.html` answers 410
+(`functions/[[path]].js`). `script.js` still carries the old archive-day code paths.
 
 **Canonical host — always `https://www.all.news`.** The apex 301-redirects to
 `www` (a Cloudflare-side rule we can't currently remove), so every absolute URL we
 emit must use `www`: a canonical or `hreflang` pointing at a redirect is a signal
 Google discards outright. `SITE_ORIGIN` in `crawler.py` is the single source for
-generated URLs; `template.html`, `archive.html`, `robots.txt` and `HUB_TEMPLATE`'s
+generated URLs; `template.html`, `robots.txt` and `HUB_TEMPLATE`'s
 `{origin}` cover the rest. **Never hardcode the bare apex.**
 
-**`<html lang>`** defaults to `en` (`write_rendered_html`) — the home feed, archive
-index and archive day pages are English pages listing many languages. Only the
+**`<html lang>`** defaults to `en` (`write_rendered_html`) — the home feed and
+section pages are English pages listing many languages. Only the
 `/news/<country>/<lang>/` landing pages and `/<section>/<lang>/` pages override it,
 with their own language.
 
-**`/archive`, not `/archive.html`.** Cloudflare Pages strips `.html` from static
-assets and 308s, so the `.html` form costs a hop and makes the served page's
-canonical circular. Internal links, the canonical and the sitemap all use `/archive`.
-(Archive *day* pages keep `.html` — they come from R2 via `functions/[[path]].js`,
-which doesn't strip anything, and answer 200 directly.)
+**R2 Class A ops (writes, lists) are the cost to watch** — the free tier is 1M a
+month and an hourly run is ~450 of them. rclone runs with `RCLONE_FAST_LIST` (one
+listing per call, not one per directory) and `RCLONE_CHECKSUM` (unchanged files are
+skipped without a modtime-touching CopyObject). Every file written per run is a PUT
+per run: think twice before adding per-run outputs, and keep state small (a file
+over 200 MB goes multipart, ~40 PUTs). Crawl state lives in `state/` in R2, which
+`functions/[[path]].js` does not serve. Check the split with the GraphQL
+`r2OperationsAdaptiveGroups` dataset (by `actionType`).
 
-**Deduplication:** `archive/seen.json` stores every URL ever crawled. `archive/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added if their `published` date is today (Swiss local time) and their URL has never been seen before. **Live feeds are a rolling 24 hours** (#43): `crawled.json`, the shards, `index.html`, landing pages and section feeds carry over every article crawled in the last 24 hours (`load_window()`/`window_start()`), so they never empty at midnight; their rows show relative times ("3 h ago", `fmt_ago()`/`fmtAgo()`, #48). Archive days stay Zurich calendar days: `archive/<date>.json` is the window's slice crawled that day (`crawl_day()`). A cached `Last-Modified` older than 7 days is not sent (`stale_validator()`): some servers keep a months-old one on fresh content and answer 304 forever. A date-only stamp (local midnight, e.g. `00:00+08:00`) counts on the source's own calendar day, else outlets east of Zurich always land on "yesterday".
+**Deduplication:** `state/seen.json.gz` stores the URLs crawled in the last `SEEN_DAYS` (30) days, per feed (`news` and every section) and day (`load_seen()`/`add_seen()`/`save_seen()`); the live window's URLs count as seen too. `state/http_cache.json` stores `ETag`/`Last-Modified` headers so unchanged feeds return `NotModified` and are skipped. Articles are only added if their `published` date is today (Swiss local time) and their URL has never been seen before. **Live feeds are a rolling 24 hours** (#43): `crawled.json`, the shards, `index.html`, landing pages and section feeds carry over every article crawled in the last 24 hours (`load_window()`/`window_start()`), so they never empty at midnight; their rows show relative times ("3 h ago", `fmt_ago()`/`fmtAgo()`, #48). Archive days stay Zurich calendar days: `archive/<date>.json` is the window's slice crawled that day (`crawl_day()`). A cached `Last-Modified` older than 7 days is not sent (`stale_validator()`): some servers keep a months-old one on fresh content and answer 304 forever. A date-only stamp (local midnight, e.g. `00:00+08:00`) counts on the source's own calendar day, else outlets east of Zurich always land on "yesterday".
 
 **Crawl groups:** `main` (3 sharded GitHub Actions jobs) runs everything except the
 `vpn` group, which runs behind a Swiss WireGuard VPN: CH Media papers plus
@@ -135,16 +138,14 @@ which doesn't strip anything, and answer 200 directly.)
 shard.
 
 **Sitemap:** `write_sitemap()` emits `<lastmod>` on every URL (the crawl timestamp
-for the hourly pages, the day itself for settled archive days) — the only hint here
-Google acts on; `changefreq`/`priority` are ignored. Each archive day is one URL:
-Search Console showed the old pages 2+ as "crawled – currently not indexed".
+for the hourly pages) — the only hint here Google acts on; `changefreq`/`priority`
+are ignored.
 
 **IndexNow:** after the R2 upload the workflow runs `crawler.py --indexnow`
 (`ping_indexnow()`), which pings `api.indexnow.org` (shared with Bing, Yandex, Naver,
 Seznam, Yep) with the sitemap URLs that changed: new URLs at once, hourly pages at
 most every 6 hours (`INDEXNOW_EVERY`; the protocol asks not to resubmit a URL many
-times a day), past archive days once more after they end, static pages once. State
-is `archive/indexnow.json` in R2. The key is public by design: `INDEXNOW_KEY` must
+times a day), static pages once. State is `state/indexnow.json` in R2. The key is public by design: `INDEXNOW_KEY` must
 match the `<key>.txt` file in the repo root.
 
 **Programmatic landing pages:** `write_landing_pages()` writes one server-rendered
@@ -169,7 +170,7 @@ country** (visitors filter by language and outlet). `SECTION_SOURCES` lists
 section-only outlets (with inline `lang`/`country`, never in the news feed);
 `SECTION_CROSSLIST` adds existing news sources whose whole feed is on-topic.
 `sections_of()` maps a source to its feeds ("news" by default). `write_sections()`
-gives every section its own seen-set (`archive/seen-<key>.json`), so a URL can be
+gives every section its own seen-set (its key in `state/seen.json.gz`), so a URL can be
 in both news and a section; it writes `<key>/feed.json` (last 24 hours), `<key>/index.html`
 (SSR) and `archive/<key>/<date>.json` (durable record — no section archive pages
 yet). The news feed, country shards and landing pages only take "news" sources.
@@ -184,7 +185,7 @@ English copy). Each section's pages form an hreflang cluster with `/<section>/` 
 x-default, and a row of language links (`section_lang_nav()`, native names from
 `LANG_NAMES`, mirrored from `script.js`) sits under the heading of the section page
 and every language page. Thin pages backfill to `LANG_FILL` rows from the last
-`LANG_FILL_DAYS` days (state `archive/section-langs.json`, pulled from R2 each run);
+`LANG_FILL_DAYS` days (state `state/section-langs.json`, pulled from R2 each run);
 a page still under `LANG_MIN_ROWS` is `noindex` and left out of the sitemap and the
 hreflang cluster until it fills up. `script.js` resolves the slug (`SECTION_LANG`)
 and pins the language without persisting it, like the landing pages. The worker
@@ -198,8 +199,8 @@ and pins the language without persisting it, like the landing pages. The worker
 
 Groups live-feed articles about the same story into one row per *event*, within
 one country + language over the 24-hour window. Runs as the `clustering` job after
-`reduce` (so the feed is never delayed) and rewrites `crawled.json`, the country
-shards and today's archive files via `crawler.write_feed()`. Unlike the crawler it
+`reduce` (so the feed is never delayed) and rewrites `crawled.json` and the country
+shards, and writes today's archive day files, via `crawler.write_feed()`. Unlike the crawler it
 needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-clustering.txt`).
 
 - **Embeddings:** EmbeddingGemma-300m (ONNX, `onnx-community/embeddinggemma-300m-ONNX`,
@@ -270,17 +271,17 @@ run) shards skip fetching and reduce seeds it.
 
 ## Static site (`index.html`, `script.js`, `styles.css`)
 
-Single-page app. `script.js` fetches `crawled.json` (or `archive/YYYY-MM-DD.json` when `?day=YYYY-MM-DD` is in the URL) and renders the article list client-side. `archive.html` fetches `archive/index.json` and lists all archived dates as links.
+Single-page app. `script.js` fetches `crawled.json` and renders the article list client-side.
 
 **Sections in the client:** `script.js` detects `/<section>/` (`SECTION`), loads
-`/<section>/feed.json` (single-file, like archive days), hides the Countries filter
+`/<section>/feed.json` (single-file), hides the Countries filter
 group, and stores filters under `allnews.<section>.*`. A first visit
 seeds the language filter from the browser languages (relaxed to all if empty).
 On `/<section>/<lang>/` the path pins the language instead (`SECTION_LANG`).
 
 **Menu** lists "Browse by country & language" (`/news/`) first, then the sections,
-then Archive (`/archive`) last, plus Settings (current entry marked by `script.js`;
-Archive on archive day pages). The filter panel has Countries, Languages and Medias.
+plus Settings (current entry marked by `script.js`). The filter panel has Countries,
+Languages and Medias.
 
 **Settings** (`settings.html`, `/settings`): UI language (automatic / any of ours)
 in `allnews.uilang`, theme (dark default / light / system) in
@@ -292,7 +293,7 @@ tiny inline `<head>` script that sets `data-theme` / `data-density` /
 before first paint, and adds `i18n-wait` when the page will be translated;
 `styles.css` holds the light palette (`:root[data-theme="light"]`), the compact
 overrides, the hidden-descriptions rules and the `i18n-wait` rules. Keep that inline script identical in
-`template.html`, `archive.html`, `HUB_TEMPLATE` and the static pages.
+`template.html`, `HUB_TEMPLATE` and the static pages.
 
 **UI language** (#53): menus, buttons, footer, dialogs, dates and relative times
 come in every language we carry (55 UI languages: our 54 content languages, with
@@ -323,12 +324,12 @@ Consent Mode defaults (denied in EEA/UK/CH until the CMP grants consent); the CM
 itself is Google's, configured in AdSense → Privacy & messaging. `site.js` makes
 the footer "Cookie settings" link reopen it (falls back to `/cookies#manage`).
 
-**Filter state lives in web storage, never the URL.** The durable filters — excluded sources, selected countries, selected languages — are persisted in **localStorage** under `allnews.*` keys (`STORE_EXCLUDE`/`STORE_COUNTRY`/`STORE_LANG`) and read back at module init by `script.js`; there are no `?exclude=`/`?country=`/`?lang=`/`?q=` params. Because localStorage is per-origin, the same filter automatically applies on the home feed, every archive day page and every open tab, so archive-day links are plain paths (`persistFilters()` writes the selection; landing pages are pinned by their path and skip it). **Search (`STORE_QUERY`) is deliberately session-only — it uses `sessionStorage`**, so it survives a reload but is forgotten between visits rather than greeting a returning visitor with a stale query. The only remaining query param is a legacy `?day=` → `/archive/<day>.html` redirect for old inbound links; the `#hash` still deep-links individual articles.
+**Filter state lives in web storage, never the URL.** The durable filters — excluded sources, selected countries, selected languages — are persisted in **localStorage** under `allnews.*` keys (`STORE_EXCLUDE`/`STORE_COUNTRY`/`STORE_LANG`) and read back at module init by `script.js`; there are no `?exclude=`/`?country=`/`?lang=`/`?q=` params. Because localStorage is per-origin, the same filter automatically applies on the home feed, every landing/section page and every open tab (`persistFilters()` writes the selection; landing pages are pinned by their path and skip it). **Search (`STORE_QUERY`) is deliberately session-only — it uses `sessionStorage`**, so it survives a reload but is forgotten between visits rather than greeting a returning visitor with a stale query. The only remaining query param is a legacy `?day=` → `/archive/<day>.html` redirect (now 410); the `#hash` still deep-links individual articles.
 
 `SOURCE_COLORS` is defined in `crawler.py` and generated into `colors.js` (loaded by `script.js`). It must have an entry for every source name used in `crawler.py` — missing entries fall back to `#888`.
 
 The article list is server-rendered at crawl time by `write_rendered_html()` — the home
 feed ships its newest `SSR_LIMIT` (120) rows in the HTML and `script.js` lazy-loads the
-rest, archive day pages and landing pages ship their full slice. Bots get real headlines
+rest; landing and section pages ship their newest `SSR_LIMIT` too. Bots get real headlines
 without executing JS. Live pages head each older day like `script.js` does
 (`<li class="day-sep">`), so hydration doesn't shift the rows.

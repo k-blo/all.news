@@ -11,8 +11,7 @@ concurrency:
   group: crawl
   cancel-in-progress: false
 
-# R2 remote ("R2:") for rclone, configured from secrets. rclone `copy` is used
-# everywhere (never `sync`) so existing archive days in R2 are never deleted.
+# R2 remote ("R2:") for rclone, from secrets.
 env:
   RCLONE_CONFIG_R2_TYPE: s3
   RCLONE_CONFIG_R2_PROVIDER: Cloudflare
@@ -23,6 +22,9 @@ env:
   # Object-scoped R2 tokens can't create buckets; without this rclone tries to
   # verify/create the bucket on first write and gets AccessDenied.
   RCLONE_CONFIG_R2_NO_CHECK_BUCKET: "true"
+  # fewer Class A ops (lists, puts)
+  RCLONE_FAST_LIST: "true"
+  RCLONE_CHECKSUM: "true"
   R2_BUCKET: ${{ secrets.R2_BUCKET }}
 
 jobs:
@@ -42,7 +44,7 @@ jobs:
         run: curl -fsSL https://rclone.org/install.sh | sudo bash
       - name: Pull HTTP cache + description state from R2
         run: |
-          mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
+          rclone copy "R2:$R2_BUCKET/state/http_cache.json" state/ || true
           rclone copy "R2:$R2_BUCKET/state/describe.json" state/ || true
       - name: Crawl (main shard ${{ matrix.shard }}/3)
         run: python3 crawler.py --group main --shard ${{ matrix.shard }} --of 3 --out partial-main-${{ matrix.shard }}.json
@@ -63,7 +65,7 @@ jobs:
         run: curl -fsSL https://rclone.org/install.sh | sudo bash
       - name: Pull HTTP cache + description state from R2
         run: |
-          mkdir -p archive && rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
+          rclone copy "R2:$R2_BUCKET/state/http_cache.json" state/ || true
           rclone copy "R2:$R2_BUCKET/state/describe.json" state/ || true
       - name: Connect VPN
         run: |
@@ -101,18 +103,14 @@ jobs:
         run: |
           mkdir -p archive
           rclone copy "R2:$R2_BUCKET/crawled.json" . || true
-          rclone copy "R2:$R2_BUCKET/archive/seen.json" archive/ || true
-          rclone copy "R2:$R2_BUCKET/archive/http_cache.json" archive/ || true
           rclone copy "R2:$R2_BUCKET/archive/index.json" archive/ || true
-          rclone copy "R2:$R2_BUCKET/archive/indexnow.json" archive/ || true
-          # URLs already in the feed or tried for a description
-          rclone copy "R2:$R2_BUCKET/state/describe.json" state/ || true
-          # backfill for thin section language pages
-          rclone copy "R2:$R2_BUCKET/archive/section-langs.json" archive/ || true
-          # topic sections: today's feed + seen-set (so reruns append, never re-add)
+          # crawl state (not served)
+          for f in seen.json.gz http_cache.json indexnow.json describe.json section-langs.json; do
+            rclone copy "R2:$R2_BUCKET/state/$f" state/ || true
+          done
+          # section feeds, so reruns append
           for s in space business finance tech gaming yachting logistics luxury aviation auto energy cyber biotech watches rail ai science; do
             rclone copy "R2:$R2_BUCKET/$s/feed.json" "$s/" || true
-            rclone copy "R2:$R2_BUCKET/archive/seen-$s.json" archive/ || true
           done
       - uses: actions/download-artifact@v4
         with:
@@ -142,22 +140,16 @@ jobs:
           for s in space business finance tech gaming yachting logistics luxury aviation auto energy cyber biotech watches rail ai science; do
             rclone copy "$s" "R2:$R2_BUCKET/$s" -v
           done
-          # today's archive pages + JSON + state files (copy = never deletes old days)
+          # index + section days; clustering writes news
           rclone copy archive "R2:$R2_BUCKET/archive" -v
-          rclone copy state/describe.json "R2:$R2_BUCKET/state/" -v
+          rclone copy state "R2:$R2_BUCKET/state" -v
       - name: Ping IndexNow
         # After the upload, so engines fetch fresh pages.
         run: |
           if ls partials/*.json >/dev/null 2>&1; then
             python3 crawler.py --indexnow || true
-            rclone copy archive/indexnow.json "R2:$R2_BUCKET/archive/" -v || true
+            rclone copy state/indexnow.json "R2:$R2_BUCKET/state/" -v || true
           fi
-      - name: Verify R2 contents
-        run: |
-          echo "Total objects in bucket: $(rclone ls "R2:$R2_BUCKET" | wc -l)"
-          echo "--- root files ---"; rclone lsl "R2:$R2_BUCKET" --max-depth 1
-          echo "--- today's archive objects (by filename) ---"
-          rclone lsf "R2:$R2_BUCKET/archive" | grep "^$(TZ=Europe/Zurich date +%F)" | head || true
 
   # ---- Clustering (#58): group the live feed into stories ----
   # Runs after reduce, so the feed is never delayed.
@@ -200,11 +192,11 @@ jobs:
       - name: Cluster the feed
         run: python3 clustering.py
         env:
-          CLUSTERING_BUDGET: "420"  # embed seconds; crawl runs every 30 min
+          CLUSTERING_BUDGET: "420"  # embed seconds; crawl runs hourly
       - name: Upload to R2
         run: |
           rclone copy crawled.json "R2:$R2_BUCKET/" -v
           rclone sync data "R2:$R2_BUCKET/data" -v
-          # only today's day file + shards exist locally
+          # today's day file + shards (infinite scroll)
           rclone copy archive "R2:$R2_BUCKET/archive" -v
           rclone copy state/embeddings.npz "R2:$R2_BUCKET/state/" -v

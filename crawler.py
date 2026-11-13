@@ -23,7 +23,7 @@ import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from itertools import zip_longest
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html import escape, unescape
 from html.entities import html5 as HTML5_ENTITIES
@@ -34,12 +34,15 @@ ZURICH = ZoneInfo("Europe/Zurich")
 # Canonical origin for every absolute URL we emit (canonical, og:url, hreflang,
 # sitemap). Must be the host that actually serves 200s: the apex 301s to www, and
 # a canonical/hreflang pointing at a redirect is a signal Google discards. Keep
-# this in sync with the absolute URLs hardcoded in template.html and archive.html.
+# this in sync with the absolute URLs hardcoded in template.html.
 SITE_ORIGIN = "https://www.all.news"
-ARCHIVE_DIR = "archive"
-SEEN_FILE = os.path.join(ARCHIVE_DIR, "seen.json")
+ARCHIVE_DIR = "archive"   # day files for infinite scroll (public)
+STATE_DIR = "state"       # crawl state (R2, not served)
+ARCHIVE_DAYS = 7          # past days infinite scroll reaches
+SEEN_FILE = os.path.join(STATE_DIR, "seen.json.gz")
+SEEN_DAYS = 30            # dedup memory per feed
 INDEX_FILE = os.path.join(ARCHIVE_DIR, "index.json")
-HTTP_CACHE_FILE = os.path.join(ARCHIVE_DIR, "http_cache.json")
+HTTP_CACHE_FILE = os.path.join(STATE_DIR, "http_cache.json")
 # Per-country shards of today's feed (data/<cc>.json) + data/manifest.json, so the
 # site downloads only the countries a visitor filters to instead of the whole world.
 DATA_DIR = "data"
@@ -4520,7 +4523,7 @@ def clip(text, n):
 
 # ---- Descriptions for articles without one (#58) ---------------------------
 # Meta descriptions for new articles; see CLAUDE.md.
-DESCRIBE_STATE = os.path.join("state", "describe.json")  # known URLs, robots rules
+DESCRIBE_STATE = os.path.join(STATE_DIR, "describe.json")  # known URLs, robots rules
 DESCRIBE_BUDGET = float(os.environ.get("DESCRIBE_BUDGET", "120"))  # seconds per shard
 DESCRIBE_KEEP = 48 * 3600   # forget tried URLs after two days
 ROBOTS_TTL = 24 * 3600      # refetch robots.txt daily
@@ -4834,16 +4837,40 @@ def is_today(s):
     return dt.astimezone(ZURICH).date() == today
 
 
-def load_seen(path=SEEN_FILE):
-    """All article URLs ever crawled — persists across days to block re-adds."""
-    try:
-        with open(path, encoding="utf-8") as f:
-            return set(json.load(f))
-    except (FileNotFoundError, json.JSONDecodeError):
-        return set()
+# {feed: {day: [urls]}}, last SEEN_DAYS days.
+_seen = None
+
+
+def load_seen(feed="news"):
+    """URLs crawled for `feed` in the last SEEN_DAYS days."""
+    global _seen
+    if _seen is None:
+        try:
+            with gzip.open(SEEN_FILE, "rt", encoding="utf-8") as f:
+                _seen = json.load(f)
+        except (OSError, EOFError, json.JSONDecodeError):
+            _seen = {}
+    return {u for urls in _seen.get(feed, {}).values() for u in urls}
+
+
+def add_seen(feed, day, urls):
+    days = _seen.setdefault(feed, {})
+    days[day] = sorted(set(days.get(day, [])) | set(urls))
+
+
+def save_seen(today):
+    """Drop days past SEEN_DAYS, write the file."""
+    cut = (date.fromisoformat(today) - timedelta(days=SEEN_DAYS)).isoformat()
+    for days in _seen.values():
+        for d in [d for d in days if d < cut]:
+            del days[d]
+    os.makedirs(STATE_DIR, exist_ok=True)
+    with gzip.open(SEEN_FILE, "wt", encoding="utf-8") as f:
+        json.dump(_seen, f, ensure_ascii=False, separators=(",", ":"))
 
 
 def write_json(path, obj):
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
 
@@ -5538,19 +5565,6 @@ def localize(html, ui):
     return _I18N_TAG.sub(attrs, html)
 
 
-EN_MONTHS = ["", "January", "February", "March", "April", "May", "June",
-             "July", "August", "September", "October", "November", "December"]
-
-
-def fmt_day_en(date_iso):
-    """'2026-08-08' -> '8 August 2026' (English, for SEO meta tags)."""
-    try:
-        y, m, d = date_iso.split("-")
-        return f"{int(d)} {EN_MONTHS[int(m)]} {y}"
-    except (ValueError, IndexError):
-        return date_iso
-
-
 # Action icons next to each row on hover (mirror OPEN_SVG / LINK_SVG in script.js).
 OPEN_SVG = '<svg width="18" height="18"><use href="#ico-arrow"/></svg>'
 LINK_SVG = '<svg width="18" height="18"><use href="#ico-link"/></svg>'
@@ -5646,26 +5660,6 @@ def render_article_html(article, now=None, ui="en"):
     )
 
 
-def render_older_dates(dates, ui="en"):
-    """The most recent days as date rows, then a link to the full archive."""
-    chev = ('<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" '
-            'stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>')
-    arrow = ('<svg class="chev" viewBox="0 0 24 24" width="22" height="22" fill="none" '
-             'stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>')
-    rows = [
-        f'      <a class="day-row" href="/archive/{d}.html">'
-        f'<span data-date="{d}">{fmt_date(d, ui)}</span>{chev}</a>'
-        for d in dates
-    ]
-    rows.append(
-        # /archive, not /archive.html: Pages strips the extension and 308s, so the
-        # .html form costs every visitor and crawler an extra hop.
-        '      <a class="day-row day-row-all" href="/archive">'
-        f'<span data-i18n="full_archive">{escape(t(ui, "full_archive"))}</span>{arrow}</a>'
-    )
-    return "\n".join(rows)
-
-
 def write_colors_js():
     pairs = ",\n  ".join(f'"{k}": "{v}"' for k, v in SOURCE_COLORS.items())
     with open("colors.js", "w", encoding="utf-8") as f:
@@ -5677,7 +5671,6 @@ AD_EVERY = 25  # insert an ad slot after every N articles (mirrors AD_EVERY in s
 # paint; script.js lazy-renders the rest from crawled.json on scroll.
 # Keep this >= a couple of screens of rows for SEO.
 SSR_LIMIT = 120
-ARCHIVE_SSR_LIMIT = 500  # archive day page; rest scrolls in
 
 
 _templates = {}
@@ -5692,16 +5685,14 @@ def page_template(ui):
 
 
 def write_rendered_html(articles, dest_path, *, title, description, canonical,
-                        heading, older_dates=(), limit=None, head_links="",
-                        html_lang="en", archive_link=True, relative_to=None,
+                        heading, limit=None, head_links="",
+                        html_lang="en", relative_to=None,
                         lang_nav="", robots="index, follow", ui=None):
     """Render a page. `limit` caps the server-rendered rows (script.js loads the
     rest); the badge counts them all. `head_links` adds <head> links (hreflang);
     `html_lang` sets <html lang>; landing pages pass their own language, everything
-    else (home, archive index, archive days) is an English page listing many
-    languages, so the default is "en". `archive_link=False` drops the bottom
-    date/archive nav (sections have no archive pages). `relative_to` (the crawl
-    time) shows row times as "3 h ago" and heads each older day, as script.js
+    else (home, sections) is an English page listing many languages, so the
+    default is "en". `relative_to` (the crawl time) shows row times as "3 h ago" and heads each older day, as script.js
     does. `lang_nav` links a section's language pages; `robots` sets the
     robots meta (thin pages: noindex). `heading` is HTML. `ui` serves the page
     in that UI language (<html data-ui>); None = English, which site.js
@@ -5735,47 +5726,21 @@ def write_rendered_html(articles, dest_path, *, title, description, canonical,
             .replace("<!-- COUNT -->", str(total))
             .replace("<!-- DATE_HEADING -->", heading)
             .replace("<!-- LANG_NAV -->", lang_nav)
-            .replace("<!-- OLDER_DATES -->", render_older_dates(older_dates, lang) if archive_link else "")
             .replace("<!-- ARTICLES -->", items))
     with open(dest_path, "w", encoding="utf-8") as f:
         f.write(html)
-
-
-def archive_page_path(date):
-    return os.path.join(ARCHIVE_DIR, f"{date}.html")
-
-
-def archive_page_url(date):
-    return f"/archive/{date}.html"
-
-
-def write_archive_day(date, articles):
-    """One page per day: the newest rows server-rendered."""
-    # script.js scrolls in the rest (and older days).
-    day_en = fmt_day_en(date)
-    write_rendered_html(
-        articles, archive_page_path(date),
-        title=f"News Archive for {day_en} – all.news",
-        description=f"All world news headlines collected on {day_en} by all.news.",
-        canonical=f"{SITE_ORIGIN}{archive_page_url(date)}",
-        heading=f'<span data-date="{date}">{fmt_date(date)}</span>',
-        older_dates=[], limit=ARCHIVE_SSR_LIMIT)
 
 
 # Static pages (legal, about) — listed without lastmod.
 STATIC_PAGES = ["/about", "/privacy", "/cookies", "/terms", "/imprint"]
 
 
-def write_sitemap(dates, landing_urls=(), now_iso=None, section_urls=()):
-    """Write sitemap.xml. Archive days list page 1 only: Google left deeper pages
-    "crawled – currently not indexed", so listing them only spent crawl budget.
-    `lastmod` is the crawl timestamp for the hourly pages and the day itself for
-    settled archive days; it is the one hint here Google actually acts on
+def write_sitemap(landing_urls=(), now_iso=None, section_urls=()):
+    """Write sitemap.xml. `lastmod` is the crawl timestamp for the hourly
+    pages; it is the one hint here Google actually acts on
     (changefreq/priority are ignored), and it is what tells it this feed is worth
     recrawling."""
-    now = datetime.now(ZURICH)
-    today = now.date().isoformat()
-    fresh = now_iso or now.isoformat(timespec="seconds")
+    fresh = now_iso or datetime.now(ZURICH).isoformat(timespec="seconds")
 
     def url(loc, lastmod, changefreq, priority):
         mod = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
@@ -5785,9 +5750,6 @@ def write_sitemap(dates, landing_urls=(), now_iso=None, section_urls=()):
     urls = [
         url("/", fresh, "hourly", "1.0"),
         url("/news/", fresh, "daily", "0.6"),
-        # /archive.html is served at /archive (Pages strips the extension); list the
-        # URL that answers 200 so the sitemap doesn't hand Google a redirect.
-        url("/archive", fresh, "daily", "0.5"),
     ]
     for u in section_urls:
         urls.append(url(u, fresh, "hourly", "0.8"))
@@ -5795,11 +5757,6 @@ def write_sitemap(dates, landing_urls=(), now_iso=None, section_urls=()):
         urls.append(url(u, fresh, "hourly", "0.6"))
     for u in STATIC_PAGES:
         urls.append(url(u, None, "yearly", "0.2"))
-    for d in dates:
-        # Today's day page is still being appended to; past days are settled.
-        current = d == today
-        urls.append(url(archive_page_url(d), fresh if current else d,
-                        "hourly" if current else "never", "0.3"))
     with open("sitemap.xml", "w", encoding="utf-8") as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
@@ -5809,7 +5766,7 @@ def write_sitemap(dates, landing_urls=(), now_iso=None, section_urls=()):
 
 # IndexNow: Bing, Yandex, Naver, Seznam, Yep.
 INDEXNOW_KEY = "f76a74626807ca2987fab930cb69e9b4"  # public: /<key>.txt
-INDEXNOW_STATE = os.path.join(ARCHIVE_DIR, "indexnow.json")  # url -> last ping
+INDEXNOW_STATE = os.path.join(STATE_DIR, "indexnow.json")  # url -> last ping
 INDEXNOW_EVERY = timedelta(hours=6)  # hourly pages: ping 4x a day
 
 
@@ -6189,7 +6146,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       </nav>
       <div class="footer-meta">
         <span>© Copyright 2026 all.news</span>
-        <span><a href="/" data-i18n="home">Home</a> · <a href="/archive" data-i18n="archive">Archive</a></span>
+        <span><a href="/" data-i18n="home">Home</a></span>
       </div>
     </footer>
   </div>
@@ -6254,7 +6211,7 @@ def write_landing_pages(articles, today, now):
             description=strings["d"].format(c=cname),
             canonical=f"{SITE_ORIGIN}{url}",
             heading=f"{escape(phrase)} · {fmt_date(today, ui_code(lang, cc))}",
-            older_dates=[], limit=SSR_LIMIT, head_links=alts, html_lang=lang,
+            limit=SSR_LIMIT, head_links=alts, html_lang=lang,
             relative_to=now, ui=ui_code(lang, cc))
     write_news_hub(langs_by_country)
     return landing_urls
@@ -6500,7 +6457,7 @@ SECTION_LANG_MIN = 3   # outlets a language page needs
 LANG_FILL = 30         # backfill thin pages to this many rows
 LANG_FILL_DAYS = 14    # oldest backfilled row
 LANG_MIN_ROWS = 10     # fewer: noindex, not in the sitemap
-SECTION_LANG_STATE = os.path.join(ARCHIVE_DIR, "section-langs.json")  # "<key>/<lang>" -> rows
+SECTION_LANG_STATE = os.path.join(STATE_DIR, "section-langs.json")  # "<key>/<lang>" -> rows
 SLIM_KEYS = ("source", "title", "url", "published", "lang", "country")
 
 # Topic phrase per language: title, heading, description.
@@ -6827,7 +6784,7 @@ def write_section_langs(key, result, langs, kept, now):
             pages[lang], os.path.join(key, lang_slug(lang), "index.html"),
             title=title, description=desc, canonical=f"{SITE_ORIGIN}{url}",
             heading=escape(heading), limit=SSR_LIMIT, head_links=alts if listed else "",
-            html_lang=lang, archive_link=False, relative_to=now,
+            html_lang=lang, relative_to=now,
             lang_nav=section_lang_nav(key, langs, lang, ui_code(lang)),
             robots="index, follow" if listed else "noindex, follow", ui=ui_code(lang))
     return indexed, state
@@ -6835,10 +6792,6 @@ def write_section_langs(key, result, langs, kept, now):
 
 def section_feed_path(key):
     return os.path.join(key, "feed.json")
-
-
-def section_seen_path(key):
-    return os.path.join(ARCHIVE_DIR, f"seen-{key}.json")
 
 
 def write_sections(rows, now, today, since):
@@ -6857,7 +6810,7 @@ def write_sections(rows, now, today, since):
     state = {}
     for key, meta in SECTIONS.items():
         existing = load_window(section_feed_path(key), since)
-        seen = load_seen(section_seen_path(key))
+        seen = load_seen(key) | {a["url"] for a in existing}
         sec_rows = [a for a in rows if key in sections_of(a["source"])]
         new, batch = select_new(sec_rows, existing, seen, now_iso, today)
         result = sorted(existing + new, key=lambda a: a.get("published", ""), reverse=True)
@@ -6870,7 +6823,7 @@ def write_sections(rows, now, today, since):
         write_json(os.path.join(ARCHIVE_DIR, key, f"{today}.json"),
                    {"generated": now_iso, "date": today, "section": key,
                     "count": len(day), "articles": day})
-        write_json(section_seen_path(key), sorted(seen | batch))
+        add_seen(key, today, batch)
         name = meta["name"]
         langs = page_langs.get(key, [])
         indexed, lang_state = write_section_langs(key, result, langs, kept, now)
@@ -6883,7 +6836,7 @@ def write_sections(rows, now, today, since):
             canonical=f"{SITE_ORIGIN}/{key}/",
             heading=(f'<span data-i18n="{key}">{escape(t("en", key))}</span> · '
                      f'<span data-i18n="last_24h">{t("en", "last_24h")}</span>'),
-            limit=SSR_LIMIT, archive_link=False, relative_to=now,
+            limit=SSR_LIMIT, relative_to=now,
             head_links=section_alternates(key, indexed), lang_nav=section_lang_nav(key, langs))
         urls.append(f"/{key}/")
         urls += [section_lang_url(key, l) for l in indexed]
@@ -6893,19 +6846,20 @@ def write_sections(rows, now, today, since):
     return urls
 
 
-def write_feed(result, now_iso, today, since_iso):
-    """Live feed, today's slice, country shards."""
-    # clustering.py rewrites these too.
-    os.makedirs(ARCHIVE_DIR, exist_ok=True)
+def write_feed(result, now_iso, today, since_iso, day_files=True):
+    """Live feed, country shards, and today's day files."""
+    # Reduce skips day files: clustering.py writes them.
     day = [a for a in result if crawl_day(a) == today]  # the archive day
     write_json("crawled.json",                             # live feed (all countries)
                {"generated": now_iso, "since": since_iso,
                 "count": len(result), "articles": result})
-    write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"),  # this date's crawl
-               {"generated": now_iso, "date": today, "count": len(day), "articles": day})
-    write_country_shards(day, now_iso, today,              # archive/<date>/<cc>.json
-                         os.path.join(ARCHIVE_DIR, today))
     write_country_shards(result, now_iso, today)           # data/<cc>.json + manifest
+    if day_files:
+        os.makedirs(ARCHIVE_DIR, exist_ok=True)
+        write_json(os.path.join(ARCHIVE_DIR, f"{today}.json"),  # this date's crawl
+                   {"generated": now_iso, "date": today, "count": len(day), "articles": day})
+        write_country_shards(day, now_iso, today,          # archive/<date>/<cc>.json
+                             os.path.join(ARCHIVE_DIR, today))
     return day
 
 
@@ -6920,7 +6874,7 @@ def write_outputs(articles):
     # Carry the last 24 hours over (keep their first-seen crawl time), so a rerun
     # appends rather than overwrites and the feed never empties at midnight.
     window = load_window("crawled.json", since)
-    seen = load_seen()
+    seen = load_seen() | {a["url"] for a in window}
     # The news feed takes only news sources; sections are written separately.
     news_rows = [a for a in articles if "news" in sections_of(a["source"])]
     new, batch = select_new(news_rows, window, seen, now_iso, today)
@@ -6931,37 +6885,33 @@ def write_outputs(articles):
     # resolves (prio) are unaffected.
     result = sorted(window + new,
                     key=lambda a: a.get("published", ""), reverse=True)
-    day = write_feed(result, now_iso, today, since.isoformat())
-    write_json(SEEN_FILE, sorted(seen | batch))
-    # Date list = prior dates (from index.json, which the workflow pulls from R2)
-    # plus today. Derived from index.json rather than listing the archive dir, so
-    # the reduce step works without every day's files present locally.
+    day = write_feed(result, now_iso, today, since.isoformat(), day_files=False)
+    add_seen("news", today, batch)
+    # Scroll days: last ARCHIVE_DAYS, plus today.
     try:
         with open(INDEX_FILE, encoding="utf-8") as f:
             prior_dates = json.load(f).get("dates", [])
     except (FileNotFoundError, json.JSONDecodeError):
-        prior_dates = archive_dates()  # local fallback (full runs)
-    all_dates = sorted(set(prior_dates) | {today}, reverse=True)
+        prior_dates = archive_dates()  # local fallback
+    oldest = (date.fromisoformat(today) - timedelta(days=ARCHIVE_DAYS)).isoformat()
+    all_dates = sorted({d for d in prior_dates if d >= oldest} | {today}, reverse=True)
     write_json(HTTP_CACHE_FILE, _http_cache)
 
     write_colors_js()
-    # Bottom-of-feed nav shows the 5 most recent days, then a "Full archive" link.
-    older = [d for d in all_dates if d != today][:5]
     write_rendered_html(
         result, "index.html",
         title="World News From Every Source in One Place – all.news",
         description="Read world news from hundreds of sources on one page. all.news aggregates global headlines and updates hourly — filter by source, language and more.",
         canonical=f"{SITE_ORIGIN}/",
         heading=f'<span data-i18n="last_24h">{t("en", "last_24h")}</span>',
-        older_dates=older,
         limit=SSR_LIMIT,  # index head only; script.js lazy-loads the rest
         relative_to=now,
     )
-    write_archive_day(today, day)  # archive/<date>.html
     write_json(INDEX_FILE, {"dates": all_dates})
     landing_urls = write_landing_pages(result, today, now)  # /news/<country>/<lang>/ + hub
     section_urls = write_sections(articles, now, today, since)  # /space/, /tech/ …
-    write_sitemap(all_dates, landing_urls, now_iso, section_urls)
+    write_sitemap(landing_urls, now_iso, section_urls)
+    save_seen(today)
     print(f"wrote crawled.json: +{len(new)} new, {len(result)} in the last 24 hours, "
           f"{len(day)} today ({today})", file=sys.stderr)
     return result

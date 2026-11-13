@@ -1,7 +1,7 @@
-// Cloudflare Pages Function: serve the generated HTML + data (index, archive
+// Cloudflare Pages Function: serve the generated HTML + data (index, landing
 // pages, JSON, sitemap) from the R2 bucket, and everything else (script.js,
-// styles.css, colors.js, favicon, robots.txt, archive.html shell…) from the
-// static assets. Edge-cached so R2 read ops stay minimal.
+// styles.css, colors.js, favicon, robots.txt…) from the static assets.
+// Edge-cached so R2 read ops stay minimal.
 //
 // Requires an R2 binding named BUCKET on the Pages project.
 
@@ -41,18 +41,10 @@ function servesFromR2(key) {
     || SECTIONS.some((s) => key.startsWith(`${s}/`));
 }
 
-// A past archive day's *content* is settled, but its *layout* isn't: regen_archive.py
-// re-renders old days whenever template.html changes. So past days get a day-long
-// TTL rather than `immutable` — long enough that they cost almost nothing to serve,
-// short enough that a re-render reaches everyone without a cache purge. (They were
-// immutable once; a re-render then left pages frozen in the old layout for a year.)
-// Everything else is short-lived: the live feed, today's archive files, and
-// `archive/index.json`, which gains a date every day — an immutable index froze the
-// visitor's archive list at whatever day they first loaded it, so recent days went
-// missing from the list even though their pages existed.
+// Past day files cache a day; rest briefly.
 function cacheControl(key) {
   if (key === "sitemap.xml") return "public, max-age=3600";
-  const day = key.match(/^archive\/(\d{4}-\d{2}-\d{2})/); // archive/2026-08-02[-3].html|json
+  const day = key.match(/^archive\/(\d{4}-\d{2}-\d{2})/); // archive/2026-08-02.json, archive/2026-08-02/ch.json
   const past = day && day[1] < zurichToday();
   return past ? "public, max-age=86400" : "public, max-age=300";
 }
@@ -64,6 +56,13 @@ export async function onRequest(context) {
   }
 
   const url = new URL(request.url);
+  // Archive pages removed; day JSON stays.
+  if (url.pathname === "/archive" || url.pathname === "/archive.html") {
+    return Response.redirect(url.origin + "/", 301);
+  }
+  if (/^\/archive\/.*\.html$/.test(url.pathname)) {
+    return new Response("Gone", { status: 410 });
+  }
   // Landing pages are directory URLs (…/news/ch/de/). Enforce the trailing slash so
   // there's a single canonical form; the last segment carries no file extension.
   if (/^\/news\/.+[^/]$/.test(url.pathname) && !url.pathname.slice(1).includes(".")) {
@@ -83,12 +82,7 @@ export async function onRequest(context) {
   if (cached) return cached;
 
   const obj = await env.BUCKET.get(key);
-  if (!obj) {
-    // Old archive page N: one page per day now.
-    const day = key.match(/^archive\/(\d{4}-\d{2}-\d{2})-\d+\.html$/);
-    if (day) return Response.redirect(`${url.origin}/archive/${day[1]}.html`, 301);
-    return new Response("Not found", { status: 404 });
-  }
+  if (!obj) return new Response("Not found", { status: 404 });
 
   const headers = new Headers();
   obj.writeHttpMetadata(headers); // content-type from stored metadata, if any
