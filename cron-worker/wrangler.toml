@@ -1,4 +1,4 @@
-name = "all-news-cron"
+name = "allnews-cron"
 main = "src/worker.js"
 compatibility_date = "2024-11-01"
 
