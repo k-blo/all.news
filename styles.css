@@ -601,19 +601,8 @@ a { color: inherit; }
   font-size: 0.7em;
   font-weight: 600;
 }
-.menu-secondary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 22px;
-  margin-top: 40px;
-}
-.menu-secondary a {
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--muted);
-  text-decoration: none;
-}
-.menu-secondary a:hover { color: var(--hover); }
+/* Settings first, then a separator. */
+.menu-sep { border: 0; border-top: 2px solid var(--line); margin: 6px 0 10px; }
 
 /* ---------- Static pages (legal, about, settings) ---------- */
 .prose { max-width: 68ch; padding: 56px 0 8px; line-height: 1.6; font-size: 16px; }
@@ -839,7 +828,6 @@ a { color: inherit; }
 :root[data-density="compact"] .choice[aria-pressed="true"]::after,
 :root[data-density="compact"] .section-link[aria-current="page"] > span::after { font-weight: 400; }
 :root[data-density="compact"] .choice { font-size: 17px; font-weight: 400; }
-:root[data-density="compact"] .menu-secondary a { font-size: 15px; font-weight: 400; }
 :root[data-density="compact"] .prose { font-size: 15px; }
 :root[data-density="compact"] .prose h1 { font-weight: 500; }
 :root[data-density="compact"] .prose h2,

@@ -30,7 +30,7 @@
     "logo": "https://www.all.news/favicon-512.png"
   }
   </script>
-  <link rel="stylesheet" href="/styles.css?v=13">
+  <link rel="stylesheet" href="/styles.css?v=14">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N83C506R65"></script>
   <script>
@@ -169,6 +169,10 @@
     <!-- ===== Menu view: sections ===== -->
     <!-- script.js marks the current section (aria-current). -->
     <section id="moreView" class="view" hidden>
+      <nav class="section-nav" aria-label="More" data-i18n-aria="more">
+        <a class="section-link" href="/settings" data-section="settings"><span data-i18n="settings">Settings</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
+      </nav>
+      <hr class="menu-sep">
       <nav class="section-nav" aria-label="Sections" data-i18n-aria="sections">
         <a class="section-link" href="/news/" data-section="browse"><span data-i18n="browse">Browse by country &amp; language</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/" data-section="news"><span data-i18n="news">News</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
@@ -189,9 +193,6 @@
         <a class="section-link" href="/rail/" data-section="rail"><span data-i18n="rail">Rail</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/ai/" data-section="ai"><span data-i18n="ai">AI</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
         <a class="section-link" href="/science/" data-section="science"><span data-i18n="science">Science</span><svg class="chev" width="22" height="22" aria-hidden="true"><use href="#ico-chev-right"/></svg></a>
-      </nav>
-      <nav class="menu-secondary" aria-label="More" data-i18n-aria="more">
-        <a href="/settings" data-i18n="settings">Settings</a>
       </nav>
     </section>
 
