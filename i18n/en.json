@@ -100,7 +100,23 @@
    "one": "also in {n} other language",
    "other": "also in {n} other languages"
   },
-  "elsewhere": "Elsewhere"
+  "elsewhere": "Elsewhere",
+  "most_reported": "Most reported",
+  "top_intro": "Stories covered by the most outlets, updated hourly.",
+  "last_7d": "Last 7 days",
+  "outlet_count": {
+   "one": "{n} outlet",
+   "other": "{n} outlets"
+  },
+  "country_count": {
+   "one": "{n} country",
+   "other": "{n} countries"
+  },
+  "edition_count": {
+   "one": "{n} edition",
+   "other": "{n} editions"
+  },
+  "no_stories": "No stories yet."
  },
  "dates": [
   "{d} January {y}",

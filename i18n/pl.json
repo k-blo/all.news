@@ -106,7 +106,29 @@
    "many": "także w {n} innych językach",
    "other": "także w {n} innych językach"
   },
-  "elsewhere": "Gdzie indziej"
+  "elsewhere": "Gdzie indziej",
+  "most_reported": "Najszerzej opisywane",
+  "top_intro": "Tematy opisywane przez najwięcej mediów, aktualizowane co godzinę.",
+  "last_7d": "Ostatnie 7 dni",
+  "outlet_count": {
+   "one": "{n} medium",
+   "few": "{n} media",
+   "many": "{n} mediów",
+   "other": "{n} medium"
+  },
+  "country_count": {
+   "one": "{n} kraj",
+   "few": "{n} kraje",
+   "many": "{n} krajów",
+   "other": "{n} kraju"
+  },
+  "edition_count": {
+   "one": "{n} wydanie",
+   "few": "{n} wydania",
+   "many": "{n} wydań",
+   "other": "{n} wydania"
+  },
+  "no_stories": "Brak tematów."
  },
  "dates": [
   "{d} stycznia {y}",

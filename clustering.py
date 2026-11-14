@@ -8,7 +8,7 @@ import os
 import re
 import time
 from collections import Counter, defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import numpy as np
 import onnxruntime as ort
@@ -30,6 +30,14 @@ MAX_SX = 12                   # other editions listed per event
 BONUS, BONUS_FROM = 0.08, 0.72  # shared rare word lifts near-misses
 RARE_DF = 5                   # rare: in at most 5 articles
 MIN_SOURCES, MAX_SHARE = 2, 0.5
+
+# Most reported (/top/): stories ranked by outlets.
+TOP_MEMORY = os.path.join("state", "top.npz")  # 7-day stories
+TOP_DAYS = 7
+TOP_MATCH = 0.85              # same story in an earlier run
+TOP_ALL, TOP_CC = 20, 10      # list lengths shown
+TOP_KEEP = 5                  # outlets to be remembered
+TOP_MAX_ED = 40               # editions listed per story
 
 # Horoscopes, roundups, tickers: never grouped.
 HARD = re.compile(
@@ -239,6 +247,145 @@ def tag_stories(events):
     return stories
 
 
+def utc(s):
+    """ISO time as UTC, seconds."""
+    dt = datetime.fromisoformat(s.replace("Z", "+00:00"))
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc).isoformat(timespec="seconds")
+
+
+def edition_of(evs):
+    """[cc, lang, articles, headline, url, live]."""
+    big = max(evs, key=lambda e: len(e["rows"]))
+    lead = next((a for a in big["rows"] if not NOISY.search(a["title"])), big["rows"][0])
+    return [*big["key"], sum(len(e["rows"]) for e in evs), lead["title"], lead["url"], 1]
+
+
+def story_of(evs, now):
+    """Outlets, articles, editions of one story."""
+    src, n, per_src, by_ed = defaultdict(set), Counter(), Counter(), defaultdict(list)
+    for e in evs:
+        by_ed[e["key"]].append(e)
+        for a in e["rows"]:
+            src[e["key"][0]].add(a["source"])
+            n[e["key"][0]] += 1
+            per_src[a["source"]] += 1
+    times = [min(utc(a["published"]), now) for e in evs for a in e["rows"]]
+    eds = sorted((edition_of(v) for v in by_ed.values()), key=lambda x: -x[2])
+    return {"v": centroid([e["c"] for e in evs]), "src": {cc: sorted(s) for cc, s in src.items()},
+            "n": dict(n), "ed": eds[:TOP_MAX_ED], "ne": len(eds), "t0": min(times),
+            "t1": max(times), "dots": [s for s, _ in per_src.most_common(5)]}
+
+
+def outlets(s, cc=None):
+    return len(s["src"].get(cc, ())) if cc else sum(map(len, s["src"].values()))
+
+
+def load_memory():
+    """Stories of the last 7 days."""
+    try:
+        with np.load(TOP_MEMORY) as z:
+            meta = json.loads(bytes(z["meta"]).decode())
+            for m, v in zip(meta, z["vecs"]):
+                m["v"] = v.astype(np.float32)
+            return meta
+    except (FileNotFoundError, KeyError, ValueError, OSError):
+        return []
+
+
+def save_memory(mem):
+    os.makedirs(os.path.dirname(TOP_MEMORY), exist_ok=True)
+    meta = [{k: v for k, v in m.items() if k != "v"} for m in mem]
+    vecs = np.stack([m["v"] for m in mem]).astype(np.float16) if mem else np.zeros((0, 1), np.float16)
+    np.savez(TOP_MEMORY, meta=np.frombuffer(json.dumps(meta, ensure_ascii=False).encode(), np.uint8),
+             vecs=vecs)
+
+
+def merge_into(m, s):
+    """Add a run's story to its memory."""
+    for cc, srcs in s["src"].items():
+        m["src"][cc] = sorted(set(m["src"].get(cc, ())) | set(srcs))
+    for cc, k in s["n"].items():
+        m["n"][cc] = max(m["n"].get(cc, 0), k)
+    eds = {(e[0], e[1]): e for e in m["ed"]}
+    for e in s["ed"]:
+        old = eds.get((e[0], e[1]))
+        if not old or not old[5] or e[2] > old[2]:
+            eds[(e[0], e[1])] = e
+    m["ed"] = sorted(eds.values(), key=lambda e: -e[2])[:TOP_MAX_ED]
+    m["ne"] = max(m["ne"], s["ne"], len(eds))
+    m["t0"], m["t1"] = min(m["t0"], s["t0"]), max(m["t1"], s["t1"])
+    m["v"], m["dots"] = s["v"], s["dots"]
+
+
+def remember(stories, now):
+    """7-day memory, updated with this run."""
+    cut = (datetime.fromisoformat(now) - timedelta(days=TOP_DAYS)).isoformat(timespec="seconds")
+    mem = [m for m in load_memory() if m["t1"] >= cut]
+    for m in mem:  # live: in this run's feed
+        m["ed"] = [e[:5] + [0] for e in m["ed"]]
+    shown = {i for ids in top_ids(stories).values() for i in ids}
+    new = [s for i, s in enumerate(stories) if i in shown or outlets(s) >= TOP_KEEP]
+    old = len(mem)
+    if old and new:
+        sim = np.stack([s["v"] for s in new]) @ np.stack([m["v"] for m in mem]).T
+        best = sim.argmax(1)
+    for i, s in enumerate(new):
+        if old and sim[i, best[i]] >= TOP_MATCH:
+            merge_into(mem[best[i]], s)
+        else:
+            mem.append({**s, "src": dict(s["src"]), "n": dict(s["n"]), "ed": list(s["ed"])})
+    return mem
+
+
+def top_ids(items):
+    """Scope -> story indices, most outlets first."""
+    lists = {"all": sorted(range(len(items)), key=lambda i: (
+        -outlets(items[i]), -len(items[i]["src"]), -sum(items[i]["n"].values())))[:TOP_ALL]}
+    by_cc = defaultdict(list)
+    for i, s in enumerate(items):
+        for cc in s["src"]:
+            if outlets(s, cc) >= 2:
+                by_cc[cc].append(i)
+    for cc, ids in by_cc.items():
+        lists[cc] = sorted(ids, key=lambda i: (-outlets(items[i], cc), -items[i]["n"][cc]))[:TOP_CC]
+    return lists
+
+
+def rank(items):
+    """Stories, lists per scope, landing paths."""
+    lists = top_ids(items)
+    table, sid, paths = [], {}, {}
+    for ids in lists.values():
+        for i in ids:
+            if i not in sid:
+                sid[i] = len(table)
+                s = items[i]
+                table.append({"cc": sorted(s["src"]), "t1": s["t1"], "dots": s["dots"],
+                              "ed": s["ed"], "ne": s["ne"]})
+                for e in s["ed"]:
+                    paths[f"{e[0]}/{e[1]}"] = crawler.landing_url(e[0], e[1])
+    out = {}
+    for scope, ids in lists.items():
+        cc = None if scope == "all" else scope
+        out[scope] = [[sid[i], outlets(items[i], cc),
+                       items[i]["n"][cc] if cc else sum(items[i]["n"].values())] for i in ids]
+    return {"stories": table, "lists": out, "paths": paths}
+
+
+def most_reported(events, stories, gen):
+    """Write /top/: 24 hours and 7 days."""
+    now = utc(gen)
+    linked = {i for s in stories for i in s}
+    groups = stories + [[i] for i in range(len(events)) if i not in linked]
+    day = [story_of([events[i] for i in g], now) for g in groups]
+    mem = remember(day, now)
+    crawler.write_top({"24h": rank(day), "7d": rank(mem)}, gen)
+    save_memory(mem)
+    return len(mem)
+
+
 def main():
     with open("crawled.json", encoding="utf-8") as f:
         feed = json.load(f)
@@ -268,10 +415,11 @@ def main():
     gen = feed["generated"]
     today = datetime.fromisoformat(gen).astimezone(crawler.ZURICH).date().isoformat()
     crawler.write_feed(rows, gen, today, feed.get("since", gen))
+    remembered = most_reported(events, stories, gen)
     save_cache({a["url"]: cache[a["url"]] for a in rows if a["url"] in cache})
     print(f"clustering: embedded {done}/{len(todo)} new, {len(events)} events, "
           f"{tagged}/{len(rows)} articles grouped, {len(stories)} cross-edition stories "
-          f"({sum(map(len, stories))} events)")
+          f"({sum(map(len, stories))} events), {remembered} stories in 7-day memory")
 
 
 if __name__ == "__main__":

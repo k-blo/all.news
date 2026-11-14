@@ -91,7 +91,14 @@
   "hide": "隱藏",
   "also_countries": "另有{n}個國家報導",
   "also_languages": "另有{n}種語言報導",
-  "elsewhere": "其他地區"
+  "elsewhere": "其他地區",
+  "most_reported": "報導最多",
+  "top_intro": "報導媒體最多的新聞，每小時更新。",
+  "last_7d": "過去7天",
+  "outlet_count": "{n}家媒體",
+  "country_count": "{n}個國家",
+  "edition_count": "{n}個版本",
+  "no_stories": "暫無新聞。"
  },
  "dates": [
   "{y}年1月{d}日",

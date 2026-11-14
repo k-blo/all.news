@@ -91,7 +91,14 @@
   "hide": "Ẩn",
   "also_countries": "cũng có ở {n} quốc gia khác",
   "also_languages": "cũng có bằng {n} ngôn ngữ khác",
-  "elsewhere": "Nơi khác"
+  "elsewhere": "Nơi khác",
+  "most_reported": "Được đưa tin nhiều nhất",
+  "top_intro": "Tin được nhiều nguồn tin đưa nhất, cập nhật mỗi giờ.",
+  "last_7d": "7 ngày qua",
+  "outlet_count": "{n} nguồn tin",
+  "country_count": "{n} quốc gia",
+  "edition_count": "{n} phiên bản",
+  "no_stories": "Chưa có tin nào."
  },
  "dates": [
   "{d} tháng 1, {y}",

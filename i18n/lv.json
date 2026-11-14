@@ -103,7 +103,26 @@
    "one": "vēl {n} valodā",
    "other": "vēl {n} valodās"
   },
-  "elsewhere": "Citur"
+  "elsewhere": "Citur",
+  "most_reported": "Visvairāk atspoguļotās",
+  "top_intro": "Ziņas, ko atspoguļojuši visvairāk mediju, atjaunotas katru stundu.",
+  "last_7d": "Pēdējās 7 dienas",
+  "outlet_count": {
+   "zero": "{n} mediju",
+   "one": "{n} medijs",
+   "other": "{n} mediji"
+  },
+  "country_count": {
+   "zero": "{n} valstu",
+   "one": "{n} valsts",
+   "other": "{n} valstis"
+  },
+  "edition_count": {
+   "zero": "{n} izdevumu",
+   "one": "{n} izdevums",
+   "other": "{n} izdevumi"
+  },
+  "no_stories": "Ziņu vēl nav."
  },
  "dates": [
   "{y}. gada {d}. janvāris",

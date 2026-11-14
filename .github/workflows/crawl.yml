@@ -189,6 +189,7 @@ jobs:
           rclone copy "R2:$R2_BUCKET/crawled.json" .
           # state/ is not served publicly (functions/[[path]].js)
           rclone copy "R2:$R2_BUCKET/state/embeddings.npz" state/ || true
+          rclone copy "R2:$R2_BUCKET/state/top.npz" state/ || true
       - name: Cluster the feed
         run: python3 clustering.py
         env:
@@ -200,3 +201,6 @@ jobs:
           # today's day file + shards (infinite scroll)
           rclone copy archive "R2:$R2_BUCKET/archive" -v
           rclone copy state/embeddings.npz "R2:$R2_BUCKET/state/" -v
+          # most reported: page, 24h/7d lists, memory
+          rclone copy top "R2:$R2_BUCKET/top" -v
+          rclone copy state/top.npz "R2:$R2_BUCKET/state/" -v

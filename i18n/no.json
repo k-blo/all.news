@@ -100,7 +100,20 @@
    "one": "også på {n} annet språk",
    "other": "også på {n} andre språk"
   },
-  "elsewhere": "Andre steder"
+  "elsewhere": "Andre steder",
+  "most_reported": "Mest omtalt",
+  "top_intro": "Saker dekket av flest medier, oppdatert hver time.",
+  "last_7d": "Siste 7 dager",
+  "outlet_count": {
+   "one": "{n} medium",
+   "other": "{n} medier"
+  },
+  "country_count": "{n} land",
+  "edition_count": {
+   "one": "{n} utgave",
+   "other": "{n} utgaver"
+  },
+  "no_stories": "Ingen saker ennå."
  },
  "dates": [
   "{d}. januar {y}",

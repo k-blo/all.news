@@ -91,7 +91,14 @@
   "hide": "Cuddio",
   "also_countries": "hefyd mewn {n} gwlad arall",
   "also_languages": "hefyd mewn {n} iaith arall",
-  "elsewhere": "Mewn mannau eraill"
+  "elsewhere": "Mewn mannau eraill",
+  "most_reported": "Y mwyaf o sylw",
+  "top_intro": "Straeon gyda'r sylw mwyaf yn y cyfryngau, bob awr.",
+  "last_7d": "Y 7 diwrnod diwethaf",
+  "outlet_count": "{n} cyfrwng",
+  "country_count": "{n} gwlad",
+  "edition_count": "{n} argraffiad",
+  "no_stories": "Dim straeon eto."
  },
  "dates": [
   "{d} Ionawr {y}",

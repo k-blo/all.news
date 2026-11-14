@@ -94,7 +94,20 @@
   "hide": "लपवा",
   "also_countries": "आणखी {n} देशांतही",
   "also_languages": "आणखी {n} भाषांतही",
-  "elsewhere": "इतरत्र"
+  "elsewhere": "इतरत्र",
+  "most_reported": "सर्वाधिक वृत्तांकन",
+  "top_intro": "सर्वाधिक माध्यमांनी दिलेल्या बातम्या, दर तासाला अपडेट.",
+  "last_7d": "गेले 7 दिवस",
+  "outlet_count": {
+   "one": "{n} माध्यम",
+   "other": "{n} माध्यमे"
+  },
+  "country_count": "{n} देश",
+  "edition_count": {
+   "one": "{n} आवृत्ती",
+   "other": "{n} आवृत्त्या"
+  },
+  "no_stories": "अद्याप बातम्या नाहीत."
  },
  "dates": [
   "{d} जानेवारी, {y}",

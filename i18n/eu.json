@@ -94,7 +94,14 @@
   "hide": "Ezkutatu",
   "also_countries": "beste {n} herrialdetan ere",
   "also_languages": "beste {n} hizkuntzatan ere",
-  "elsewhere": "Beste nonbait"
+  "elsewhere": "Beste nonbait",
+  "most_reported": "Gehien jorratuak",
+  "top_intro": "Hedabide gehienek jorratutako albisteak, orduro eguneratuak.",
+  "last_7d": "Azken 7 egunak",
+  "outlet_count": "{n} hedabide",
+  "country_count": "{n} herrialde",
+  "edition_count": "{n} edizio",
+  "no_stories": "Oraindik ez dago albisterik."
  },
  "dates": [
   "{y}(e)ko urtarrilaren {d}(a)",

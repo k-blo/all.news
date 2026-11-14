@@ -91,7 +91,14 @@
   "hide": "Sembunyikan",
   "also_countries": "juga di {n} negara lain",
   "also_languages": "juga dalam {n} bahasa lain",
-  "elsewhere": "Di tempat lain"
+  "elsewhere": "Di tempat lain",
+  "most_reported": "Paling banyak diberitakan",
+  "top_intro": "Berita yang diliput paling banyak media, diperbarui setiap jam.",
+  "last_7d": "7 hari terakhir",
+  "outlet_count": "{n} media",
+  "country_count": "{n} negara",
+  "edition_count": "{n} edisi",
+  "no_stories": "Belum ada berita."
  },
  "dates": [
   "{d} Januari {y}",

@@ -103,7 +103,26 @@
    "few": "i na još {n} jezika",
    "other": "i na još {n} jezika"
   },
-  "elsewhere": "Drugdje"
+  "elsewhere": "Drugdje",
+  "most_reported": "Najpraćenije",
+  "top_intro": "Vijesti o kojima je izvijestilo najviše medija, ažurirano svaki sat.",
+  "last_7d": "Posljednjih 7 dana",
+  "outlet_count": {
+   "one": "{n} medij",
+   "few": "{n} medija",
+   "other": "{n} medija"
+  },
+  "country_count": {
+   "one": "{n} zemlja",
+   "few": "{n} zemlje",
+   "other": "{n} zemalja"
+  },
+  "edition_count": {
+   "one": "{n} izdanje",
+   "few": "{n} izdanja",
+   "other": "{n} izdanja"
+  },
+  "no_stories": "Još nema vijesti."
  },
  "dates": [
   "{d}. siječnja {y}.",

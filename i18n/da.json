@@ -100,7 +100,23 @@
    "one": "også på {n} andet sprog",
    "other": "også på {n} andre sprog"
   },
-  "elsewhere": "Andre steder"
+  "elsewhere": "Andre steder",
+  "most_reported": "Mest omtalt",
+  "top_intro": "Historier dækket af flest medier, opdateret hver time.",
+  "last_7d": "Seneste 7 dage",
+  "outlet_count": {
+   "one": "{n} medie",
+   "other": "{n} medier"
+  },
+  "country_count": {
+   "one": "{n} land",
+   "other": "{n} lande"
+  },
+  "edition_count": {
+   "one": "{n} udgave",
+   "other": "{n} udgaver"
+  },
+  "no_stories": "Ingen historier endnu."
  },
  "dates": [
   "{d}. januar {y}",

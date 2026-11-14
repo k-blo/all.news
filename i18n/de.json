@@ -97,7 +97,23 @@
    "one": "auch in {n} weiteren Sprache",
    "other": "auch in {n} weiteren Sprachen"
   },
-  "elsewhere": "Anderswo"
+  "elsewhere": "Anderswo",
+  "most_reported": "Meistberichtet",
+  "top_intro": "Themen, über die die meisten Medien berichten, stündlich aktualisiert.",
+  "last_7d": "Letzte 7 Tage",
+  "outlet_count": {
+   "one": "{n} Medium",
+   "other": "{n} Medien"
+  },
+  "country_count": {
+   "one": "{n} Land",
+   "other": "{n} Länder"
+  },
+  "edition_count": {
+   "one": "{n} Ausgabe",
+   "other": "{n} Ausgaben"
+  },
+  "no_stories": "Noch keine Themen."
  },
  "dates": [
   "{d}. Januar {y}",

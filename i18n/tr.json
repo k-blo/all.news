@@ -91,7 +91,14 @@
   "hide": "Gizle",
   "also_countries": "{n} başka ülkede de",
   "also_languages": "{n} başka dilde de",
-  "elsewhere": "Başka yerlerde"
+  "elsewhere": "Başka yerlerde",
+  "most_reported": "En çok haber yapılanlar",
+  "top_intro": "En çok medyanın haber yaptığı konular, saatte bir güncellenir.",
+  "last_7d": "Son 7 gün",
+  "outlet_count": "{n} medya kuruluşu",
+  "country_count": "{n} ülke",
+  "edition_count": "{n} baskı",
+  "no_stories": "Henüz haber yok."
  },
  "dates": [
   "{d} Ocak {y}",

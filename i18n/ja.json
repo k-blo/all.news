@@ -91,7 +91,14 @@
   "hide": "非表示",
   "also_countries": "他に{n}か国でも",
   "also_languages": "他に{n}言語でも",
-  "elsewhere": "他の国・言語"
+  "elsewhere": "他の国・言語",
+  "most_reported": "最も報じられたニュース",
+  "top_intro": "最も多くのメディアが報じたニュース。毎時更新。",
+  "last_7d": "過去7日間",
+  "outlet_count": "{n}媒体",
+  "country_count": "{n}か国",
+  "edition_count": "{n}版",
+  "no_stories": "まだニュースはありません。"
  },
  "dates": [
   "{y}年1月{d}日",

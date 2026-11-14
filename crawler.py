@@ -5588,16 +5588,6 @@ def portal_home(url):
         pass
     return url
 
-_SLUG_TRANSLIT = str.maketrans({"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"})
-
-
-def slugify(s):
-    """Lowercase ASCII slug (mirrors slugify() in script.js)."""
-    s = (s or "").lower().translate(_SLUG_TRANSLIT)
-    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
-    return s[:60].strip("-")
-
-
 def djb2(s):
     """djb2 hash, 32-bit (mirrors djb2() in script.js)."""
     h = 5381
@@ -5750,6 +5740,7 @@ def write_sitemap(landing_urls=(), now_iso=None, section_urls=()):
     urls = [
         url("/", fresh, "hourly", "1.0"),
         url("/news/", fresh, "daily", "0.6"),
+        url(f"/{TOP_DIR}/", fresh, "hourly", "0.8"),
     ]
     for u in section_urls:
         urls.append(url(u, fresh, "hourly", "0.8"))
@@ -5880,8 +5871,8 @@ LANG_NAMES = {
 
 
 def slugify(s):
-    """Lowercase ASCII slug: 'United Kingdom' -> 'united-kingdom'. Mirrors slugify() in script.js."""
-    s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode("ascii")
+    """'United Kingdom' -> 'united-kingdom' (mirrors script.js)."""
+    s = re.sub("[\u0300-\u036f]", "", unicodedata.normalize("NFKD", s or ""))
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
 
 
@@ -6080,11 +6071,11 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{title}</title>
   <meta name="description" content="{desc}">
-  <link rel="canonical" href="{origin}/news/">
+  <link rel="canonical" href="{origin}{path}">
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="{origin}/news/">
+  <meta property="og:url" content="{origin}{path}">
   <meta property="og:image" content="{origin}/og-image.png">
   <meta name="robots" content="index, follow">
   <!-- Theme first; hide text awaiting translation. -->
@@ -6092,7 +6083,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/favicon-192.png">
-  <link rel="stylesheet" href="/styles.css?v=14">
+  <link rel="stylesheet" href="/styles.css?v=15">
   <style>
     .hub-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}}
     .hub-card h2{{font-size:1rem;margin:0 0 .4rem}}
@@ -6124,15 +6115,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       <a href="/" class="brand-link">all.news</a>
     </header>
     <main class="view">
-      <div class="hero">
-        <h1 class="wordmark" data-i18n="browse">Browse by country &amp; language</h1>
-      </div>
-      <p class="hub-intro" data-i18n="hub_intro">Read world news by country and language. Each page collects
-      today's headlines from that country's sources, updated hourly. Pick a country
-      and a language to start.</p>
-      <div class="hub-grid">
-{cards}
-      </div>
+{main}
     </main>
     <footer class="site-footer">
       <nav class="footer-links" aria-label="Legal" data-i18n-aria="legal">
@@ -6150,10 +6133,19 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       </div>
     </footer>
   </div>
-  <script src="/site.js?v=6"></script>
+  <script src="/site.js?v=7"></script>{scripts}
 </body>
 </html>
 """
+HUB_MAIN = """      <div class="hero">
+        <h1 class="wordmark" data-i18n="browse">Browse by country &amp; language</h1>
+      </div>
+      <p class="hub-intro" data-i18n="hub_intro">Read world news by country and language. Each page collects
+      today's headlines from that country's sources, updated hourly. Pick a country
+      and a language to start.</p>
+      <div class="hub-grid">
+{cards}
+      </div>"""
 
 
 def write_news_hub(langs_by_country):
@@ -6174,12 +6166,84 @@ def write_news_hub(langs_by_country):
     title = "Browse News by Country and Language – all.news"
     desc = ("Browse world news by country and language. all.news aggregates headlines "
             "from hundreds of sources across every country we cover, updated hourly.")
-    html = localize(HUB_TEMPLATE.format(origin=SITE_ORIGIN, title=escape(title),
-                                        desc=escape(desc), cards="\n".join(cards)), "en")
+    main = HUB_MAIN.format(cards="\n".join(cards))
+    html = localize(HUB_TEMPLATE.format(origin=SITE_ORIGIN, path=f"/{LANDING_DIR}/", title=escape(title),
+                                        desc=escape(desc), main=main, scripts=""), "en")
     os.makedirs(LANDING_DIR, exist_ok=True)
     with open(os.path.join(LANDING_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
 
+
+# Most reported (/top/), written by clustering.py.
+TOP_DIR = "top"
+TOP_MAIN = """      <div class="hero">
+        <h1 class="wordmark" data-i18n="most_reported">Most reported</h1>
+      </div>
+      <p class="hub-intro" data-i18n="top_intro">Stories covered by the most outlets, updated hourly.</p>
+      <div class="top-controls">
+        <div class="choice-row" id="topWin">
+          <button type="button" class="choice" data-win="24h" aria-pressed="true" data-i18n="last_24h">Last 24 hours</button>
+          <button type="button" class="choice" data-win="7d" aria-pressed="false" data-i18n="last_7d">Last 7 days</button>
+        </div>
+        <select id="topCc" class="lang-select" aria-label="Countries" data-i18n-aria="countries">
+          <option value="" data-i18n="all_countries">All countries</option>
+        </select>
+      </div>
+      <ol class="top-list" id="topList">
+{items}
+      </ol>"""
+EXT_LINK = ' target="_blank" rel="noopener nofollow ugc"'
+TOP_KICKER = re.compile(r"^[A-ZÄÖÜ]{4,}\s*[-–:]\s*")  # "VIDEO: " etc.
+
+
+def plural_en(n, one, many):
+    return f"{n} {one if n == 1 else many}"
+
+
+def top_edition(e):
+    """One edition link (mirrors edition() in top.js)."""
+    cc, lang, n, title, url, live = e
+    href = landing_url(cc, lang) + "#" + article_id({"title": title, "url": url}) if live else url
+    return (f'<li><a href="{escape(href)}"{"" if live else EXT_LINK}>'
+            f'<span class="ed-where"><span data-cc="{cc}">{escape(COUNTRY_NAMES.get(cc, cc))}</span> · '
+            f'<span data-lang-name="{lang}">{escape(LANG_EN_NAMES.get(lang, lang))}</span></span>'
+            f'<span class="ed-title" dir="auto">{escape(TOP_KICKER.sub("", title))}</span>'
+            f'<span class="ed-n">{plural_en(n, "article", "articles")}</span></a></li>')
+
+
+def top_item(st, row, rank, now):
+    """One story (mirrors item() in top.js)."""
+    ed = next((e for e in st["ed"] if e[1] == "en"), st["ed"][0])
+    dots = "".join(f'<i style="background:{color_for(s)}" title="{escape(s)}"></i>' for s in st["dots"])
+    return (
+        f'        <li class="top-item"><span class="top-rank">{rank}</span><div class="top-body">'
+        f'<a class="top-title" dir="auto" href="{escape(ed[4])}"{EXT_LINK}>{escape(TOP_KICKER.sub("", ed[3]))}</a>'
+        f'<div class="top-meta"><span class="top-n">{plural_en(row[1], "outlet", "outlets")}</span>'
+        f'<span>{plural_en(len(st["cc"]), "country", "countries")}</span>'
+        f'<time datetime="{escape(st["t1"])}">{escape(fmt_ago(st["t1"], now))}</time>'
+        f'<span class="top-dots" aria-hidden="true">{dots}</span></div>'
+        f'<details class="top-eds"><summary>{plural_en(st["ne"], "edition", "editions")}</summary>'
+        f'<ul>{"".join(top_edition(e) for e in st["ed"])}</ul></details></div></li>')
+
+
+def write_top(windows, generated):
+    """top/<window>.json plus the /top/ page."""
+    os.makedirs(TOP_DIR, exist_ok=True)
+    for win, data in windows.items():
+        with open(os.path.join(TOP_DIR, f"{win}.json"), "w", encoding="utf-8") as f:
+            json.dump({"generated": generated, **data}, f, ensure_ascii=False, separators=(",", ":"))
+    now = datetime.fromisoformat(generated)
+    day = windows["24h"]
+    items = "\n".join(top_item(day["stories"][row[0]], row, i + 1, now)
+                      for i, row in enumerate(day["lists"].get("all", [])))
+    title = "Most Reported News Stories Worldwide – all.news"
+    desc = "The news stories covered by the most outlets worldwide, updated hourly."
+    html = localize(HUB_TEMPLATE.format(
+        origin=SITE_ORIGIN, path=f"/{TOP_DIR}/", title=escape(title), desc=escape(desc),
+        main=TOP_MAIN.format(items=items),
+        scripts='\n  <script src="/colors.js"></script>\n  <script src="/top.js?v=1"></script>'), "en")
+    with open(os.path.join(TOP_DIR, "index.html"), "w", encoding="utf-8") as f:
+        f.write(html)
 
 def write_landing_pages(articles, today, now):
     """One SSR page per (country, language) at /news/<country>/<lang>/, plus the

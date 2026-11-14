@@ -103,7 +103,26 @@
    "few": "și în {n} alte limbi",
    "other": "și în {n} de alte limbi"
   },
-  "elsewhere": "În altă parte"
+  "elsewhere": "În altă parte",
+  "most_reported": "Cele mai mediatizate",
+  "top_intro": "Știrile preluate de cele mai multe publicații, actualizate din oră în oră.",
+  "last_7d": "Ultimele 7 zile",
+  "outlet_count": {
+   "one": "{n} publicație",
+   "few": "{n} publicații",
+   "other": "{n} de publicații"
+  },
+  "country_count": {
+   "one": "{n} țară",
+   "few": "{n} țări",
+   "other": "{n} de țări"
+  },
+  "edition_count": {
+   "one": "{n} ediție",
+   "few": "{n} ediții",
+   "other": "{n} de ediții"
+  },
+  "no_stories": "Încă nu există știri."
  },
  "dates": [
   "{d} ianuarie {y}",

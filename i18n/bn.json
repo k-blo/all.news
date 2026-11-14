@@ -91,7 +91,14 @@
   "hide": "লুকান",
   "also_countries": "আরও {n}টি দেশে",
   "also_languages": "আরও {n}টি ভাষায়",
-  "elsewhere": "অন্যত্র"
+  "elsewhere": "অন্যত্র",
+  "most_reported": "সবচেয়ে বেশি প্রকাশিত",
+  "top_intro": "সবচেয়ে বেশি সংবাদমাধ্যমে প্রকাশিত খবর, প্রতি ঘণ্টায় হালনাগাদ।",
+  "last_7d": "গত 7 দিন",
+  "outlet_count": "{n}টি সংবাদমাধ্যম",
+  "country_count": "{n}টি দেশ",
+  "edition_count": "{n}টি সংস্করণ",
+  "no_stories": "এখনও কোনো খবর নেই।"
  },
  "dates": [
   "{d} জানুয়ারী, {y}",

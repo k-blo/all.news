@@ -94,7 +94,23 @@
   "hide": "Peida",
   "also_countries": "ka {n} muus riigis",
   "also_languages": "ka {n} muus keeles",
-  "elsewhere": "Mujal"
+  "elsewhere": "Mujal",
+  "most_reported": "Enim kajastatud",
+  "top_intro": "Uudised, mida kajastas kõige rohkem väljaandeid, uueneb iga tund.",
+  "last_7d": "Viimased 7 päeva",
+  "outlet_count": {
+   "one": "{n} väljaanne",
+   "other": "{n} väljaannet"
+  },
+  "country_count": {
+   "one": "{n} riik",
+   "other": "{n} riiki"
+  },
+  "edition_count": {
+   "one": "{n} versioon",
+   "other": "{n} versiooni"
+  },
+  "no_stories": "Uudiseid veel pole."
  },
  "dates": [
   "{d}. jaanuar {y}",

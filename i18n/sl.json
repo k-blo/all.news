@@ -106,7 +106,29 @@
    "few": "tudi v {n} drugih jezikih",
    "other": "tudi v {n} drugih jezikih"
   },
-  "elsewhere": "Drugje"
+  "elsewhere": "Drugje",
+  "most_reported": "Najbolj odmevno",
+  "top_intro": "Zgodbe, o katerih poroča največ medijev, posodobljeno vsako uro.",
+  "last_7d": "Zadnjih 7 dni",
+  "outlet_count": {
+   "one": "{n} medij",
+   "two": "{n} medija",
+   "few": "{n} mediji",
+   "other": "{n} medijev"
+  },
+  "country_count": {
+   "one": "{n} država",
+   "two": "{n} državi",
+   "few": "{n} države",
+   "other": "{n} držav"
+  },
+  "edition_count": {
+   "one": "{n} izdaja",
+   "two": "{n} izdaji",
+   "few": "{n} izdaje",
+   "other": "{n} izdaj"
+  },
+  "no_stories": "Zgodb še ni."
  },
  "dates": [
   "{d}. januar {y}",

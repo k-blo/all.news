@@ -103,7 +103,26 @@
    "few": "i na još {n} jezika",
    "other": "i na još {n} jezika"
   },
-  "elsewhere": "Drugde"
+  "elsewhere": "Drugde",
+  "most_reported": "Najpraćenije",
+  "top_intro": "Vesti o kojima je izveštavalo najviše medija, ažurirano svakog sata.",
+  "last_7d": "Poslednjih 7 dana",
+  "outlet_count": {
+   "one": "{n} medij",
+   "few": "{n} medija",
+   "other": "{n} medija"
+  },
+  "country_count": {
+   "one": "{n} zemlja",
+   "few": "{n} zemlje",
+   "other": "{n} zemalja"
+  },
+  "edition_count": {
+   "one": "{n} izdanje",
+   "few": "{n} izdanja",
+   "other": "{n} izdanja"
+  },
+  "no_stories": "Još nema vesti."
  },
  "dates": [
   "{d}. januar {y}.",

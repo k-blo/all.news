@@ -94,7 +94,14 @@
   "hide": "ਲੁਕਾਓ",
   "also_countries": "ਹੋਰ {n} ਦੇਸ਼ਾਂ ਵਿੱਚ ਵੀ",
   "also_languages": "ਹੋਰ {n} ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ ਵੀ",
-  "elsewhere": "ਹੋਰ ਥਾਵਾਂ"
+  "elsewhere": "ਹੋਰ ਥਾਵਾਂ",
+  "most_reported": "ਸਭ ਤੋਂ ਵੱਧ ਕਵਰੇਜ",
+  "top_intro": "ਸਭ ਤੋਂ ਵੱਧ ਮੀਡੀਆ ਵੱਲੋਂ ਦਿੱਤੀਆਂ ਖ਼ਬਰਾਂ, ਹਰ ਘੰਟੇ ਅੱਪਡੇਟ।",
+  "last_7d": "ਪਿਛਲੇ 7 ਦਿਨ",
+  "outlet_count": "{n} ਮੀਡੀਆ",
+  "country_count": "{n} ਦੇਸ਼",
+  "edition_count": "{n} ਸੰਸਕਰਣ",
+  "no_stories": "ਹਾਲੇ ਕੋਈ ਖ਼ਬਰ ਨਹੀਂ।"
  },
  "dates": [
   "{d} ਜਨਵਰੀ {y}",

@@ -91,7 +91,14 @@
   "hide": "Itago",
   "also_countries": "pati sa {n} pang bansa",
   "also_languages": "pati sa {n} pang wika",
-  "elsewhere": "Sa ibang lugar"
+  "elsewhere": "Sa ibang lugar",
+  "most_reported": "Pinakamaraming ulat",
+  "top_intro": "Mga balitang iniulat ng pinakamaraming media, ina-update kada oras.",
+  "last_7d": "Huling 7 araw",
+  "outlet_count": "{n} media",
+  "country_count": "{n} bansa",
+  "edition_count": "{n} edisyon",
+  "no_stories": "Wala pang balita."
  },
  "dates": [
   "Enero {d}, {y}",

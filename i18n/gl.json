@@ -100,7 +100,23 @@
    "one": "tamén en {n} lingua máis",
    "other": "tamén en {n} linguas máis"
   },
-  "elsewhere": "Noutros lugares"
+  "elsewhere": "Noutros lugares",
+  "most_reported": "Máis difundidas",
+  "top_intro": "As novas que cobren máis medios, actualizadas cada hora.",
+  "last_7d": "Últimos 7 días",
+  "outlet_count": {
+   "one": "{n} medio",
+   "other": "{n} medios"
+  },
+  "country_count": {
+   "one": "{n} país",
+   "other": "{n} países"
+  },
+  "edition_count": {
+   "one": "{n} edición",
+   "other": "{n} edicións"
+  },
+  "no_stories": "Aínda non hai novas."
  },
  "dates": [
   "{d} de xaneiro de {y}",

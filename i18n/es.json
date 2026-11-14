@@ -100,7 +100,23 @@
    "one": "también en {n} idioma más",
    "other": "también en {n} idiomas más"
   },
-  "elsewhere": "En otros lugares"
+  "elsewhere": "En otros lugares",
+  "most_reported": "Más difundidas",
+  "top_intro": "Las noticias que cubren más medios, actualizadas cada hora.",
+  "last_7d": "Últimos 7 días",
+  "outlet_count": {
+   "one": "{n} medio",
+   "other": "{n} medios"
+  },
+  "country_count": {
+   "one": "{n} país",
+   "other": "{n} países"
+  },
+  "edition_count": {
+   "one": "{n} edición",
+   "other": "{n} ediciones"
+  },
+  "no_stories": "Aún no hay noticias."
  },
  "dates": [
   "{d} de enero de {y}",

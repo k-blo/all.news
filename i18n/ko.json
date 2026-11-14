@@ -91,7 +91,14 @@
   "hide": "숨기기",
   "also_countries": "다른 {n}개국에서도",
   "also_languages": "다른 {n}개 언어로도",
-  "elsewhere": "다른 곳"
+  "elsewhere": "다른 곳",
+  "most_reported": "가장 많이 보도된 뉴스",
+  "top_intro": "가장 많은 언론사가 보도한 뉴스, 매시간 업데이트.",
+  "last_7d": "최근 7일",
+  "outlet_count": "언론사 {n}곳",
+  "country_count": "{n}개국",
+  "edition_count": "에디션 {n}개",
+  "no_stories": "아직 뉴스가 없습니다."
  },
  "dates": [
   "{y}년 1월 {d}일",

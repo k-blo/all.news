@@ -91,7 +91,14 @@
   "hide": "ซ่อน",
   "also_countries": "รวมถึงอีก {n} ประเทศ",
   "also_languages": "รวมถึงอีก {n} ภาษา",
-  "elsewhere": "ที่อื่น"
+  "elsewhere": "ที่อื่น",
+  "most_reported": "ข่าวที่ถูกรายงานมากที่สุด",
+  "top_intro": "ข่าวที่สำนักข่าวรายงานมากที่สุด อัปเดตทุกชั่วโมง",
+  "last_7d": "7 วันที่ผ่านมา",
+  "outlet_count": "{n} สำนักข่าว",
+  "country_count": "{n} ประเทศ",
+  "edition_count": "{n} ฉบับ",
+  "no_stories": "ยังไม่มีข่าว"
  },
  "dates": [
   "{d} มกราคม {y}",

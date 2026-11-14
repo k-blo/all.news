@@ -91,7 +91,14 @@
   "hide": "Folaigh",
   "also_countries": "i dtíortha eile freisin: {n}",
   "also_languages": "i dteangacha eile freisin: {n}",
-  "elsewhere": "In áiteanna eile"
+  "elsewhere": "In áiteanna eile",
+  "most_reported": "Is mó a tuairiscíodh",
+  "top_intro": "Scéalta a chlúdaigh an líon is mó meán, gach uair.",
+  "last_7d": "Na 7 lá seo caite",
+  "outlet_count": "Meáin: {n}",
+  "country_count": "Tíortha: {n}",
+  "edition_count": "Eagráin: {n}",
+  "no_stories": "Níl scéalta ar bith fós."
  },
  "dates": [
   "{d} Eanáir {y}",

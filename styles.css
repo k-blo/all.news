@@ -653,13 +653,42 @@ a { color: inherit; }
   cursor: pointer;
 }
 
+/* Most reported (/top/). */
+.top-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; margin: 28px 0 8px; }
+.top-list { list-style: none; margin: 0 0 48px; padding: 0; }
+.top-item { display: grid; grid-template-columns: 2.2em 1fr; gap: 0 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.top-rank { font-size: 26px; font-weight: 600; line-height: 1.15; color: var(--dim); text-align: right; font-variant-numeric: tabular-nums; }
+.top-body { min-width: 0; }
+.top-title { font-size: 20px; font-weight: 500; line-height: 1.3; color: var(--fg); text-decoration: none; }
+.top-title:hover { color: var(--hover); }
+.top-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; font-size: 14px; color: var(--muted); }
+.top-n { color: var(--fg); font-weight: 600; }
+.top-dots { display: inline-flex; gap: 3px; }
+.top-dots i { width: 8px; height: 8px; border-radius: 50%; }
+.top-eds { margin-top: 6px; font-size: 14px; }
+.top-eds summary { width: max-content; color: var(--muted); cursor: pointer; }
+.top-eds summary:hover { color: var(--hover); }
+.top-eds ul { list-style: none; margin: 8px 0 0; padding: 0; }
+.top-eds li { border-top: 1px dashed var(--line); }
+.top-eds a { display: grid; grid-template-columns: minmax(9em, 14em) 1fr auto; gap: 12px; padding: 6px 0; font-size: 15px; color: var(--fg); text-decoration: none; }
+.top-eds a:hover .ed-title { color: var(--hover); }
+.ed-where, .ed-n { color: var(--muted); }
+.top-empty { padding: 24px 0; color: var(--muted); }
+@media (max-width: 600px) {
+  .top-eds a { grid-template-columns: 1fr auto; }
+  .ed-where { grid-column: 1 / -1; }
+  .top-title { font-size: 18px; }
+}
+
 /* UI text waits for its translation (site.js). */
 .i18n-wait [data-i18n],
 .i18n-wait [data-date],
 .i18n-wait .day-heading,
 .i18n-wait #list time,
 .i18n-wait .row-act .label,
-.i18n-wait .ad-slot { visibility: hidden; }
+.i18n-wait .ad-slot,
+.i18n-wait .top-meta,
+.i18n-wait .top-eds summary { visibility: hidden; }
 .i18n-wait #search::placeholder { color: transparent; }
 /* RTL UI text: own direction, so end punctuation stays put. */
 :root[data-uidir="rtl"] [data-i18n],
@@ -828,6 +857,8 @@ a { color: inherit; }
 :root[data-density="compact"] .choice[aria-pressed="true"]::after,
 :root[data-density="compact"] .section-link[aria-current="page"] > span::after { font-weight: 400; }
 :root[data-density="compact"] .choice { font-size: 17px; font-weight: 400; }
+:root[data-density="compact"] .top-title { font-size: 17px; font-weight: 400; }
+:root[data-density="compact"] .top-rank { font-weight: 400; }
 :root[data-density="compact"] .prose { font-size: 15px; }
 :root[data-density="compact"] .prose h1 { font-weight: 500; }
 :root[data-density="compact"] .prose h2,

@@ -18,16 +18,7 @@ function portalHome(u) {
 }
 
 // Stable per-article anchor id (mirrors article_id() in crawler.py). Used for
-// "Share" deep-links: https://www.all.news/#<id>
-function slugify(s) {
-  return (s || "")
-    .toLowerCase()
-    .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 60)
-    .replace(/^-+|-+$/g, "");
-}
+// "Share" deep-links: https://www.all.news/#<id>. slugify() is below.
 function djb2(s) {
   let h = 5381;
   for (let i = 0; i < s.length; i++) h = ((h * 33) + s.charCodeAt(i)) >>> 0;

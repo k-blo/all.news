@@ -91,7 +91,14 @@
   "hide": "Elrejtés",
   "also_countries": "{n} további országban is",
   "also_languages": "{n} további nyelven is",
-  "elsewhere": "Máshol"
+  "elsewhere": "Máshol",
+  "most_reported": "Legnagyobb visszhangú",
+  "top_intro": "A legtöbb médium által feldolgozott hírek, óránként frissítve.",
+  "last_7d": "Az elmúlt 7 nap",
+  "outlet_count": "{n} médium",
+  "country_count": "{n} ország",
+  "edition_count": "{n} kiadás",
+  "no_stories": "Még nincsenek hírek."
  },
  "dates": [
   "{y}. január {d}.",

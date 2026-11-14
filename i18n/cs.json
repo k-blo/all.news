@@ -106,7 +106,24 @@
    "many": "také v {n} dalších jazycích",
    "other": "také v {n} dalších jazycích"
   },
-  "elsewhere": "Jinde"
+  "elsewhere": "Jinde",
+  "most_reported": "Nejvíce medializované",
+  "top_intro": "Zprávy, o kterých psalo nejvíce médií, aktualizované každou hodinu.",
+  "last_7d": "Posledních 7 dní",
+  "outlet_count": {
+   "one": "{n} médium",
+   "few": "{n} média",
+   "many": "{n} média",
+   "other": "{n} médií"
+  },
+  "country_count": {
+   "one": "{n} země",
+   "few": "{n} země",
+   "many": "{n} země",
+   "other": "{n} zemí"
+  },
+  "edition_count": "{n} vydání",
+  "no_stories": "Zatím žádné zprávy."
  },
  "dates": [
   "{d}. ledna {y}",

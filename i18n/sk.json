@@ -106,7 +106,29 @@
    "many": "aj v {n} ďalších jazykoch",
    "other": "aj v {n} ďalších jazykoch"
   },
-  "elsewhere": "Inde"
+  "elsewhere": "Inde",
+  "most_reported": "Najviac medializované",
+  "top_intro": "Správy, o ktorých písalo najviac médií, aktualizované každú hodinu.",
+  "last_7d": "Posledných 7 dní",
+  "outlet_count": {
+   "one": "{n} médium",
+   "few": "{n} médiá",
+   "many": "{n} média",
+   "other": "{n} médií"
+  },
+  "country_count": {
+   "one": "{n} krajina",
+   "few": "{n} krajiny",
+   "many": "{n} krajiny",
+   "other": "{n} krajín"
+  },
+  "edition_count": {
+   "one": "{n} vydanie",
+   "few": "{n} vydania",
+   "many": "{n} vydania",
+   "other": "{n} vydaní"
+  },
+  "no_stories": "Zatiaľ žiadne správy."
  },
  "dates": [
   "{d}. januára {y}",

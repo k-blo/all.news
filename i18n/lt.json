@@ -106,7 +106,29 @@
    "many": "dar {n} kalbų",
    "other": "dar {n} kalbų"
   },
-  "elsewhere": "Kitur"
+  "elsewhere": "Kitur",
+  "most_reported": "Plačiausiai aprašytos",
+  "top_intro": "Naujienos, apie kurias rašė daugiausia leidinių, atnaujinama kas valandą.",
+  "last_7d": "Paskutinės 7 dienos",
+  "outlet_count": {
+   "one": "{n} leidinys",
+   "few": "{n} leidiniai",
+   "many": "{n} leidinio",
+   "other": "{n} leidinių"
+  },
+  "country_count": {
+   "one": "{n} šalis",
+   "few": "{n} šalys",
+   "many": "{n} šalies",
+   "other": "{n} šalių"
+  },
+  "edition_count": {
+   "one": "{n} leidimas",
+   "few": "{n} leidimai",
+   "many": "{n} leidimo",
+   "other": "{n} leidimų"
+  },
+  "no_stories": "Naujienų dar nėra."
  },
  "dates": [
   "{y} m. sausio {d} d.",

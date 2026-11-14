@@ -100,7 +100,23 @@
    "one": "även på {n} annat språk",
    "other": "även på {n} andra språk"
   },
-  "elsewhere": "På andra håll"
+  "elsewhere": "På andra håll",
+  "most_reported": "Mest bevakat",
+  "top_intro": "Nyheter som flest medier rapporterar om, uppdateras varje timme.",
+  "last_7d": "Senaste 7 dagarna",
+  "outlet_count": {
+   "one": "{n} medium",
+   "other": "{n} medier"
+  },
+  "country_count": {
+   "one": "{n} land",
+   "other": "{n} länder"
+  },
+  "edition_count": {
+   "one": "{n} utgåva",
+   "other": "{n} utgåvor"
+  },
+  "no_stories": "Inga nyheter än."
  },
  "dates": [
   "{d} januari {y}",

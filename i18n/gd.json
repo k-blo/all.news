@@ -91,7 +91,14 @@
   "hide": "Falaich",
   "also_countries": "ann an dùthchannan eile cuideachd: {n}",
   "also_languages": "ann an cànanan eile cuideachd: {n}",
-  "elsewhere": "Ann an àiteachan eile"
+  "elsewhere": "Ann an àiteachan eile",
+  "most_reported": "Na sgeulachdan as motha",
+  "top_intro": "Sgeulachdan air an do rinn na meadhanan as motha aithris.",
+  "last_7d": "Na 7 làithean mu dheireadh",
+  "outlet_count": "Meadhanan: {n}",
+  "country_count": "Dùthchannan: {n}",
+  "edition_count": "Deasachaidhean: {n}",
+  "no_stories": "Chan eil sgeulachd ann fhathast."
  },
  "dates": [
   "{d}mh dhen Fhaoilleach {y}",

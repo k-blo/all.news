@@ -94,7 +94,23 @@
   "hide": "Piilota",
   "also_countries": "myös {n} muussa maassa",
   "also_languages": "myös {n} muulla kielellä",
-  "elsewhere": "Muualla"
+  "elsewhere": "Muualla",
+  "most_reported": "Eniten uutisoidut",
+  "top_intro": "Uutiset, joista on kertonut eniten medioita, päivittyy tunneittain.",
+  "last_7d": "Viimeiset 7 päivää",
+  "outlet_count": {
+   "one": "{n} media",
+   "other": "{n} mediaa"
+  },
+  "country_count": {
+   "one": "{n} maa",
+   "other": "{n} maata"
+  },
+  "edition_count": {
+   "one": "{n} versio",
+   "other": "{n} versiota"
+  },
+  "no_stories": "Ei vielä uutisia."
  },
  "dates": [
   "{d}. tammikuuta {y}",

@@ -100,7 +100,23 @@
    "one": "ook in {n} andere taal",
    "other": "ook in {n} andere talen"
   },
-  "elsewhere": "Elders"
+  "elsewhere": "Elders",
+  "most_reported": "Meest in het nieuws",
+  "top_intro": "Verhalen die de meeste media brengen, elk uur bijgewerkt.",
+  "last_7d": "Afgelopen 7 dagen",
+  "outlet_count": {
+   "one": "{n} medium",
+   "other": "{n} media"
+  },
+  "country_count": {
+   "one": "{n} land",
+   "other": "{n} landen"
+  },
+  "edition_count": {
+   "one": "{n} editie",
+   "other": "{n} edities"
+  },
+  "no_stories": "Nog geen verhalen."
  },
  "dates": [
   "{d} januari {y}",

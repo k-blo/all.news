@@ -244,6 +244,19 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-clustering.txt`).
   into `models/embeddinggemma/` (see the workflow step), then `python3 clustering.py`
   next to a `crawled.json`.
 
+**Most reported** (`/top/`): `most_reported()` ranks stories (linked events, plus
+unlinked events as one-edition stories) by distinct outlets — globally (top
+`TOP_ALL` 20) and per country (top `TOP_CC` 10, outlets in that country, 2+).
+Two windows: the 24-hour feed, and 7 days from `state/top.npz` (story centroids +
+outlet sets; a run's story joins the remembered one scoring ≥ `TOP_MATCH` 0.85,
+else is added if shown or with `TOP_KEEP` 5+ outlets; dropped 7 days after its
+last article). `crawler.write_top()` writes `top/24h.json`, `top/7d.json` (loaded
+on click) and the SSR page `top/index.html` (24 hours, all countries, English;
+`HUB_TEMPLATE`). `top.js` renders lists and the country picker, remembering the
+choice in `allnews.top`; the headline is the edition in the visitor's UI language,
+else the biggest. Editions in the current feed link their landing page
+`#id` (`paths` + `articleId()`), older ones the article itself. 3 PUTs per run.
+
 **Summaries:** every row shows its RSS summary under the headline — two lines,
 the whole text on hover/focus; Settings → Descriptions → Hide shows it only then.
 `parse_feed()` keeps up to `SUMMARY_MAX` (800) characters, cut at a word with "…"
@@ -279,8 +292,9 @@ group, and stores filters under `allnews.<section>.*`. A first visit
 seeds the language filter from the browser languages (relaxed to all if empty).
 On `/<section>/<lang>/` the path pins the language instead (`SECTION_LANG`).
 
-**Menu** lists "Browse by country & language" (`/news/`) first, then the sections,
-plus Settings (current entry marked by `script.js`). The filter panel has Countries,
+**Menu** lists Settings, a separator, then "Most reported" (`/top/`), "Browse by
+country & language" (`/news/`) and the sections (current entry marked by
+`script.js`). The filter panel has Countries,
 Languages and Medias.
 
 **Settings** (`settings.html`, `/settings`): UI language (automatic / any of ours)
