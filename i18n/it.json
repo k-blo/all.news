@@ -104,6 +104,8 @@
   "most_reported": "Più riprese",
   "top_intro": "Le notizie riprese dal maggior numero di testate, aggiornate ogni ora.",
   "last_7d": "Ultimi 7 giorni",
+  "last_30d": "Ultimi 30 giorni",
+  "last_12m": "Ultimi 12 mesi",
   "outlet_count": {
    "one": "{n} testata",
    "other": "{n} testate"

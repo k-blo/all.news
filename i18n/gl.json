@@ -104,6 +104,8 @@
   "most_reported": "Máis difundidas",
   "top_intro": "As novas que cobren máis medios, actualizadas cada hora.",
   "last_7d": "Últimos 7 días",
+  "last_30d": "Últimos 30 días",
+  "last_12m": "Últimos 12 meses",
   "outlet_count": {
    "one": "{n} medio",
    "other": "{n} medios"

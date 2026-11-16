@@ -104,6 +104,8 @@
   "most_reported": "Meest in het nieuws",
   "top_intro": "Verhalen die de meeste media brengen, elk uur bijgewerkt.",
   "last_7d": "Afgelopen 7 dagen",
+  "last_30d": "Afgelopen 30 dagen",
+  "last_12m": "Afgelopen 12 maanden",
   "outlet_count": {
    "one": "{n} medium",
    "other": "{n} media"

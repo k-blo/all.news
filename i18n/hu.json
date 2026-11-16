@@ -95,6 +95,8 @@
   "most_reported": "Legnagyobb visszhangú",
   "top_intro": "A legtöbb médium által feldolgozott hírek, óránként frissítve.",
   "last_7d": "Az elmúlt 7 nap",
+  "last_30d": "Az elmúlt 30 nap",
+  "last_12m": "Az elmúlt 12 hónap",
   "outlet_count": "{n} médium",
   "country_count": "{n} ország",
   "edition_count": "{n} kiadás",

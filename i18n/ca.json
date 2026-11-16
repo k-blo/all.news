@@ -104,6 +104,8 @@
   "most_reported": "Més difoses",
   "top_intro": "Les notícies cobertes per més mitjans, actualitzades cada hora.",
   "last_7d": "Últims 7 dies",
+  "last_30d": "Últims 30 dies",
+  "last_12m": "Últims 12 mesos",
   "outlet_count": {
    "one": "{n} mitjà",
    "other": "{n} mitjans"

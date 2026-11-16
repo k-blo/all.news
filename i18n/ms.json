@@ -95,6 +95,8 @@
   "most_reported": "Paling banyak dilaporkan",
   "top_intro": "Berita yang dilaporkan paling banyak media, dikemas kini setiap jam.",
   "last_7d": "7 hari terakhir",
+  "last_30d": "30 hari terakhir",
+  "last_12m": "12 bulan terakhir",
   "outlet_count": "{n} media",
   "country_count": "{n} negara",
   "edition_count": "{n} edisi",

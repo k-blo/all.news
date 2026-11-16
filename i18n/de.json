@@ -101,6 +101,8 @@
   "most_reported": "Meistberichtet",
   "top_intro": "Themen, über die die meisten Medien berichten, stündlich aktualisiert.",
   "last_7d": "Letzte 7 Tage",
+  "last_30d": "Letzte 30 Tage",
+  "last_12m": "Letzte 12 Monate",
   "outlet_count": {
    "one": "{n} Medium",
    "other": "{n} Medien"

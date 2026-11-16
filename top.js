@@ -46,6 +46,11 @@
       `<span class="ed-n">${esc(I18N.count("event_count", n))}</span></a></li>`;
   }
 
+  // Recent: "3 h ago"; older: the date.
+  function when(t) {
+    return Date.now() - new Date(t) < 7 * 864e5 ? I18N.ago(t) : I18N.date(t.slice(0, 10));
+  }
+
   function item(st, row, rank, cc) {
     const ed = pick(st, cc);
     const dots = st.dots.map((s) => `<i style="background:${esc(color(s))}" title="${esc(s)}"></i>`).join("");
@@ -53,7 +58,7 @@
       `<a class="top-title" dir="auto" href="${esc(ed[4])}"${EXT}>${esc(kicker(ed[3]))}</a>` +
       `<div class="top-meta"><span class="top-n">${esc(I18N.count("outlet_count", row[1]))}</span>` +
       (cc ? "" : `<span>${esc(I18N.count("country_count", st.cc.length))}</span>`) +
-      `<time datetime="${esc(st.t1)}">${esc(I18N.ago(st.t1))}</time>` +
+      `<time datetime="${esc(st.t1)}">${esc(when(st.t1))}</time>` +
       `<span class="top-dots" aria-hidden="true">${dots}</span></div>` +
       `<details class="top-eds"><summary>${esc(I18N.count("edition_count", st.ne))}</summary>` +
       `<ul>${st.ed.map(edition).join("")}</ul></details></div></li>`;
@@ -107,6 +112,7 @@
     render();
   });
 
-  if (state.win !== "7d") state.win = "24h";
+  const known = [...wins.querySelectorAll(".choice")].map((b) => b.dataset.win);
+  if (!known.includes(state.win)) state.win = "24h";
   show(state.win).catch(() => { /* keep the server-rendered list */ });
 })();

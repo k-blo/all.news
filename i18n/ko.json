@@ -95,6 +95,8 @@
   "most_reported": "가장 많이 보도된 뉴스",
   "top_intro": "가장 많은 언론사가 보도한 뉴스, 매시간 업데이트.",
   "last_7d": "최근 7일",
+  "last_30d": "최근 30일",
+  "last_12m": "최근 12개월",
   "outlet_count": "언론사 {n}곳",
   "country_count": "{n}개국",
   "edition_count": "에디션 {n}개",

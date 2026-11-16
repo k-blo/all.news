@@ -107,6 +107,8 @@
   "most_reported": "Cele mai mediatizate",
   "top_intro": "Știrile preluate de cele mai multe publicații, actualizate din oră în oră.",
   "last_7d": "Ultimele 7 zile",
+  "last_30d": "Ultimele 30 de zile",
+  "last_12m": "Ultimele 12 luni",
   "outlet_count": {
    "one": "{n} publicație",
    "few": "{n} publicații",

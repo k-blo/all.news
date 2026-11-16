@@ -33,7 +33,9 @@ MIN_SOURCES, MAX_SHARE = 2, 0.5
 
 # Most reported (/top/): stories ranked by outlets.
 TOP_MEMORY = os.path.join("state", "top.npz")  # 7-day stories
-TOP_DAYS = 7
+TOP_DAYS = 7                  # hourly window
+TOP_LONG = {"30d": 30, "365d": 365}  # written daily
+TOP_SPARE = 5                 # quiet stories kept: 5x list lengths
 TOP_MATCH = 0.85              # same story in an earlier run
 TOP_LINK = 0.3                # shared articles: same story
 TOP_MAX_U = 5000              # article keys kept per story
@@ -295,10 +297,11 @@ def outlets(s, cc=None):
 
 
 def load_memory():
-    """Stories of the last 7 days."""
+    """Remembered stories, plus run info."""
     try:
         with np.load(TOP_MEMORY) as z:
             meta = json.loads(bytes(z["meta"]).decode())
+            info = json.loads(bytes(z["info"]).decode()) if "info" in z.files else {}
             keys = (np.split(z["urls"], np.cumsum(z["nu"])[:-1]) if "urls" in z.files
                     else [None] * len(meta))
             for m, v, u in zip(meta, z["vecs"], keys):
@@ -308,19 +311,20 @@ def load_memory():
                           else {url_key(e[4]): None for e in m["ed"]})
                 m["src"] = {cc: o if isinstance(o, dict) else dict.fromkeys(o, m["t1"])
                             for cc, o in m["src"].items()}
-            return meta
+            return meta, info
     except (FileNotFoundError, KeyError, ValueError, OSError):
-        return []
+        return [], {}
 
 
-def save_memory(mem):
+def save_memory(mem, info):
     os.makedirs(os.path.dirname(TOP_MEMORY), exist_ok=True)
     meta = [{k: v for k, v in m.items() if k not in ("v", "u")} for m in mem]
     vecs = np.stack([m["v"] for m in mem]).astype(np.float16) if mem else np.zeros((0, 1), np.float16)
     keys = [np.fromiter(m["u"], np.uint64, len(m["u"])) for m in mem]
     np.savez(TOP_MEMORY, meta=np.frombuffer(json.dumps(meta, ensure_ascii=False).encode(), np.uint8),
              vecs=vecs, urls=np.concatenate(keys) if keys else np.zeros(0, np.uint64),
-             nu=np.array([len(k) for k in keys], np.int64))
+             nu=np.array([len(k) for k in keys], np.int64),
+             info=np.frombuffer(json.dumps(info).encode(), np.uint8))
 
 
 def merge_into(m, s):
@@ -381,17 +385,33 @@ def same_story(items, old):
     return list(groups.values())
 
 
-def remember(stories, now):
-    """7-day memory, updated with this run."""
-    cut = (datetime.fromisoformat(now) - timedelta(days=TOP_DAYS)).isoformat(timespec="seconds")
-    mem = []
-    for m in load_memory():
-        m["src"] = {cc: kept for cc, o in m["src"].items()
-                    if (kept := {k: t for k, t in o.items() if t >= cut})}
+def days_before(now, days):
+    return (datetime.fromisoformat(now) - timedelta(days=days)).isoformat(timespec="seconds")
+
+
+def window(mem, now, days):
+    """Stories with outlets seen lately, their indices."""
+    cut = days_before(now, days)
+    views, ids = [], []
+    for i, m in enumerate(mem):
+        src = {cc: kept for cc, o in m["src"].items()
+               if (kept := {k: t for k, t in o.items() if t >= cut})}
+        if src:
+            views.append({**m, "src": src})
+            ids.append(i)
+    return views, ids
+
+
+def remember(stories, now, mem):
+    """Memory updated with this run."""
+    year = max(TOP_LONG.values())
+    fresh = days_before(now, TOP_DAYS)
+    mem, _ = window(mem, now, year)
+    for m in mem:
         m["n"] = {cc: k for cc, k in m["n"].items() if cc in m["src"]}
-        if m["src"]:  # outlets seen in 7 days
-            m["ed"] = [e[:5] + [0] for e in m["ed"]]  # live: in this run's feed
-            mem.append(m)
+        m["ed"] = [e[:5] + [0] for e in m["ed"]]  # live: in this run's feed
+        if m["t1"] < fresh:
+            m["u"] = {}  # quiet: vectors only
     shown = {i for ids in top_ids(stories).values() for i in ids}
     items = mem + [s for i, s in enumerate(stories) if i in shown or outlets(s) >= TOP_KEEP]
     out = []
@@ -404,20 +424,26 @@ def remember(stories, now):
         for i in g[1:]:
             merge_into(m, items[i])
         out.append(m)
-    return out
+    # quiet stories: only those near a long list
+    keep = {i for i, m in enumerate(out) if m["t1"] >= fresh}
+    for days in TOP_LONG.values():
+        views, ids = window(out, now, days)
+        lists = top_ids(views, TOP_ALL * TOP_SPARE, TOP_CC * TOP_SPARE)
+        keep |= {ids[j] for js in lists.values() for j in js}
+    return [m for i, m in enumerate(out) if i in keep]
 
 
-def top_ids(items):
+def top_ids(items, n_all=TOP_ALL, n_cc=TOP_CC):
     """Scope -> story indices, most outlets first."""
     lists = {"all": sorted(range(len(items)), key=lambda i: (
-        -outlets(items[i]), -len(items[i]["src"]), -sum(items[i]["n"].values())))[:TOP_ALL]}
+        -outlets(items[i]), -len(items[i]["src"]), -sum(items[i]["n"].values())))[:n_all]}
     by_cc = defaultdict(list)
     for i, s in enumerate(items):
         for cc in s["src"]:
             if outlets(s, cc) >= 2:
                 by_cc[cc].append(i)
     for cc, ids in by_cc.items():
-        lists[cc] = sorted(ids, key=lambda i: (-outlets(items[i], cc), -items[i]["n"][cc]))[:TOP_CC]
+        lists[cc] = sorted(ids, key=lambda i: (-outlets(items[i], cc), -items[i]["n"][cc]))[:n_cc]
     return lists
 
 
@@ -443,14 +469,20 @@ def rank(items):
 
 
 def most_reported(events, stories, gen):
-    """Write /top/: 24 hours and 7 days."""
+    """Write /top/: 24 hours to a year."""
     now = utc(gen)
     linked = {i for s in stories for i in s}
     groups = stories + [[i] for i in range(len(events)) if i not in linked]
     day = [story_of([events[i] for i in g], now) for g in groups]
-    mem = remember(day, now)
-    crawler.write_top({"24h": rank(day), "7d": rank(mem)}, gen)
-    save_memory(mem)
+    mem, info = load_memory()
+    mem = remember(day, now, mem)
+    out = {"24h": rank(day), "7d": rank(window(mem, now, TOP_DAYS)[0])}
+    today = datetime.fromisoformat(gen).astimezone(crawler.ZURICH).date().isoformat()
+    if info.get("long") != today:  # month, year: daily
+        out.update({w: rank(window(mem, now, d)[0]) for w, d in TOP_LONG.items()})
+        info["long"] = today
+    crawler.write_top(out, gen)
+    save_memory(mem, info)
     return len(mem)
 
 

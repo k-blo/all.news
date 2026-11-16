@@ -110,6 +110,8 @@
   "most_reported": "Najviac medializované",
   "top_intro": "Správy, o ktorých písalo najviac médií, aktualizované každú hodinu.",
   "last_7d": "Posledných 7 dní",
+  "last_30d": "Posledných 30 dní",
+  "last_12m": "Posledných 12 mesiacov",
   "outlet_count": {
    "one": "{n} médium",
    "few": "{n} médiá",

@@ -104,6 +104,8 @@
   "most_reported": "Les plus couverts",
   "top_intro": "Les sujets couverts par le plus de médias, mis à jour chaque heure.",
   "last_7d": "Les 7 derniers jours",
+  "last_30d": "Les 30 derniers jours",
+  "last_12m": "Les 12 derniers mois",
   "outlet_count": {
    "one": "{n} média",
    "other": "{n} médias"

@@ -95,6 +95,8 @@
   "most_reported": "Na sgeulachdan as motha",
   "top_intro": "Sgeulachdan air an do rinn na meadhanan as motha aithris.",
   "last_7d": "Na 7 làithean mu dheireadh",
+  "last_30d": "Na 30 latha mu dheireadh",
+  "last_12m": "Na 12 mìosan mu dheireadh",
   "outlet_count": "Meadhanan: {n}",
   "country_count": "Dùthchannan: {n}",
   "edition_count": "Deasachaidhean: {n}",

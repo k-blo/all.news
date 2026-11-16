@@ -95,6 +95,8 @@
   "most_reported": "Y mwyaf o sylw",
   "top_intro": "Straeon gyda'r sylw mwyaf yn y cyfryngau, bob awr.",
   "last_7d": "Y 7 diwrnod diwethaf",
+  "last_30d": "Y 30 diwrnod diwethaf",
+  "last_12m": "Y 12 mis diwethaf",
   "outlet_count": "{n} cyfrwng",
   "country_count": "{n} gwlad",
   "edition_count": "{n} argraffiad",

@@ -104,6 +104,8 @@
   "most_reported": "Mais noticiadas",
   "top_intro": "As notícias publicadas por mais fontes, atualizadas a cada hora.",
   "last_7d": "Últimos 7 dias",
+  "last_30d": "Últimos 30 dias",
+  "last_12m": "Últimos 12 meses",
   "outlet_count": {
    "one": "{n} fonte",
    "other": "{n} fontes"

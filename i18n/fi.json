@@ -98,6 +98,8 @@
   "most_reported": "Eniten uutisoidut",
   "top_intro": "Uutiset, joista on kertonut eniten medioita, päivittyy tunneittain.",
   "last_7d": "Viimeiset 7 päivää",
+  "last_30d": "Viimeiset 30 päivää",
+  "last_12m": "Viimeiset 12 kuukautta",
   "outlet_count": {
    "one": "{n} media",
    "other": "{n} mediaa"

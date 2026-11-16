@@ -104,6 +104,8 @@
   "most_reported": "Mest bevakat",
   "top_intro": "Nyheter som flest medier rapporterar om, uppdateras varje timme.",
   "last_7d": "Senaste 7 dagarna",
+  "last_30d": "Senaste 30 dagarna",
+  "last_12m": "Senaste 12 månaderna",
   "outlet_count": {
    "one": "{n} medium",
    "other": "{n} medier"

@@ -98,6 +98,8 @@
   "most_reported": "Enim kajastatud",
   "top_intro": "Uudised, mida kajastas kõige rohkem väljaandeid, uueneb iga tund.",
   "last_7d": "Viimased 7 päeva",
+  "last_30d": "Viimased 30 päeva",
+  "last_12m": "Viimased 12 kuud",
   "outlet_count": {
    "one": "{n} väljaanne",
    "other": "{n} väljaannet"

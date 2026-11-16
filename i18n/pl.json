@@ -110,6 +110,8 @@
   "most_reported": "Najszerzej opisywane",
   "top_intro": "Tematy opisywane przez najwięcej mediów, aktualizowane co godzinę.",
   "last_7d": "Ostatnie 7 dni",
+  "last_30d": "Ostatnie 30 dni",
+  "last_12m": "Ostatnie 12 miesięcy",
   "outlet_count": {
    "one": "{n} medium",
    "few": "{n} media",

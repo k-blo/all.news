@@ -6133,7 +6133,7 @@ HUB_TEMPLATE = """<!DOCTYPE html>
       </div>
     </footer>
   </div>
-  <script src="/site.js?v=7"></script>{scripts}
+  <script src="/site.js?v=8"></script>{scripts}
 </body>
 </html>
 """
@@ -6184,6 +6184,8 @@ TOP_MAIN = """      <div class="hero">
         <div class="choice-row" id="topWin">
           <button type="button" class="choice" data-win="24h" aria-pressed="true" data-i18n="last_24h">Last 24 hours</button>
           <button type="button" class="choice" data-win="7d" aria-pressed="false" data-i18n="last_7d">Last 7 days</button>
+          <button type="button" class="choice" data-win="30d" aria-pressed="false" data-i18n="last_30d">Last 30 days</button>
+          <button type="button" class="choice" data-win="365d" aria-pressed="false" data-i18n="last_12m">Last 12 months</button>
         </div>
         <select id="topCc" class="lang-select" aria-label="Countries" data-i18n-aria="countries">
           <option value="" data-i18n="all_countries">All countries</option>
@@ -6241,7 +6243,7 @@ def write_top(windows, generated):
     html = localize(HUB_TEMPLATE.format(
         origin=SITE_ORIGIN, path=f"/{TOP_DIR}/", title=escape(title), desc=escape(desc),
         main=TOP_MAIN.format(items=items),
-        scripts='\n  <script src="/colors.js"></script>\n  <script src="/top.js?v=1"></script>'), "en")
+        scripts='\n  <script src="/colors.js"></script>\n  <script src="/top.js?v=2"></script>'), "en")
     with open(os.path.join(TOP_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
 

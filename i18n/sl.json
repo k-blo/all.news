@@ -110,6 +110,8 @@
   "most_reported": "Najbolj odmevno",
   "top_intro": "Zgodbe, o katerih poroča največ medijev, posodobljeno vsako uro.",
   "last_7d": "Zadnjih 7 dni",
+  "last_30d": "Zadnjih 30 dni",
+  "last_12m": "Zadnjih 12 mesecev",
   "outlet_count": {
    "one": "{n} medij",
    "two": "{n} medija",

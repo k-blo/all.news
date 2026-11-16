@@ -107,6 +107,8 @@
   "most_reported": "Najpraćenije",
   "top_intro": "Vijesti o kojima je izvijestilo najviše medija, ažurirano svaki sat.",
   "last_7d": "Posljednjih 7 dana",
+  "last_30d": "Posljednjih 30 dana",
+  "last_12m": "Posljednjih 12 mjeseci",
   "outlet_count": {
    "one": "{n} medij",
    "few": "{n} medija",

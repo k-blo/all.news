@@ -95,6 +95,8 @@
   "most_reported": "報導最多",
   "top_intro": "報導媒體最多的新聞，每小時更新。",
   "last_7d": "過去7天",
+  "last_30d": "過去30天",
+  "last_12m": "過去12個月",
   "outlet_count": "{n}家媒體",
   "country_count": "{n}個國家",
   "edition_count": "{n}個版本",

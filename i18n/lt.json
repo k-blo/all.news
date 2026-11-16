@@ -110,6 +110,8 @@
   "most_reported": "Plačiausiai aprašytos",
   "top_intro": "Naujienos, apie kurias rašė daugiausia leidinių, atnaujinama kas valandą.",
   "last_7d": "Paskutinės 7 dienos",
+  "last_30d": "Paskutinės 30 dienų",
+  "last_12m": "Paskutiniai 12 mėnesių",
   "outlet_count": {
    "one": "{n} leidinys",
    "few": "{n} leidiniai",

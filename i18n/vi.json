@@ -95,6 +95,8 @@
   "most_reported": "Được đưa tin nhiều nhất",
   "top_intro": "Tin được nhiều nguồn tin đưa nhất, cập nhật mỗi giờ.",
   "last_7d": "7 ngày qua",
+  "last_30d": "30 ngày qua",
+  "last_12m": "12 tháng qua",
   "outlet_count": "{n} nguồn tin",
   "country_count": "{n} quốc gia",
   "edition_count": "{n} phiên bản",

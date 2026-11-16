@@ -107,6 +107,8 @@
   "most_reported": "Visvairāk atspoguļotās",
   "top_intro": "Ziņas, ko atspoguļojuši visvairāk mediju, atjaunotas katru stundu.",
   "last_7d": "Pēdējās 7 dienas",
+  "last_30d": "Pēdējās 30 dienas",
+  "last_12m": "Pēdējie 12 mēneši",
   "outlet_count": {
    "zero": "{n} mediju",
    "one": "{n} medijs",

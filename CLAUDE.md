@@ -247,19 +247,24 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-clustering.txt`).
 **Most reported** (`/top/`): `most_reported()` ranks stories (linked events, plus
 unlinked events as one-edition stories) by distinct outlets — globally (top
 `TOP_ALL` 20) and per country (top `TOP_CC` 10, outlets in that country, 2+).
-Two windows: the 24-hour feed, and 7 days from `state/top.npz` (story centroids,
-outlets with their last article time, up to `TOP_MAX_U` article URL hashes). Each
-run's stories (shown or `TOP_KEEP` 5+ outlets) and the remembered ones are merged
-by shared articles (`same_story()`: ≥ 2 and ≥ `TOP_LINK` 30% of the smaller set,
-union-find, so duplicates heal); a run story sharing none joins the closest
-remembered one scoring ≥ `TOP_MATCH` 0.85, else is added. Outlets count only if
-seen in the last 7 days; a story with none left is dropped. Centroids alone drift
-run to run and split one story into many entries. `crawler.write_top()` writes `top/24h.json`, `top/7d.json` (loaded
+Windows: the 24-hour feed, then 7 days, 30 days and 12 months from `state/top.npz`
+(story centroids, outlets with their last article time, up to `TOP_MAX_U` article
+URL hashes). Each run's stories (shown or `TOP_KEEP` 5+ outlets) and the remembered
+ones are merged by shared articles (`same_story()`: ≥ 2 and ≥ `TOP_LINK` 30% of the
+smaller set, union-find, so duplicates heal); a run story sharing none joins the
+closest remembered one scoring ≥ `TOP_MATCH` 0.85, else is added. Centroids alone
+drift run to run and split one story into many entries. A window counts the
+outlets seen in it (`window()`). Stories quiet for 7 days lose their URL hashes
+and are kept only while in `TOP_SPARE` (5)× the list lengths of the 30-day or
+12-month window. `7d` is written hourly; `30d` and `365d` once per Zurich day
+(`info["long"]` in `top.npz`). No backfill: the long windows fill over time.
+`crawler.write_top()` writes `top/<window>.json` (loaded
 on click) and the SSR page `top/index.html` (24 hours, all countries, English;
 `HUB_TEMPLATE`). `top.js` renders lists and the country picker, remembering the
 choice in `allnews.top`; the headline is the edition in the visitor's UI language,
 else the biggest. Editions in the current feed link their landing page
-`#id` (`paths` + `articleId()`), older ones the article itself. 3 PUTs per run.
+`#id` (`paths` + `articleId()`), older ones the article itself. 3 PUTs per run,
+5 on the first run of a day.
 
 **Summaries:** every row shows its RSS summary under the headline — two lines,
 the whole text on hover/focus; Settings → Descriptions → Hide shows it only then.

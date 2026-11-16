@@ -104,6 +104,8 @@
   "most_reported": "Mest omtalt",
   "top_intro": "Saker dekket av flest medier, oppdatert hver time.",
   "last_7d": "Siste 7 dager",
+  "last_30d": "Siste 30 dager",
+  "last_12m": "Siste 12 måneder",
   "outlet_count": {
    "one": "{n} medium",
    "other": "{n} medier"

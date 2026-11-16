@@ -95,6 +95,8 @@
   "most_reported": "Pinakamaraming ulat",
   "top_intro": "Mga balitang iniulat ng pinakamaraming media, ina-update kada oras.",
   "last_7d": "Huling 7 araw",
+  "last_30d": "Huling 30 araw",
+  "last_12m": "Huling 12 buwan",
   "outlet_count": "{n} media",
   "country_count": "{n} bansa",
   "edition_count": "{n} edisyon",

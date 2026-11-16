@@ -98,6 +98,8 @@
   "most_reported": "Gehien jorratuak",
   "top_intro": "Hedabide gehienek jorratutako albisteak, orduro eguneratuak.",
   "last_7d": "Azken 7 egunak",
+  "last_30d": "Azken 30 egunak",
+  "last_12m": "Azken 12 hilabeteak",
   "outlet_count": "{n} hedabide",
   "country_count": "{n} herrialde",
   "edition_count": "{n} edizio",

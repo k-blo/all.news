@@ -104,6 +104,8 @@
   "most_reported": "Mest omtalt",
   "top_intro": "Historier dækket af flest medier, opdateret hver time.",
   "last_7d": "Seneste 7 dage",
+  "last_30d": "Seneste 30 dage",
+  "last_12m": "Seneste 12 måneder",
   "outlet_count": {
    "one": "{n} medie",
    "other": "{n} medier"

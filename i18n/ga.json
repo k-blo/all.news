@@ -95,6 +95,8 @@
   "most_reported": "Is mó a tuairiscíodh",
   "top_intro": "Scéalta a chlúdaigh an líon is mó meán, gach uair.",
   "last_7d": "Na 7 lá seo caite",
+  "last_30d": "Na 30 lá seo caite",
+  "last_12m": "Na 12 mhí seo caite",
   "outlet_count": "Meáin: {n}",
   "country_count": "Tíortha: {n}",
   "edition_count": "Eagráin: {n}",

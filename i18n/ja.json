@@ -95,6 +95,8 @@
   "most_reported": "最も報じられたニュース",
   "top_intro": "最も多くのメディアが報じたニュース。毎時更新。",
   "last_7d": "過去7日間",
+  "last_30d": "過去30日間",
+  "last_12m": "過去12か月",
   "outlet_count": "{n}媒体",
   "country_count": "{n}か国",
   "edition_count": "{n}版",
