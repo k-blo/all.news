@@ -247,10 +247,14 @@ needs `numpy`, `onnxruntime` and `tokenizers` (`requirements-clustering.txt`).
 **Most reported** (`/top/`): `most_reported()` ranks stories (linked events, plus
 unlinked events as one-edition stories) by distinct outlets — globally (top
 `TOP_ALL` 20) and per country (top `TOP_CC` 10, outlets in that country, 2+).
-Two windows: the 24-hour feed, and 7 days from `state/top.npz` (story centroids +
-outlet sets; a run's story joins the remembered one scoring ≥ `TOP_MATCH` 0.85,
-else is added if shown or with `TOP_KEEP` 5+ outlets; dropped 7 days after its
-last article). `crawler.write_top()` writes `top/24h.json`, `top/7d.json` (loaded
+Two windows: the 24-hour feed, and 7 days from `state/top.npz` (story centroids,
+outlets with their last article time, up to `TOP_MAX_U` article URL hashes). Each
+run's stories (shown or `TOP_KEEP` 5+ outlets) and the remembered ones are merged
+by shared articles (`same_story()`: ≥ 2 and ≥ `TOP_LINK` 30% of the smaller set,
+union-find, so duplicates heal); a run story sharing none joins the closest
+remembered one scoring ≥ `TOP_MATCH` 0.85, else is added. Outlets count only if
+seen in the last 7 days; a story with none left is dropped. Centroids alone drift
+run to run and split one story into many entries. `crawler.write_top()` writes `top/24h.json`, `top/7d.json` (loaded
 on click) and the SSR page `top/index.html` (24 hours, all countries, English;
 `HUB_TEMPLATE`). `top.js` renders lists and the country picker, remembering the
 choice in `allnews.top`; the headline is the edition in the visitor's UI language,

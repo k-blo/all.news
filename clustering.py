@@ -35,6 +35,8 @@ MIN_SOURCES, MAX_SHARE = 2, 0.5
 TOP_MEMORY = os.path.join("state", "top.npz")  # 7-day stories
 TOP_DAYS = 7
 TOP_MATCH = 0.85              # same story in an earlier run
+TOP_LINK = 0.3                # shared articles: same story
+TOP_MAX_U = 5000              # article keys kept per story
 TOP_ALL, TOP_CC = 20, 10      # list lengths shown
 TOP_KEEP = 5                  # outlets to be remembered
 TOP_MAX_ED = 40               # editions listed per story
@@ -262,18 +264,28 @@ def edition_of(evs):
     return [*big["key"], sum(len(e["rows"]) for e in evs), lead["title"], lead["url"], 1]
 
 
+def url_key(url):
+    """64-bit article key."""
+    return int.from_bytes(hashlib.blake2b(url.encode(), digest_size=8).digest(), "little")
+
+
 def story_of(evs, now):
     """Outlets, articles, editions of one story."""
-    src, n, per_src, by_ed = defaultdict(set), Counter(), Counter(), defaultdict(list)
+    src, n, per_src, by_ed = defaultdict(dict), Counter(), Counter(), defaultdict(list)
+    times, keys = [], {}
     for e in evs:
         by_ed[e["key"]].append(e)
         for a in e["rows"]:
-            src[e["key"][0]].add(a["source"])
+            t = min(utc(a["published"]), now)
+            times.append(t)
+            seen = src[e["key"][0]]  # outlet -> last article
+            seen[a["source"]] = max(seen.get(a["source"], t), t)
             n[e["key"][0]] += 1
             per_src[a["source"]] += 1
-    times = [min(utc(a["published"]), now) for e in evs for a in e["rows"]]
+            if not LIVE.search(a["title"]):  # live blogs span stories
+                keys[url_key(a["url"])] = None
     eds = sorted((edition_of(v) for v in by_ed.values()), key=lambda x: -x[2])
-    return {"v": centroid([e["c"] for e in evs]), "src": {cc: sorted(s) for cc, s in src.items()},
+    return {"v": centroid([e["c"] for e in evs]), "src": dict(src), "u": keys,
             "n": dict(n), "ed": eds[:TOP_MAX_ED], "ne": len(eds), "t0": min(times),
             "t1": max(times), "dots": [s for s, _ in per_src.most_common(5)]}
 
@@ -287,8 +299,15 @@ def load_memory():
     try:
         with np.load(TOP_MEMORY) as z:
             meta = json.loads(bytes(z["meta"]).decode())
-            for m, v in zip(meta, z["vecs"]):
+            keys = (np.split(z["urls"], np.cumsum(z["nu"])[:-1]) if "urls" in z.files
+                    else [None] * len(meta))
+            for m, v, u in zip(meta, z["vecs"], keys):
                 m["v"] = v.astype(np.float32)
+                # older state: lead URLs, outlet lists
+                m["u"] = (dict.fromkeys(u.tolist()) if u is not None
+                          else {url_key(e[4]): None for e in m["ed"]})
+                m["src"] = {cc: o if isinstance(o, dict) else dict.fromkeys(o, m["t1"])
+                            for cc, o in m["src"].items()}
             return meta
     except (FileNotFoundError, KeyError, ValueError, OSError):
         return []
@@ -296,16 +315,20 @@ def load_memory():
 
 def save_memory(mem):
     os.makedirs(os.path.dirname(TOP_MEMORY), exist_ok=True)
-    meta = [{k: v for k, v in m.items() if k != "v"} for m in mem]
+    meta = [{k: v for k, v in m.items() if k not in ("v", "u")} for m in mem]
     vecs = np.stack([m["v"] for m in mem]).astype(np.float16) if mem else np.zeros((0, 1), np.float16)
+    keys = [np.fromiter(m["u"], np.uint64, len(m["u"])) for m in mem]
     np.savez(TOP_MEMORY, meta=np.frombuffer(json.dumps(meta, ensure_ascii=False).encode(), np.uint8),
-             vecs=vecs)
+             vecs=vecs, urls=np.concatenate(keys) if keys else np.zeros(0, np.uint64),
+             nu=np.array([len(k) for k in keys], np.int64))
 
 
 def merge_into(m, s):
-    """Add a run's story to its memory."""
-    for cc, srcs in s["src"].items():
-        m["src"][cc] = sorted(set(m["src"].get(cc, ())) | set(srcs))
+    """Add story s to m."""
+    for cc, seen in s["src"].items():
+        mine = m["src"].setdefault(cc, {})
+        for k, t in seen.items():
+            mine[k] = max(mine.get(k, t), t)
     for cc, k in s["n"].items():
         m["n"][cc] = max(m["n"].get(cc, 0), k)
     eds = {(e[0], e[1]): e for e in m["ed"]}
@@ -316,27 +339,72 @@ def merge_into(m, s):
     m["ed"] = sorted(eds.values(), key=lambda e: -e[2])[:TOP_MAX_ED]
     m["ne"] = max(m["ne"], s["ne"], len(eds))
     m["t0"], m["t1"] = min(m["t0"], s["t0"]), max(m["t1"], s["t1"])
+    keys = [k for k in m["u"] if k not in s["u"]] + list(s["u"])  # newest last
+    m["u"] = dict.fromkeys(keys[-TOP_MAX_U:])
     m["v"], m["dots"] = s["v"], s["dots"]
+
+
+def same_story(items, old):
+    """Groups of items telling one story."""
+    parent = list(range(len(items)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    owners = defaultdict(list)  # article -> items, ascending
+    for i, s in enumerate(items):
+        for k in s["u"]:
+            owners[k].append(i)
+    shared = Counter()
+    for ids in owners.values():
+        for a, i in enumerate(ids):
+            for j in ids[a + 1:]:
+                if i < old:  # new stories never pair up
+                    shared[i, j] += 1
+    linked = set()
+    for (i, j), k in shared.items():
+        if k >= 2 and k >= TOP_LINK * min(len(items[i]["u"]), len(items[j]["u"])):
+            parent[find(i)] = find(j)
+            linked.add(j)
+    rest = [j for j in range(old, len(items)) if j not in linked]
+    if old and rest:  # no shared articles: closest vector
+        sim = np.stack([items[j]["v"] for j in rest]) @ np.stack([m["v"] for m in items[:old]]).T
+        for j, row in zip(rest, sim):
+            if row.max() >= TOP_MATCH:
+                parent[find(j)] = find(int(row.argmax()))
+    groups = defaultdict(list)
+    for i in range(len(items)):
+        groups[find(i)].append(i)
+    return list(groups.values())
 
 
 def remember(stories, now):
     """7-day memory, updated with this run."""
     cut = (datetime.fromisoformat(now) - timedelta(days=TOP_DAYS)).isoformat(timespec="seconds")
-    mem = [m for m in load_memory() if m["t1"] >= cut]
-    for m in mem:  # live: in this run's feed
-        m["ed"] = [e[:5] + [0] for e in m["ed"]]
+    mem = []
+    for m in load_memory():
+        m["src"] = {cc: kept for cc, o in m["src"].items()
+                    if (kept := {k: t for k, t in o.items() if t >= cut})}
+        m["n"] = {cc: k for cc, k in m["n"].items() if cc in m["src"]}
+        if m["src"]:  # outlets seen in 7 days
+            m["ed"] = [e[:5] + [0] for e in m["ed"]]  # live: in this run's feed
+            mem.append(m)
     shown = {i for ids in top_ids(stories).values() for i in ids}
-    new = [s for i, s in enumerate(stories) if i in shown or outlets(s) >= TOP_KEEP]
-    old = len(mem)
-    if old and new:
-        sim = np.stack([s["v"] for s in new]) @ np.stack([m["v"] for m in mem]).T
-        best = sim.argmax(1)
-    for i, s in enumerate(new):
-        if old and sim[i, best[i]] >= TOP_MATCH:
-            merge_into(mem[best[i]], s)
-        else:
-            mem.append({**s, "src": dict(s["src"]), "n": dict(s["n"]), "ed": list(s["ed"])})
-    return mem
+    items = mem + [s for i, s in enumerate(stories) if i in shown or outlets(s) >= TOP_KEEP]
+    out = []
+    for g in same_story(items, len(mem)):
+        # newest, biggest last: it sets vector and dots
+        g.sort(key=lambda i: (i >= len(mem), outlets(items[i]), items[i]["t1"]))
+        s = items[g[0]]
+        m = {**s, "src": {cc: dict(o) for cc, o in s["src"].items()}, "n": dict(s["n"]),
+             "ed": list(s["ed"]), "u": dict(s["u"])}
+        for i in g[1:]:
+            merge_into(m, items[i])
+        out.append(m)
+    return out
 
 
 def top_ids(items):
